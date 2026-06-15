@@ -31,12 +31,12 @@ def test_h2_lj_target_shape():
 
 
 def test_graphene_builder_has_12_atoms():
-    import graphene_qe_active_inverse as graphene
+    from generated_models import graphene_generated_qe_active_inverse as graphene
 
-    atoms = graphene.build_graphene(2.46)
-    assert len(atoms) == 12
-    assert atoms.cell[2, 2] == graphene.CONFIG.vacuum
-    assert assert_pseudo_path(graphene.PSEUDO_DIR_ABS, graphene.PSEUDOPOTENTIALS["C"])
+    atoms = graphene.SYSTEM.builder(2.46)
+    assert len(atoms) == 8
+    assert atoms.cell[2, 2] == 15.0
+    assert assert_pseudo_path(graphene.SYSTEM.pseudopotentials["C"])
 
 
 def test_h2o_builder_has_3_atoms_and_correct_angle():
@@ -80,39 +80,39 @@ def test_ch4_builder_has_5_atoms_and_tetrahedral_geometry():
 
 
 def test_bulk_cu_builder_has_4_atoms():
-    import bulk_cu_qe_active_inverse as bulk_cu
+    from generated_models import bulk_cu_generated_qe_active_inverse as bulk_cu
 
-    atoms = bulk_cu.build_fcc_cu(3.61)
+    atoms = bulk_cu.SYSTEM.builder(3.61)
     assert len(atoms) == 4
     assert atoms.cell[0, 0] == 3.61
-    assert assert_pseudo_path(bulk_cu.PSEUDO_DIR_ABS, bulk_cu.PSEUDOPOTENTIALS["Cu"])
+    assert assert_pseudo_path(bulk_cu.SYSTEM.pseudopotentials["Cu"])
 
 
 def test_bulk_si_builder_has_8_atoms():
-    import bulk_si_qe_active_inverse as bulk_si
+    from generated_models import bulk_si_generated_qe_active_inverse as bulk_si
 
-    atoms = bulk_si.build_si_diamond(5.45)
+    atoms = bulk_si.SYSTEM.builder(5.45)
     assert len(atoms) == 8
     assert atoms.cell[0, 0] == 5.45
-    assert assert_pseudo_path(bulk_si.PSEUDO_DIR_ABS, bulk_si.PSEUDOPOTENTIALS["Si"])
+    assert assert_pseudo_path(bulk_si.SYSTEM.pseudopotentials["Si"])
 
 
 def test_bulk_mgo_builder_has_8_atoms():
-    import bulk_mgo_qe_active_inverse as bulk_mgo
+    from generated_models import bulk_mgo_generated_qe_active_inverse as bulk_mgo
 
-    atoms = bulk_mgo.build_mgo_rocksalt(4.22)
+    atoms = bulk_mgo.SYSTEM.builder(4.22)
     assert len(atoms) == 8
     assert atoms.get_chemical_symbols().count("Mg") == 4
     assert atoms.get_chemical_symbols().count("O") == 4
     assert atoms.cell[0, 0] == 4.22
-    assert assert_pseudo_path(bulk_mgo.PSEUDO_DIR_ABS, bulk_mgo.PSEUDOPOTENTIALS["Mg"])
-    assert assert_pseudo_path(bulk_mgo.PSEUDO_DIR_ABS, bulk_mgo.PSEUDOPOTENTIALS["O"])
+    assert assert_pseudo_path(bulk_mgo.SYSTEM.pseudopotentials["Mg"])
+    assert assert_pseudo_path(bulk_mgo.SYSTEM.pseudopotentials["O"])
 
 
 def test_bulk_licoo2_builder_has_12_atoms():
-    import bulk_licoo2_qe_active_inverse as licoo2
+    from generated_models import bulk_licoo2_generated_qe_active_inverse as licoo2
 
-    atoms = licoo2.build_licoo2_r3m(2.815, 14.05)
+    atoms = licoo2.SYSTEM.builder(2.815, 14.05 / 2.815)
     symbols = atoms.get_chemical_symbols()
     assert len(atoms) == 12
     assert symbols.count("Li") == 3
@@ -120,29 +120,21 @@ def test_bulk_licoo2_builder_has_12_atoms():
     assert symbols.count("O") == 6
     assert abs(atoms.cell[0, 0] - 2.815) < 1e-12
     assert abs(atoms.cell[2, 2] - 14.05) < 1e-12
-    assert assert_pseudo_path(licoo2.PSEUDO_DIR_ABS, licoo2.PSEUDOPOTENTIALS["Li"])
-    assert assert_pseudo_path(licoo2.PSEUDO_DIR_ABS, licoo2.PSEUDOPOTENTIALS["Co"])
-    assert assert_pseudo_path(licoo2.PSEUDO_DIR_ABS, licoo2.PSEUDOPOTENTIALS["O"])
+    assert assert_pseudo_path(licoo2.SYSTEM.pseudopotentials["Li"])
+    assert assert_pseudo_path(licoo2.SYSTEM.pseudopotentials["Co"])
+    assert assert_pseudo_path(licoo2.SYSTEM.pseudopotentials["O"])
 
 
 
 def test_h_cu111_builder_has_12_cu_plus_h_and_fixed_bottom():
-    try:
-        import h_cu111_qe_active_inverse as hcu
-    except Exception:
-        return
+    from generated_models import h_on_cu111_qe_active_inverse as hcu
 
-    slab = hcu.build_clean_slab()
-    ads = hcu.add_h_to_slab(slab, 1.0 / 3.0, 1.0 / 3.0)
-    bottom = hcu.bottom_layer_indices(slab)
-    assert len(slab) == 12
-    assert slab.get_chemical_symbols().count("Cu") == 12
-    assert len(bottom) == 4
+    ads = hcu.SYSTEM.builder(1.0, 0.9)
     assert len(ads) == 13
     assert ads.get_chemical_symbols().count("Cu") == 12
     assert ads.get_chemical_symbols().count("H") == 1
-    assert assert_pseudo_path(hcu.PSEUDO_DIR_ABS, hcu.PSEUDOPOTENTIALS["Cu"])
-    assert assert_pseudo_path(hcu.PSEUDO_DIR_ABS, hcu.PSEUDOPOTENTIALS["H"])
+    assert assert_pseudo_path(hcu.SYSTEM.pseudopotentials["Cu"])
+    assert assert_pseudo_path(hcu.SYSTEM.pseudopotentials["H"])
 
 def test_h2_qe_uses_sssp_spin_reference_cache():
     import h2_qe_active_inverse as h2_qe

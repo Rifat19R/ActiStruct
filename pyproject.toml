@@ -9,7 +9,7 @@ description = "Active-learning inverse design workflows for DFT structure optimi
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-authors = [{name = "Rifat"}]
+authors = [{name = "Md. Rifat Khandaker"}]
 keywords = [
   "inverse-design",
   "active-learning",
@@ -29,6 +29,9 @@ dependencies = [
   "scikit-learn",
   "ase",
 ]
+
+[project.optional-dependencies]
+test = ["pytest"]
 
 [project.urls]
 Homepage = "https://github.com/Rifat19R/ActiStruct"

@@ -3,7 +3,8 @@ title: "ActiStruct: Active-Learning Inverse Design for DFT Structure Optimizatio
 message: "If you use ActiStruct, please cite this software."
 type: software
 authors:
-  - family-names: "Rifat"
+  - family-names: "Khandaker"
+    given-names: "Md. Rifat"
 repository-code: "https://github.com/Rifat19R/ActiStruct"
 abstract: "Active-learning inverse-design workflows coupling Gaussian-process surrogate models, ASE, and Quantum ESPRESSO for DFT-based structure optimization across atomistic benchmark systems."
 keywords:
