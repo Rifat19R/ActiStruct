@@ -125,21 +125,6 @@ def test_bulk_licoo2_builder_has_12_atoms():
     assert assert_pseudo_path(licoo2.PSEUDO_DIR_ABS, licoo2.PSEUDOPOTENTIALS["O"])
 
 
-def test_h_pt111_builder_has_12_pt_plus_h():
-    try:
-        import h_pt111_qe_active_inverse as hpt
-    except Exception:
-        return
-
-    slab = hpt.build_pt111_slab()
-    ads = hpt.add_h_to_slab(slab, 1.0 / 3.0, 1.0 / 3.0)
-    assert len(slab) == 12
-    assert slab.get_chemical_symbols().count("Pt") == 12
-    assert len(ads) == 13
-    assert ads.get_chemical_symbols().count("Pt") == 12
-    assert ads.get_chemical_symbols().count("H") == 1
-    assert assert_pseudo_path(hpt.PSEUDO_DIR_ABS, hpt.PSEUDOPOTENTIALS["Pt"])
-    assert assert_pseudo_path(hpt.PSEUDO_DIR_ABS, hpt.PSEUDOPOTENTIALS["H"])
 
 def test_h_cu111_builder_has_12_cu_plus_h_and_fixed_bottom():
     try:
@@ -177,7 +162,6 @@ if __name__ == "__main__":
     test_bulk_si_builder_has_8_atoms()
     test_bulk_mgo_builder_has_8_atoms()
     test_bulk_licoo2_builder_has_12_atoms()
-    # test_h_pt111_builder_has_12_pt_plus_h()  # skipped: h_pt111_qe_active_inverse.py not yet implemented
     test_h_cu111_builder_has_12_cu_plus_h_and_fixed_bottom()
     test_h2_qe_uses_sssp_spin_reference_cache()
     print("Smoke tests passed.")

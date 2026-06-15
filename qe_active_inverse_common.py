@@ -1,7 +1,7 @@
 """
 qe_active_inverse_common.py
 ============================
-Shared engine for the inverse_active 50-system benchmark.
+Shared engine for the ActiStruct 51-workflow benchmark.
 
 Implements:
   - Variable / ActiveSystem dataclasses (the public API)
@@ -10,8 +10,8 @@ Implements:
   - DE-based acquisition — Fix 2, no grid blowup (scipy.optimize)
   - Caching with file locks (safe for parallel runs)
   - 1D and 2D parameter spaces
-  - Reference energy subtraction (for adsorption energies)
-  - QE calculator via ASE (outdir on Linux /tmp — not on /mnt/d/)
+  - Optional reference-energy subtraction when a workflow explicitly defines references
+  - QE calculator via ASE with scratch output on a local Linux filesystem
   - Plots and text report per system
 
 Usage in a wrapper file
@@ -50,10 +50,11 @@ Rules for wrapper authors
 1.  builder must be a MODULE-LEVEL function (not a lambda/closure).
     Child processes must be able to pickle it.
 2.  All pseudopotentials must be the same type (all US or all PAW).
-3.  For adsorption energy: supply reference_builders = (clean_slab_fn, ads_fn).
+3.  For a true referenced adsorption/binding energy, supply reference_builders.
     Each takes no arguments and returns an Atoms object.
-    target = E(system) - sum(E(ref) for ref in reference_builders)
-4.  Set energy_per_atom=False for adsorption and molecule binding energies.
+    target = E(system) - sum(E(ref) for ref in reference_builders).
+    Without reference_builders, surface systems report structure-search objective energy.
+4.  Set energy_per_atom=False for molecule and surface objective energies.
 5.  N_PROCS and PARALLEL_WORKERS at the top of this file control parallelism.
     N_PROCS * PARALLEL_WORKERS must not exceed your CPU core count (nproc).
 """
@@ -337,7 +338,7 @@ def _ref_cache_key(system: ActiveSystem, ref_idx: int) -> str:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def _qe_input_data(system: ActiveSystem, prefix: str) -> dict:
-    # CRITICAL: outdir on Linux /tmp, NOT on /mnt/d/ (NTFS breaks QE locking).
+    # Keep QE scratch on a local Linux filesystem; network/translated filesystems can break QE locking.
     safe_key    = system.key[:12].replace("-", "_")
     safe_prefix = prefix[:12].replace("-", "_")
     outdir = f"/tmp/qe_{safe_key}_{safe_prefix}_{os.getpid()}"
@@ -444,7 +445,7 @@ def _get_reference_energies(
         if energy is None:
             raise RuntimeError(
                 f"Reference calculation {i} failed for {system.title}. "
-                f"Cannot compute adsorption energy without it."
+                f"Cannot compute referenced objective energy without it."
             )
         _set_cached(paths["cache"], paths["lock"], key, energy)
         print(f"  Reference {i}: {energy:.8f} eV")
@@ -842,8 +843,8 @@ def run_system(system: ActiveSystem) -> None:
         f"{system.title}",
         f"Key: {system.key}   Category: {system.category}",
         f"Variables: { {v.name: (v.lo, v.hi) for v in system.variables} }",
-        f"QE command:       {QE_COMMAND}",
-        f"Pseudo dir:       {PSEUDO_DIR}",
+        "QE command:       configured by ESPRESSO_COMMAND",
+        "Pseudo dir:       configured by ESPRESSO_PSEUDO",
         f"Pseudopotentials: {system.pseudopotentials}",
         f"ecutwfc / ecutrho: {system.ecutwfc} / {system.ecutrho} Ry",
         f"kpts: {system.kpts}   smearing: {system.smearing} {system.degauss} Ry",
@@ -956,7 +957,7 @@ def run_system(system: ActiveSystem) -> None:
         f"  Best {system.result_quantity}: {best_e:.8f} {system.result_units}",
         f"  GP uncertainty  : {best_std:.8f} {system.result_units}",
         f"  Total QE calls  : {len(labeled_X)}",
-        f"  Cache file      : {paths['cache']}",
+        f"  Cache file      : outputs/cache/{system.key}_cache.pkl",
         "=" * 80,
     ]
     print("\n".join(final))

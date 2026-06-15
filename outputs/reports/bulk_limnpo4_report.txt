@@ -27,5 +27,5 @@ FINAL RESULT
   Best Total energy per atom objective: -787.95560057 eV/atom
   GP uncertainty  : 0.00000600 eV/atom
   Total QE calls  : 4
-  Cache file      : <ACTISTRUCT_ROOT>/bulk_limnpo4_cache.pkl
+  Cache file      : outputs/cache/bulk_limnpo4_cache.pkl
 ================================================================================

@@ -51,15 +51,14 @@ mu(x), sigma(x)
 where `mu(x)` is predicted energy and `sigma(x)` is model uncertainty.
 
 For 2D workflows, `x` is a vector. H2O uses `(bond length, angle)`. H/Pt(111)
-uses fractional surface coordinates `(u, v)` and learns adsorption energy:
+uses fractional surface coordinates `(u, v)`. If explicit references are enabled, the referenced objective is:
 
 ```text
 E_ads(u, v) = E(Pt slab + H) - E(Pt slab) - E(H atom)
 ```
 
 Bulk LiCoO2 uses `(a, c)` for the R-3m hexagonal cell and minimizes QE total
-energy per atom. H/Cu(111) uses the same adsorption-energy formula as H/Pt(111),
-but fixes the bottom Cu layer and relaxes H plus the top two Cu layers.
+energy per atom. H/Cu(111) uses a surface structure-search objective unless clean-slab and isolated-H references are explicitly enabled.
 
 ## Active Learning
 
@@ -154,4 +153,4 @@ outputs/reports/
 - No force training yet.
 - No multi-objective optimization yet.
 - No full DFT convergence study yet.
-- arXiv manuscript still needs final benchmark table and clean reruns.
+- Manuscript preparation should use the completed benchmark table and curated reference provenance.

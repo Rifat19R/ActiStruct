@@ -28,5 +28,5 @@ FINAL RESULT
   Best Total energy per atom objective: -739.97298903 eV/atom
   GP uncertainty  : 0.00000044 eV/atom
   Total QE calls  : 4
-  Cache file      : <ACTISTRUCT_ROOT>/bulk_litio2_cache.pkl
+  Cache file      : outputs/cache/bulk_litio2_cache.pkl
 ================================================================================

@@ -81,7 +81,7 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(rows)
     parsed = sum(1 for row in rows if row.get("best_param1") not in ("", None))
-    print(f"Reports found for {len(MATERIALS) - len(missing)}/50 systems; parsed best parameter for {parsed}/50.")
+    print(f"Reports found for {len(MATERIALS) - len(missing)}/51 workflows; parsed best parameter for {parsed}/50.")
     if missing:
         print("Missing reports:", ", ".join(missing))
     print(f"Wrote {out}")

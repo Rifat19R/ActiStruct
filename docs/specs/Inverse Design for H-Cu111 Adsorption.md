@@ -6,7 +6,7 @@ You are an expert Python and DFT programmer. Write a complete script that implem
 
 
 
-The goal is to find the \*\*in‑plane adsorption site (fractional coordinates x, y)\*\* that \*\*minimises the adsorption energy\*\* of H on Cu(111), using as few QE calculations as possible. This is a \*\*2‑dimensional optimisation\*\* problem directly relevant to the Hydrogen Evolution Reaction (HER).
+The goal is to find the \*\*in‑plane adsorption site (fractional coordinates x, y)\*\* that \*\*minimises the referenced surface objective\*\* of H on Cu(111), using as few QE calculations as possible. This is a \*\*2‑dimensional optimisation\*\* problem directly relevant to the Hydrogen Evolution Reaction (HER).
 
 
 
@@ -26,9 +26,9 @@ The goal is to find the \*\*in‑plane adsorption site (fractional coordinates x
 
 \- \*\*Variables\*\*: in‑plane fractional coordinates `(x, y)` of the H atom within the p(2×2) surface cell. Range: `\[0, 1] × \[0, 1]`.
 
-\- \*\*Target\*\*: minimise the \*\*adsorption energy\*\* `E\_ads = E\_slab+H − (E\_slab\_clean + E\_H\_atom)`. A more negative value indicates stronger binding.
+\- \*\*Target\*\*: minimise the \*\*referenced adsorption energy\*\* `E\_ads = E\_slab+H − (E\_slab\_clean + E\_H\_atom)`. A more negative value indicates stronger binding.
 
-\- \*\*Expected result\*\*: literature shows the fcc hollow site is most stable (adsorption energy ≈ −0.40 to −0.45 eV with PBE). The hcp site is slightly less stable, and top/bridge are higher in energy.
+\- \*\*Expected result\*\*: literature shows the fcc hollow site is most stable (referenced adsorption energy ≈ −0.40 to −0.45 eV with PBE). The hcp site is slightly less stable, and top/bridge are higher in energy.
 
 
 

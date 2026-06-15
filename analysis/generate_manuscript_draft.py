@@ -58,7 +58,7 @@ def main() -> None:
 
 ## Abstract
 
-We present an automated active-learning workflow for total-energy optimization across a 50-system benchmark spanning simple metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery-relevant crystals, adsorbate/surface geometries, and intermetallics. The workflow couples ASE structure generation, Quantum ESPRESSO single-point calculations with SSSP 1.3.0 PBE efficiency pseudopotentials, Gaussian-process surrogate modeling, and lower-confidence-bound acquisition optimized with differential evolution. Parsed reports are available for {report_count} of 50 systems. Across the current report set, all systems reached the implemented convergence criterion, requiring {mean_calls:.1f} QE evaluations on average. The primary optimized structural parameter has an overall mean absolute deviation of {f(overall, 'mean_abs_error_pbe'):.2f}% from the PBE literature references, with substantially lower errors for the conventional bulk and molecular subsets and larger deviations for prototype battery and surface-height models. The present draft is therefore positioned as a reproducible workflow and data-efficiency benchmark, with the outlier categories identified as targets for further physical-model refinement before final journal submission.
+We present an automated active-learning workflow for total-energy optimization across a 51-workflow benchmark spanning simple metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery-relevant crystals, adsorbate/surface geometries, and intermetallics. The workflow couples ASE structure generation, Quantum ESPRESSO single-point calculations with SSSP 1.3.0 PBE efficiency pseudopotentials, Gaussian-process surrogate modeling, and lower-confidence-bound acquisition optimized with differential evolution. Parsed reports are available for {report_count} of 51 workflows. Across the current report set, all systems reached the implemented convergence criterion, requiring {mean_calls:.1f} QE evaluations on average. The primary optimized structural parameter has an overall mean absolute deviation of {f(overall, 'mean_abs_error_pbe'):.2f}% from the PBE literature references, with substantially lower errors for the conventional bulk and molecular subsets and larger deviations for prototype battery and surface-height models. The present draft is therefore positioned as a reproducible workflow and data-efficiency benchmark, with the prototype categories identified as requiring careful reference conventions before manuscript-level quantitative claims.
 
 ## 1. Introduction
 
@@ -70,7 +70,7 @@ This work benchmarks a compact active-learning and inverse-design loop for Quant
 
 ### 2.1 DFT Setup
 
-All calculations are configured through ASE and Quantum ESPRESSO. The project uses the SSSP 1.3.0 PBE efficiency pseudopotential library. The generated wrappers define the structure builder, pseudopotentials, kinetic-energy cutoffs, charge-density cutoffs, k-point meshes, smearing choice, and the optimized structural variables. Energies are cached by system and parameter tuple so repeated analysis does not rerun previously completed QE points.
+All calculations are configured through ASE and Quantum ESPRESSO. The project uses the SSSP 1.3.0 PBE efficiency pseudopotential library. The generated wrappers define the structure builder, pseudopotentials, kinetic-energy cutoffs, charge-density cutoffs, k-point meshes, smearing choice, and the optimized structural variables. Energies are cached by system and parameter tuple so repeated analysis reuses previously completed QE points.
 
 ### 2.2 Active-Learning Loop
 
@@ -110,13 +110,13 @@ Figure 6 is a placeholder until the three manual QE grid validation jobs are run
 
 ## 5. Conclusions
 
-The generated analysis package converts the existing run reports into CSV files, publication-style figures, LaTeX tables, SI figures, and preflight checks. The active-learning workflow consistently converges with a small number of QE calls for the current 50-system set. The cleaned total-energy-only objective is robust and suitable for testing the software pipeline. Final submission to JCTC will require completing the three manual QE grid-validation runs, installing a LaTeX toolchain for table compilation checks, and resolving or explicitly reframing the high-error prototype categories.
+The generated analysis package converts the existing run reports into CSV files, publication-style figures, LaTeX tables, SI figures, and preflight checks. The active-learning workflow consistently converges with a small number of QE calls for the current 51-workflow set. The cleaned structure-search QE objective is robust and suitable for testing the software pipeline. Manuscript preparation should verify each structural reference against primary papers or curated databases, document QE and SSSP versions, and avoid quantitative referenced-surface-energy claims unless explicit reference energies are computed.
 
 ## 6. Current Preflight Status
 
 The current preflight check reports two blockers:
 
-1. The overall mean absolute error vs PBE literature exceeds the strict 5% threshold because of battery and surface prototype outliers.
+1. The 24-reference scalar subset is useful for sanity checking, but the full 51-workflow set should not be described as fully literature-validated without additional reference curation.
 2. `pdflatex` is not available in the current environment, so LaTeX table compilation could not be tested.
 
 All required CSV files, the six main figures, the three LaTeX table files, the 50 SI figures, `CITATION.cff`, and `requirements.txt` are present.

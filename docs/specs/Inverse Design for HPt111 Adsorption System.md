@@ -6,7 +6,7 @@ You are an expert Python and DFT programmer. Write a complete script that implem
 
 
 
-The goal is to find the \*\*optimal adsorption site (in-plane coordinates x, y)\*\* that minimises the \*\*adsorption energy\*\* of hydrogen on Pt(111), using as few QE calculations as possible. This is a \*\*2‑dimensional optimisation\*\* problem directly relevant to catalysis and the Hydrogen Evolution Reaction (HER).
+The goal is to find the \*\*optimal adsorption site (in-plane coordinates x, y)\*\* that minimises the \*\*referenced adsorption energy\*\* of hydrogen on Pt(111), using as few QE calculations as possible. This is a \*\*2‑dimensional optimisation\*\* problem directly relevant to catalysis and the Hydrogen Evolution Reaction (HER).
 
 
 
@@ -36,13 +36,13 @@ The goal is to find the \*\*optimal adsorption site (in-plane coordinates x, y)\
 
 \- \*\*Search range\*\*: the irreducible wedge of the p(2×2) surface unit cell (typically 0 ≤ x ≤ a/2, 0 ≤ y ≤ a/√3/2, etc.).
 
-\- \*\*Target\*\*: minimise the \*\*adsorption energy\*\* `E\_ads = E\_slab+H − (E\_slab + E\_H\_atom)`, where `E\_H\_atom` is the total energy of an isolated H atom in a large box. A more negative value indicates stronger binding.
+\- \*\*Target\*\*: minimise the \*\*referenced adsorption energy\*\* `E\_ads = E\_slab+H − (E\_slab + E\_H\_atom)`, where `E\_H\_atom` is the total energy of an isolated H atom in a large box. A more negative value indicates stronger binding.
 
 
 
 \## 2. Expected results (literature values)
 
-&#x20; - The fcc hollow site is the most stable adsorption site for H on Pt(111), with an adsorption energy around \*\*−0.52 eV\*\* (PBE).\[reference:0]
+&#x20; - The fcc hollow site is the most stable adsorption site for H on Pt(111), with a referenced adsorption energy around \*\*−0.52 eV\*\* (PBE).\[reference:0]
 
 &#x20; - The hcp hollow site is slightly less stable (≈ −0.47 eV), and the top site is about −0.49 eV.\[reference:1]
 

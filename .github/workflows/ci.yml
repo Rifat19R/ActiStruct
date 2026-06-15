@@ -22,6 +22,8 @@ jobs:
         run: |
           python -m py_compile qe_active_inverse_common.py
           python -m py_compile generated_models/*.py
-          python -m py_compile tests/test_builders_and_config.py
+          python -m py_compile tests/*.py
       - name: Smoke tests
-        run: python tests/test_builders_and_config.py
+        run: |
+          python tests/test_builders_and_config.py
+          python tests/test_generated_workflows.py

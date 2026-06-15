@@ -19,7 +19,6 @@ input_tmp.in
 *.xlsx
 *.xls
 *supporting_results*.docx
-!ActiStruct_supporting_results.docx
 
 # Pseudopotential binaries are external assets.
 pseudo/*.upf

@@ -14,8 +14,7 @@ ActiStruct is a research workflow for active-learning inverse design of atomisti
 - Structure builders for molecules, crystals, 2D materials, cathode models, and adsorption systems
 - Completed benchmark reports: `outputs/reports/`
 - Convergence and surrogate plots: `outputs/plots/`
-- JCTC-style results draft: `outputs/reports/NEBWALK_INVERSE_ACTIVE_JCTC_RESULTS_DRAFT.md`
-- Supporting manuscript-style document: `ActiStruct_supporting_results.docx`
+- JCTC-style results draft: `outputs/reports/ACTISTRUCT_RESULTS_DRAFT.md`
 
 Raw Quantum ESPRESSO scratch directories are local reproducibility artifacts and are ignored by git by default. Final reports and plots are kept in the repository.
 
@@ -39,12 +38,11 @@ Summary from the local reports:
 - Generated benchmark reports with `FINAL RESULT`: 51 / 51
 - Total final report files: 51
 - Total final reports: 51 / 51
-- Main scalar structural sanity checks: mean absolute percentage deviation about 0.68% across 24 reference checks
+- Structural sanity subset: 24 scalar checks show about 0.68% mean absolute percentage deviation; this is not a claim that all 51 workflows are fully literature-validated
 
 See:
 
-- `outputs/reports/NEBWALK_INVERSE_ACTIVE_JCTC_RESULTS_DRAFT.md`
-- `ActiStruct_supporting_results.docx`
+- `outputs/reports/ACTISTRUCT_RESULTS_DRAFT.md`
 
 ## Repository Layout
 
@@ -150,7 +148,7 @@ python tests/test_builders_and_config.py
 
 ## Results Interpretation
 
-The final QE objectives are useful for ranking candidates within each system. Absolute total energies should not be compared directly to literature unless pseudopotentials, cutoffs, spin state, DFT+U treatment, smearing, and reference-energy conventions match. The strongest validation signal in this repository is structural parameter recovery and successful convergence across a chemically diverse benchmark set.
+The final QE objectives are useful for ranking candidates within each system. Absolute total energies should not be compared directly to literature unless pseudopotentials, cutoffs, spin state, DFT+U treatment, smearing, Hubbard corrections, and reference-energy conventions match. Surface entries should be read as structure-search objective energies, not quantitative adsorption energies, unless an explicit clean-slab plus adsorbate reference calculation is enabled. The strongest validation signal in this repository is structural parameter recovery for the documented 24-check subset and successful convergence across a chemically diverse benchmark set.
 
 ## Citation
 

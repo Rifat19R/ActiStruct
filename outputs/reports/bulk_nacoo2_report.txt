@@ -28,5 +28,5 @@ FINAL RESULT
   Best Total energy per atom objective: -1623.38953775 eV/atom
   GP uncertainty  : 0.00011188 eV/atom
   Total QE calls  : 6
-  Cache file      : <ACTISTRUCT_ROOT>/bulk_nacoo2_cache.pkl
+  Cache file      : outputs/cache/bulk_nacoo2_cache.pkl
 ================================================================================

@@ -9,8 +9,8 @@ ecutwfc / ecutrho: 70.0 / 560.0 Ry
 kpts: (4, 4, 1)   smearing: mv 0.02 Ry
 spin_polarized: False   relax: False
 energy_per_atom: False
-Computed quantity: Total energy objective (eV)
-Notes: Total-energy-only objective for the generated 50-system benchmark.
+Computed quantity: Structure-search QE objective (eV)
+Notes: Structure-search QE objective for the generated 51-workflow benchmark.
 ================================================================================
 
 Iteration 1
@@ -53,8 +53,8 @@ Iteration 4
 ================================================================================
 FINAL RESULT
   Best parameters : height=1.375000  shift=0.875000
-  Best Total energy objective: -56858.98925829 eV
+  Best Structure-search QE objective: -56858.98925829 eV
   GP uncertainty  : 0.00009936 eV
   Total QE calls  : 17
-  Cache file      : <ACTISTRUCT_ROOT>/co_on_ni111_cache.pkl
+  Cache file      : outputs/cache/co_on_ni111_cache.pkl
 ================================================================================

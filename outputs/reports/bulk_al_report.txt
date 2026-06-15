@@ -10,7 +10,7 @@ kpts: (12, 12, 12)   smearing: mv 0.02 Ry
 spin_polarized: False   relax: False
 energy_per_atom: True
 Computed quantity: Total energy per atom objective (eV/atom)
-Notes: Total-energy-only objective for the generated 50-system benchmark.
+Notes: Structure-search QE objective for the generated 51-workflow benchmark.
 ================================================================================
 
 Iteration 1
@@ -27,5 +27,5 @@ FINAL RESULT
   Best Total energy per atom objective: -537.46053091 eV/atom
   GP uncertainty  : 0.00000112 eV/atom
   Total QE calls  : 4
-  Cache file      : <ACTISTRUCT_ROOT>/bulk_al_cache.pkl
+  Cache file      : outputs/cache/bulk_al_cache.pkl
 ================================================================================

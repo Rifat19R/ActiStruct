@@ -8,7 +8,7 @@ Prepared from the 51 final benchmark reports in `outputs/reports/` on 2026-06-15
 
 This document summarizes the completed ActiStruct inverse-design benchmark calculations. The workflow couples Quantum ESPRESSO evaluations with Gaussian-process active learning and differential-evolution inverse design to locate low-energy structural parameters across chemically diverse atomistic systems.
 
-The strongest evidence from this output set is workflow robustness and structural parameter recovery. Absolute QE total energies are reported for reproducibility, but they are not treated as directly comparable to literature unless pseudopotentials, cutoffs, smearing, spin treatment, Hubbard corrections, and reference-energy conventions match.
+The strongest evidence from this output set is workflow robustness plus structural parameter recovery for the documented scalar-reference subset. Absolute QE total energies are reported for reproducibility, but they are not treated as directly comparable to literature unless pseudopotentials, cutoffs, smearing, spin treatment, Hubbard corrections, and reference-energy conventions match.
 
 ### Completion Summary
 
@@ -23,28 +23,28 @@ The strongest evidence from this output set is workflow robustness and structura
 - Raw Quantum ESPRESSO scratch directories, caches, locks, and machine-specific paths are excluded from the public repository.
 - Pseudopotential binaries are external assets and are not committed.
 
-### Precision Against Reference Structural Quantities
+### Structural Sanity Checks Against Documented References
 
-| System | Quantity | ActiStruct/QE result | Reference | Error | Reference type |
+| System | Quantity | ActiStruct/QE result | Reference | Error | Reference provenance |
 |---|---:|---:|---:|---:|---|
-| `bulk_ag` | `a` | 4.149480 | 4.079000 | 1.73% | tabulated fcc Ag |
-| `bulk_al` | `a` | 4.049370 | 4.046000 | 0.08% | tabulated fcc Al |
-| `bulk_alas` | `a` | 5.731088 | 5.661000 | 1.24% | tabulated zincblende AlAs |
-| `bulk_au` | `a` | 4.145950 | 4.065000 | 1.99% | tabulated fcc Au |
-| `bulk_cu_generated` | `a` | 3.621795 | 3.597000 | 0.69% | tabulated fcc Cu |
-| `bulk_fe` | `a` | 2.855777 | 2.856000 | 0.01% | tabulated bcc Fe |
-| `bulk_gaas` | `a` | 5.745379 | 5.653000 | 1.63% | tabulated zincblende GaAs |
-| `bulk_ge` | `a` | 5.734928 | 5.658000 | 1.36% | tabulated diamond Ge |
-| `bulk_inp` | `a` | 5.939600 | 5.869000 | 1.20% | tabulated zincblende InP |
-| `bulk_lifepo4` | `a` | 4.654192 | 4.654917 | 0.02% | CIF reference |
-| `bulk_litio2` | `a` | 4.046930 | 4.046074 | 0.02% | CIF reference |
-| `bulk_mgo_generated` | `a` | 4.251955 | 4.212000 | 0.95% | tabulated rocksalt MgO |
-| `bulk_mo` | `a` | 3.150000 | 3.142000 | 0.25% | tabulated bcc Mo |
-| `bulk_nacoo2` | `a` | 2.900000 | 2.881369 | 0.65% | CIF reference |
-| `bulk_ni` | `a` | 3.520000 | 3.499000 | 0.60% | tabulated fcc Ni |
-| `bulk_si_generated` | `a` | 5.481979 | 5.431000 | 0.94% | tabulated diamond Si |
-| `bulk_w` | `a` | 3.196028 | 3.155000 | 1.30% | tabulated bcc W |
-| `bulk_zno` | `a` | 3.250000 | 3.250000 | 0.00% | tabulated wurtzite ZnO |
+| `bulk_ag` | `a` | 4.149480 | 4.079000 | 1.73% | documented fcc Ag |
+| `bulk_al` | `a` | 4.049370 | 4.046000 | 0.08% | documented fcc Al |
+| `bulk_alas` | `a` | 5.731088 | 5.661000 | 1.24% | documented zincblende AlAs |
+| `bulk_au` | `a` | 4.145950 | 4.065000 | 1.99% | documented fcc Au |
+| `bulk_cu_generated` | `a` | 3.621795 | 3.597000 | 0.69% | documented fcc Cu |
+| `bulk_fe` | `a` | 2.855777 | 2.856000 | 0.01% | documented bcc Fe |
+| `bulk_gaas` | `a` | 5.745379 | 5.653000 | 1.63% | documented zincblende GaAs |
+| `bulk_ge` | `a` | 5.734928 | 5.658000 | 1.36% | documented diamond Ge |
+| `bulk_inp` | `a` | 5.939600 | 5.869000 | 1.20% | documented zincblende InP |
+| `bulk_lifepo4` | `a` | 4.654192 | 4.654917 | 0.02% | curated crystallographic reference |
+| `bulk_litio2` | `a` | 4.046930 | 4.046074 | 0.02% | curated crystallographic reference |
+| `bulk_mgo_generated` | `a` | 4.251955 | 4.212000 | 0.95% | documented rocksalt MgO |
+| `bulk_mo` | `a` | 3.150000 | 3.142000 | 0.25% | documented bcc Mo |
+| `bulk_nacoo2` | `a` | 2.900000 | 2.881369 | 0.65% | curated crystallographic reference |
+| `bulk_ni` | `a` | 3.520000 | 3.499000 | 0.60% | documented fcc Ni |
+| `bulk_si_generated` | `a` | 5.481979 | 5.431000 | 0.94% | documented diamond Si |
+| `bulk_w` | `a` | 3.196028 | 3.155000 | 1.30% | documented bcc W |
+| `bulk_zno` | `a` | 3.250000 | 3.250000 | 0.00% | documented wurtzite ZnO |
 | `ch4_generated` | `bond` | 1.090000 | 1.087000 | 0.28% | gas-phase CH4 C-H bond |
 | `co` | `bond` | 1.130000 | 1.128000 | 0.18% | experimental CO bond length |
 | `h2_generated` | `bond` | 0.740000 | 0.741000 | 0.13% | experimental H2 bond length |
@@ -52,11 +52,11 @@ The strongest evidence from this output set is workflow robustness and structura
 | `n2` | `bond` | 1.100000 | 1.098000 | 0.18% | experimental N2 bond length |
 | `nh3` | `bond` | 1.020000 | 1.012000 | 0.79% | gas-phase NH3 N-H bond |
 
-Across the 24 systems with simple scalar structural references, the mean absolute percentage deviation is **0.68%** and the median deviation is **0.65%**.
+Across the 24 systems with simple scalar structural references, the mean absolute percentage deviation is **0.68%** and the median deviation is **0.65%**. This subset is a structural sanity check, not a claim that all 51 workflows are fully literature-validated.
 
 ### Main Benchmark Results
 
-| # | Category | Key | System | Best parameters | Best objective | QE calls | Report updated |
+| # | Category | Key | System | Best parameters | Best QE objective | QE calls | Report updated |
 |---:|---|---|---|---|---:|---:|---|
 | 1 | 2D material | `aln_2d` | 2D AlN 2x2 | a=3.130000 | -406.95813911 eV/atom | 4 | 2026-06-15 09:06 |
 | 2 | 2D material | `graphene_generated` | Graphene 2x2 | a=2.460000 | -250.93787420 eV/atom | 6 | 2026-06-15 09:06 |
@@ -112,10 +112,17 @@ Across the 24 systems with simple scalar structural references, the mean absolut
 
 ### Suggested JCTC Results Paragraph
 
-ActiStruct was evaluated on 51 completed QE-labeled inverse-design benchmark systems spanning bulk crystals, battery materials, molecules, two-dimensional systems, and adsorption models. Each benchmark produced a final report, and most scalar structural parameters agree closely with tabulated or CIF-derived references. These results support the use of Gaussian-process active learning to reduce the number of expensive electronic-structure evaluations required for structure optimization while preserving a transparent, reproducible record of the model settings and final outcomes.
+ActiStruct was evaluated on 51 completed QE-labeled inverse-design workflow reports spanning bulk crystals, battery/perovskite/intermetallic models, molecules, two-dimensional systems, and surface structure-search models. The documented 24-system scalar structural subset shows close agreement with curated structural references. Surface objective values are reported as QE structure-search objectives and should not be interpreted as adsorption energies unless clean-slab and adsorbate reference energies are explicitly computed.
 
-### References Used for Sanity Comparisons
+### Reference Provenance Policy
 
-- Standard tabulated lattice constants for common crystals: https://en.wikipedia.org/wiki/Lattice_constant
-- LiFePO4 structural context and approximate lattice constants: https://en.wikipedia.org/wiki/Lithium_iron_phosphate
-- User-supplied CIF-derived cells were used as direct local references for NaCoO2, LiTiO2, and LiFePO4.
+Manuscript-level validation should use primary papers or curated scientific databases. Acceptable sources include:
+
+- Materials Project: https://materialsproject.org
+- Crystallography Open Database: https://www.crystallography.net/cod/
+- ICSD: https://icsd.products.fiz-karlsruhe.de/
+- NIST Chemistry WebBook: https://webbook.nist.gov/chemistry/
+- NIST Computational Chemistry Comparison and Benchmark Database: https://cccbdb.nist.gov/
+- Peer-reviewed DFT benchmark and crystallography papers recorded in `analysis/publication_data.py`.
+
+The 24 scalar checks in this draft should be treated as sanity checks until each reference is mapped to a primary-paper or curated-database entry in the manuscript bibliography.
