@@ -1,0 +1,42 @@
+================================================================================
+H2O Molecule
+Key: h2o_generated   Category: Molecules
+Variables: {'bond': (0.85, 1.08), 'angle': (95.0, 115.0)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 60.0 / 480.0 Ry
+kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['bond=1.080000  angle=115.000000', 'bond=1.051250  angle=115.000000']
+    Added AL:  bond=1.080000  angle=115.000000 -> E=-598.61995890 eV
+    Added AL:  bond=1.051250  angle=115.000000 -> E=-598.82418619 eV
+  Inverse proposal: bond=0.959877  angle=104.372213
+    GP E=-599.14282028 ± 0.11316353 eV   predicted improvement=0.22535491 eV
+    Added ID:  bond=0.959877  angle=104.372213 -> E=-599.19392890 eV
+  Best: bond=0.960000  angle=104.500000  E=-599.19409883 eV  GP std=0.00000978 eV  QE labels=8
+
+Iteration 2
+  AL requested: ['bond=0.850000  angle=115.000000', 'bond=1.080000  angle=95.000000']
+    Added AL:  bond=0.850000  angle=115.000000 -> E=-598.26053789 eV
+    Added AL:  bond=1.080000  angle=95.000000 -> E=-598.73603573 eV
+  Inverse proposal: bond=0.982263  angle=111.872447
+    GP E=-599.07879540 ± 0.17024596 eV   predicted improvement=0.00000000 eV
+    Added ID:  bond=0.982263  angle=111.872447 -> E=-599.15205126 eV
+  Best: bond=0.960000  angle=104.500000  E=-599.19409883 eV  GP std=0.00001284 eV  QE labels=11
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : bond=0.960000  angle=104.500000
+  Best Total energy objective: -599.19409883 eV
+  GP uncertainty  : 0.00001284 eV
+  Total QE calls  : 11
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/h2o_generated_cache.pkl
+================================================================================

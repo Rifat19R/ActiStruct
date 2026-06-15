@@ -1,0 +1,33 @@
+================================================================================
+CO on Pt(111)
+Key: co_on_pt111   Category: Surface adsorption
+Variables: {'height': (1.2, 2.6), 'shift': (0.0, 1.0)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Pt': 'pt_pbe_v1.4.uspp.F.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (4, 4, 1)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['height=2.600000  shift=0.125000', 'height=1.200000  shift=0.875000']
+    Added AL:  height=2.600000  shift=0.125000 -> E=-35211.67891483 eV
+    Added AL:  height=1.200000  shift=0.875000 -> E=-35212.58940664 eV
+  Inverse proposal: height=2.597608  shift=0.336870
+    GP E=-35212.66629169 ± 2.95647167 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=2.597608  shift=0.336870 -> E=-35211.49830730 eV
+  Best: height=1.200000  shift=0.875000  E=-35212.58940664 eV  GP std=0.00015659 eV  QE labels=8
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : height=1.200000  shift=0.875000
+  Best Total energy objective: -35212.58940664 eV
+  GP uncertainty  : 0.00015659 eV
+  Total QE calls  : 8
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/co_on_pt111_cache.pkl
+================================================================================

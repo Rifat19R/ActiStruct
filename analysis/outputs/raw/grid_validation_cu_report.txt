@@ -1,0 +1,2 @@
+Best: {'a': 3.626315789473684, 'energy_eV_per_atom': -2899.3308075852983}
+Total grid calls: 20

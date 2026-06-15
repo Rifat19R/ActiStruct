@@ -1,0 +1,31 @@
+================================================================================
+Spinel LiMn2O4 Model
+Key: bulk_limn2o4   Category: Battery materials
+Variables: {'a': (7.9, 8.4)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Mn': 'mn_pbe_v1.5.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (4, 4, 4)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=7.900003
+    GP E=-1170.24211565 ± 0.00181528 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=7.900003 -> E=-1170.24562229 eV
+  Best: a=7.900003  E=-1170.24562229 eV  GP std=0.00000625 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=7.900003
+  Best Total energy per atom objective: -1170.24562229 eV/atom
+  GP uncertainty  : 0.00000625 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_limn2o4_cache.pkl
+================================================================================

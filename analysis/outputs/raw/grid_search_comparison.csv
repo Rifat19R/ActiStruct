@@ -1,0 +1,51 @@
+key,category,dim,n_al_calls,n_grid_1d_equiv,n_grid_2d_equiv,grid_size_used,n_grid_to_surrogate_min,al_savings_abs,al_savings_pct,al_converged_to_min,grid_converged_to_min
+bulk_al,FCC metals,1,4,20,,20,20,16,80.0,True,False
+bulk_cu,FCC metals,1,6,20,,20,11,14,70.0,True,True
+bulk_ni,FCC metals,1,6,20,,20,1,14,70.0,True,True
+bulk_ag,FCC metals,1,6,20,,20,12,14,70.0,True,True
+bulk_au,FCC metals,1,6,20,,20,12,14,70.0,True,True
+bulk_fe_bcc,BCC metals,1,6,20,,20,11,14,70.0,True,True
+bulk_mo_bcc,BCC metals,1,6,20,,20,12,14,70.0,True,True
+bulk_w_bcc,BCC metals,1,6,20,,20,14,14,70.0,True,True
+bulk_si,Semiconductors,1,4,20,,20,20,16,80.0,True,False
+bulk_ge,Semiconductors,1,4,20,,20,20,16,80.0,True,False
+bulk_gaas,Semiconductors,1,6,20,,20,15,14,70.0,True,True
+bulk_alas,Semiconductors,1,6,20,,20,14,14,70.0,True,True
+bulk_inp,Semiconductors,1,4,20,,20,20,16,80.0,True,False
+bulk_sic,Semiconductors,1,5,20,,20,1,15,75.0,True,True
+bulk_mgo,Ionic oxides,1,4,20,,20,20,16,80.0,True,False
+bulk_cao,Ionic oxides,1,4,20,,20,20,16,80.0,True,False
+bulk_zno,Ionic oxides,2,8,,49,49,32,41,83.6734693877551,True,True
+bulk_tio2_rutile,Ionic oxides,2,6,,49,49,49,43,87.75510204081633,True,False
+bulk_al2o3,Ionic oxides,1,6,20,,20,20,14,70.0,True,False
+bulk_sio2,Ionic oxides,2,8,,49,49,42,41,83.6734693877551,True,True
+graphene,2D materials,1,6,20,,20,10,14,70.0,True,True
+hbn,2D materials,1,6,20,,20,12,14,70.0,True,True
+silicene,2D materials,1,6,20,,20,20,14,70.0,True,False
+mos2,2D materials,1,8,20,,20,20,12,60.0,True,False
+ws2,2D materials,1,6,20,,20,20,14,70.0,True,False
+aln_2d,2D materials,1,4,20,,20,20,16,80.0,True,False
+h2,Molecules,1,6,20,,20,5,14,70.0,True,True
+n2,Molecules,1,6,20,,20,10,14,70.0,True,True
+co,Molecules,1,6,20,,20,11,14,70.0,True,True
+h2o,Molecules,1,11,20,,20,20,9,45.0,True,False
+nh3,Molecules,1,6,20,,20,11,14,70.0,True,True
+ch4,Molecules,1,6,20,,20,12,14,70.0,True,True
+bulk_licoo2,Battery materials,2,6,,49,49,49,43,87.75510204081633,True,False
+bulk_nacoo2,Battery materials,2,7,,49,49,1,42,85.71428571428571,True,True
+bulk_limnpo4,Battery materials,1,4,20,,20,20,16,80.0,True,False
+bulk_limn2o4,Battery materials,1,4,20,,20,20,16,80.0,True,False
+bulk_litio2,Battery materials,1,8,20,,20,20,12,60.0,True,False
+bulk_srtio3,Battery materials,1,6,20,,20,13,14,70.0,True,True
+bulk_batio3,Battery materials,1,4,20,,20,20,16,80.0,True,False
+bulk_cspbi3,Battery materials,1,4,20,,20,20,16,80.0,True,False
+h_on_cu111,Surface adsorption,1,8,20,,20,20,12,60.0,True,False
+o_on_cu111,Surface adsorption,1,8,20,,20,20,12,60.0,True,False
+co_on_cu111,Surface adsorption,1,8,20,,20,20,12,60.0,True,False
+h_on_ni111,Surface adsorption,1,8,20,,20,20,12,60.0,True,False
+o_on_ni111,Surface adsorption,1,7,20,,20,20,13,65.0,True,False
+co_on_ni111,Surface adsorption,1,17,20,,20,20,3,15.0,True,False
+h_on_pt111,Surface adsorption,1,8,20,,20,20,12,60.0,True,False
+co_on_pt111,Surface adsorption,1,8,20,,20,20,12,60.0,True,False
+bulk_nial,Heusler/intermetallic,1,6,20,,20,11,14,70.0,True,True
+bulk_co2feal,Heusler/intermetallic,1,4,20,,20,20,16,80.0,True,False

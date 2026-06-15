@@ -1,0 +1,33 @@
+================================================================================
+MoS2 Monolayer 2x2
+Key: mos2   Category: 2D materials
+Variables: {'a': (3.05, 3.3), 'layer_half_thickness': (1.45, 1.7)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Mo': 'Mo_ONCV_PBE-1.0.oncvpsp.upf', 'S': 's_pbe_v1.4.uspp.F.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (6, 6, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=3.050000  layer_half_thickness=1.700000', 'a=3.050000  layer_half_thickness=1.668750']
+    Added AL:  a=3.050000  layer_half_thickness=1.700000 -> E=-841.13318519 eV
+    Added AL:  a=3.050000  layer_half_thickness=1.668750 -> E=-841.14231237 eV
+  Inverse proposal: a=3.198622  layer_half_thickness=1.589480
+    GP E=-841.16908429 ± 0.03042286 eV   predicted improvement=0.00018298 eV
+    Added ID:  a=3.198622  layer_half_thickness=1.589480 -> E=-841.17631013 eV
+  Best: a=3.198622  layer_half_thickness=1.589480  E=-841.17631013 eV  GP std=0.00000203 eV  QE labels=8
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=3.198622  layer_half_thickness=1.589480
+  Best Total energy per atom objective: -841.17631013 eV/atom
+  GP uncertainty  : 0.00000203 eV/atom
+  Total QE calls  : 8
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/mos2_cache.pkl
+================================================================================

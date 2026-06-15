@@ -1,0 +1,31 @@
+================================================================================
+Bulk Diamond Ge
+Key: bulk_ge   Category: Semiconductors
+Variables: {'a': (5.45, 5.85)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Ge': 'ge_pbe_v1.4.uspp.F.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (8, 8, 8)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=5.734928
+    GP E=-2906.87142176 ± 0.01916880 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=5.734928 -> E=-2906.86968118 eV
+  Best: a=5.734928  E=-2906.86968118 eV  GP std=0.00000594 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=5.734928
+  Best Total energy per atom objective: -2906.86968118 eV/atom
+  GP uncertainty  : 0.00000594 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_ge_cache.pkl
+================================================================================

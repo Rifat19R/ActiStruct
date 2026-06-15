@@ -1,0 +1,33 @@
+================================================================================
+Bulk SiO2 Model
+Key: bulk_sio2   Category: Ionic oxides
+Variables: {'a': (4.75, 5.05), 'c_over_a': (1.05, 1.15)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Si': 'Si.pbe-n-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (6, 6, 6)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=4.750000  c_over_a=1.150000', 'a=5.050000  c_over_a=1.050000']
+    Added AL:  a=4.750000  c_over_a=1.150000 -> E=-422.50714088 eV
+    Added AL:  a=5.050000  c_over_a=1.050000 -> E=-423.31496877 eV
+  Inverse proposal: a=5.050000  c_over_a=1.150000
+    GP E=-425.03484649 ± 0.02466049 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=5.050000  c_over_a=1.150000 -> E=-425.07754094 eV
+  Best: a=5.050000  c_over_a=1.150000  E=-425.07754094 eV  GP std=0.00005607 eV  QE labels=8
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=5.050000  c_over_a=1.150000
+  Best Total energy per atom objective: -425.07754094 eV/atom
+  GP uncertainty  : 0.00005607 eV/atom
+  Total QE calls  : 8
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_sio2_cache.pkl
+================================================================================

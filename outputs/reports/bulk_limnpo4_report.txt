@@ -1,0 +1,31 @@
+================================================================================
+LiMnPO₄ (Orthorhombic Olivine)
+Key: bulk_limnpo4   Category: Battery materials
+Variables: {'b': (5.9, 6.3)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Mn': 'mn_pbe_v1.5.uspp.F.UPF', 'P': 'P.pbe-n-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (2, 2, 2)   smearing: gaussian 0.03 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Orthorhombic LiMnPO₄ optimising b lattice constant. Experimental ratios a:b:c = 10.45:6.10:4.75 Å.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: b=5.900002
+    GP E=-787.95474224 ± 0.00060686 eV   predicted improvement=0.00000000 eV
+    Added ID:  b=5.900002 -> E=-787.95560057 eV
+  Best: b=5.900002  E=-787.95560057 eV  GP std=0.00000600 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : b=5.900002
+  Best Total energy per atom objective: -787.95560057 eV/atom
+  GP uncertainty  : 0.00000600 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_limnpo4_cache.pkl
+================================================================================

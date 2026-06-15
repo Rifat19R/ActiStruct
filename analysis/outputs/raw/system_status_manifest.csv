@@ -1,0 +1,51 @@
+key,name,category,report,parsed_result,wall_time,n_qe,converged,status
+bulk_al,Al (FCC),FCC metals,yes,yes,yes,4,True,included
+bulk_cu,Cu (FCC),FCC metals,yes,yes,yes,6,True,included
+bulk_ni,Ni (FCC),FCC metals,yes,yes,yes,6,True,included
+bulk_ag,Ag (FCC),FCC metals,yes,yes,yes,6,True,included
+bulk_au,Au (FCC),FCC metals,yes,yes,yes,6,True,included
+bulk_fe_bcc,Fe (BCC),BCC metals,yes,yes,yes,6,True,included
+bulk_mo_bcc,Mo (BCC),BCC metals,yes,yes,yes,6,True,included
+bulk_w_bcc,W (BCC),BCC metals,yes,yes,yes,6,True,included
+bulk_si,Si (diamond),Semiconductors,yes,yes,yes,4,True,included
+bulk_ge,Ge (diamond),Semiconductors,yes,yes,yes,4,True,included
+bulk_gaas,GaAs,Semiconductors,yes,yes,yes,6,True,included
+bulk_alas,AlAs,Semiconductors,yes,yes,yes,6,True,included
+bulk_inp,InP,Semiconductors,yes,yes,yes,4,True,included
+bulk_sic,SiC,Semiconductors,yes,yes,yes,5,True,included
+bulk_mgo,MgO,Ionic oxides,yes,yes,yes,4,True,included
+bulk_cao,CaO,Ionic oxides,yes,yes,yes,4,True,included
+bulk_zno,ZnO,Ionic oxides,yes,yes,yes,8,True,included
+bulk_tio2_rutile,TiO2 rutile,Ionic oxides,yes,yes,yes,6,True,included
+bulk_al2o3,Al2O3,Ionic oxides,yes,yes,yes,6,True,included
+bulk_sio2,SiO2 alpha-quartz,Ionic oxides,yes,yes,yes,8,True,included
+graphene,Graphene,2D materials,yes,yes,yes,6,True,included
+hbn,h-BN,2D materials,yes,yes,yes,6,True,included
+silicene,Silicene,2D materials,yes,yes,yes,6,True,included
+mos2,MoS2,2D materials,yes,yes,yes,8,True,included
+ws2,WS2,2D materials,yes,yes,yes,6,True,included
+aln_2d,2D AlN,2D materials,yes,yes,yes,4,True,included
+h2,H2,Molecules,yes,yes,yes,6,True,included
+n2,N2,Molecules,yes,yes,yes,6,True,included
+co,CO,Molecules,yes,yes,yes,6,True,included
+h2o,H2O,Molecules,yes,yes,yes,11,True,included
+nh3,NH3,Molecules,yes,yes,yes,6,True,included
+ch4,CH4,Molecules,yes,yes,yes,6,True,included
+bulk_nacoo2,NaCoO2,Battery materials,yes,yes,yes,7,True,included
+bulk_limnpo4,LiMnPO4,Battery materials,yes,yes,yes,4,True,included
+bulk_limn2o4,LiMn2O4,Battery materials,yes,yes,yes,4,True,included
+bulk_litio2,LiTiO2,Battery materials,yes,yes,yes,8,True,included
+bulk_srtio3,SrTiO3,Battery materials,yes,yes,yes,6,True,included
+bulk_batio3,BaTiO3,Battery materials,yes,yes,yes,4,True,included
+bulk_cspbi3,CsPbI3,Battery materials,yes,yes,yes,4,True,included
+h_on_cu111,H/Cu(111),Surface adsorption,yes,yes,yes,8,True,included
+o_on_cu111,O/Cu(111),Surface adsorption,yes,yes,yes,8,True,included
+co_on_cu111,CO/Cu(111),Surface adsorption,yes,yes,yes,8,True,included
+h_on_ni111,H/Ni(111),Surface adsorption,yes,yes,yes,8,True,included
+o_on_ni111,O/Ni(111),Surface adsorption,yes,yes,yes,7,True,included
+co_on_ni111,CO/Ni(111),Surface adsorption,yes,yes,yes,17,True,included
+h_on_pt111,H/Pt(111),Surface adsorption,yes,yes,yes,8,True,included
+co_on_pt111,CO/Pt(111),Surface adsorption,yes,yes,yes,8,True,included
+bulk_nial,NiAl,Heusler/intermetallic,yes,yes,yes,6,True,included
+bulk_co2feal,Co2FeAl,Heusler/intermetallic,yes,yes,yes,4,True,included
+bulk_licoo2,Layered LiCoO2,Battery materials,yes,yes,yes,6,True,included

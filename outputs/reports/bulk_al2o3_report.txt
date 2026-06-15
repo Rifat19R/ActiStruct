@@ -1,0 +1,31 @@
+================================================================================
+Bulk Al2O3 Model
+Key: bulk_al2o3   Category: Ionic oxides
+Variables: {'a': (4.65, 4.9), 'c_over_a': (2.65, 2.8)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (6, 6, 4)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=4.650003  c_over_a=2.650002
+    GP E=-553.51671301 ± 0.00009564 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=4.650003  c_over_a=2.650002 -> E=-553.51630613 eV
+  Best: a=4.650003  c_over_a=2.650002  E=-553.51630613 eV  GP std=0.00000644 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=4.650003  c_over_a=2.650002
+  Best Total energy per atom objective: -553.51630613 eV/atom
+  GP uncertainty  : 0.00000644 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_al2o3_cache.pkl
+================================================================================

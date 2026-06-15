@@ -1,0 +1,33 @@
+================================================================================
+N2 Molecule
+Key: n2   Category: Molecules
+Variables: {'bond': (0.9, 1.35)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'N': 'N.pbe-n-radius_5.UPF'}
+ecutwfc / ecutrho: 60.0 / 480.0 Ry
+kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['bond=1.350000', 'bond=1.342500']
+    Added AL:  bond=1.350000 -> E=-546.97126332 eV
+    Added AL:  bond=1.342500 -> E=-547.08349368 eV
+  Inverse proposal: bond=1.140487
+    GP E=-549.49291057 ± 0.25850135 eV   predicted improvement=0.00000000 eV
+    Added ID:  bond=1.140487 -> E=-549.37370171 eV
+  Best: bond=1.100000  E=-549.45559437 eV  GP std=0.00005112 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : bond=1.100000
+  Best Total energy objective: -549.45559437 eV
+  GP uncertainty  : 0.00005112 eV
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/n2_cache.pkl
+================================================================================

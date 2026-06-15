@@ -1,0 +1,31 @@
+================================================================================
+Bulk Rocksalt MgO
+Key: bulk_mgo_generated   Category: Ionic oxides
+Variables: {'a': (4.0, 4.35)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Mg': 'Mg.pbe-n-kjpaw_psl.0.3.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (8, 8, 8)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=4.251955
+    GP E=-513.87828321 ± 0.00942915 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=4.251955 -> E=-513.87574682 eV
+  Best: a=4.251955  E=-513.87574682 eV  GP std=0.00000204 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=4.251955
+  Best Total energy per atom objective: -513.87574682 eV/atom
+  GP uncertainty  : 0.00000204 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_mgo_generated_cache.pkl
+================================================================================

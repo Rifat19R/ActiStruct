@@ -1,0 +1,31 @@
+================================================================================
+Perovskite CsPbI3
+Key: bulk_cspbi3   Category: Complex structures
+Variables: {'a': (6.0, 6.5)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Cs': 'Cs_pbe_v1.uspp.F.UPF', 'Pb': 'Pb.pbe-dn-kjpaw_psl.0.2.2.UPF', 'I': 'I.pbe-n-kjpaw_psl.0.2.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (4, 4, 4)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=6.380333
+    GP E=-5634.74904486 ± 0.00724804 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=6.380333 -> E=-5634.74664933 eV
+  Best: a=6.380333  E=-5634.74664933 eV  GP std=0.00000160 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=6.380333
+  Best Total energy per atom objective: -5634.74664933 eV/atom
+  GP uncertainty  : 0.00000160 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_cspbi3_cache.pkl
+================================================================================

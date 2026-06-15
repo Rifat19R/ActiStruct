@@ -1,0 +1,33 @@
+================================================================================
+Graphene 2x2
+Key: graphene_generated   Category: 2D materials
+Variables: {'a': (2.3, 2.7)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (8, 8, 1)   smearing: gaussian 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=2.700000', 'a=2.693333']
+    Added AL:  a=2.700000 -> E=-250.45750826 eV
+    Added AL:  a=2.693333 -> E=-250.48158714 eV
+  Inverse proposal: a=2.485365
+    GP E=-250.94351760 ± 0.00364342 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=2.485365 -> E=-250.93475294 eV
+  Best: a=2.460000  E=-250.93787420 eV  GP std=0.00000879 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=2.460000
+  Best Total energy per atom objective: -250.93787420 eV/atom
+  GP uncertainty  : 0.00000879 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/graphene_generated_cache.pkl
+================================================================================

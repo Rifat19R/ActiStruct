@@ -1,0 +1,30 @@
+==================================================================================
+Bulk FCC Cu 4 atoms active learning + inverse minimization using QE via ASE
+Atoms: 4 conventional FCC cell
+Lattice range: 3.400 to 3.800 A
+Initial lattices: [3.45, 3.61, 3.75] A
+QE command base: mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir: /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (12, 12, 12)
+==================================================================================
+
+Iteration 1
+  Active labels requested: [3.53, 3.525] A
+    Added AL label: a=3.530000 A -> E/atom=-2899.29602599 eV
+    Added AL label: a=3.525000 A -> E/atom=-2899.29161282 eV
+  Inverse minimization proposal: a=3.622902 A, GP E/atom=-2899.33534731 +/- 0.00067089 eV, predicted improvement proxy=0.00000000 eV/atom
+    Added inverse label: a=3.622902 A -> E/atom=-2899.33646228 eV
+  Best observed: a=3.622902 A, E/atom=-2899.33646228 eV, GP std=0.00000295 eV, predicted min a=3.630000 A, predicted gap=0.00020479 eV/atom, QE labels=6
+  Converged: best observed point is low-uncertainty and no meaningful GP improvement remains
+
+==================================================================================
+Final result
+Best lattice constant: 3.622902 A
+Best QE energy per atom: -2899.33646228 eV/atom
+GP uncertainty at best lattice: 0.00000295 eV/atom
+Successful QE evaluations: 6
+Energy plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/bulk_cu_4_qe_energy_curve.png
+Convergence plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/bulk_cu_4_qe_convergence.png
+Cache file: /mnt/d/Rifat_kh/inverse_active/bulk_cu_4_qe_energy_cache_sssp_efficiency.pkl

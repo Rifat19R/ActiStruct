@@ -1,0 +1,31 @@
+================================================================================
+Heusler Co2FeAl
+Key: bulk_co2feal   Category: Complex structures
+Variables: {'a': (5.5, 5.9)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Co': 'Co_pbe_v1.2.uspp.F.UPF', 'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF', 'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (8, 8, 8)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=5.500009
+    GP E=-3281.54277433 ± 0.00088498 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=5.500009 -> E=-3281.54411333 eV
+  Best: a=5.500009  E=-3281.54411333 eV  GP std=0.00000556 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=5.500009
+  Best Total energy per atom objective: -3281.54411333 eV/atom
+  GP uncertainty  : 0.00000556 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_co2feal_cache.pkl
+================================================================================

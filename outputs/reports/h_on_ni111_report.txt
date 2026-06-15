@@ -1,0 +1,33 @@
+================================================================================
+H on Ni(111)
+Key: h_on_ni111   Category: Surface adsorption
+Variables: {'height': (0.8, 2.1), 'shift': (0.0, 1.0)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'Ni': 'ni_pbe_v1.4.uspp.F.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (4, 4, 1)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['height=2.100000  shift=0.000000', 'height=2.100000  shift=0.125000']
+    Added AL:  height=2.100000  shift=0.000000 -> E=-56055.26646553 eV
+    Added AL:  height=2.100000  shift=0.125000 -> E=-56055.26646553 eV
+  Inverse proposal: height=1.293956  shift=1.000000
+    GP E=-56056.63208622 ± 0.53110989 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=1.293956  shift=1.000000 -> E=-56056.67128234 eV
+  Best: height=1.293956  shift=1.000000  E=-56056.67128234 eV  GP std=0.00009196 eV  QE labels=8
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : height=1.293956  shift=1.000000
+  Best Total energy objective: -56056.67128234 eV
+  GP uncertainty  : 0.00009196 eV
+  Total QE calls  : 8
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/h_on_ni111_cache.pkl
+================================================================================

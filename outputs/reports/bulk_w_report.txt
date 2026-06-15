@@ -1,0 +1,33 @@
+================================================================================
+Bulk BCC W
+Key: bulk_w   Category: Simple metals (FCC, BCC)
+Variables: {'a': (3.0, 3.3)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'W': 'W_pbe_v1.2.uspp.F.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (14, 14, 14)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=3.000000', 'a=3.300000']
+    Added AL:  a=3.000000 -> E=-2164.69414975 eV
+    Added AL:  a=3.300000 -> E=-2165.09245584 eV
+  Inverse proposal: a=3.196028
+    GP E=-2165.24520855 ± 0.02789177 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=3.196028 -> E=-2165.25263068 eV
+  Best: a=3.196028  E=-2165.25263068 eV  GP std=0.00020690 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=3.196028
+  Best Total energy per atom objective: -2165.25263068 eV/atom
+  GP uncertainty  : 0.00020690 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_w_cache.pkl
+================================================================================

@@ -1,0 +1,33 @@
+================================================================================
+Bulk FCC Cu
+Key: bulk_cu_generated   Category: Simple metals (FCC, BCC)
+Variables: {'a': (3.4, 3.8)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (12, 12, 12)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=3.526667', 'a=3.533333']
+    Added AL:  a=3.526667 -> E=-2899.28763992 eV
+    Added AL:  a=3.533333 -> E=-2899.29332833 eV
+  Inverse proposal: a=3.621795
+    GP E=-2899.32958396 ± 0.00073971 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=3.621795 -> E=-2899.33060932 eV
+  Best: a=3.621795  E=-2899.33060932 eV  GP std=0.00001385 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=3.621795
+  Best Total energy per atom objective: -2899.33060932 eV/atom
+  GP uncertainty  : 0.00001385 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_cu_generated_cache.pkl
+================================================================================

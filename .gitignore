@@ -1,0 +1,59 @@
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local scratch files
+*.tmp
+*.bak
+*.log
+run_logs/
+CRASH
+input_tmp.in
+~$*
+
+# Local office/spreadsheet scratch; keep curated manuscript docs explicitly.
+*.xlsx
+*.xls
+!inverse_active_supporting_results_Aplus.docx
+
+# Pseudopotential binaries are external assets.
+pseudo/*.upf
+pseudo/*.UPF
+!pseudo/README.md
+
+# QE and active-learning caches.
+*.pkl
+*.lock
+
+# Raw Quantum ESPRESSO scratch can be very large. Keep final reports and plots.
+outputs/qe_runs*/
+outputs/qe_runs/
+outputs/**/*.pwi
+outputs/**/*.pwo
+outputs/**/*.err
+outputs/**/*.save/
+*.pwi
+*.pwo
+*.err
+*.save/
+tmp/
+
+# Keep curated outputs.
+!outputs/
+!outputs/reports/
+!outputs/reports/**
+!outputs/plots/
+!outputs/plots/**
+
+# Generated archives and local duplicates.
+generated_models.zip
+# Local scratch notes and duplicate drafts not intended for release.
+md to code.txt
+Target mateirals for testing.png
+inverse_active_supporting_results.docx
+inverse_active_supporting_results_v2.docx
+!inverse_active_supporting_results_Aplus.docx
+!ActiStruct Active-Learning Inverse Design for DFT Structure Optimization.docx

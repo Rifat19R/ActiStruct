@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: "ActiStruct: Active-Learning Inverse Design for DFT Structure Optimization"
+message: "If you use ActiStruct, please cite this software."
+type: software
+authors:
+  - family-names: "Rifat"
+repository-code: "https://github.com/Rifat19R/ActiStruct"
+abstract: "Active-learning inverse-design workflows coupling Gaussian-process surrogate models, ASE, and Quantum ESPRESSO for DFT-based structure optimization across atomistic benchmark systems."
+keywords:
+  - inverse-design
+  - active-learning
+  - dft
+  - quantum-espresso
+  - ase
+  - gaussian-process
+  - bayesian-optimization
+  - materials-science
+  - atomistic-simulation
+  - structure-optimization
+license: MIT
+version: "0.1.0"
+date-released: "2026-06-15"

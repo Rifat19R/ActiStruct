@@ -1,0 +1,51 @@
+key,name,category,ecutwfc,ecutrho,kpts,smearing,degauss,spin,relax,pseudos
+bulk_al,Al (FCC),FCC metals,50.0,400.0,"(12, 12, 12)",mv,0.02,False,False,{'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF'}
+bulk_cu,Cu (FCC),FCC metals,70.0,560.0,"(12, 12, 12)",mv,0.02,False,False,{'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}
+bulk_ni,Ni (FCC),FCC metals,60.0,480.0,"(12, 12, 12)",mv,0.02,False,False,{'Ni': 'ni_pbe_v1.4.uspp.F.UPF'}
+bulk_ag,Ag (FCC),FCC metals,60.0,480.0,"(12, 12, 12)",mv,0.02,False,False,{'Ag': 'Ag_ONCV_PBE-1.0.oncvpsp.upf'}
+bulk_au,Au (FCC),FCC metals,60.0,480.0,"(12, 12, 12)",mv,0.02,False,False,{'Au': 'Au_ONCV_PBE-1.0.oncvpsp.upf'}
+bulk_fe_bcc,Fe (BCC),BCC metals,70.0,560.0,"(14, 14, 14)",mv,0.02,False,False,{'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF'}
+bulk_mo_bcc,Mo (BCC),BCC metals,70.0,560.0,"(14, 14, 14)",mv,0.02,False,False,{'Mo': 'Mo_ONCV_PBE-1.0.oncvpsp.upf'}
+bulk_w_bcc,W (BCC),BCC metals,70.0,560.0,"(14, 14, 14)",mv,0.02,False,False,{'W': 'W_pbe_v1.2.uspp.F.UPF'}
+bulk_si,Si (diamond),Semiconductors,50.0,400.0,"(8, 8, 8)",gaussian,0.01,False,False,{'Si': 'Si.pbe-n-rrkjus_psl.1.0.0.UPF'}
+bulk_ge,Ge (diamond),Semiconductors,50.0,400.0,"(8, 8, 8)",gaussian,0.01,False,False,{'Ge': 'ge_pbe_v1.4.uspp.F.UPF'}
+bulk_gaas,GaAs,Semiconductors,60.0,480.0,"(8, 8, 8)",gaussian,0.01,False,False,"{'Ga': 'Ga.pbe-dn-kjpaw_psl.1.0.0.UPF', 'As': 'As.pbe-n-rrkjus_psl.0.2.UPF'}"
+bulk_alas,AlAs,Semiconductors,60.0,480.0,"(8, 8, 8)",gaussian,0.01,False,False,"{'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF', 'As': 'As.pbe-n-rrkjus_psl.0.2.UPF'}"
+bulk_inp,InP,Semiconductors,60.0,480.0,"(8, 8, 8)",gaussian,0.01,False,False,"{'In': 'In.pbe-dn-rrkjus_psl.0.2.2.UPF', 'P': 'P.pbe-n-rrkjus_psl.1.0.0.UPF'}"
+bulk_sic,SiC,Semiconductors,60.0,480.0,"(8, 8, 8)",gaussian,0.01,False,False,"{'Si': 'Si.pbe-n-rrkjus_psl.1.0.0.UPF', 'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF'}"
+bulk_mgo,MgO,Ionic oxides,70.0,560.0,"(8, 8, 8)",gaussian,0.01,False,False,"{'Mg': 'Mg.pbe-n-kjpaw_psl.0.3.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_cao,CaO,Ionic oxides,70.0,560.0,"(8, 8, 8)",gaussian,0.01,False,False,"{'Ca': 'Ca_pbe_v1.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_zno,ZnO,Ionic oxides,70.0,560.0,"(8, 8, 6)",gaussian,0.01,False,False,"{'Zn': 'Zn_pbe_v1.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_tio2_rutile,TiO2 rutile,Ionic oxides,70.0,560.0,"(8, 8, 10)",gaussian,0.01,False,False,"{'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_al2o3,Al2O3,Ionic oxides,70.0,560.0,"(6, 6, 4)",gaussian,0.01,False,False,"{'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_sio2,SiO2 alpha-quartz,Ionic oxides,70.0,560.0,"(6, 6, 6)",gaussian,0.01,False,False,"{'Si': 'Si.pbe-n-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+graphene,Graphene,2D materials,50.0,400.0,"(8, 8, 1)",gaussian,0.02,False,False,{'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF'}
+hbn,h-BN,2D materials,60.0,480.0,"(8, 8, 1)",gaussian,0.01,False,False,"{'B': 'b_pbe_v1.4.uspp.F.UPF', 'N': 'N.pbe-n-radius_5.UPF'}"
+silicene,Silicene,2D materials,50.0,400.0,"(6, 6, 1)",gaussian,0.01,False,False,{'Si': 'Si.pbe-n-rrkjus_psl.1.0.0.UPF'}
+mos2,MoS2,2D materials,70.0,560.0,"(6, 6, 1)",gaussian,0.01,False,False,"{'Mo': 'Mo_ONCV_PBE-1.0.oncvpsp.upf', 'S': 's_pbe_v1.4.uspp.F.UPF'}"
+ws2,WS2,2D materials,70.0,560.0,"(6, 6, 1)",gaussian,0.01,False,False,"{'W': 'W_pbe_v1.2.uspp.F.UPF', 'S': 's_pbe_v1.4.uspp.F.UPF'}"
+aln_2d,2D AlN,2D materials,60.0,480.0,"(8, 8, 1)",gaussian,0.01,False,False,"{'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF', 'N': 'N.pbe-n-radius_5.UPF'}"
+h2,H2,Molecules,50.0,400.0,"(1, 1, 1)",gaussian,0.01,False,False,{'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
+n2,N2,Molecules,60.0,480.0,"(1, 1, 1)",gaussian,0.01,False,False,{'N': 'N.pbe-n-radius_5.UPF'}
+co,CO,Molecules,60.0,480.0,"(1, 1, 1)",gaussian,0.01,False,False,"{'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+h2o,H2O,Molecules,60.0,480.0,"(1, 1, 1)",gaussian,0.01,False,False,"{'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+nh3,NH3,Molecules,60.0,480.0,"(1, 1, 1)",gaussian,0.01,False,False,"{'N': 'N.pbe-n-radius_5.UPF', 'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}"
+ch4,CH4,Molecules,60.0,480.0,"(1, 1, 1)",gaussian,0.01,False,False,"{'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}"
+bulk_nacoo2,NaCoO2,Battery materials,80.0,640.0,"(6, 6, 2)",mv,0.02,True,False,"{'Na': 'na_pbe_v1.5.uspp.F.UPF', 'Co': 'Co_pbe_v1.2.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_limnpo4,LiMnPO4,Battery materials,50.0,400.0,"(2, 2, 2)",gaussian,0.03,False,False,"{'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Mn': 'mn_pbe_v1.5.uspp.F.UPF', 'P': 'P.pbe-n-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_limn2o4,LiMn2O4,Battery materials,70.0,560.0,"(4, 4, 4)",mv,0.02,False,False,"{'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Mn': 'mn_pbe_v1.5.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_litio2,LiTiO2,Battery materials,80.0,640.0,"(6, 6, 3)",gaussian,0.01,False,False,"{'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_srtio3,SrTiO3,Battery materials,70.0,560.0,"(6, 6, 6)",gaussian,0.01,False,False,"{'Sr': 'Sr_pbe_v1.uspp.F.UPF', 'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_batio3,BaTiO3,Battery materials,70.0,560.0,"(6, 6, 6)",gaussian,0.01,False,False,"{'Ba': 'Ba.pbe-spn-kjpaw_psl.1.0.0.UPF', 'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}"
+bulk_cspbi3,CsPbI3,Battery materials,70.0,560.0,"(4, 4, 4)",gaussian,0.01,False,False,"{'Cs': 'Cs_pbe_v1.uspp.F.UPF', 'Pb': 'Pb.pbe-dn-kjpaw_psl.0.2.2.UPF', 'I': 'I.pbe-n-kjpaw_psl.0.2.UPF'}"
+h_on_cu111,H/Cu(111),Surface adsorption,80.0,640.0,"(6, 6, 1)",mv,0.015,False,False,"{'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}"
+o_on_cu111,O/Cu(111),Surface adsorption,80.0,640.0,"(6, 6, 1)",mv,0.015,False,False,"{'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}"
+co_on_cu111,CO/Cu(111),Surface adsorption,80.0,640.0,"(6, 6, 1)",mv,0.015,False,False,"{'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}"
+h_on_ni111,H/Ni(111),Surface adsorption,70.0,560.0,"(4, 4, 1)",mv,0.02,False,False,"{'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'Ni': 'ni_pbe_v1.4.uspp.F.UPF'}"
+o_on_ni111,O/Ni(111),Surface adsorption,70.0,560.0,"(4, 4, 1)",mv,0.02,False,False,"{'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Ni': 'ni_pbe_v1.4.uspp.F.UPF'}"
+co_on_ni111,CO/Ni(111),Surface adsorption,70.0,560.0,"(4, 4, 1)",mv,0.02,False,False,"{'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Ni': 'ni_pbe_v1.4.uspp.F.UPF'}"
+h_on_pt111,H/Pt(111),Surface adsorption,80.0,640.0,"(6, 6, 1)",mv,0.015,False,False,"{'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'Pt': 'pt_pbe_v1.4.uspp.F.UPF'}"
+co_on_pt111,CO/Pt(111),Surface adsorption,70.0,560.0,"(4, 4, 1)",mv,0.02,False,False,"{'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Pt': 'pt_pbe_v1.4.uspp.F.UPF'}"
+bulk_nial,NiAl,Heusler/intermetallic,70.0,560.0,"(10, 10, 10)",mv,0.02,False,False,"{'Ni': 'ni_pbe_v1.4.uspp.F.UPF', 'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF'}"
+bulk_co2feal,Co2FeAl,Heusler/intermetallic,70.0,560.0,"(8, 8, 8)",mv,0.02,False,False,"{'Co': 'Co_pbe_v1.2.uspp.F.UPF', 'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF', 'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF'}"
+bulk_licoo2,Layered LiCoO2,Battery materials,80.0,640.0,"(6, 6, 2)",mv,0.02,True,False,"{'Li','Co','O'}"

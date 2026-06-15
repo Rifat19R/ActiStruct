@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "actistruct"
+version = "0.1.0"
+description = "Active-learning inverse design workflows for DFT structure optimization with ASE and Quantum ESPRESSO."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Rifat"}]
+keywords = [
+  "inverse-design",
+  "active-learning",
+  "dft",
+  "quantum-espresso",
+  "ase",
+  "gaussian-process",
+  "bayesian-optimization",
+  "materials-science",
+  "atomistic-simulation",
+  "structure-optimization",
+]
+dependencies = [
+  "numpy",
+  "scipy",
+  "matplotlib",
+  "scikit-learn",
+  "ase",
+]
+
+[project.urls]
+Homepage = "https://github.com/Rifat19R/ActiStruct"
+Repository = "https://github.com/Rifat19R/ActiStruct"
+Issues = "https://github.com/Rifat19R/ActiStruct/issues"
+
+[tool.setuptools]
+py-modules = ["qe_active_inverse_common"]
+packages = ["generated_models"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

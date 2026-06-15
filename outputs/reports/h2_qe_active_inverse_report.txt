@@ -1,0 +1,94 @@
+==============================================================================
+H2 active learning + inverse design using Quantum ESPRESSO via ASE
+Target binding energy: -4.500000 eV
+Distance range: 0.500 to 2.000 A
+QE command base: mpirun -np 6 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir: /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+==============================================================================
+Cached H atom total energy: -13.6029117457 eV
+
+Iteration 1
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 2
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 3
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 4
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 5
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 6
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 7
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 8
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 9
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 10
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 11
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+Iteration 12
+  Active labels requested: [2.0, 1.984848] A
+  Inverse proposal: R=0.774544 A, GP E_bind=-4.331923 +/- 0.304584 eV, pred error=0.168077 eV
+    Inverse proposal skipped after QE failure: R=0.774544 A
+  Best observed: R=0.900000 A, E_bind=-4.250838 eV, error=0.249162 eV, GP std=0.003590 eV, QE labels=3
+
+==============================================================================
+Final result
+Best distance: 0.900000 A
+Best QE binding energy: -4.250838 eV
+Target binding energy: -4.500000 eV
+Absolute error: 0.249162 eV
+GP uncertainty at best distance: 0.003590 eV
+Successful QE evaluations: 3
+Energy plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2_qe_energy_curve.png
+Convergence plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2_qe_convergence.png
+Cache file: /mnt/d/Rifat_kh/inverse_active/h2_energy_cache_sssp_efficiency_spinref.pkl

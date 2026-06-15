@@ -1,0 +1,31 @@
+================================================================================
+WS2 Monolayer 2x2
+Key: ws2   Category: 2D materials
+Variables: {'a': (3.05, 3.3), 'layer_half_thickness': (1.45, 1.75)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'W': 'W_pbe_v1.2.uspp.F.UPF', 'S': 's_pbe_v1.4.uspp.F.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (6, 6, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=3.179577  layer_half_thickness=1.749913
+    GP E=-940.85511232 ± 0.00480610 eV   predicted improvement=0.00047683 eV
+    Added ID:  a=3.179577  layer_half_thickness=1.749913 -> E=-940.74688948 eV
+  Best: a=3.180000  layer_half_thickness=1.580000  E=-940.85531087 eV  GP std=0.00002394 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=3.180000  layer_half_thickness=1.580000
+  Best Total energy per atom objective: -940.85531087 eV/atom
+  GP uncertainty  : 0.00002394 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/ws2_cache.pkl
+================================================================================

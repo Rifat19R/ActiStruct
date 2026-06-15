@@ -1,0 +1,33 @@
+================================================================================
+CH4 Molecule
+Key: ch4_generated   Category: Molecules
+Variables: {'bond': (0.95, 1.22)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 60.0 / 480.0 Ry
+kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['bond=1.220000', 'bond=1.215500']
+    Added AL:  bond=1.220000 -> E=-314.89995291 eV
+    Added AL:  bond=1.215500 -> E=-314.95163060 eV
+  Inverse proposal: bond=1.109308
+    GP E=-315.72879033 ± 0.01610455 eV   predicted improvement=0.00000000 eV
+    Added ID:  bond=1.109308 -> E=-315.69607147 eV
+  Best: bond=1.090000  E=-315.70514565 eV  GP std=0.00001556 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : bond=1.090000
+  Best Total energy objective: -315.70514565 eV
+  GP uncertainty  : 0.00001556 eV
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/ch4_generated_cache.pkl
+================================================================================

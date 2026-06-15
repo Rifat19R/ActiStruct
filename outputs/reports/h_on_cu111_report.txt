@@ -1,0 +1,32 @@
+================================================================================
+H on Cu(111)
+Key: h_on_cu111   Category: Surface adsorption
+Variables: {'height': (0.85, 1.15), 'shift': (0.85, 1.0)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'Cu': 'Cu.paw.z_11.ld1.psl.v1.0.0-low.upf'}
+ecutwfc / ecutrho: 80.0 / 640.0 Ry
+kpts: (6, 6, 1)   smearing: mv 0.015 Ry
+conv_thr: 5e-09   mixing_beta: 0.3
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: height=0.850000  shift=1.000000
+    GP E=-34804.27950079 ± 0.00391235 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=0.850000  shift=1.000000 -> E=-34804.27352695 eV
+  Best: height=0.900000  shift=0.860000  E=-34804.27961767 eV  GP std=0.00055105 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : height=0.900000  shift=0.860000
+  Best Total energy objective: -34804.27961767 eV
+  GP uncertainty  : 0.00055105 eV
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/h_on_cu111_cache.pkl
+================================================================================

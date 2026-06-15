@@ -1,0 +1,31 @@
+================================================================================
+Perovskite BaTiO3
+Key: bulk_batio3   Category: Complex structures
+Variables: {'a': (3.9, 4.15)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Ba': 'Ba.pbe-spn-kjpaw_psl.1.0.0.UPF', 'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (6, 6, 6)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=4.000638
+    GP E=-1853.45903102 ± 0.00504560 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=4.000638 -> E=-1853.46140244 eV
+  Best: a=4.000638  E=-1853.46140244 eV  GP std=0.00000043 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=4.000638
+  Best Total energy per atom objective: -1853.46140244 eV/atom
+  GP uncertainty  : 0.00000043 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_batio3_cache.pkl
+================================================================================

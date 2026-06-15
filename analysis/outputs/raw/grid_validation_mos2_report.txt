@@ -1,0 +1,2 @@
+Best: {'a': 3.2166666666666663, 'layer_half_thickness': 1.575, 'energy_eV_per_atom': -841.1753937176301}
+Total grid calls: 49

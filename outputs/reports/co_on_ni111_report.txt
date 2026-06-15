@@ -1,0 +1,60 @@
+================================================================================
+CO on Ni(111)
+Key: co_on_ni111   Category: Surface adsorption
+Variables: {'height': (1.2, 2.6), 'shift': (0.0, 1.0)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF', 'Ni': 'ni_pbe_v1.4.uspp.F.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (4, 4, 1)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['height=2.600000  shift=1.000000', 'height=2.250000  shift=1.000000']
+    Added AL:  height=2.600000  shift=1.000000 -> E=-56857.12265423 eV
+    Added AL:  height=2.250000  shift=1.000000 -> E=-56857.35883258 eV
+  Inverse proposal: height=2.056903  shift=0.530343
+    GP E=-56857.84438405 ± 1.25200169 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=2.056903  shift=0.530343 -> E=-56857.72277804 eV
+  Best: height=1.800000  shift=0.500000  E=-56858.30843260 eV  GP std=0.04356490 eV  QE labels=8
+
+Iteration 2
+  AL requested: ['height=2.600000  shift=0.125000', 'height=2.425000  shift=0.125000']
+    Added AL:  height=2.600000  shift=0.125000 -> E=-56857.26490623 eV
+    Added AL:  height=2.425000  shift=0.125000 -> E=-56857.43299041 eV
+  Inverse proposal: height=1.200000  shift=0.181400
+    GP E=-56858.13891768 ± 1.06374691 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=1.200000  shift=0.181400 -> E=-56850.24422933 eV
+  Best: height=1.800000  shift=0.500000  E=-56858.30843260 eV  GP std=0.04537189 eV  QE labels=11
+
+Iteration 3
+  AL requested: ['height=1.375000  shift=0.875000', 'height=2.075000  shift=0.875000']
+    Added AL:  height=1.375000  shift=0.875000 -> E=-56858.98925829 eV
+    Added AL:  height=2.075000  shift=0.875000 -> E=-56857.62124706 eV
+  Inverse proposal: height=1.200228  shift=0.880254
+    GP E=-56858.51715029 ± 1.89155421 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=1.200228  shift=0.880254 -> E=-56858.85926788 eV
+  Best: height=1.375000  shift=0.875000  E=-56858.98925829 eV  GP std=0.04123991 eV  QE labels=14
+
+Iteration 4
+  AL requested: ['height=2.600000  shift=0.375000', 'height=2.425000  shift=0.375000']
+    Added AL:  height=2.600000  shift=0.375000 -> E=-56857.13976734 eV
+    Added AL:  height=2.425000  shift=0.375000 -> E=-56857.23191257 eV
+  Inverse proposal: height=1.200000  shift=0.850185
+    GP E=-56859.20025507 ± 1.52095978 eV   predicted improvement=0.00000000 eV
+    Added ID:  height=1.200000  shift=0.850185 -> E=-56858.85881032 eV
+  Best: height=1.375000  shift=0.875000  E=-56858.98925829 eV  GP std=0.00009936 eV  QE labels=17
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : height=1.375000  shift=0.875000
+  Best Total energy objective: -56858.98925829 eV
+  GP uncertainty  : 0.00009936 eV
+  Total QE calls  : 17
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/co_on_ni111_cache.pkl
+================================================================================

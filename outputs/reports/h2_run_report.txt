@@ -1,0 +1,56 @@
+========================================================================
+H2 active learning + inverse design
+Target energy: -4.500000 eV
+Initial distances: [0.62, 0.9, 1.3] A
+========================================================================
+
+Iteration 1
+  Active learning labels: [0.6, 1.4] A
+    R=0.6000 A -> E=24.065800 eV
+    R=1.4000 A -> E=-0.194135 eV
+  Inverse proposal: R=0.8866 A, GP E=0.577913 +/- 7.292070 eV, pred error=5.077913 eV
+    Oracle check: E=-2.527810 eV, true error=1.972190 eV
+  Best observed: R=0.8866 A, E=-2.527810 eV, error=1.972190 eV
+
+Iteration 2
+  Active learning labels: [0.7552, 0.7525] A
+    R=0.7552 A -> E=-4.440763 eV
+    R=0.7525 A -> E=-4.458804 eV
+  Inverse proposal: R=0.6595 A, GP E=0.397808 +/- 8.379854 eV, pred error=4.897808 eV
+    Oracle check: E=-0.043995 eV, true error=4.456005 eV
+  Best observed: R=0.7525 A, E=-4.458804 eV, error=0.041196 eV
+
+Iteration 3
+  Active learning labels: [1.0816, 1.0843] A
+    R=1.0816 A -> E=-0.875705 eV
+    R=1.0843 A -> E=-0.863506 eV
+  Inverse proposal: R=0.8015 A, GP E=0.489376 +/- 7.157348 eV, pred error=4.989376 eV
+    Oracle check: E=-3.848024 eV, true error=0.651976 eV
+  Best observed: R=0.7525 A, E=-4.458804 eV, error=0.041196 eV
+
+Iteration 4
+  Active learning labels: [1.1967, 1.1993] A
+    R=1.1967 A -> E=-0.489217 eV
+    R=1.1993 A -> E=-0.482890 eV
+  Inverse proposal: R=0.8362 A, GP E=-1.892018 +/- 5.717734 eV, pred error=2.607982 eV
+    Oracle check: E=-3.284339 eV, true error=1.215661 eV
+  Best observed: R=0.7525 A, E=-4.458804 eV, error=0.041196 eV
+
+Iteration 5
+  Active learning labels: [0.988, 0.9906] A
+    R=0.9880 A -> E=-1.448947 eV
+    R=0.9906 A -> E=-1.427847 eV
+  Inverse proposal: R=0.7439 A, GP E=-4.472985 +/- 0.007380 eV, pred error=0.027015 eV
+    Oracle check: E=-4.495644 eV, true error=0.004356 eV
+  Best observed: R=0.7439 A, E=-4.495644 eV, error=0.004356 eV
+  Converged: error and uncertainty thresholds met
+
+========================================================================
+Final result
+Best distance: 0.743909 A
+Best LJ energy: -4.495644 eV
+Target energy: -4.500000 eV
+Absolute error: 0.004356 eV
+Oracle evaluations used by loop: 18
+Energy plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2_energy_curve.png
+Convergence plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2_convergence.png

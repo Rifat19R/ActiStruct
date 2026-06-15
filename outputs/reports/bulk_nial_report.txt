@@ -1,0 +1,33 @@
+================================================================================
+B2 NiAl
+Key: bulk_nial   Category: Complex structures
+Variables: {'a': (2.75, 3.05)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Ni': 'ni_pbe_v1.4.uspp.F.UPF', 'Al': 'Al.pbe-n-kjpaw_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (10, 10, 10)   smearing: mv 0.02 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=3.050000', 'a=3.045000']
+    Added AL:  a=3.050000 -> E=-2604.52036740 eV
+    Added AL:  a=3.045000 -> E=-2604.52803393 eV
+  Inverse proposal: a=2.903959
+    GP E=-2604.65413606 ± 0.00087030 eV   predicted improvement=0.00001877 eV
+    Added ID:  a=2.903959 -> E=-2604.65248690 eV
+  Best: a=2.890000  E=-2604.65306330 eV  GP std=0.00000241 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=2.890000
+  Best Total energy per atom objective: -2604.65306330 eV/atom
+  GP uncertainty  : 0.00000241 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_nial_cache.pkl
+================================================================================

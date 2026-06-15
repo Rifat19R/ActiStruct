@@ -1,0 +1,33 @@
+================================================================================
+CO Molecule
+Key: co   Category: Molecules
+Variables: {'bond': (0.95, 1.35)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'C': 'C.pbe-n-kjpaw_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 60.0 / 480.0 Ry
+kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['bond=1.350000', 'bond=1.343333']
+    Added AL:  bond=1.350000 -> E=-814.94581416 eV
+    Added AL:  bond=1.343333 -> E=-815.02362211 eV
+  Inverse proposal: bond=1.168907
+    GP E=-816.61873973 ± 0.09003165 eV   predicted improvement=0.00000000 eV
+    Added ID:  bond=1.168907 -> E=-816.49329440 eV
+  Best: bond=1.130000  E=-816.54078629 eV  GP std=0.00003150 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : bond=1.130000
+  Best Total energy objective: -816.54078629 eV
+  GP uncertainty  : 0.00003150 eV
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/co_cache.pkl
+================================================================================

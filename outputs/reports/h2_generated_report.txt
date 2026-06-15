@@ -1,0 +1,33 @@
+================================================================================
+H2 Molecule
+Key: h2_generated   Category: Molecules
+Variables: {'bond': (0.55, 1.2)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['bond=1.200000', 'bond=1.189167']
+    Added AL:  bond=1.200000 -> E=-30.16432732 eV
+    Added AL:  bond=1.189167 -> E=-30.21494499 eV
+  Inverse proposal: bond=0.809840
+    GP E=-31.79596666 ± 0.04893802 eV   predicted improvement=0.00000000 eV
+    Added ID:  bond=0.809840 -> E=-31.68981832 eV
+  Best: bond=0.740000  E=-31.74160104 eV  GP std=0.00002894 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : bond=0.740000
+  Best Total energy objective: -31.74160104 eV
+  GP uncertainty  : 0.00002894 eV
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/h2_generated_cache.pkl
+================================================================================

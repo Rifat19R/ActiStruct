@@ -1,0 +1,39 @@
+==================================================================================
+H2 Molecule active learning + inverse minimization using QE via ASE
+Category: Molecules
+Builder: mol:h2
+Atoms in reference structure: 2
+Variables: ['bond=0.55-1.2']
+Initial points: [(0.6,), (0.74,), (1.05,)]
+QE command base: mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir: /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (1, 1, 1)
+Notes: Generated from the 50-system test matrix PNG; review physical settings before production runs.
+==================================================================================
+
+Iteration 1
+  Active labels requested: [(1.2,), (1.191875,)]
+    Added AL label: bond=1.200000 -> E/atom=-15.08216366 eV
+    Added AL label: bond=1.191875 -> E/atom=-15.10114387 eV
+  Inverse proposal: bond=0.810182, GP E/atom=-15.89805917 +/- 0.02395465 eV, predicted improvement proxy=0.00000000 eV/atom
+    Added inverse label: bond=0.810182 -> E/atom=-15.84461725 eV
+  Best observed: bond=0.740000, E/atom=-15.87080052 eV, GP std=0.00001453 eV, predicted gap=0.00309368 eV/atom, QE labels=6
+
+Iteration 2
+  Active labels requested: none above uncertainty threshold
+  Inverse proposal: bond=0.758202, GP E/atom=-15.87401334 +/- 0.00093454 eV, predicted improvement proxy=0.00011914 eV/atom
+    Added inverse label: bond=0.758202 -> E/atom=-15.87127046 eV
+  Best observed: bond=0.758202, E/atom=-15.87127046 eV, GP std=0.00149924 eV, predicted gap=0.00103122 eV/atom, QE labels=7
+  Converged: best observed point is low-uncertainty and no meaningful GP improvement remains
+
+==================================================================================
+Final result
+Best parameters: bond=0.758202
+Best QE energy per atom: -15.87127046 eV/atom
+GP uncertainty at best point: 0.00149924 eV/atom
+Successful QE evaluations: 7
+Energy plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2_generated_qe_energy_curve.png
+Convergence plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2_generated_qe_convergence.png
+Cache file: /mnt/d/Rifat_kh/inverse_active/h2_generated_qe_energy_cache_sssp_efficiency.pkl

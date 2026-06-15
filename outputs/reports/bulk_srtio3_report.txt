@@ -1,0 +1,33 @@
+================================================================================
+Perovskite SrTiO3
+Key: bulk_srtio3   Category: Complex structures
+Variables: {'a': (3.75, 4.05)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Sr': 'Sr_pbe_v1.uspp.F.UPF', 'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 70.0 / 560.0 Ry
+kpts: (6, 6, 6)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=4.050000', 'a=4.045000']
+    Added AL:  a=4.050000 -> E=-857.45030199 eV
+    Added AL:  a=4.045000 -> E=-857.45392717 eV
+  Inverse proposal: a=3.939457
+    GP E=-857.49777000 ± 0.00158000 eV   predicted improvement=0.00000668 eV
+    Added ID:  a=3.939457 -> E=-857.49459192 eV
+  Best: a=3.939457  E=-857.49459192 eV  GP std=0.00000124 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=3.939457
+  Best Total energy per atom objective: -857.49459192 eV/atom
+  GP uncertainty  : 0.00000124 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_srtio3_cache.pkl
+================================================================================

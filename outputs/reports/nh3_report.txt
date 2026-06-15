@@ -1,0 +1,33 @@
+================================================================================
+NH3 Molecule
+Key: nh3   Category: Molecules
+Variables: {'bond': (0.92, 1.15)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'N': 'N.pbe-n-radius_5.UPF', 'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 60.0 / 480.0 Ry
+kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: False
+Computed quantity: Total energy objective (eV)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['bond=1.150000', 'bond=1.146167']
+    Added AL:  bond=1.150000 -> E=-322.62275400 eV
+    Added AL:  bond=1.146167 -> E=-322.66244425 eV
+  Inverse proposal: bond=1.036293
+    GP E=-323.38790129 ± 0.00850338 eV   predicted improvement=0.00000000 eV
+    Added ID:  bond=1.036293 -> E=-323.36709446 eV
+  Best: bond=1.020000  E=-323.37492087 eV  GP std=0.00001373 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : bond=1.020000
+  Best Total energy objective: -323.37492087 eV
+  GP uncertainty  : 0.00001373 eV
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/nh3_cache.pkl
+================================================================================

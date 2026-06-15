@@ -1,0 +1,33 @@
+================================================================================
+Bulk Zincblende GaAs
+Key: bulk_gaas   Category: Semiconductors
+Variables: {'a': (5.45, 5.85)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Ga': 'Ga.pbe-dn-kjpaw_psl.1.0.0.UPF', 'As': 'As.pbe-n-rrkjus_psl.0.2.UPF'}
+ecutwfc / ecutrho: 60.0 / 480.0 Ry
+kpts: (8, 8, 8)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL requested: ['a=5.850000', 'a=5.843333']
+    Added AL:  a=5.850000 -> E=-2014.83564750 eV
+    Added AL:  a=5.843333 -> E=-2014.83705679 eV
+  Inverse proposal: a=5.745379
+    GP E=-2014.84743018 ± 0.00039623 eV   predicted improvement=0.00000774 eV
+    Added ID:  a=5.745379 -> E=-2014.84657921 eV
+  Best: a=5.745379  E=-2014.84657921 eV  GP std=0.00000146 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=5.745379
+  Best Total energy per atom objective: -2014.84657921 eV/atom
+  GP uncertainty  : 0.00000146 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_gaas_cache.pkl
+================================================================================

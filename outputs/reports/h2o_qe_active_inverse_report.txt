@@ -1,0 +1,40 @@
+========================================================================================
+H2O 2D active learning + inverse minimization using QE via ASE
+Atoms: 3 molecule in 10.0 A cubic box
+r range: 0.850 to 1.050 A
+theta range: 95.000 to 115.000 deg
+Initial points: [(0.9, 100.0), (0.96, 104.5), (1.02, 110.0), (0.9, 110.0), (1.02, 100.0)]
+QE command base: mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir: /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (1, 1, 1)
+========================================================================================
+
+Iteration 1
+  Active labels requested: [(1.05, 115.0), (1.05, 113.0)]
+    Added AL label: r=1.050000 A, theta=115.000000 deg -> E=-598.82623249 eV
+    Added AL label: r=1.050000 A, theta=113.000000 deg -> E=-598.85573752 eV
+  Inverse minimization proposal: r=0.953853 A, theta=107.706945 deg, GP E=-599.15479887 +/- 0.06918742 eV, predicted improvement proxy=0.03821043 eV
+    Added inverse label: r=0.953853 A, theta=107.706945 deg -> E=-599.17369642 eV
+  Best observed: r=0.960000 A, theta=104.500000 deg, E=-599.18666128 eV, GP std=0.01539332 eV, predicted min=(0.970000, 111.000000), predicted gap=0.02996839 eV, QE labels=8
+
+Iteration 2
+  Active labels requested: [(0.85, 95.0), (0.85, 97.0)]
+    Added AL label: r=0.850000 A, theta=95.000000 deg -> E=-598.10379065 eV
+    Added AL label: r=0.850000 A, theta=97.000000 deg -> E=-598.14478664 eV
+  Inverse minimization proposal: r=0.955692 A, theta=95.004157 deg, GP E=-599.15910422 +/- 0.04420601 eV, predicted improvement proxy=0.00000000 eV
+    Added inverse label: r=0.955692 A, theta=95.004157 deg -> E=-599.11528977 eV
+  Best observed: r=0.960000 A, theta=104.500000 deg, E=-599.18666128 eV, GP std=0.00001660 eV, predicted min=(0.970000, 105.000000), predicted gap=0.00065627 eV, QE labels=11
+  Converged: best observed point is low-uncertainty and no meaningful GP improvement remains
+
+========================================================================================
+Final result
+Best O-H bond length: 0.960000 A
+Best H-O-H angle: 104.500000 deg
+Best QE total energy: -599.18666128 eV
+GP uncertainty at best geometry: 0.00001660 eV
+Successful QE evaluations: 11
+Energy surface plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2o_qe_energy_surface.png
+Convergence plot: /mnt/d/Rifat_kh/inverse_active/outputs/plots/h2o_qe_convergence.png
+Cache file: /mnt/d/Rifat_kh/inverse_active/h2o_qe_energy_cache_sssp_efficiency.pkl

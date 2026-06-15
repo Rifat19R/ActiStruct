@@ -1,0 +1,31 @@
+================================================================================
+Bulk Diamond Si
+Key: bulk_si_generated   Category: Semiconductors
+Variables: {'a': (5.2, 5.6)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Si': 'Si.pbe-n-rrkjus_psl.1.0.0.UPF'}
+ecutwfc / ecutrho: 50.0 / 400.0 Ry
+kpts: (8, 8, 8)   smearing: gaussian 0.01 Ry
+spin_polarized: False   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: Total-energy-only objective for the generated 50-system benchmark.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=5.481979
+    GP E=-155.37888672 ± 0.01444305 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=5.481979 -> E=-155.37818111 eV
+  Best: a=5.481979  E=-155.37818111 eV  GP std=0.00000178 eV  QE labels=4
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=5.481979
+  Best Total energy per atom objective: -155.37818111 eV/atom
+  GP uncertainty  : 0.00000178 eV/atom
+  Total QE calls  : 4
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_si_generated_cache.pkl
+================================================================================

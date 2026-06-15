@@ -1,0 +1,32 @@
+================================================================================
+Layered LiCoO2 Model
+Key: bulk_licoo2_generated   Category: Battery materials
+Variables: {'a': (2.82, 2.94), 'c_over_a': (5.2, 5.5)}
+QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
+Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+Pseudopotentials: {'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Co': 'Co_pbe_v1.2.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
+ecutwfc / ecutrho: 80.0 / 640.0 Ry
+kpts: (6, 6, 2)   smearing: mv 0.02 Ry
+conv_thr: 5e-09   mixing_beta: 0.3
+spin_polarized: True   relax: False
+energy_per_atom: True
+Computed quantity: Total energy per atom objective (eV/atom)
+Notes: CIF-derived Li3Co3O6 hexagonal cell; fractional coordinates fixed while a and c/a vary.
+================================================================================
+
+Iteration 1
+  AL: no points above uncertainty threshold
+  Inverse proposal: a=2.867946  c_over_a=5.200000
+    GP E=-1348.44508384 ± 0.00720657 eV   predicted improvement=0.00000000 eV
+    Added ID:  a=2.867946  c_over_a=5.200000 -> E=-1348.44365319 eV
+  Best: a=2.867946  c_over_a=5.200000  E=-1348.44365319 eV  GP std=0.00000132 eV  QE labels=6
+  ✓ Converged.
+
+================================================================================
+FINAL RESULT
+  Best parameters : a=2.867946  c_over_a=5.200000
+  Best Total energy per atom objective: -1348.44365319 eV/atom
+  GP uncertainty  : 0.00000132 eV/atom
+  Total QE calls  : 6
+  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_licoo2_generated_cache.pkl
+================================================================================

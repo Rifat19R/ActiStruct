@@ -1,0 +1,4 @@
+key,status,energy_diff_eV,grid_calls,al_calls
+bulk_cu,PASS,0.0001982652984224842,20,6
+bulk_licoo2,PASS,4.36375557910651e-09,49,6
+mos2,PASS,0.0009164123699747506,49,8
