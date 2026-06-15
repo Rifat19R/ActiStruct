@@ -1,16 +1,17 @@
 """
-Active learning + inverse design for 12-atom graphene using Quantum ESPRESSO via ASE.
+Active learning + inverse design for bulk diamond Si using Quantum ESPRESSO via ASE.
 
 Objective:
-    Minimize total energy per atom by varying in-plane graphene lattice constant a.
+    Minimize total energy per atom by varying the conventional diamond-cubic
+    lattice constant a.
 
 System:
-    2x3 graphene supercell = 12 carbon atoms, periodic x/y, 15 A vacuum z.
+    Diamond cubic silicon conventional cell = 8 atoms.
 
 Run:
     cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
-    python graphene_qe_active_inverse.py
+    python examples/manual_qe/bulk_si_qe_active_inverse.py
 """
 
 from __future__ import annotations
@@ -32,7 +33,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from ase import Atoms
-from ase.build import make_supercell
 from ase.calculators.espresso import Espresso
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
@@ -47,25 +47,25 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
-QE_RUN_DIR = ROOT / "outputs" / "qe_runs_graphene"
+QE_RUN_DIR = ROOT / "outputs" / "qe_runs_bulk_si"
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 QE_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
-CACHE_FILE = ROOT / "graphene_12_qe_energy_cache_sssp_efficiency.pkl"
-CACHE_LOCK = ROOT / "graphene_12_qe_energy_cache_sssp_efficiency.lock"
-REPORT_FILE = REPORT_DIR / "graphene_12_qe_active_inverse_report.txt"
+CACHE_DIR = ROOT / "outputs" / "cache"
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+CACHE_FILE = CACHE_DIR / "bulk_si_8_qe_energy_cache_sssp_efficiency.pkl"
+CACHE_LOCK = ROOT / "bulk_si_8_qe_energy_cache_sssp_efficiency.lock"
+REPORT_FILE = REPORT_DIR / "bulk_si_8_qe_active_inverse_report.txt"
 
 PSEUDO_DIR_ABS = os.environ.get("ESPRESSO_PSEUDO", "")
-# This is the SSSP 1.3.0 PBE efficiency carbon pseudo present in the user folder.
-# The markdown names C.pbe-n-rrkjus_psl.1.0.0.UPF, but that file is not present there.
-PSEUDOPOTENTIALS = {"C": "C.pbe-n-kjpaw_psl.1.0.0.UPF"}
+PSEUDOPOTENTIALS = {"Si": "Si.pbe-n-rrkjus_psl.1.0.0.UPF"}
 ECUTWFC_RY = 50.0
 ECUTRHO_RY = 400.0
-KPTS = (8, 8, 1)
+KPTS = (8, 8, 8)
 N_PROCS = 2
 PARALLEL_WORKERS = 2
 PW_X_CANDIDATES = [
@@ -79,22 +79,19 @@ RY_TO_EV = 13.605693122994
 
 @dataclass
 class Config:
-    lattice_min: float = 2.30
-    lattice_max: float = 2.70
+    lattice_min: float = 5.20
+    lattice_max: float = 5.60
     n_candidates: int = 81
-    initial_lattices: tuple[float, ...] = (2.34, 2.46, 2.64)
+    initial_lattices: tuple[float, ...] = (5.25, 5.45, 5.58)
     max_iterations: int = 12
-    uncertainty_threshold: float = 0.05  # eV/atom
+    uncertainty_threshold: float = 0.03  # eV/atom
     active_labels_per_iter: int = 2
     kappa: float = 1.0
-    convergence_uncertainty: float = 0.05  # eV/atom
-    convergence_predicted_improvement: float = 0.002  # eV/atom
+    convergence_uncertainty: float = 0.03  # eV/atom
+    convergence_predicted_improvement: float = 0.001  # eV/atom
     duplicate_tol: float = 1e-6
     cache_round_digits: int = 6
-    random_state: int = 31
-    nx: int = 2
-    ny: int = 3
-    vacuum: float = 15.0
+    random_state: int = 51
     retries: int = 2
     retry_wait_seconds: int = 5
 
@@ -102,24 +99,28 @@ class Config:
 CONFIG = Config()
 
 
-def build_graphene(a: float, nx: int = 2, ny: int = 3, vacuum: float = 15.0) -> Atoms:
-    """Build 2D graphene supercell with 2 * nx * ny carbon atoms."""
+def build_si_diamond(a: float) -> Atoms:
+    """Create diamond-cubic Si conventional cell with 8 atoms."""
     a = float(a)
-    a1 = np.array([a, 0.0, 0.0])
-    a2 = np.array([-0.5 * a, 0.5 * np.sqrt(3.0) * a, 0.0])
-    primitive_cell = np.array([a1, a2, [0.0, 0.0, float(vacuum)]])
-
-    primitive = Atoms("C2", cell=primitive_cell, pbc=(True, True, True))
-    primitive.set_scaled_positions([[0.0, 0.0, 0.5], [1.0 / 3.0, 2.0 / 3.0, 0.5]])
-    supercell = make_supercell(primitive, [[nx, 0, 0], [0, ny, 0], [0, 0, 1]])
-    supercell.wrap()
-    if len(supercell) != 2 * nx * ny:
-        raise RuntimeError(f"Expected {2 * nx * ny} atoms, got {len(supercell)}")
-    return supercell
+    scaled_positions = [
+        [0.0, 0.0, 0.0],
+        [0.0, 0.5, 0.5],
+        [0.5, 0.0, 0.5],
+        [0.5, 0.5, 0.0],
+        [0.25, 0.25, 0.25],
+        [0.25, 0.75, 0.75],
+        [0.75, 0.25, 0.75],
+        [0.75, 0.75, 0.25],
+    ]
+    atoms = Atoms("Si8", cell=np.eye(3) * a, pbc=True)
+    atoms.set_scaled_positions(scaled_positions)
+    if len(atoms) != 8:
+        raise RuntimeError(f"Expected 8 atoms, got {len(atoms)}")
+    return atoms
 
 
 def qe_input_data(prefix: str) -> dict:
-    """Quantum ESPRESSO pw.x input for graphene SCF."""
+    """Quantum ESPRESSO pw.x input for bulk Si SCF."""
     return {
         "control": {
             "calculation": "scf",
@@ -135,7 +136,7 @@ def qe_input_data(prefix: str) -> dict:
             "ecutrho": ECUTRHO_RY,
             "occupations": "smearing",
             "smearing": "gaussian",
-            "degauss": 0.02,
+            "degauss": 0.01,
         },
         "electrons": {
             "conv_thr": 1e-8,
@@ -167,13 +168,13 @@ def ensure_qe_environment() -> None:
         raise RuntimeError("pw.x not found in PATH. Set ESPRESSO_COMMAND or add pw.x to PATH.")
     if not PSEUDO_DIR_ABS:
         raise RuntimeError("Set ESPRESSO_PSEUDO to the directory containing required UPF files.")
-    pseudo_path = Path(PSEUDO_DIR_ABS) / PSEUDOPOTENTIALS["C"]
+    pseudo_path = Path(PSEUDO_DIR_ABS) / PSEUDOPOTENTIALS["Si"]
     if not pseudo_path.exists():
-        raise FileNotFoundError(f"Missing C pseudopotential: {pseudo_path}")
+        raise FileNotFoundError(f"Missing Si pseudopotential: {pseudo_path}")
 
 
 def cache_key_lattice(a: float) -> str:
-    return f"graphene12:energy_per_atom:a={float(a):.{CONFIG.cache_round_digits}f}:pseudo={PSEUDOPOTENTIALS['C']}:ecut={ECUTWFC_RY}-{ECUTRHO_RY}:kpts={KPTS}"
+    return f"bulksi8:energy_per_atom:a={float(a):.{CONFIG.cache_round_digits}f}:pseudo={PSEUDOPOTENTIALS['Si']}:ecut={ECUTWFC_RY}-{ECUTRHO_RY}:kpts={KPTS}"
 
 
 def acquire_cache_lock(timeout: float = 600.0, poll: float = 0.1) -> int:
@@ -243,7 +244,7 @@ def parse_qe_total_energy(output_path: Path) -> float | None:
 
 
 def compute_energy_per_atom(a: float, retries: int = 2) -> float | None:
-    """Compute/cached graphene total energy per atom at lattice constant a."""
+    """Compute/cached bulk Si total energy per atom at lattice constant a."""
     key = cache_key_lattice(a)
     cached = get_cached_value(key)
     if cached is not None:
@@ -252,10 +253,10 @@ def compute_energy_per_atom(a: float, retries: int = 2) -> float | None:
     last_error = None
     for attempt in range(1, retries + 2):
         a_tag = f"{float(a):.{CONFIG.cache_round_digits}f}".replace(".", "p")
-        work_dir = QE_RUN_DIR / f"graphene12_a{a_tag}_pid{os.getpid()}_attempt{attempt}"
+        work_dir = QE_RUN_DIR / f"bulksi8_a{a_tag}_pid{os.getpid()}_attempt{attempt}"
         try:
-            atoms = build_graphene(float(a), CONFIG.nx, CONFIG.ny, CONFIG.vacuum)
-            atoms.calc = get_qe_calculator(work_dir, prefix=f"graphene12_a{a_tag}")
+            atoms = build_si_diamond(float(a))
+            atoms.calc = get_qe_calculator(work_dir, prefix=f"bulksi8_a{a_tag}")
             try:
                 total_energy = float(atoms.get_potential_energy())
             except Exception:
@@ -417,12 +418,13 @@ def propose_inverse_candidate(model: GPModel) -> tuple[float, float, float, floa
         seed=CONFIG.random_state,
         maxiter=500,
         tol=1e-7,
-        polish=True,
+        polish=True,       # L-BFGS-B local refinement after DE
         mutation=(0.5, 1.5),
         recombination=0.9,
     )
     best_x = float(result.x[0])
     mean_at, std_at = model.predict([[best_x]])
+    # predicted_improvement: coarse grid used for reporting only, not for proposal
     coarse = np.linspace(CONFIG.lattice_min, CONFIG.lattice_max, CONFIG.n_candidates)
     coarse_mean, _ = model.predict(coarse)
     predicted_improvement = float(max(0.0, float(np.min(coarse_mean)) - float(mean_at[0])))
@@ -454,15 +456,16 @@ def plot_energy_curve(model: GPModel, candidate_lattices: np.ndarray, labeled_la
     ax.fill_between(candidate_lattices, mean - std, mean + std, color="tab:red", alpha=0.22, label="GP uncertainty (+/- 1 std)")
     ax.scatter(labeled_lattices, labeled_energies, s=58, color="tab:blue", zorder=5, label="QE labels")
     ax.axvline(best_a, color="tab:green", linestyle=":", lw=2, label=f"Best observed a={best_a:.3f} A")
-    ax.axhline(best_e, color="tab:gray", linestyle=":", lw=1.5, label="Best observed E/atom")
-    ax.set_xlabel("Graphene lattice constant a (A)")
+    ax.axvline(5.45, color="tab:gray", linestyle="-.", lw=1.5, label="Reference a~5.45 A")
+    ax.axhline(best_e, color="tab:gray", linestyle=":", lw=1.2, label="Best observed E/atom")
+    ax.set_xlabel("Diamond Si lattice constant a (A)")
     ax.set_ylabel("Total energy per atom (eV)")
-    ax.set_title("Graphene 12 atoms: QE Active Learning + Inverse Minimization")
+    ax.set_title("Bulk Si 8 atoms: QE Active Learning + Inverse Minimization")
     ax.grid(alpha=0.25)
     ax.legend()
     fig.tight_layout()
 
-    path = PLOT_DIR / "graphene_12_qe_energy_curve.png"
+    path = PLOT_DIR / "bulk_si_8_qe_energy_curve.png"
     fig.savefig(path, dpi=180)
     plt.close(fig)
     return path
@@ -483,7 +486,7 @@ def plot_convergence(history: dict[str, list[float]]) -> Path:
     ax_n.grid(alpha=0.25)
 
     fig.tight_layout()
-    path = PLOT_DIR / "graphene_12_qe_convergence.png"
+    path = PLOT_DIR / "bulk_si_8_qe_convergence.png"
     fig.savefig(path, dpi=180)
     plt.close(fig)
     return path
@@ -497,13 +500,13 @@ def write_report(lines: list[str]) -> Path:
 def main() -> None:
     ensure_qe_environment()
     candidate_lattices = np.linspace(CONFIG.lattice_min, CONFIG.lattice_max, CONFIG.n_candidates)
-    test_atoms = build_graphene(2.46, CONFIG.nx, CONFIG.ny, CONFIG.vacuum)
+    test_atoms = build_si_diamond(5.45)
 
     report: list[str] = []
     header = [
         "=" * 82,
-        "Graphene 12 atoms active learning + inverse minimization using QE via ASE",
-        f"Atoms: {len(test_atoms)}  supercell: {CONFIG.nx}x{CONFIG.ny} primitive graphene cells",
+        "Bulk diamond Si 8 atoms active learning + inverse minimization using QE via ASE",
+        f"Atoms: {len(test_atoms)} conventional diamond cubic cell",
         f"Lattice range: {CONFIG.lattice_min:.3f} to {CONFIG.lattice_max:.3f} A",
         f"Initial lattices: {list(CONFIG.initial_lattices)} A",
         f"QE command base: {QE_COMMAND}",

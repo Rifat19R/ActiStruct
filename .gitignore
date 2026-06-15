@@ -6,6 +6,7 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Local scratch files
+local_artifacts/
 *.tmp
 *.bak
 *.log
@@ -26,6 +27,7 @@ pseudo/*.UPF
 !pseudo/README.md
 
 # QE and active-learning caches.
+outputs/cache/
 *.pkl
 *.lock
 

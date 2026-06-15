@@ -239,12 +239,13 @@ class ActiveSystem:
 
 def _paths(system: ActiveSystem) -> dict[str, Path]:
     """Create output directories and return a dict of useful paths."""
-    cache = ROOT / f"{system.key}_cache.pkl"
-    lock  = ROOT / f"{system.key}_cache.lock"
+    cache_dir = ROOT / "outputs" / "cache"
+    cache = cache_dir / f"{system.key}_cache.pkl"
+    lock = cache_dir / f"{system.key}_cache.lock"
     qedir = ROOT / "outputs" / f"qe_runs_{system.key}"
     plots = ROOT / "outputs" / "plots"
-    rpts  = ROOT / "outputs" / "reports"
-    for p in (qedir, plots, rpts):
+    rpts = ROOT / "outputs" / "reports"
+    for p in (cache_dir, qedir, plots, rpts):
         p.mkdir(parents=True, exist_ok=True)
     return dict(cache=cache, lock=lock, qedir=qedir, plots=plots, reports=rpts)
 

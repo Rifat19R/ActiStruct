@@ -10,6 +10,7 @@ ActiStruct is a research workflow for active-learning inverse design of atomisti
 
 - Shared active-learning engine: `qe_active_inverse_common.py`
 - 51 generated QE benchmark workflows: `generated_models/`
+- Standalone manual QE examples: `examples/manual_qe/`
 - Structure builders for molecules, crystals, 2D materials, cathode models, and adsorption systems
 - Completed benchmark reports: `outputs/reports/`
 - Convergence and surrogate plots: `outputs/plots/`
@@ -51,6 +52,7 @@ See:
 ActiStruct/
 |-- qe_active_inverse_common.py          # shared active-learning QE engine
 |-- generated_models/                    # generated benchmark scripts and runner
+|-- examples/manual_qe/                  # standalone manual QE examples
 |-- analysis/                            # result extraction and manuscript helpers
 |-- docs/                                # setup notes and original specifications
 |-- outputs/
@@ -130,7 +132,7 @@ Run one script directly:
 bash run.sh one generated_models/bulk_litio2_qe_active_inverse.py
 ```
 
-Logs are written to `run_logs/`. Final reports and plots are written to:
+Logs are written to `run_logs/`. Runtime caches are written to `outputs/cache/`. Final reports and plots are written to:
 
 ```text
 outputs/reports/
@@ -155,9 +157,7 @@ The final QE objectives are useful for ranking candidates within each system. Ab
 If ActiStruct supports your work, please cite the repository metadata in `CITATION.cff`. Update the DOI after archival release.
 
 ## Acknowledgments
-The development of nebwalk benefited from selective AI-assisted support using Claude and OpenAI Codex/ChatGPT for code review, debugging guidance, documentation refinement, and release-workflow cleanup.
-
-The scientific direction, algorithmic design, implementation decisions, validation strategy, benchmark interpretation, and release responsibility remain fully maintained by Md. Rifat Khandaker. AI tools were used only as auxiliary development aids to improve clarity, review consistency, and workflow efficiency.
+ActiStruct was developed with selective AI-assisted support for code review, debugging guidance, documentation refinement, and release-workflow cleanup. Scientific direction, algorithmic design, implementation decisions, validation strategy, benchmark interpretation, and release responsibility remain with the project maintainer.
 
 ## License
 

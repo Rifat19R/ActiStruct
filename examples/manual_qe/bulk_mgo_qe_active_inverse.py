@@ -1,17 +1,17 @@
 """
-Active learning + inverse design for bulk diamond Si using Quantum ESPRESSO via ASE.
+Active learning + inverse design for bulk rocksalt MgO using Quantum ESPRESSO via ASE.
 
 Objective:
-    Minimize total energy per atom by varying the conventional diamond-cubic
+    Minimize total energy per atom by varying the conventional rocksalt
     lattice constant a.
 
 System:
-    Diamond cubic silicon conventional cell = 8 atoms.
+    MgO rocksalt conventional cubic cell = 8 atoms (4 Mg + 4 O).
 
 Run:
     cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
-    python bulk_si_qe_active_inverse.py
+    python examples/manual_qe/bulk_mgo_qe_active_inverse.py
 """
 
 from __future__ import annotations
@@ -47,22 +47,29 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
-QE_RUN_DIR = ROOT / "outputs" / "qe_runs_bulk_si"
+QE_RUN_DIR = ROOT / "outputs" / "qe_runs_bulk_mgo"
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 QE_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
-CACHE_FILE = ROOT / "bulk_si_8_qe_energy_cache_sssp_efficiency.pkl"
-CACHE_LOCK = ROOT / "bulk_si_8_qe_energy_cache_sssp_efficiency.lock"
-REPORT_FILE = REPORT_DIR / "bulk_si_8_qe_active_inverse_report.txt"
+CACHE_DIR = ROOT / "outputs" / "cache"
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+CACHE_FILE = CACHE_DIR / "bulk_mgo_8_qe_energy_cache_sssp_efficiency.pkl"
+CACHE_LOCK = ROOT / "bulk_mgo_8_qe_energy_cache_sssp_efficiency.lock"
+REPORT_FILE = REPORT_DIR / "bulk_mgo_8_qe_active_inverse_report.txt"
 
 PSEUDO_DIR_ABS = os.environ.get("ESPRESSO_PSEUDO", "")
-PSEUDOPOTENTIALS = {"Si": "Si.pbe-n-rrkjus_psl.1.0.0.UPF"}
-ECUTWFC_RY = 50.0
-ECUTRHO_RY = 400.0
+# The markdown names rrkjus pseudopotentials. This local SSSP efficiency folder
+# contains the PAW/USPP variants below, which are valid SSSP efficiency files.
+PSEUDOPOTENTIALS = {
+    "Mg": "Mg.pbe-n-kjpaw_psl.0.3.0.UPF",
+    "O": "O.pbe-n-kjpaw_psl.0.1.UPF",
+}
+ECUTWFC_RY = 60.0
+ECUTRHO_RY = 480.0
 KPTS = (8, 8, 8)
 N_PROCS = 2
 PARALLEL_WORKERS = 2
@@ -77,10 +84,10 @@ RY_TO_EV = 13.605693122994
 
 @dataclass
 class Config:
-    lattice_min: float = 5.20
-    lattice_max: float = 5.60
-    n_candidates: int = 81
-    initial_lattices: tuple[float, ...] = (5.25, 5.45, 5.58)
+    lattice_min: float = 4.10
+    lattice_max: float = 4.40
+    n_candidates: int = 61
+    initial_lattices: tuple[float, ...] = (4.12, 4.23, 4.36)
     max_iterations: int = 12
     uncertainty_threshold: float = 0.03  # eV/atom
     active_labels_per_iter: int = 2
@@ -89,7 +96,7 @@ class Config:
     convergence_predicted_improvement: float = 0.001  # eV/atom
     duplicate_tol: float = 1e-6
     cache_round_digits: int = 6
-    random_state: int = 51
+    random_state: int = 71
     retries: int = 2
     retry_wait_seconds: int = 5
 
@@ -97,28 +104,30 @@ class Config:
 CONFIG = Config()
 
 
-def build_si_diamond(a: float) -> Atoms:
-    """Create diamond-cubic Si conventional cell with 8 atoms."""
+def build_mgo_rocksalt(a: float) -> Atoms:
+    """Create rocksalt MgO conventional cell with 8 atoms and lattice constant a."""
     a = float(a)
-    scaled_positions = [
+    mg_scaled = [
         [0.0, 0.0, 0.0],
         [0.0, 0.5, 0.5],
         [0.5, 0.0, 0.5],
         [0.5, 0.5, 0.0],
-        [0.25, 0.25, 0.25],
-        [0.25, 0.75, 0.75],
-        [0.75, 0.25, 0.75],
-        [0.75, 0.75, 0.25],
     ]
-    atoms = Atoms("Si8", cell=np.eye(3) * a, pbc=True)
-    atoms.set_scaled_positions(scaled_positions)
+    o_scaled = [
+        [0.5, 0.0, 0.0],
+        [0.0, 0.5, 0.0],
+        [0.0, 0.0, 0.5],
+        [0.5, 0.5, 0.5],
+    ]
+    atoms = Atoms(["Mg"] * 4 + ["O"] * 4, cell=np.eye(3) * a, pbc=True)
+    atoms.set_scaled_positions(mg_scaled + o_scaled)
     if len(atoms) != 8:
         raise RuntimeError(f"Expected 8 atoms, got {len(atoms)}")
     return atoms
 
 
 def qe_input_data(prefix: str) -> dict:
-    """Quantum ESPRESSO pw.x input for bulk Si SCF."""
+    """Quantum ESPRESSO pw.x input for bulk MgO SCF."""
     return {
         "control": {
             "calculation": "scf",
@@ -138,7 +147,7 @@ def qe_input_data(prefix: str) -> dict:
         },
         "electrons": {
             "conv_thr": 1e-8,
-            "electron_maxstep": 200,
+            "electron_maxstep": 300,
             "mixing_beta": 0.4,
         },
     }
@@ -166,13 +175,14 @@ def ensure_qe_environment() -> None:
         raise RuntimeError("pw.x not found in PATH. Set ESPRESSO_COMMAND or add pw.x to PATH.")
     if not PSEUDO_DIR_ABS:
         raise RuntimeError("Set ESPRESSO_PSEUDO to the directory containing required UPF files.")
-    pseudo_path = Path(PSEUDO_DIR_ABS) / PSEUDOPOTENTIALS["Si"]
-    if not pseudo_path.exists():
-        raise FileNotFoundError(f"Missing Si pseudopotential: {pseudo_path}")
+    for element, pseudo in PSEUDOPOTENTIALS.items():
+        pseudo_path = Path(PSEUDO_DIR_ABS) / pseudo
+        if not pseudo_path.exists():
+            raise FileNotFoundError(f"Missing {element} pseudopotential: {pseudo_path}")
 
 
 def cache_key_lattice(a: float) -> str:
-    return f"bulksi8:energy_per_atom:a={float(a):.{CONFIG.cache_round_digits}f}:pseudo={PSEUDOPOTENTIALS['Si']}:ecut={ECUTWFC_RY}-{ECUTRHO_RY}:kpts={KPTS}"
+    return f"bulkmgo8:energy_per_atom:a={float(a):.{CONFIG.cache_round_digits}f}:pseudo={PSEUDOPOTENTIALS}:ecut={ECUTWFC_RY}-{ECUTRHO_RY}:kpts={KPTS}"
 
 
 def acquire_cache_lock(timeout: float = 600.0, poll: float = 0.1) -> int:
@@ -242,7 +252,7 @@ def parse_qe_total_energy(output_path: Path) -> float | None:
 
 
 def compute_energy_per_atom(a: float, retries: int = 2) -> float | None:
-    """Compute/cached bulk Si total energy per atom at lattice constant a."""
+    """Compute/cached bulk MgO total energy per atom at lattice constant a."""
     key = cache_key_lattice(a)
     cached = get_cached_value(key)
     if cached is not None:
@@ -251,10 +261,10 @@ def compute_energy_per_atom(a: float, retries: int = 2) -> float | None:
     last_error = None
     for attempt in range(1, retries + 2):
         a_tag = f"{float(a):.{CONFIG.cache_round_digits}f}".replace(".", "p")
-        work_dir = QE_RUN_DIR / f"bulksi8_a{a_tag}_pid{os.getpid()}_attempt{attempt}"
+        work_dir = QE_RUN_DIR / f"bulkmgo8_a{a_tag}_pid{os.getpid()}_attempt{attempt}"
         try:
-            atoms = build_si_diamond(float(a))
-            atoms.calc = get_qe_calculator(work_dir, prefix=f"bulksi8_a{a_tag}")
+            atoms = build_mgo_rocksalt(float(a))
+            atoms.calc = get_qe_calculator(work_dir, prefix=f"bulkmgo8_a{a_tag}")
             try:
                 total_energy = float(atoms.get_potential_energy())
             except Exception:
@@ -290,7 +300,7 @@ class GPModel:
     def __init__(self) -> None:
         kernel = (
             ConstantKernel(1.0, (1e-3, 1e3))
-            * RBF(length_scale=0.08, length_scale_bounds=(1e-3, 1.0))
+            * RBF(length_scale=0.06, length_scale_bounds=(1e-3, 1.0))
             + WhiteKernel(noise_level=1e-5, noise_level_bounds=(1e-9, 1e-2))
         )
         self.gp = GaussianProcessRegressor(
@@ -351,7 +361,7 @@ def add_successful_labels(pairs: list[tuple[float, float]], lattices: list[float
 def build_initial_training_set() -> tuple[list[float], list[float]]:
     lattices: list[float] = []
     energies: list[float] = []
-    offsets = [0.0, -0.02, 0.02, -0.04, 0.04]
+    offsets = [0.0, -0.015, 0.015, -0.03, 0.03]
 
     for base_lattice in CONFIG.initial_lattices:
         added = False
@@ -454,16 +464,16 @@ def plot_energy_curve(model: GPModel, candidate_lattices: np.ndarray, labeled_la
     ax.fill_between(candidate_lattices, mean - std, mean + std, color="tab:red", alpha=0.22, label="GP uncertainty (+/- 1 std)")
     ax.scatter(labeled_lattices, labeled_energies, s=58, color="tab:blue", zorder=5, label="QE labels")
     ax.axvline(best_a, color="tab:green", linestyle=":", lw=2, label=f"Best observed a={best_a:.3f} A")
-    ax.axvline(5.45, color="tab:gray", linestyle="-.", lw=1.5, label="Reference a~5.45 A")
+    ax.axvline(4.22, color="tab:gray", linestyle="-.", lw=1.5, label="Reference a~4.22 A")
     ax.axhline(best_e, color="tab:gray", linestyle=":", lw=1.2, label="Best observed E/atom")
-    ax.set_xlabel("Diamond Si lattice constant a (A)")
+    ax.set_xlabel("Rocksalt MgO lattice constant a (A)")
     ax.set_ylabel("Total energy per atom (eV)")
-    ax.set_title("Bulk Si 8 atoms: QE Active Learning + Inverse Minimization")
+    ax.set_title("Bulk MgO 8 atoms: QE Active Learning + Inverse Minimization")
     ax.grid(alpha=0.25)
     ax.legend()
     fig.tight_layout()
 
-    path = PLOT_DIR / "bulk_si_8_qe_energy_curve.png"
+    path = PLOT_DIR / "bulk_mgo_8_qe_energy_curve.png"
     fig.savefig(path, dpi=180)
     plt.close(fig)
     return path
@@ -484,7 +494,7 @@ def plot_convergence(history: dict[str, list[float]]) -> Path:
     ax_n.grid(alpha=0.25)
 
     fig.tight_layout()
-    path = PLOT_DIR / "bulk_si_8_qe_convergence.png"
+    path = PLOT_DIR / "bulk_mgo_8_qe_convergence.png"
     fig.savefig(path, dpi=180)
     plt.close(fig)
     return path
@@ -498,13 +508,13 @@ def write_report(lines: list[str]) -> Path:
 def main() -> None:
     ensure_qe_environment()
     candidate_lattices = np.linspace(CONFIG.lattice_min, CONFIG.lattice_max, CONFIG.n_candidates)
-    test_atoms = build_si_diamond(5.45)
+    test_atoms = build_mgo_rocksalt(4.22)
 
     report: list[str] = []
     header = [
         "=" * 82,
-        "Bulk diamond Si 8 atoms active learning + inverse minimization using QE via ASE",
-        f"Atoms: {len(test_atoms)} conventional diamond cubic cell",
+        "Bulk rocksalt MgO 8 atoms active learning + inverse minimization using QE via ASE",
+        f"Atoms: {len(test_atoms)} conventional rocksalt cell",
         f"Lattice range: {CONFIG.lattice_min:.3f} to {CONFIG.lattice_max:.3f} A",
         f"Initial lattices: {list(CONFIG.initial_lattices)} A",
         f"QE command base: {QE_COMMAND}",

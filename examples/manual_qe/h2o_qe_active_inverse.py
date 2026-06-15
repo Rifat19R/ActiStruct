@@ -11,7 +11,7 @@ System:
 Run:
     cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
-    python h2o_qe_active_inverse.py
+    python examples/manual_qe/h2o_qe_active_inverse.py
 """
 
 from __future__ import annotations
@@ -47,7 +47,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
 QE_RUN_DIR = ROOT / "outputs" / "qe_runs_h2o"
@@ -55,7 +55,9 @@ PLOT_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 QE_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
-CACHE_FILE = ROOT / "h2o_qe_energy_cache_sssp_efficiency.pkl"
+CACHE_DIR = ROOT / "outputs" / "cache"
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+CACHE_FILE = CACHE_DIR / "h2o_qe_energy_cache_sssp_efficiency.pkl"
 CACHE_LOCK = ROOT / "h2o_qe_energy_cache_sssp_efficiency.lock"
 REPORT_FILE = REPORT_DIR / "h2o_qe_active_inverse_report.txt"
 

@@ -1,12 +1,13 @@
 """
-Combined active learning + inverse design for a Cu2 dimer.
+Combined active learning + inverse design for an H2 dimer.
 
 Goal:
-    Find a Cu-Cu bond distance whose EMT total energy is close to a target.
+    Find an H-H bond distance whose mock-DFT energy is close to a target.
 
 Notes:
-    - EMT is used as a fast mock DFT oracle.
-    - Replace dft_energy(distance) later with VASP, GPAW, QE, etc.
+    - EMT is not suitable for H2, so this MVP uses a Lennard-Jones oracle.
+    - The LJ parameters put the minimum at 0.74 A with well depth 4.5 eV.
+    - Replace dft_energy(distance) later with GPAW, VASP, QE, etc.
     - Script is self-contained and writes plots/reports under outputs/.
 """
 
@@ -22,7 +23,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from ase import Atoms
-from ase.calculators.emt import EMT
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
 from scipy.optimize import differential_evolution
@@ -31,7 +31,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
@@ -40,26 +40,48 @@ REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 @dataclass
 class Config:
-    requested_target_energy: float = -1.5
-    distance_min: float = 1.8
-    distance_max: float = 3.5
-    n_candidates: int = 250
-    n_truth_grid: int = 400
-    initial_distances: tuple[float, ...] = (2.0, 2.5, 3.0)
+    requested_target_energy: float = -4.5
+    distance_min: float = 0.60
+    distance_max: float = 1.40
+    n_candidates: int = 300
+    n_truth_grid: int = 600
+    initial_distances: tuple[float, ...] = (0.62, 0.90, 1.30)
     max_iterations: int = 12
     uncertainty_threshold: float = 0.05
     active_labels_per_iter: int = 2
     kappa: float = 1.0
     convergence_error: float = 0.03
     duplicate_tol: float = 1e-6
-    random_state: int = 7
+    random_state: int = 11
+
+
+def h2_lj_energy(distance: float) -> float:
+    """
+    Lennard-Jones potential for H2.
+
+    Parameters chosen to give:
+        - minimum at r0 = 0.74 Angstrom
+        - well depth = 4.5 eV, so minimum energy = -4.5 eV
+    """
+    r = float(distance)
+    if r <= 0:
+        raise ValueError("Bond distance must be positive.")
+
+    r0 = 0.74
+    epsilon = 4.5
+    sigma = r0 / (2 ** (1 / 6))
+    return float(4 * epsilon * ((sigma / r) ** 12 - (sigma / r) ** 6))
 
 
 def dft_energy(distance: float) -> float:
-    """Mock DFT oracle: return Cu2 EMT potential energy in eV."""
-    atoms = Atoms("Cu2", positions=[[0.0, 0.0, 0.0], [float(distance), 0.0, 0.0]])
-    atoms.calc = EMT()
-    return float(atoms.get_potential_energy())
+    """
+    Mock DFT oracle for H2 energy in eV.
+
+    ASE Atoms object is created to keep the interface close to future real
+    calculator workflows. Energy currently comes from analytical LJ.
+    """
+    Atoms("H2", positions=[[0.0, 0.0, 0.0], [float(distance), 0.0, 0.0]])
+    return h2_lj_energy(distance)
 
 
 class GPModel:
@@ -67,14 +89,14 @@ class GPModel:
 
     def __init__(self, random_state: int) -> None:
         kernel = (
-            ConstantKernel(1.0, (1e-3, 1e3))
-            * RBF(length_scale=0.35, length_scale_bounds=(1e-2, 10.0))
-            + WhiteKernel(noise_level=1e-5, noise_level_bounds=(1e-8, 1e-1))
+            ConstantKernel(1.0, (1e-3, 1e4))
+            * RBF(length_scale=0.20, length_scale_bounds=(1e-3, 5.0))
+            + WhiteKernel(noise_level=1e-5, noise_level_bounds=(1e-9, 1e-1))
         )
         self.gp = GaussianProcessRegressor(
             kernel=kernel,
             normalize_y=True,
-            n_restarts_optimizer=8,
+            n_restarts_optimizer=10,
             random_state=random_state,
         )
 
@@ -90,22 +112,23 @@ class GPModel:
 
 
 def choose_reachable_target(config: Config, truth_distances: np.ndarray, truth_energies: np.ndarray) -> float:
-    """Use requested target if reachable; otherwise use minimum EMT energy."""
+    """Use requested target if reachable; otherwise use LJ minimum energy."""
     e_min = float(np.min(truth_energies))
     e_max = float(np.max(truth_energies))
-    target = config.requested_target_energy
+    target = float(config.requested_target_energy)
+    reachability_tol = 1e-3
 
-    if e_min <= target <= e_max:
+    if e_min - reachability_tol <= target <= e_max + reachability_tol:
         return target
 
     min_idx = int(np.argmin(truth_energies))
     adjusted = float(truth_energies[min_idx])
     print(
-        f"Requested target {target:.4f} eV is outside EMT range "
+        f"Requested target {target:.4f} eV is outside LJ range "
         f"[{e_min:.4f}, {e_max:.4f}] eV."
     )
     print(
-        f"Using reachable target = minimum EMT energy {adjusted:.4f} eV "
+        f"Using reachable target = LJ minimum {adjusted:.4f} eV "
         f"near R = {truth_distances[min_idx]:.4f} A."
     )
     return adjusted
@@ -174,7 +197,7 @@ def plot_energy_curve(
     mean, std = model.predict(truth_distances)
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(truth_distances, truth_energies, color="black", lw=2, label="True EMT curve")
+    ax.plot(truth_distances, truth_energies, color="black", lw=2, label="True LJ curve")
     ax.plot(truth_distances, mean, color="tab:red", ls="--", lw=2, label="GP prediction")
     ax.fill_between(
         truth_distances,
@@ -184,16 +207,18 @@ def plot_energy_curve(
         alpha=0.22,
         label="GP uncertainty (+/- 1 std)",
     )
-    ax.scatter(labeled_distances, labeled_energies, s=55, color="tab:blue", zorder=5, label="Labeled DFT points")
+    ax.scatter(labeled_distances, labeled_energies, s=55, color="tab:blue", zorder=5, label="Labeled points")
     ax.axhline(target_energy, color="tab:green", ls=":", lw=2, label="Target energy")
-    ax.set_xlabel("Cu-Cu distance (A)")
+    ax.axvline(0.74, color="tab:gray", ls="-.", lw=1.5, label="Known H2 r0 = 0.74 A")
+    ax.set_xlabel("H-H distance (A)")
     ax.set_ylabel("Total energy (eV)")
-    ax.set_title("Cu2 Dimer: Active Learning + Inverse Design")
+    ax.set_title("H2 Dimer: Active Learning + Inverse Design")
+    ax.set_ylim(min(float(np.min(truth_energies)) - 0.8, target_energy - 0.8), 20.0)
     ax.grid(alpha=0.25)
     ax.legend()
     fig.tight_layout()
 
-    path = PLOT_DIR / "cu2_energy_curve.png"
+    path = PLOT_DIR / "h2_energy_curve.png"
     fig.savefig(path, dpi=180)
     plt.close(fig)
     return path
@@ -210,19 +235,19 @@ def plot_convergence(history: dict[str, list[float]]) -> Path:
 
     ax_dft.plot(history["iteration"], history["n_dft"], marker="s", color="tab:purple")
     ax_dft.set_xlabel("Iteration")
-    ax_dft.set_ylabel("Total DFT evaluations")
+    ax_dft.set_ylabel("Total oracle evaluations")
     ax_dft.set_title("Data efficiency")
     ax_dft.grid(alpha=0.25)
 
     fig.tight_layout()
-    path = PLOT_DIR / "cu2_convergence.png"
+    path = PLOT_DIR / "h2_convergence.png"
     fig.savefig(path, dpi=180)
     plt.close(fig)
     return path
 
 
 def write_report(lines: list[str]) -> Path:
-    path = REPORT_DIR / "cu2_run_report.txt"
+    path = REPORT_DIR / "h2_run_report.txt"
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path
 
@@ -251,7 +276,7 @@ def main() -> None:
 
     header = [
         "=" * 72,
-        "Cu2 active learning + inverse design",
+        "H2 active learning + inverse design",
         f"Target energy: {target_energy:.6f} eV",
         f"Initial distances: {list(config.initial_distances)} A",
         "=" * 72,
@@ -285,11 +310,11 @@ def main() -> None:
             report.append("  Active learning labels: none above uncertainty threshold")
 
         # --- Fix 2: DE-based acquisition optimisation (replaces grid argmax) ---
-        def _neg_acq_cu2(x: np.ndarray) -> float:
+        def _neg_acq_h2(x: np.ndarray) -> float:
             m, s = model.predict(x.reshape(1, -1))
             return float(abs(m[0] - target_energy) - config.kappa * s[0])
         _de_result = differential_evolution(
-            _neg_acq_cu2,
+            _neg_acq_h2,
             [(config.distance_min, config.distance_max)],
             seed=config.random_state,
             maxiter=500, tol=1e-7, polish=True,
@@ -316,8 +341,8 @@ def main() -> None:
         if added:
             model.train(labeled_distances, labeled_energies)
             true_error = abs(true_energy - target_energy)
-            print(f"    DFT check: E={true_energy:.6f} eV, true error={true_error:.6f} eV")
-            report.append(f"    DFT check: E={true_energy:.6f} eV, true error={true_error:.6f} eV")
+            print(f"    Oracle check: E={true_energy:.6f} eV, true error={true_error:.6f} eV")
+            report.append(f"    Oracle check: E={true_energy:.6f} eV, true error={true_error:.6f} eV")
         else:
             print(f"    Already labeled: E={true_energy:.6f} eV")
             report.append(f"    Already labeled: E={true_energy:.6f} eV")
@@ -353,10 +378,10 @@ def main() -> None:
         "=" * 72,
         "Final result",
         f"Best distance: {best_r:.6f} A",
-        f"Best EMT energy: {best_e:.6f} eV",
+        f"Best LJ energy: {best_e:.6f} eV",
         f"Target energy: {target_energy:.6f} eV",
         f"Absolute error: {best_err:.6f} eV",
-        f"DFT evaluations used by loop: {len(labeled_distances)}",
+        f"Oracle evaluations used by loop: {len(labeled_distances)}",
         f"Energy plot: {energy_plot}",
         f"Convergence plot: {convergence_plot}",
     ]
