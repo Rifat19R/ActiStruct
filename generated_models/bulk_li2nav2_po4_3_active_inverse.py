@@ -122,7 +122,7 @@ def build_li2nav2po43(a: float, c: float) -> Atoms:
 
 
 # VERIFY before running:
-#   ls /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency/ | grep -iE "^na_|^v_"
+#   ls "$ESPRESSO_PSEUDO" | grep -iE "^na_|^v_"
 # Expected output should include:
 #   na_pbe_v1.5.uspp.F.UPF
 #   v_pbe_v1.4.uspp.F.UPF

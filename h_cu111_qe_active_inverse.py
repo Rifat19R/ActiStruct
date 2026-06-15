@@ -14,7 +14,7 @@ System:
     Bottom Cu layer is fixed. Top two Cu layers and H relax for each site.
 
 Run:
-    cd /mnt/d/Rifat_kh/inverse_active
+    cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
     python h_cu111_qe_active_inverse.py
 """
@@ -67,7 +67,7 @@ CACHE_FILE = ROOT / "h_cu111_qe_adsorption_cache_sssp_efficiency.pkl"
 CACHE_LOCK = ROOT / "h_cu111_qe_adsorption_cache_sssp_efficiency.lock"
 REPORT_FILE = REPORT_DIR / "h_cu111_qe_active_inverse_report.txt"
 
-PSEUDO_DIR_ABS = "/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency"
+PSEUDO_DIR_ABS = os.environ.get("ESPRESSO_PSEUDO", "")
 # The markdown names Cu rrkjus pseudopotentials. This local SSSP efficiency
 # folder contains the validated Cu PAW file below. H uses the SSSP file.
 PSEUDOPOTENTIALS = {
@@ -81,11 +81,11 @@ KPTS_ATOM = (1, 1, 1)
 6
 PARALLEL_WORKERS = 2
 PW_X_CANDIDATES = [
+    os.environ.get("ESPRESSO_PW"),
     shutil.which("pw.x"),
-    "/home/alchemist/q-e/bin/pw.x",
 ]
 PW_X = next((str(Path(path)) for path in PW_X_CANDIDATES if path and Path(path).exists()), "pw.x")
-QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
+QE_COMMAND = os.environ.get("ESPRESSO_COMMAND", f"mpirun -np {N_PROCS} {PW_X}")
 RY_TO_EV = 13.605693122994
 
 
@@ -229,7 +229,9 @@ def get_qe_calculator(directory: Path, prefix: str, kpts: tuple[int, int, int], 
 
 def ensure_qe_environment() -> None:
     if PW_X == "pw.x" and shutil.which("pw.x") is None:
-        raise RuntimeError("pw.x not found in PATH and /home/alchemist/q-e/bin/pw.x does not exist.")
+        raise RuntimeError("pw.x not found in PATH. Set ESPRESSO_COMMAND or add pw.x to PATH.")
+    if not PSEUDO_DIR_ABS:
+        raise RuntimeError("Set ESPRESSO_PSEUDO to the directory containing required UPF files.")
     for element, pseudo in PSEUDOPOTENTIALS.items():
         pseudo_path = Path(PSEUDO_DIR_ABS) / pseudo
         if not pseudo_path.exists():

@@ -13,7 +13,7 @@ import csv
 from pathlib import Path
 import sys
 
-sys.path.insert(0, "/mnt/d/Rifat_kh/inverse_active")
+sys.path.insert(0, "<ACTISTRUCT_ROOT>")
 
 import numpy as np
 
@@ -21,7 +21,7 @@ from generated_models.bulk_licoo2_generated_qe_active_inverse import SYSTEM
 from qe_active_inverse_common import _compute_energy, _get_reference_energies, _paths
 
 
-RAW_DIR = Path("/mnt/d/Rifat_kh/inverse_active/analysis/outputs/raw")
+RAW_DIR = Path("<ACTISTRUCT_ROOT>/analysis/outputs/raw")
 
 
 def main() -> None:

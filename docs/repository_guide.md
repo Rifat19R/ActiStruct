@@ -22,7 +22,7 @@
 ## First Commit
 
 ```bash
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 git status
 git add .
 git commit -m "Initial active learning inverse design workflows"

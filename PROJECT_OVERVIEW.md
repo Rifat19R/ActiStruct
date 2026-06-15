@@ -72,7 +72,7 @@ N_PROCS = 2
 PARALLEL_WORKERS = 2
 QE_CONV_THR = 5e-9
 QE_MIXING_BETA = 0.3
-PSEUDO_DIR = /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+PSEUDO_DIR = <PSEUDO_DIR>
 ```
 
 For the corrected outlier systems, the input ranges and numerical settings were tightened, including higher cutoffs such as `ecutwfc = 80 Ry`, `ecutrho = 640 Ry`, denser k-point meshes, and smaller metallic smearing where appropriate.
@@ -210,7 +210,7 @@ run.sh
 Run it from WSL:
 
 ```bash
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 bash run.sh
 ```
 
@@ -274,14 +274,14 @@ These limitations are normal for a proof-of-concept, and they define a clear pat
 1. Finish the remaining nine corrected reruns:
 
 ```bash
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 bash run.sh
 ```
 
 2. Regenerate extracted results, tables, and figures:
 
 ```bash
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 python analysis/extract_all_results.py
 python analysis/generate_tables.py
 python analysis/generate_figures.py

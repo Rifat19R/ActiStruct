@@ -8,7 +8,7 @@ System:
     2x3 graphene supercell = 12 carbon atoms, periodic x/y, 15 A vacuum z.
 
 Run:
-    cd /mnt/d/Rifat_kh/inverse_active
+    cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
     python graphene_qe_active_inverse.py
 """
@@ -59,7 +59,7 @@ CACHE_FILE = ROOT / "graphene_12_qe_energy_cache_sssp_efficiency.pkl"
 CACHE_LOCK = ROOT / "graphene_12_qe_energy_cache_sssp_efficiency.lock"
 REPORT_FILE = REPORT_DIR / "graphene_12_qe_active_inverse_report.txt"
 
-PSEUDO_DIR_ABS = "/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency"
+PSEUDO_DIR_ABS = os.environ.get("ESPRESSO_PSEUDO", "")
 # This is the SSSP 1.3.0 PBE efficiency carbon pseudo present in the user folder.
 # The markdown names C.pbe-n-rrkjus_psl.1.0.0.UPF, but that file is not present there.
 PSEUDOPOTENTIALS = {"C": "C.pbe-n-kjpaw_psl.1.0.0.UPF"}
@@ -69,11 +69,11 @@ KPTS = (8, 8, 1)
 N_PROCS = 2
 PARALLEL_WORKERS = 2
 PW_X_CANDIDATES = [
+    os.environ.get("ESPRESSO_PW"),
     shutil.which("pw.x"),
-    "/home/alchemist/q-e/bin/pw.x",
 ]
 PW_X = next((str(Path(path)) for path in PW_X_CANDIDATES if path and Path(path).exists()), "pw.x")
-QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
+QE_COMMAND = os.environ.get("ESPRESSO_COMMAND", f"mpirun -np {N_PROCS} {PW_X}")
 RY_TO_EV = 13.605693122994
 
 
@@ -164,10 +164,12 @@ def get_qe_calculator(directory: Path, prefix: str) -> Espresso:
 
 def ensure_qe_environment() -> None:
     if PW_X == "pw.x" and shutil.which("pw.x") is None:
-        raise RuntimeError("pw.x not found in PATH and /home/alchemist/q-e/bin/pw.x does not exist.")
+        raise RuntimeError("pw.x not found in PATH. Set ESPRESSO_COMMAND or add pw.x to PATH.")
+    if not PSEUDO_DIR_ABS:
+        raise RuntimeError("Set ESPRESSO_PSEUDO to the directory containing required UPF files.")
     pseudo_path = Path(PSEUDO_DIR_ABS) / PSEUDOPOTENTIALS["C"]
     if not pseudo_path.exists():
-        raise FileNotFoundError(f"Missing carbon pseudopotential: {pseudo_path}")
+        raise FileNotFoundError(f"Missing C pseudopotential: {pseudo_path}")
 
 
 def cache_key_lattice(a: float) -> str:

@@ -14,7 +14,7 @@ ActiStruct is a research workflow for active-learning inverse design of atomisti
 - Completed benchmark reports: `outputs/reports/`
 - Convergence and surrogate plots: `outputs/plots/`
 - JCTC-style results draft: `outputs/reports/NEBWALK_INVERSE_ACTIVE_JCTC_RESULTS_DRAFT.md`
-- Supporting manuscript-style document: `inverse_active_supporting_results_Aplus.docx`
+- Supporting manuscript-style document: `ActiStruct_supporting_results.docx`
 
 Raw Quantum ESPRESSO scratch directories are local reproducibility artifacts and are ignored by git by default. Final reports and plots are kept in the repository.
 
@@ -30,20 +30,20 @@ For each system, a small set of initial structural parameters is evaluated with 
 
 ## Current Output Status
 
-The local benchmark set contains 51 generated workflows with final reports. The report archive also includes several older legacy/demo reports for traceability.
+The local benchmark set contains 51 generated workflows, and the repository keeps only those 51 final benchmark reports.
 
 Summary from the local reports:
 
 - Generated benchmark scripts: 51
 - Generated benchmark reports with `FINAL RESULT`: 51 / 51
-- Total report files: 59
-- Total final reports: 51 / 59
+- Total final report files: 51
+- Total final reports: 51 / 51
 - Main scalar structural sanity checks: mean absolute percentage deviation about 0.68% across 24 reference checks
 
 See:
 
 - `outputs/reports/NEBWALK_INVERSE_ACTIVE_JCTC_RESULTS_DRAFT.md`
-- `inverse_active_supporting_results_Aplus.docx`
+- `ActiStruct_supporting_results.docx`
 
 ## Repository Layout
 
@@ -73,7 +73,7 @@ ActiStruct/
 Use WSL/Linux for Quantum ESPRESSO runs.
 
 ```bash
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -89,18 +89,19 @@ Required Python packages:
 
 ## Quantum ESPRESSO Setup
 
-ActiStruct expects `pw.x` in `PATH` or at one of the known local paths in `qe_active_inverse_common.py`.
+ActiStruct expects Quantum ESPRESSO to be configured through environment variables or available in `PATH`.
 
-Check:
+Example setup:
+
+```bash
+export ESPRESSO_PSEUDO=/path/to/SSSP_1.3.0_PBE_efficiency
+export ESPRESSO_COMMAND="mpirun -np 2 pw.x"
+```
+
+Check that QE is available:
 
 ```bash
 which pw.x
-```
-
-The local benchmark configuration expects SSSP 1.3.0 PBE efficiency pseudopotentials at:
-
-```text
-/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
 ```
 
 Pseudopotential binaries are not committed. See `pseudo/README.md` and `docs/qe_setup.md`.

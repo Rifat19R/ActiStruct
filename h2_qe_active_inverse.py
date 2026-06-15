@@ -7,11 +7,11 @@ Target property:
 Before running:
     1. Install Quantum ESPRESSO and make pw.x/mpirun available in WSL PATH.
     2. Keep SSSP 1.3.0 PBE efficiency pseudopotentials available at
-       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency.
+       the directory configured by ESPRESSO_PSEUDO.
     3. Activate Python environment with numpy, matplotlib, scikit-learn, ase.
 
 Run:
-    cd /mnt/d/Rifat_kh/inverse_active
+    cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
     python h2_qe_active_inverse.py
 """
@@ -60,7 +60,7 @@ CACHE_FILE = ROOT / "h2_energy_cache_sssp_efficiency_spinref.pkl"
 CACHE_LOCK = ROOT / "h2_energy_cache_sssp_efficiency_spinref.lock"
 REPORT_FILE = REPORT_DIR / "h2_qe_active_inverse_report.txt"
 
-PSEUDO_DIR_ABS = "/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency"
+PSEUDO_DIR_ABS = os.environ.get("ESPRESSO_PSEUDO", "")
 PSEUDOPOTENTIALS = {"H": "H.pbe-rrkjus_psl.1.0.0.UPF"}
 ECUTWFC_RY = 50.0
 ECUTRHO_RY = 400.0
@@ -68,11 +68,11 @@ N_PROCS = 2
 PARALLEL_WORKERS = 2
 KPTS = (1, 1, 1)
 PW_X_CANDIDATES = [
+    os.environ.get("ESPRESSO_PW"),
     shutil.which("pw.x"),
-    "/home/alchemist/q-e/bin/pw.x",
 ]
 PW_X = next((str(Path(path)) for path in PW_X_CANDIDATES if path and Path(path).exists()), "pw.x")
-QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
+QE_COMMAND = os.environ.get("ESPRESSO_COMMAND", f"mpirun -np {N_PROCS} {PW_X}")
 # ASE's current EspressoProfile appends "-in espresso.pwi" and captures stdout
 # to espresso.pwo. This is equivalent to: mpirun -np 2 pw.x -in PREFIX.pwi > PREFIX.pwo
 
@@ -177,18 +177,13 @@ def get_qe_calculator(directory: Path, prefix: str, spin_polarized: bool = False
 
 
 def ensure_qe_environment() -> None:
-    """Fail early if QE executable or pseudopotential is missing."""
     if PW_X == "pw.x" and shutil.which("pw.x") is None:
-        raise RuntimeError(
-            "pw.x not found in PATH. Install Quantum ESPRESSO or load its module before running."
-        )
-
+        raise RuntimeError("pw.x not found in PATH. Set ESPRESSO_COMMAND or add pw.x to PATH.")
+    if not PSEUDO_DIR_ABS:
+        raise RuntimeError("Set ESPRESSO_PSEUDO to the directory containing required UPF files.")
     pseudo_path = Path(PSEUDO_DIR_ABS) / PSEUDOPOTENTIALS["H"]
     if not pseudo_path.exists():
-        raise FileNotFoundError(
-            f"Missing pseudopotential: {pseudo_path}\n"
-            "Check SSSP_1.3.0_PBE_efficiency path and H.pbe-rrkjus_psl.1.0.0.UPF."
-        )
+        raise FileNotFoundError(f"Missing H pseudopotential: {pseudo_path}")
 
 
 def cache_key_distance(r: float) -> str:

@@ -2,8 +2,8 @@
 Bulk BCC Fe
 Key: bulk_fe   Category: Simple metals (FCC, BCC)
 Variables: {'a': (2.65, 3.05)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF'}
 ecutwfc / ecutrho: 70.0 / 560.0 Ry
 kpts: (14, 14, 14)   smearing: mv 0.02 Ry
@@ -29,5 +29,5 @@ FINAL RESULT
   Best Total energy per atom objective: -4479.91006871 eV/atom
   GP uncertainty  : 0.00036779 eV/atom
   Total QE calls  : 6
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_fe_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/bulk_fe_cache.pkl
 ================================================================================

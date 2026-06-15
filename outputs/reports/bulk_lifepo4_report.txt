@@ -2,8 +2,8 @@
 LiFePO4 Model
 Key: bulk_lifepo4   Category: Battery materials
 Variables: {'a': (4.55, 4.75)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF', 'P': 'P.pbe-n-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
 ecutwfc / ecutrho: 70.0 / 560.0 Ry
 kpts: (4, 3, 2)   smearing: mv 0.02 Ry
@@ -35,5 +35,5 @@ FINAL RESULT
   Best Total energy per atom objective: -1019.92030530 eV/atom
   GP uncertainty  : 0.00000569 eV/atom
   Total QE calls  : 5
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_lifepo4_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/bulk_lifepo4_cache.pkl
 ================================================================================

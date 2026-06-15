@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-ROOT = Path("/mnt/d/Rifat_kh/inverse_active")
+ROOT = Path("<ACTISTRUCT_ROOT>")
 REPORT_DIR = ROOT / "outputs" / "reports"
 OUTPUT_DIR = ROOT / "analysis" / "outputs"
 RAW_DIR = OUTPUT_DIR / "raw"

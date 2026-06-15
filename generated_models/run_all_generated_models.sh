@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 python generated_models/bulk_al_qe_active_inverse.py
 python generated_models/bulk_cu_generated_qe_active_inverse.py
 python generated_models/bulk_ni_qe_active_inverse.py

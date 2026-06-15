@@ -2,8 +2,8 @@
 LiMnPO₄ (Orthorhombic Olivine)
 Key: bulk_limnpo4   Category: Battery materials
 Variables: {'b': (5.9, 6.3)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Mn': 'mn_pbe_v1.5.uspp.F.UPF', 'P': 'P.pbe-n-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
 ecutwfc / ecutrho: 50.0 / 400.0 Ry
 kpts: (2, 2, 2)   smearing: gaussian 0.03 Ry
@@ -27,5 +27,5 @@ FINAL RESULT
   Best Total energy per atom objective: -787.95560057 eV/atom
   GP uncertainty  : 0.00000600 eV/atom
   Total QE calls  : 4
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_limnpo4_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/bulk_limnpo4_cache.pkl
 ================================================================================

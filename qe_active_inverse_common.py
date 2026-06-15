@@ -97,21 +97,20 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 N_PROCS          = 2
 PARALLEL_WORKERS = 2
 
-PSEUDO_DIR = "/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency"
+PSEUDO_DIR = os.environ.get("ESPRESSO_PSEUDO", "")
 
 # qe_active_inverse_common.py lives in the project root.
 ROOT = Path(__file__).resolve().parent
 
 _PW_X_CANDIDATES = [
+    os.environ.get("ESPRESSO_PW"),
     shutil.which("pw.x"),
-    "/home/duets/q-e-qe-7.4.1/bin/pw.x",
-    "/home/alchemist/q-e/bin/pw.x",
 ]
 PW_X = next(
-    (str(Path(p)) for p in _PW_X_CANDIDATES if p and Path(p).exists()),
+    (str(Path(path)) for path in _PW_X_CANDIDATES if path and Path(path).exists()),
     "pw.x",
 )
-QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
+QE_COMMAND = os.environ.get("ESPRESSO_COMMAND", f"mpirun -np {N_PROCS} {PW_X}")
 QE_CONV_THR = 5e-9
 QE_MIXING_BETA = 0.3
 
@@ -820,12 +819,16 @@ def run_system(system: ActiveSystem) -> None:
     Call this from `if __name__ == '__main__':` in every wrapper script.
     """
     # ── Validate environment ──────────────────────────────────────────────────
+    if not PSEUDO_DIR:
+        raise RuntimeError(
+            "Set ESPRESSO_PSEUDO to the directory containing required UPF files."
+        )
     for elem, pseudo in system.pseudopotentials.items():
         p = Path(PSEUDO_DIR) / pseudo
         if not p.exists():
             raise FileNotFoundError(
                 f"Missing {elem} pseudopotential: {p}\n"
-                f"Check PSEUDO_DIR = {PSEUDO_DIR}"
+                f"Check ESPRESSO_PSEUDO = {PSEUDO_DIR}"
             )
 
     paths          = _paths(system)

@@ -2,8 +2,8 @@
 LiTiO2 Model
 Key: bulk_litio2   Category: Battery materials
 Variables: {'a': (3.95, 4.15)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'Li': 'li_pbe_v1.4.uspp.F.UPF', 'Ti': 'ti_pbe_v1.4.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
 ecutwfc / ecutrho: 80.0 / 640.0 Ry
 kpts: (6, 6, 3)   smearing: gaussian 0.01 Ry
@@ -28,5 +28,5 @@ FINAL RESULT
   Best Total energy per atom objective: -739.97298903 eV/atom
   GP uncertainty  : 0.00000044 eV/atom
   Total QE calls  : 4
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_litio2_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/bulk_litio2_cache.pkl
 ================================================================================

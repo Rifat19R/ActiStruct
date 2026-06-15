@@ -1,51 +1,51 @@
 key,category,material_name,dim,best_param1,best_param2,best_energy_eV_per_atom,gp_uncertainty_eV,n_qe_total,n_iterations,converged,lit_pbe_param1,lit_pbe_param2,exp_param1,exp_param2,abs_error_param1,pct_error_param1,abs_error_param2,pct_error_param2,report_file
-bulk_al,FCC metals,Al (FCC),1,4.04937,,-537.46053091,1.12e-06,4,1,True,4.042,,4.046,,0.007369999999999877,0.1823354774863898,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_al_report.txt
-bulk_cu,FCC metals,Cu (FCC),1,3.621795,,-2899.33060932,1.385e-05,6,1,True,3.634,,3.615,,0.0122049999999998,0.33585580627407263,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_cu_generated_report.txt
-bulk_ni,FCC metals,Ni (FCC),1,3.52,,-4670.57027851,5.89e-06,6,1,True,3.524,,3.524,,0.0040000000000000036,0.11350737797956878,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_ni_report.txt
-bulk_ag,FCC metals,Ag (FCC),1,4.14948,,-3909.31545987,1.95e-06,6,1,True,4.154,,4.085,,0.0045200000000003016,0.10881078478575594,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_ag_report.txt
-bulk_au,FCC metals,Au (FCC),1,4.14595,,-3737.12003209,3.23e-06,6,1,True,4.174,,4.078,,0.028050000000000352,0.6720172496406409,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_au_report.txt
-bulk_fe_bcc,BCC metals,Fe (BCC),1,2.855777,,-4479.91006871,0.00036779,6,1,True,2.832,,2.87,,0.023776999999999937,0.8395833333333311,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_fe_report.txt
-bulk_mo_bcc,BCC metals,Mo (BCC),1,3.15,,-1865.96306827,3.68e-06,6,1,True,3.168,,3.147,,0.018000000000000238,0.5681818181818257,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_mo_report.txt
-bulk_w_bcc,BCC metals,W (BCC),1,3.196028,,-2165.25263068,0.0002069,6,1,True,3.185,,3.165,,0.011028000000000038,0.3462480376766103,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_w_report.txt
-bulk_si,Semiconductors,Si (diamond),1,5.481979,,-155.37818111,1.78e-06,4,1,True,5.468,,5.431,,0.013978999999999964,0.2556510607168977,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_si_generated_report.txt
-bulk_ge,Semiconductors,Ge (diamond),1,5.734928,,-2906.86968118,5.94e-06,4,1,True,5.766,,5.658,,0.03107199999999999,0.5388831078737424,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_ge_report.txt
-bulk_gaas,Semiconductors,GaAs,1,5.745379,,-2014.84657921,1.46e-06,6,1,True,5.75,,5.653,,0.004621000000000208,0.08036521739130796,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_gaas_report.txt
-bulk_alas,Semiconductors,AlAs,1,5.731088,,-393.02601851,1.76e-06,6,1,True,5.731,,5.66,,8.799999999986596e-05,0.0015355086372337455,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_alas_report.txt
-bulk_inp,Semiconductors,InP,1,5.9396,,-1081.12228971,1.92e-06,4,1,True,5.969,,5.869,,0.02939999999999987,0.49254481487686164,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_inp_report.txt
-bulk_sic,Semiconductors,SiC,1,4.383841,,-203.36005151,9.99e-06,5,2,True,4.38,,4.36,,0.0038410000000004274,0.0876940639269504,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_sic_report.txt
-bulk_mgo,Ionic oxides,MgO,1,4.251955,,-513.87574682,2.04e-06,4,1,True,4.258,,4.211,,0.0060450000000003,0.1419680601221301,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_mgo_generated_report.txt
-bulk_cao,Ionic oxides,CaO,1,4.81064,,-795.13715087,9.1e-07,4,1,True,4.82,,4.811,,0.009360000000000035,0.19419087136929533,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_cao_report.txt
-bulk_zno,Ionic oxides,ZnO,2,3.25,5.2,-3423.78052531,1.93e-06,8,1,True,3.282,5.307,3.25,5.207,0.03200000000000003,0.9750152346130417,0.1070000000000002,2.016205012247978,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_zno_report.txt
-bulk_tio2_rutile,Ionic oxides,TiO2 rutile,2,4.59,2.9375999999999998,-920.48407242,0.00377583,6,1,True,4.653,2.97,4.594,2.958,0.06299999999999972,1.353965183752412,0.03240000000000043,1.0909090909091053,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_tio2_report.txt
-bulk_al2o3,Ionic oxides,Al2O3,1,4.650003,,-553.51630613,6.44e-06,6,1,True,4.806,,4.758,,0.15599700000000016,3.2458801498127374,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_al2o3_report.txt
-bulk_sio2,Ionic oxides,SiO2 alpha-quartz,2,5.05,5.807499999999999,-425.07754094,5.607e-05,8,1,True,5.025,5.525,4.916,5.406,0.024999999999999467,0.49751243781093457,0.28249999999999886,5.1131221719456805,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_sio2_report.txt
-graphene,2D materials,Graphene,1,2.46,,-250.9378742,8.79e-06,6,1,True,2.468,,2.461,,0.008000000000000007,0.32414910858995166,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/graphene_generated_report.txt
-hbn,2D materials,h-BN,1,2.5,,-182.13324497,3.08e-06,6,1,True,2.512,,2.504,,0.01200000000000001,0.47770700636942715,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/hbn_report.txt
-silicene,2D materials,Silicene,1,3.86,,-154.73730297,2.36e-06,6,1,True,3.866,,,,0.006000000000000227,0.1551991722710871,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/silicene_report.txt
-mos2,2D materials,MoS2,1,3.198622,,-841.17631013,2.03e-06,8,1,True,3.19,,3.16,,0.008621999999999908,0.2702821316614391,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/mos2_report.txt
-ws2,2D materials,WS2,1,3.18,,-940.85531087,2.394e-05,6,1,True,3.19,,3.153,,0.009999999999999787,0.3134796238244447,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/ws2_report.txt
-aln_2d,2D materials,2D AlN,1,3.13,,-406.95813911,5.116e-05,4,1,True,3.126,,,,0.0040000000000000036,0.12795905310300718,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/aln_2d_report.txt
-h2,Molecules,H2,1,0.74,,-31.74160104,2.894e-05,6,1,True,0.75,,0.741,,0.010000000000000009,1.3333333333333344,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/h2_generated_report.txt
-n2,Molecules,N2,1,1.1,,-549.45559437,5.112e-05,6,1,True,1.101,,1.098,,0.0009999999999998899,0.09082652134422252,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/n2_report.txt
-co,Molecules,CO,1,1.13,,-816.54078629,3.15e-05,6,1,True,1.144,,1.128,,0.014000000000000012,1.223776223776225,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/co_report.txt
-h2o,Molecules,H2O,1,0.96,,-599.19409883,1.284e-05,11,2,True,0.971,,0.958,,0.01100000000000001,1.1328527291452122,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/h2o_generated_report.txt
-nh3,Molecules,NH3,1,1.02,,-323.37492087,1.373e-05,6,1,True,1.024,,1.012,,0.0040000000000000036,0.39062500000000033,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/nh3_report.txt
-ch4,Molecules,CH4,1,1.09,,-315.70514565,1.556e-05,6,1,True,1.097,,1.087,,0.006999999999999895,0.638103919781212,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/ch4_generated_report.txt
-bulk_licoo2,Battery materials,LiCoO2,2,2.7,12.42,-1344.77219939,0.00119767,6,1,True,2.82,14.1,,,0.11999999999999966,4.255319148936159,1.6799999999999997,11.914893617021274,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_licoo2_generated_report.txt
-bulk_nacoo2,Battery materials,NaCoO2,2,2.75,9.9,-1620.58937238,1.3e-05,7,1,True,2.845,15.66,,,0.0950000000000002,3.339191564147634,5.76,36.7816091954023,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_nacoo2_report.txt
-bulk_limnpo4,Battery materials,LiMnPO4,1,5.900002,,-787.95560057,6e-06,4,1,True,5.985,,,,0.08499800000000057,1.4201837928153813,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_limnpo4_report.txt
-bulk_limn2o4,Battery materials,LiMn2O4,1,7.900003,,-1170.24562229,6.25e-06,4,1,True,8.246,,,,0.34599700000000055,4.195937424205682,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_limn2o4_report.txt
-bulk_litio2,Battery materials,LiTiO2,1,2.750001,,-735.93579369,1.067e-05,8,1,True,4.148,,,,1.3979989999999995,33.70296528447444,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_litio2_report.txt
-bulk_srtio3,Battery materials,SrTiO3,1,3.939457,,-857.49459192,1.24e-06,6,1,True,3.942,,,,0.002543000000000184,0.06451040081177534,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_srtio3_report.txt
-bulk_batio3,Battery materials,BaTiO3,1,4.000638,,-1853.46140244,4.3e-07,4,1,True,4.036,,,,0.03536199999999923,0.8761645193260463,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_batio3_report.txt
-bulk_cspbi3,Battery materials,CsPbI3,1,6.380333,,-5634.74664933,1.6e-06,4,1,True,6.296,,6.18,,0.08433299999999999,1.339469504447268,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_cspbi3_report.txt
-h_on_cu111,Surface adsorption,H/Cu(111),1,1.390254,,-34803.80098304,5.516e-05,8,1,True,1.0,,,,0.3902540000000001,39.02540000000001,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/h_on_cu111_report.txt
-o_on_cu111,Surface adsorption,O/Cu(111),1,1.3,,-35354.03004317,0.0015552,8,1,True,0.85,,,,0.45000000000000007,52.941176470588246,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/o_on_cu111_report.txt
-co_on_cu111,Surface adsorption,CO/Cu(111),1,1.8,,-35605.13445507,0.00238529,8,1,True,1.9,,,,0.09999999999999987,5.263157894736835,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/co_on_cu111_report.txt
-h_on_ni111,Surface adsorption,H/Ni(111),1,1.293956,,-56056.67128234,9.196e-05,8,1,True,1.0,,,,0.2939560000000001,29.39560000000001,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/h_on_ni111_report.txt
-o_on_ni111,Surface adsorption,O/Ni(111),1,1.3,,-56607.32766201,0.00078995,7,1,True,1.1,,,,0.19999999999999996,18.181818181818176,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/o_on_ni111_report.txt
-co_on_ni111,Surface adsorption,CO/Ni(111),1,1.375,,-56858.98925829,9.936e-05,17,4,True,1.82,,,,0.44500000000000006,24.450549450549453,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/co_on_ni111_report.txt
-h_on_pt111,Surface adsorption,H/Pt(111),1,1.571747,,-34411.22429104,0.0002104,8,1,True,1.1,,,,0.4717469999999999,42.886090909090896,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/h_on_pt111_report.txt
-co_on_pt111,Surface adsorption,CO/Pt(111),1,1.2,,-35212.58940664,0.00015659,8,1,True,1.85,,,,0.6500000000000001,35.135135135135144,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/co_on_pt111_report.txt
-bulk_nial,Heusler/intermetallic,NiAl,1,2.89,,-2604.6530633,2.41e-06,6,1,True,2.885,,2.887,,0.0050000000000003375,0.17331022530330462,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_nial_report.txt
-bulk_co2feal,Heusler/intermetallic,Co2FeAl,1,5.500009,,-3281.54411333,5.56e-06,4,1,True,5.73,,5.73,,0.22999100000000006,4.013804537521816,,,/mnt/d/Rifat_kh/inverse_active/outputs/reports/bulk_co2feal_report.txt
+bulk_al,FCC metals,Al (FCC),1,4.04937,,-537.46053091,1.12e-06,4,1,True,4.042,,4.046,,0.007369999999999877,0.1823354774863898,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_al_report.txt
+bulk_cu,FCC metals,Cu (FCC),1,3.621795,,-2899.33060932,1.385e-05,6,1,True,3.634,,3.615,,0.0122049999999998,0.33585580627407263,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_cu_generated_report.txt
+bulk_ni,FCC metals,Ni (FCC),1,3.52,,-4670.57027851,5.89e-06,6,1,True,3.524,,3.524,,0.0040000000000000036,0.11350737797956878,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_ni_report.txt
+bulk_ag,FCC metals,Ag (FCC),1,4.14948,,-3909.31545987,1.95e-06,6,1,True,4.154,,4.085,,0.0045200000000003016,0.10881078478575594,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_ag_report.txt
+bulk_au,FCC metals,Au (FCC),1,4.14595,,-3737.12003209,3.23e-06,6,1,True,4.174,,4.078,,0.028050000000000352,0.6720172496406409,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_au_report.txt
+bulk_fe_bcc,BCC metals,Fe (BCC),1,2.855777,,-4479.91006871,0.00036779,6,1,True,2.832,,2.87,,0.023776999999999937,0.8395833333333311,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_fe_report.txt
+bulk_mo_bcc,BCC metals,Mo (BCC),1,3.15,,-1865.96306827,3.68e-06,6,1,True,3.168,,3.147,,0.018000000000000238,0.5681818181818257,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_mo_report.txt
+bulk_w_bcc,BCC metals,W (BCC),1,3.196028,,-2165.25263068,0.0002069,6,1,True,3.185,,3.165,,0.011028000000000038,0.3462480376766103,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_w_report.txt
+bulk_si,Semiconductors,Si (diamond),1,5.481979,,-155.37818111,1.78e-06,4,1,True,5.468,,5.431,,0.013978999999999964,0.2556510607168977,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_si_generated_report.txt
+bulk_ge,Semiconductors,Ge (diamond),1,5.734928,,-2906.86968118,5.94e-06,4,1,True,5.766,,5.658,,0.03107199999999999,0.5388831078737424,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_ge_report.txt
+bulk_gaas,Semiconductors,GaAs,1,5.745379,,-2014.84657921,1.46e-06,6,1,True,5.75,,5.653,,0.004621000000000208,0.08036521739130796,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_gaas_report.txt
+bulk_alas,Semiconductors,AlAs,1,5.731088,,-393.02601851,1.76e-06,6,1,True,5.731,,5.66,,8.799999999986596e-05,0.0015355086372337455,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_alas_report.txt
+bulk_inp,Semiconductors,InP,1,5.9396,,-1081.12228971,1.92e-06,4,1,True,5.969,,5.869,,0.02939999999999987,0.49254481487686164,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_inp_report.txt
+bulk_sic,Semiconductors,SiC,1,4.383841,,-203.36005151,9.99e-06,5,2,True,4.38,,4.36,,0.0038410000000004274,0.0876940639269504,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_sic_report.txt
+bulk_mgo,Ionic oxides,MgO,1,4.251955,,-513.87574682,2.04e-06,4,1,True,4.258,,4.211,,0.0060450000000003,0.1419680601221301,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_mgo_generated_report.txt
+bulk_cao,Ionic oxides,CaO,1,4.81064,,-795.13715087,9.1e-07,4,1,True,4.82,,4.811,,0.009360000000000035,0.19419087136929533,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_cao_report.txt
+bulk_zno,Ionic oxides,ZnO,2,3.25,5.2,-3423.78052531,1.93e-06,8,1,True,3.282,5.307,3.25,5.207,0.03200000000000003,0.9750152346130417,0.1070000000000002,2.016205012247978,<ACTISTRUCT_ROOT>/outputs/reports/bulk_zno_report.txt
+bulk_tio2_rutile,Ionic oxides,TiO2 rutile,2,4.59,2.9375999999999998,-920.48407242,0.00377583,6,1,True,4.653,2.97,4.594,2.958,0.06299999999999972,1.353965183752412,0.03240000000000043,1.0909090909091053,<ACTISTRUCT_ROOT>/outputs/reports/bulk_tio2_report.txt
+bulk_al2o3,Ionic oxides,Al2O3,1,4.650003,,-553.51630613,6.44e-06,6,1,True,4.806,,4.758,,0.15599700000000016,3.2458801498127374,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_al2o3_report.txt
+bulk_sio2,Ionic oxides,SiO2 alpha-quartz,2,5.05,5.807499999999999,-425.07754094,5.607e-05,8,1,True,5.025,5.525,4.916,5.406,0.024999999999999467,0.49751243781093457,0.28249999999999886,5.1131221719456805,<ACTISTRUCT_ROOT>/outputs/reports/bulk_sio2_report.txt
+graphene,2D materials,Graphene,1,2.46,,-250.9378742,8.79e-06,6,1,True,2.468,,2.461,,0.008000000000000007,0.32414910858995166,,,<ACTISTRUCT_ROOT>/outputs/reports/graphene_generated_report.txt
+hbn,2D materials,h-BN,1,2.5,,-182.13324497,3.08e-06,6,1,True,2.512,,2.504,,0.01200000000000001,0.47770700636942715,,,<ACTISTRUCT_ROOT>/outputs/reports/hbn_report.txt
+silicene,2D materials,Silicene,1,3.86,,-154.73730297,2.36e-06,6,1,True,3.866,,,,0.006000000000000227,0.1551991722710871,,,<ACTISTRUCT_ROOT>/outputs/reports/silicene_report.txt
+mos2,2D materials,MoS2,1,3.198622,,-841.17631013,2.03e-06,8,1,True,3.19,,3.16,,0.008621999999999908,0.2702821316614391,,,<ACTISTRUCT_ROOT>/outputs/reports/mos2_report.txt
+ws2,2D materials,WS2,1,3.18,,-940.85531087,2.394e-05,6,1,True,3.19,,3.153,,0.009999999999999787,0.3134796238244447,,,<ACTISTRUCT_ROOT>/outputs/reports/ws2_report.txt
+aln_2d,2D materials,2D AlN,1,3.13,,-406.95813911,5.116e-05,4,1,True,3.126,,,,0.0040000000000000036,0.12795905310300718,,,<ACTISTRUCT_ROOT>/outputs/reports/aln_2d_report.txt
+h2,Molecules,H2,1,0.74,,-31.74160104,2.894e-05,6,1,True,0.75,,0.741,,0.010000000000000009,1.3333333333333344,,,<ACTISTRUCT_ROOT>/outputs/reports/h2_generated_report.txt
+n2,Molecules,N2,1,1.1,,-549.45559437,5.112e-05,6,1,True,1.101,,1.098,,0.0009999999999998899,0.09082652134422252,,,<ACTISTRUCT_ROOT>/outputs/reports/n2_report.txt
+co,Molecules,CO,1,1.13,,-816.54078629,3.15e-05,6,1,True,1.144,,1.128,,0.014000000000000012,1.223776223776225,,,<ACTISTRUCT_ROOT>/outputs/reports/co_report.txt
+h2o,Molecules,H2O,1,0.96,,-599.19409883,1.284e-05,11,2,True,0.971,,0.958,,0.01100000000000001,1.1328527291452122,,,<ACTISTRUCT_ROOT>/outputs/reports/h2o_generated_report.txt
+nh3,Molecules,NH3,1,1.02,,-323.37492087,1.373e-05,6,1,True,1.024,,1.012,,0.0040000000000000036,0.39062500000000033,,,<ACTISTRUCT_ROOT>/outputs/reports/nh3_report.txt
+ch4,Molecules,CH4,1,1.09,,-315.70514565,1.556e-05,6,1,True,1.097,,1.087,,0.006999999999999895,0.638103919781212,,,<ACTISTRUCT_ROOT>/outputs/reports/ch4_generated_report.txt
+bulk_licoo2,Battery materials,LiCoO2,2,2.7,12.42,-1344.77219939,0.00119767,6,1,True,2.82,14.1,,,0.11999999999999966,4.255319148936159,1.6799999999999997,11.914893617021274,<ACTISTRUCT_ROOT>/outputs/reports/bulk_licoo2_generated_report.txt
+bulk_nacoo2,Battery materials,NaCoO2,2,2.75,9.9,-1620.58937238,1.3e-05,7,1,True,2.845,15.66,,,0.0950000000000002,3.339191564147634,5.76,36.7816091954023,<ACTISTRUCT_ROOT>/outputs/reports/bulk_nacoo2_report.txt
+bulk_limnpo4,Battery materials,LiMnPO4,1,5.900002,,-787.95560057,6e-06,4,1,True,5.985,,,,0.08499800000000057,1.4201837928153813,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_limnpo4_report.txt
+bulk_limn2o4,Battery materials,LiMn2O4,1,7.900003,,-1170.24562229,6.25e-06,4,1,True,8.246,,,,0.34599700000000055,4.195937424205682,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_limn2o4_report.txt
+bulk_litio2,Battery materials,LiTiO2,1,2.750001,,-735.93579369,1.067e-05,8,1,True,4.148,,,,1.3979989999999995,33.70296528447444,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_litio2_report.txt
+bulk_srtio3,Battery materials,SrTiO3,1,3.939457,,-857.49459192,1.24e-06,6,1,True,3.942,,,,0.002543000000000184,0.06451040081177534,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_srtio3_report.txt
+bulk_batio3,Battery materials,BaTiO3,1,4.000638,,-1853.46140244,4.3e-07,4,1,True,4.036,,,,0.03536199999999923,0.8761645193260463,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_batio3_report.txt
+bulk_cspbi3,Battery materials,CsPbI3,1,6.380333,,-5634.74664933,1.6e-06,4,1,True,6.296,,6.18,,0.08433299999999999,1.339469504447268,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_cspbi3_report.txt
+h_on_cu111,Surface adsorption,H/Cu(111),1,1.390254,,-34803.80098304,5.516e-05,8,1,True,1.0,,,,0.3902540000000001,39.02540000000001,,,<ACTISTRUCT_ROOT>/outputs/reports/h_on_cu111_report.txt
+o_on_cu111,Surface adsorption,O/Cu(111),1,1.3,,-35354.03004317,0.0015552,8,1,True,0.85,,,,0.45000000000000007,52.941176470588246,,,<ACTISTRUCT_ROOT>/outputs/reports/o_on_cu111_report.txt
+co_on_cu111,Surface adsorption,CO/Cu(111),1,1.8,,-35605.13445507,0.00238529,8,1,True,1.9,,,,0.09999999999999987,5.263157894736835,,,<ACTISTRUCT_ROOT>/outputs/reports/co_on_cu111_report.txt
+h_on_ni111,Surface adsorption,H/Ni(111),1,1.293956,,-56056.67128234,9.196e-05,8,1,True,1.0,,,,0.2939560000000001,29.39560000000001,,,<ACTISTRUCT_ROOT>/outputs/reports/h_on_ni111_report.txt
+o_on_ni111,Surface adsorption,O/Ni(111),1,1.3,,-56607.32766201,0.00078995,7,1,True,1.1,,,,0.19999999999999996,18.181818181818176,,,<ACTISTRUCT_ROOT>/outputs/reports/o_on_ni111_report.txt
+co_on_ni111,Surface adsorption,CO/Ni(111),1,1.375,,-56858.98925829,9.936e-05,17,4,True,1.82,,,,0.44500000000000006,24.450549450549453,,,<ACTISTRUCT_ROOT>/outputs/reports/co_on_ni111_report.txt
+h_on_pt111,Surface adsorption,H/Pt(111),1,1.571747,,-34411.22429104,0.0002104,8,1,True,1.1,,,,0.4717469999999999,42.886090909090896,,,<ACTISTRUCT_ROOT>/outputs/reports/h_on_pt111_report.txt
+co_on_pt111,Surface adsorption,CO/Pt(111),1,1.2,,-35212.58940664,0.00015659,8,1,True,1.85,,,,0.6500000000000001,35.135135135135144,,,<ACTISTRUCT_ROOT>/outputs/reports/co_on_pt111_report.txt
+bulk_nial,Heusler/intermetallic,NiAl,1,2.89,,-2604.6530633,2.41e-06,6,1,True,2.885,,2.887,,0.0050000000000003375,0.17331022530330462,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_nial_report.txt
+bulk_co2feal,Heusler/intermetallic,Co2FeAl,1,5.500009,,-3281.54411333,5.56e-06,4,1,True,5.73,,5.73,,0.22999100000000006,4.013804537521816,,,<ACTISTRUCT_ROOT>/outputs/reports/bulk_co2feal_report.txt

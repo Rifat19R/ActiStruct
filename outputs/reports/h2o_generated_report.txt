@@ -2,8 +2,8 @@
 H2O Molecule
 Key: h2o_generated   Category: Molecules
 Variables: {'bond': (0.85, 1.08), 'angle': (95.0, 115.0)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
 ecutwfc / ecutrho: 60.0 / 480.0 Ry
 kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
@@ -38,5 +38,5 @@ FINAL RESULT
   Best Total energy objective: -599.19409883 eV
   GP uncertainty  : 0.00001284 eV
   Total QE calls  : 11
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/h2o_generated_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/h2o_generated_cache.pkl
 ================================================================================

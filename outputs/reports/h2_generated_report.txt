@@ -2,8 +2,8 @@
 H2 Molecule
 Key: h2_generated   Category: Molecules
 Variables: {'bond': (0.55, 1.2)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}
 ecutwfc / ecutrho: 50.0 / 400.0 Ry
 kpts: (1, 1, 1)   smearing: gaussian 0.01 Ry
@@ -29,5 +29,5 @@ FINAL RESULT
   Best Total energy objective: -31.74160104 eV
   GP uncertainty  : 0.00002894 eV
   Total QE calls  : 6
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/h2_generated_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/h2_generated_cache.pkl
 ================================================================================

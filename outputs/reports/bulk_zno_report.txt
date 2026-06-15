@@ -2,8 +2,8 @@
 Bulk Wurtzite ZnO
 Key: bulk_zno   Category: Ionic oxides
 Variables: {'a': (3.1, 3.4), 'c_over_a': (1.55, 1.7)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'Zn': 'Zn_pbe_v1.uspp.F.UPF', 'O': 'O.pbe-n-kjpaw_psl.0.1.UPF'}
 ecutwfc / ecutrho: 70.0 / 560.0 Ry
 kpts: (8, 8, 6)   smearing: gaussian 0.01 Ry
@@ -29,5 +29,5 @@ FINAL RESULT
   Best Total energy per atom objective: -3423.78052531 eV/atom
   GP uncertainty  : 0.00000193 eV/atom
   Total QE calls  : 8
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_zno_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/bulk_zno_cache.pkl
 ================================================================================

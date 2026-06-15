@@ -181,7 +181,7 @@ must use the same pseudopotential family.
 | Ba | `Ba.pbe-spn-kjpaw_psl.1.0.0.UPF` | — | PAW |
 | Mn | `Mn.pbe-spn-kjpaw_psl.0.3.1.UPF` | — | PAW, use spin |
 
-> **Before generating a script:** verify the exact filename exists with `ls /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency/<filename>`.
+> **Before generating a script:** verify the exact filename exists with `ls <PSEUDO_DIR>/<filename>`.
 
 ---
 
@@ -506,9 +506,9 @@ Literature sources to cite:
 ## 16. Paths (Do Not Change)
 
 ```
-Project root:    /mnt/d/Rifat_kh/inverse_active
-Pseudo dir:      /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
-pw.x binary:     /home/duets/q-e-qe-7.4.1/bin/pw.x
+Project root:    <ACTISTRUCT_ROOT>
+Pseudo dir:      <PSEUDO_DIR>
+pw.x binary:     <PW_X>
 venv activate:   source .venv/bin/activate
 ```
 

@@ -17,7 +17,8 @@ input_tmp.in
 # Local office/spreadsheet scratch; keep curated manuscript docs explicitly.
 *.xlsx
 *.xls
-!inverse_active_supporting_results_Aplus.docx
+*supporting_results*.docx
+!ActiStruct_supporting_results.docx
 
 # Pseudopotential binaries are external assets.
 pseudo/*.upf
@@ -53,7 +54,3 @@ generated_models.zip
 # Local scratch notes and duplicate drafts not intended for release.
 md to code.txt
 Target mateirals for testing.png
-inverse_active_supporting_results.docx
-inverse_active_supporting_results_v2.docx
-!inverse_active_supporting_results_Aplus.docx
-!ActiStruct Active-Learning Inverse Design for DFT Structure Optimization.docx

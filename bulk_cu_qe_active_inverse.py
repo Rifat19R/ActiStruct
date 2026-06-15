@@ -8,7 +8,7 @@ System:
     FCC copper conventional cubic cell = 4 atoms.
 
 Run:
-    cd /mnt/d/Rifat_kh/inverse_active
+    cd <ACTISTRUCT_ROOT>
     source .venv/bin/activate
     python bulk_cu_qe_active_inverse.py
 """
@@ -58,7 +58,7 @@ CACHE_FILE = ROOT / "bulk_cu_4_qe_energy_cache_sssp_efficiency.pkl"
 CACHE_LOCK = ROOT / "bulk_cu_4_qe_energy_cache_sssp_efficiency.lock"
 REPORT_FILE = REPORT_DIR / "bulk_cu_4_qe_active_inverse_report.txt"
 
-PSEUDO_DIR_ABS = "/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency"
+PSEUDO_DIR_ABS = os.environ.get("ESPRESSO_PSEUDO", "")
 # SSSP 1.3.0 PBE efficiency folder on this machine contains this Cu PAW pseudo.
 # It has z_valence=11, so Cu 3d electrons are included.
 # The markdown names Cu.pbe-dn-rrkjus_psl.1.0.0.UPF, but that file is not present there.
@@ -69,11 +69,11 @@ KPTS = (12, 12, 12)
 N_PROCS = 2
 PARALLEL_WORKERS = 2
 PW_X_CANDIDATES = [
+    os.environ.get("ESPRESSO_PW"),
     shutil.which("pw.x"),
-    "/home/alchemist/q-e/bin/pw.x",
 ]
 PW_X = next((str(Path(path)) for path in PW_X_CANDIDATES if path and Path(path).exists()), "pw.x")
-QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
+QE_COMMAND = os.environ.get("ESPRESSO_COMMAND", f"mpirun -np {N_PROCS} {PW_X}")
 RY_TO_EV = 13.605693122994
 
 
@@ -164,7 +164,9 @@ def get_qe_calculator(directory: Path, prefix: str) -> Espresso:
 
 def ensure_qe_environment() -> None:
     if PW_X == "pw.x" and shutil.which("pw.x") is None:
-        raise RuntimeError("pw.x not found in PATH and /home/alchemist/q-e/bin/pw.x does not exist.")
+        raise RuntimeError("pw.x not found in PATH. Set ESPRESSO_COMMAND or add pw.x to PATH.")
+    if not PSEUDO_DIR_ABS:
+        raise RuntimeError("Set ESPRESSO_PSEUDO to the directory containing required UPF files.")
     pseudo_path = Path(PSEUDO_DIR_ABS) / PSEUDOPOTENTIALS["Cu"]
     if not pseudo_path.exists():
         raise FileNotFoundError(f"Missing Cu pseudopotential: {pseudo_path}")

@@ -2,8 +2,8 @@
 Bulk FCC Ag
 Key: bulk_ag   Category: Simple metals (FCC, BCC)
 Variables: {'a': (3.9, 4.3)}
-QE command:       mpirun -np 2 /home/duets/q-e-qe-7.4.1/bin/pw.x
-Pseudo dir:       /mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+QE command:       configured by ESPRESSO_COMMAND
+Pseudo dir:       configured by ESPRESSO_PSEUDO
 Pseudopotentials: {'Ag': 'Ag_ONCV_PBE-1.0.oncvpsp.upf'}
 ecutwfc / ecutrho: 60.0 / 480.0 Ry
 kpts: (12, 12, 12)   smearing: mv 0.02 Ry
@@ -29,5 +29,5 @@ FINAL RESULT
   Best Total energy per atom objective: -3909.31545987 eV/atom
   GP uncertainty  : 0.00000195 eV/atom
   Total QE calls  : 6
-  Cache file      : /mnt/d/Rifat_kh/inverse_active/bulk_ag_cache.pkl
+  Cache file      : <ACTISTRUCT_ROOT>/bulk_ag_cache.pkl
 ================================================================================

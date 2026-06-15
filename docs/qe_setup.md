@@ -3,23 +3,23 @@
 ## WSL Environment
 
 ```bash
-cd /mnt/d/Rifat_kh/inverse_active
+cd <ACTISTRUCT_ROOT>
 source .venv/bin/activate
 which pw.x
 ```
 
-Scripts also fall back to:
+Configure QE with environment variables when `pw.x` is not already in `PATH`:
 
-```text
-/home/alchemist/q-e/bin/pw.x
+```bash
+export ESPRESSO_COMMAND="mpirun -np 2 /path/to/pw.x"
 ```
 
 ## Pseudopotentials
 
-QE scripts use SSSP 1.3.0 PBE efficiency pseudopotentials:
+QE scripts use SSSP 1.3.0 PBE efficiency pseudopotentials. Point ActiStruct to your local UPF directory:
 
-```text
-/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+```bash
+export ESPRESSO_PSEUDO=/path/to/SSSP_1.3.0_PBE_efficiency
 ```
 
 | Workflow | Pseudopotential |
