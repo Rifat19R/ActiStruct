@@ -154,6 +154,11 @@ The final QE objectives are useful for ranking candidates within each system. Ab
 
 If ActiStruct supports your work, please cite the repository metadata in `CITATION.cff`. Update the DOI after archival release.
 
+## Acknowledgments
+The development of nebwalk benefited from selective AI-assisted support using Claude and OpenAI Codex/ChatGPT for code review, debugging guidance, documentation refinement, and release-workflow cleanup.
+
+The scientific direction, algorithmic design, implementation decisions, validation strategy, benchmark interpretation, and release responsibility remain fully maintained by Md. Rifat Khandaker. AI tools were used only as auxiliary development aids to improve clarity, review consistency, and workflow efficiency.
+
 ## License
 
 MIT License. See `LICENSE`.
