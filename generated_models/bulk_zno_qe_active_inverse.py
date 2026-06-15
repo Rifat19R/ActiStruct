@@ -35,7 +35,7 @@ SYSTEM = ActiveSystem(
     n_candidates=81,
     random_state=117,
     category='Ionic oxides',
-    notes="Total-energy-only objective for the generated 50-system benchmark.",
+    notes="Total-energy-only objective for the generated 51-system benchmark.",
 )
 
 

@@ -51,7 +51,7 @@ See:
 ```text
 ActiStruct/
 |-- qe_active_inverse_common.py          # shared active-learning QE engine
-|-- generated_models/                    # generated benchmark scripts and runner
+|-- generated_models/                    # generated benchmark scripts and canonical runner
 |-- examples/manual_qe/                  # standalone manual QE examples
 |-- analysis/                            # result extraction and manuscript helpers
 |-- docs/                                # setup notes and original specifications

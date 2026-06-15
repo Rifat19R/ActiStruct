@@ -35,7 +35,7 @@ SYSTEM = ActiveSystem(
     n_candidates=61,
     random_state=122,
     category='2D materials',
-    notes="Total-energy-only objective for the generated 50-system benchmark.",
+    notes="Total-energy-only objective for the generated 51-system benchmark.",
 )
 
 

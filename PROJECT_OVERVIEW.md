@@ -4,7 +4,7 @@
 
 `inverse_active` is a research codebase for active-learning inverse design of atomistic structures using Python, ASE, Gaussian-process surrogate modeling, and Quantum ESPRESSO. The central idea is simple but powerful: instead of scanning a large number of structural parameters with expensive DFT calculations, the model learns from a small number of DFT evaluations, estimates uncertainty, and chooses the next most informative structure to calculate.
 
-The project has already been demonstrated on a 50-system benchmark spanning metals, semiconductors, ionic oxides, 2D materials, molecules, battery materials, surface adsorption systems, and intermetallics. This makes it more than a single-case demonstration. It is a general workflow for testing whether active learning can guide DFT-based structural optimization across chemically different material classes.
+The project has already been demonstrated on a 51-system benchmark spanning metals, semiconductors, ionic oxides, 2D materials, molecules, battery materials, surface adsorption systems, and intermetallics. This makes it more than a single-case demonstration. It is a general workflow for testing whether active learning can guide DFT-based structural optimization across chemically different material classes.
 
 In its current state, the full 50-structure benchmark has been run once and analyzed. The first validation pass identified 12 structures with more than 5% mismatch against literature structural values. Those 12 input definitions were then corrected using literature-aligned structural ranges and stricter Quantum ESPRESSO settings. Three corrected reruns are confirmed in the current report directory; the remaining nine corrected reruns still need to be completed before the final updated statistics are regenerated.
 
@@ -79,7 +79,7 @@ For the corrected outlier systems, the input ranges and numerical settings were 
 
 ## Benchmark Scope
 
-The generated benchmark contains 50 systems in the following categories:
+The generated benchmark contains 51 systems in the following categories:
 
 | Category | Systems |
 | --- | ---: |
@@ -121,11 +121,11 @@ analysis/outputs/
 
 ## First 50-System Validation Pass
 
-The first full benchmark pass produced report files for all 50 systems. The analysis scripts parsed those reports and generated summary tables and figures.
+The first full benchmark pass produced report files for all 51 systems. The analysis scripts parsed those reports and generated summary tables and figures.
 
-From the current analysis outputs for the initial 50-system pass:
+From the current analysis outputs for the initial 51-system pass:
 
-- Reports parsed: 50/50 systems.
+- Reports parsed: 50/51 systems.
 - Convergence rate: 100% according to the implemented convergence criterion.
 - Mean number of QE calls: about 6.3 per system.
 - Initial overall mean absolute error vs PBE structural references: 6.36%.
@@ -144,7 +144,7 @@ This is an important result: the active-learning workflow is already accurate fo
 
 ## Outlier Diagnosis and Correction
 
-After the initial 50-system pass, 12 systems were identified with more than 5% mismatch against the literature structural references:
+After the initial 51-system pass, 12 systems were identified with more than 5% mismatch against the literature structural references:
 
 ```text
 o_on_cu111
@@ -221,7 +221,7 @@ After that, the analysis tables and figures should be regenerated so the final s
 The model is powerful as a proof-of-concept because it has already shown four important capabilities:
 
 1. **Generality**  
-   It is not limited to one molecule or one crystal. It has been applied to 50 systems across many material classes.
+   It is not limited to one molecule or one crystal. It has been applied to 51 systems across many material classes.
 
 2. **Data efficiency**  
    The initial benchmark converged with about 6.3 QE calls per system on average. That is far smaller than a dense brute-force grid for each structure.
@@ -240,7 +240,7 @@ This project is scientifically strong because it combines:
 
 - A real DFT backend rather than only a toy surrogate.
 - A reproducible active-learning loop.
-- A chemically diverse 50-system benchmark.
+- A chemically diverse 51-system benchmark.
 - Automatic reporting, plotting, and analysis.
 - Literature-based validation targets.
 - A clear correction pathway for outliers.
@@ -299,14 +299,14 @@ python analysis/preflight_check.py
 
 ## Suggested Message to a Professor
 
-This project implements an active-learning inverse-design workflow for DFT-based atomistic structure optimization. It combines ASE, Quantum ESPRESSO, Gaussian-process regression, uncertainty-guided sampling, and differential-evolution inverse proposals. The workflow has been demonstrated on a 50-system benchmark covering metals, semiconductors, oxides, 2D materials, molecules, battery materials, surface adsorption systems, and intermetallics. The first full pass converged for all 50 systems with a small average number of QE calculations, and the analysis identified 12 outliers where the input domains did not fully match literature validation targets. Those 12 systems have now been corrected with literature-aligned parameter ranges and stricter QE settings, and the corrected reruns are in progress. The project is therefore a strong proof-of-concept for data-efficient, uncertainty-aware DFT structural optimization, with a clear path toward publication-quality validation after the corrected reruns and final analysis refresh.
+This project implements an active-learning inverse-design workflow for DFT-based atomistic structure optimization. It combines ASE, Quantum ESPRESSO, Gaussian-process regression, uncertainty-guided sampling, and differential-evolution inverse proposals. The workflow has been demonstrated on a 51-system benchmark covering metals, semiconductors, oxides, 2D materials, molecules, battery materials, surface adsorption systems, and intermetallics. The first full pass converged for all 51 systems with a small average number of QE calculations, and the analysis identified 12 outliers where the input domains did not fully match literature validation targets. Those 12 systems have now been corrected with literature-aligned parameter ranges and stricter QE settings, and the corrected reruns are in progress. The project is therefore a strong proof-of-concept for data-efficient, uncertainty-aware DFT structural optimization, with a clear path toward publication-quality validation after the corrected reruns and final analysis refresh.
 
 ## Key Files
 
 | File or directory | Purpose |
 | --- | --- |
 | `qe_active_inverse_common.py` | Shared active-learning and inverse-design engine. |
-| `generated_models/` | 50 generated benchmark wrappers. |
+| `generated_models/` | 51 generated benchmark wrappers. |
 | `generated_models/structure_builders.py` | Reusable ASE builders for generated systems. |
 | `analysis/publication_data.py` | Literature references, parser logic, and validation metadata. |
 | `analysis/` | Result extraction, tables, figures, SI generation, and preflight checks. |
@@ -318,4 +318,4 @@ This project implements an active-learning inverse-design workflow for DFT-based
 
 ## Bottom Line
 
-`inverse_active` is now a substantial working research prototype. It has moved from single-example active learning to a broad 50-system DFT benchmark. The model has proven that it can run, learn, converge, and diagnose errors across diverse atomistic systems. The remaining task is to finish the corrected 12-system rerun and regenerate the final analysis outputs. Once that is done, the project will be much stronger as a GitHub repository, professor-facing research demonstration, and foundation for a manuscript.
+`inverse_active` is now a substantial working research prototype. It has moved from single-example active learning to a broad 51-system DFT benchmark. The model has proven that it can run, learn, converge, and diagnose errors across diverse atomistic systems. The remaining task is to finish the corrected 12-system rerun and regenerate the final analysis outputs. Once that is done, the project will be much stronger as a GitHub repository, professor-facing research demonstration, and foundation for a manuscript.

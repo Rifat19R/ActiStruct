@@ -1,4 +1,4 @@
-"""Reusable ASE structure builders for the generated 50-system benchmark."""
+"""Reusable ASE structure builders for the generated 51-system benchmark."""
 
 from __future__ import annotations
 
