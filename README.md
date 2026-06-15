@@ -11,6 +11,7 @@ ActiStruct is a research workflow for active-learning inverse design of atomisti
 - Shared active-learning engine: `qe_active_inverse_common.py`
 - 51 generated QE benchmark workflows: `generated_models/`
 - Standalone manual QE examples: `examples/manual_qe/`
+- Direct QE/PBE grid-validation tools: `analysis/direct_grid_validation.py`
 - Structure builders for molecules, crystals, 2D materials, cathode models, and adsorption systems
 - Completed benchmark reports: `outputs/reports/`
 - Convergence and surrogate plots: `outputs/plots/`
@@ -130,12 +131,41 @@ Run one script directly:
 bash run.sh one generated_models/bulk_litio2_qe_active_inverse.py
 ```
 
+The generated benchmark can also be launched from inside `generated_models/`:
+
+```bash
+cd generated_models
+bash run.sh all
+bash run.sh one bulk_mgo_generated_qe_active_inverse.py
+```
+
 Logs are written to `run_logs/`. Runtime caches are written to `outputs/cache/`. Final reports and plots are written to:
 
 ```text
 outputs/reports/
 outputs/plots/
 ```
+
+## Direct Grid Validation
+
+Direct QE/PBE grid validations are managed by:
+
+```bash
+python analysis/direct_grid_validation.py dry-run
+python analysis/direct_grid_validation.py summarize
+```
+
+Completed local direct-grid checks:
+
+| System | Grid | Status | Delta vs AL |
+| --- | ---: | --- | ---: |
+| Cu FCC | 20/20 | pass | 0.000198 eV/atom |
+| MoS2 monolayer | 49/49 | pass | 0.000916 eV/atom |
+| Rocksalt MgO | 20/20 | pass | 0.000157 eV/atom |
+| Diamond Si | 20/20 | pass | 0.000233 eV/atom |
+
+See `analysis/DIRECT_GRID_VALIDATION.md` and
+`analysis/outputs/raw/direct_grid_validations.csv`.
 
 ## Tests
 
@@ -144,6 +174,7 @@ Smoke tests do not launch QE:
 ```bash
 source .venv/bin/activate
 python tests/test_builders_and_config.py
+python tests/test_generated_workflows.py
 ```
 
 ## Results Interpretation

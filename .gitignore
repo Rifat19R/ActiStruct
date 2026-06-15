@@ -55,3 +55,10 @@ generated_models.zip
 # Local scratch notes and duplicate drafts not intended for release.
 md to code.txt
 Target mateirals for testing.png
+
+# Local-only direct-grid bookkeeping.
+analysis/outputs/raw/direct_grid_validations_internal.csv
+analysis/outputs/raw/direct_grid/bulk_fe_spin_grid.csv
+analysis/outputs/raw/direct_grid/bulk_licoo2_matched_grid.csv
+analysis/outputs/raw/direct_grid/o_on_ni111_height_grid.csv
+analysis/outputs/raw/direct_grid/co_on_pt111_height_grid.csv

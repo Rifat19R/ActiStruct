@@ -2,7 +2,7 @@
 
 ## Abstract
 
-We present an automated active-learning workflow for total-energy optimization across a 51-workflow benchmark spanning simple metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery-relevant crystals, adsorbate/surface geometries, and intermetallics. The workflow couples ASE structure generation, Quantum ESPRESSO single-point calculations with SSSP 1.3.0 PBE efficiency pseudopotentials, Gaussian-process surrogate modeling, and lower-confidence-bound acquisition optimized with differential evolution. Parsed reports are available for 50 of 51 workflows. Across the current report set, all systems reached the implemented convergence criterion, requiring 6.3 QE evaluations on average. The primary optimized structural parameter has an overall mean absolute deviation of 6.36% from the PBE literature references, with substantially lower errors for the conventional bulk and molecular subsets and larger deviations for prototype battery and surface-height models. The present draft is therefore positioned as a reproducible workflow and data-efficiency benchmark, with the prototype categories identified as requiring careful reference conventions before manuscript-level quantitative claims.
+We present an automated active-learning workflow for total-energy optimization across a 51-workflow benchmark spanning simple metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery-relevant crystals, surface structure-search geometries, and intermetallics. The workflow couples ASE structure generation, Quantum ESPRESSO single-point calculations with SSSP 1.3.0 PBE efficiency pseudopotentials, Gaussian-process surrogate modeling, and lower-confidence-bound acquisition optimized with differential evolution. Parsed reports are available for 51 of 51 workflows. Across the current report set, all systems reached the implemented convergence criterion, requiring 6.3 QE evaluations on average. The primary optimized structural parameter has an overall mean absolute deviation of 6.36% from the PBE literature references, with substantially lower errors for the conventional bulk and molecular subsets and larger deviations for prototype battery and surface-height models. The present draft is therefore positioned as a reproducible workflow and data-efficiency benchmark, with the prototype categories identified as requiring careful reference conventions before manuscript-level quantitative claims.
 
 ## 1. Introduction
 
@@ -26,7 +26,7 @@ The cleaned benchmark uses total-energy or total-energy-per-atom objectives only
 
 ## 3. Benchmark Set
 
-The benchmark contains 50 target systems grouped into metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery materials, surface adsorption geometries, and intermetallics. The material list and literature references are encoded in `analysis/publication_data.py`, and the raw extracted values are written to `analysis/outputs/raw/all_results.csv`.
+The benchmark contains 51 target workflows grouped into metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery materials, surface structure-search geometries, and intermetallics. The material list and literature references are encoded in `analysis/publication_data.py`, and the raw extracted values are written to `analysis/outputs/raw/all_results.csv`.
 
 - FCC metals: N=5, MAE vs PBE=0.28%, mean QE calls=5.6, converged=100%.
 - BCC metals: N=3, MAE vs PBE=0.58%, mean QE calls=6.0, converged=100%.
@@ -50,15 +50,15 @@ Figure 3 compares the optimized primary structural parameter against the PBE lit
 
 ### 4.3 Data Efficiency
 
-Figure 4 compares the active-learning call counts with an exhaustive post-hoc grid baseline of 20 points for 1D systems and 49 points for 2D systems. The mean call saving over the benchmark is 70.8%. This figure should be interpreted as a computational-cost comparison for the implemented search ranges rather than a replacement for the three real QE grid validations. The generated validation scripts for Cu, LiCoO2, and MoS2 are located in `analysis/run_grid_cu.py`, `analysis/run_grid_licoo2.py`, and `analysis/run_grid_mos2.py`; those jobs require manual execution because they launch QE.
+Figure 4 compares the active-learning call counts with an exhaustive post-hoc grid baseline of 20 points for 1D systems and 49 points for 2D systems. The mean call saving over the benchmark is 70.8%. This figure should be interpreted as a computational-cost comparison for the implemented search ranges. Direct QE/PBE grid validations are handled by `analysis/direct_grid_validation.py`, which reuses the production wrappers and writes `analysis/outputs/raw/direct_grid_validations.csv`.
 
 ### 4.4 Category-Level Error Patterns
 
 Figure 5 summarizes errors by category. The high surface-adsorption errors arise because the current simplified models optimize adsorption height using total energy without reporting true adsorption energies or fully relaxed site-specific geometries. The battery-material deviations are dominated by prototype cells that do not yet reproduce the full crystallographic degrees of freedom of the cited structures. These limitations do not invalidate the pipeline demonstration, but they should be addressed before claiming quantitative structural benchmarking for those categories.
 
-### 4.5 Real Grid Validation Status
+### 4.5 Direct QE/PBE Grid Validation Status
 
-Figure 6 is a placeholder until the three manual QE grid validation jobs are run. After those CSV files are generated, `analysis/compare_grid_validation.py` will compare the grid minima against the active-learning minima and report whether they agree within 1 meV/atom.
+Direct grid validations compare active-learning minima with uniform QE/PBE grid minima using 20 points for 1D systems and 49 points for 2D systems. Four validations are completed and pass the 1 meV/atom criterion: Cu FCC, MoS2 monolayer, rocksalt MgO, and diamond Si. The completed deltas are 0.000198 eV/atom for Cu, 0.000916 eV/atom for MoS2, 0.000157 eV/atom for MgO, and 0.000233 eV/atom for Si. The spin-polarized Fe grid is also complete, but it is not compared against the existing non-spin AL report because the spin treatment differs. Production-matched LiCoO2, O/Ni(111), and CO/Pt(111) grids are configured in the same runner for longer QE jobs. O/Ni(111) and CO/Pt(111) require compatible active-learning reference reports before a pass/fail comparison is meaningful, because their older report minima are outside the current production wrapper bounds.
 
 ## 5. Conclusions
 
@@ -71,7 +71,7 @@ The current preflight check reports two blockers:
 1. The 24-reference scalar subset is useful for sanity checking, but the full 51-workflow set should not be described as fully literature-validated without additional reference curation.
 2. `pdflatex` is not available in the current environment, so LaTeX table compilation could not be tested.
 
-All required CSV files, the six main figures, the three LaTeX table files, the 50 SI figures, `CITATION.cff`, and `requirements.txt` are present.
+All required CSV files, the six main figures, the three LaTeX table files, the SI figures, `CITATION.cff`, `requirements.txt`, and `environment.yml` are present.
 
 ## Associated Content
 

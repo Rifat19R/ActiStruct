@@ -1,0 +1,5 @@
+system,label,dim,grid_points,completed_grid_points,AL_calls,grid_min_energy,AL_min_energy,delta_eV_per_atom,pass_fail,grid_min_params,AL_min_params,energy_units,notes
+bulk_cu,Cu FCC,1,20,20,6,-2899.330807585298,-2899.330609320000,0.000198265298,pass,a=3.626316,a=3.621795,eV/atom,
+mos2,MoS2 monolayer,2,49,49,8,-841.175393717630,-841.176310130000,0.000916412370,pass,a=3.216667 layer_half_thickness=1.575000,a=3.198622 layer_half_thickness=1.589480,eV/atom,
+bulk_mgo,Rocksalt MgO,1,20,20,4,-513.875590180466,-513.875746820000,0.000156639534,pass,a=4.257895,a=4.251955,eV/atom,
+bulk_si_optional,Diamond Si,1,20,20,4,-155.378414568375,-155.378181110000,0.000233458375,pass,a=5.473684,a=5.481979,eV/atom,

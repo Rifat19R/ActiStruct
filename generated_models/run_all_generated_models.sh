@@ -76,6 +76,9 @@ ADSORPTION=(
 
 run_script() {
   local script="$1"
+  if [[ ! -f "$script" && -f "generated_models/$script" ]]; then
+    script="generated_models/$script"
+  fi
   if [[ ! -f "$script" ]]; then
     echo "Missing script: $script" >&2
     return 2
@@ -100,6 +103,8 @@ usage() {
 Usage:
   bash run.sh [all|solids|two-d|molecules|battery|adsorption]
   bash run.sh one generated_models/<script>.py
+  bash generated_models/run.sh [all|solids|two-d|molecules|battery|adsorption]
+  bash generated_models/run.sh one <script>.py
 
 Direct generated-suite runner:
   bash generated_models/run_all_generated_models.sh all

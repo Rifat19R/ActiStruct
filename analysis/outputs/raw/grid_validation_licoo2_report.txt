@@ -1,2 +1,0 @@
-Best: {'a': 2.7, 'c': 12.42, 'c_over_a': np.float64(4.6), 'energy_eV_per_atom': -1344.7721993856362}
-Total grid calls: 49
