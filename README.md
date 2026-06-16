@@ -210,7 +210,7 @@ quantitative adsorption energies, unless an explicit clean-slab plus adsorbate
 reference calculation is enabled.
 
 The strongest validation signal in this repository is structural parameter
-recovery for the documented 24-check subset and successful convergence across
+recovery for the documented 23-check subset and successful convergence across
 a chemically diverse benchmark set.
 
 ## Citation
