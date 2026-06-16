@@ -1,10 +1,18 @@
 # ActiStruct: Active-Learning Inverse Design for DFT Structure Optimization
 
-ActiStruct is a research workflow for active-learning inverse design of atomistic structures with Quantum ESPRESSO, ASE, Gaussian-process surrogate models, and differential-evolution acquisition. It is designed to reduce the number of expensive DFT evaluations needed to locate low-energy structural parameters across molecules, bulk crystals, two-dimensional materials, battery materials, and surface adsorption systems.
+ActiStruct is a research workflow for active-learning inverse design of
+atomistic structures with Quantum ESPRESSO, ASE, Gaussian-process surrogate
+models, and differential-evolution acquisition.
+
+It is designed to reduce the number of expensive DFT evaluations needed to
+locate low-energy structural parameters across molecules, bulk crystals,
+two-dimensional materials, battery materials, and surface adsorption systems.
 
 ## Topics
 
-`inverse-design` `active-learning` `dft` `quantum-espresso` `ase` `gaussian-process` `bayesian-optimization` `materials-science` `atomistic-simulation` `structure-optimization`
+`inverse-design` `active-learning` `dft` `quantum-espresso` `ase`
+`gaussian-process` `bayesian-optimization` `materials-science`
+`atomistic-simulation` `structure-optimization`
 
 ## What Is Included
 
@@ -17,7 +25,9 @@ ActiStruct is a research workflow for active-learning inverse design of atomisti
 - Convergence and surrogate plots: `outputs/plots/`
 - JCTC-style results draft: `outputs/reports/ACTISTRUCT_RESULTS_DRAFT.md`
 
-Raw Quantum ESPRESSO scratch directories are local reproducibility artifacts and are ignored by git by default. Final reports and plots are kept in the repository.
+Raw Quantum ESPRESSO scratch directories are local reproducibility artifacts
+and are ignored by git by default. Final reports and plots are kept in the
+repository.
 
 ## Method Summary
 
@@ -27,11 +37,16 @@ ActiStruct uses a compact loop:
 initial structures -> QE labels -> Gaussian process -> active learning -> inverse proposal -> QE labels
 ```
 
-For each system, a small set of initial structural parameters is evaluated with QE through ASE. A Gaussian-process model is trained on the labeled data, uncertain candidates are selected for active learning, and differential evolution proposes low-energy candidates through a lower-confidence-bound acquisition function. Caches prevent repeated QE calculations.
+For each system, a small set of initial structural parameters is evaluated
+with QE through ASE. A Gaussian-process model is trained on the labeled data,
+uncertain candidates are selected for active learning, and differential
+evolution proposes low-energy candidates through a lower-confidence-bound
+acquisition function. Caches prevent repeated QE calculations.
 
 ## Current Output Status
 
-The local benchmark set contains 51 generated workflows, and the repository keeps only those 51 final benchmark reports.
+The local benchmark set contains 51 generated workflows, and the repository
+keeps only those 51 final benchmark reports.
 
 Summary from the local reports:
 
@@ -39,7 +54,9 @@ Summary from the local reports:
 - Generated benchmark reports with `FINAL RESULT`: 51 / 51
 - Total final report files: 51
 - Total final reports: 51 / 51
-- Structural sanity subset: 24 scalar checks show about 0.68% mean absolute percentage deviation; this is not a claim that all 51 workflows are fully literature-validated
+- Structural sanity subset: 24 scalar checks show about 0.68% mean absolute
+  percentage deviation; this is not a claim that all 51 workflows are fully
+  literature-validated
 
 See:
 
@@ -90,7 +107,8 @@ Required Python packages:
 
 ## Quantum ESPRESSO Setup
 
-ActiStruct expects Quantum ESPRESSO to be configured through environment variables or available in `PATH`.
+ActiStruct expects Quantum ESPRESSO to be configured through environment
+variables or available in `PATH`.
 
 Example setup:
 
@@ -105,7 +123,8 @@ Check that QE is available:
 which pw.x
 ```
 
-Pseudopotential binaries are not committed. See `pseudo/README.md` and `docs/qe_setup.md`.
+Pseudopotential binaries are not committed. See `pseudo/README.md` and
+`docs/qe_setup.md`.
 
 ## Running Benchmarks
 
@@ -139,7 +158,8 @@ bash run.sh all
 bash run.sh one bulk_mgo_generated_qe_active_inverse.py
 ```
 
-Logs are written to `run_logs/`. Runtime caches are written to `outputs/cache/`. Final reports and plots are written to:
+Logs are written to `run_logs/`. Runtime caches are written to
+`outputs/cache/`. Final reports and plots are written to:
 
 ```text
 outputs/reports/
@@ -179,14 +199,31 @@ python tests/test_generated_workflows.py
 
 ## Results Interpretation
 
-The final QE objectives are useful for ranking candidates within each system. Absolute total energies should not be compared directly to literature unless pseudopotentials, cutoffs, spin state, DFT+U treatment, smearing, Hubbard corrections, and reference-energy conventions match. Surface entries should be read as structure-search objective energies, not quantitative adsorption energies, unless an explicit clean-slab plus adsorbate reference calculation is enabled. The strongest validation signal in this repository is structural parameter recovery for the documented 24-check subset and successful convergence across a chemically diverse benchmark set.
+The final QE objectives are useful for ranking candidates within each system.
+Absolute total energies should not be compared directly to literature unless
+pseudopotentials, cutoffs, spin state, DFT+U treatment, smearing, Hubbard
+corrections, and reference-energy conventions match.
+
+Surface entries should be read as structure-search objective energies, not
+quantitative adsorption energies, unless an explicit clean-slab plus adsorbate
+reference calculation is enabled.
+
+The strongest validation signal in this repository is structural parameter
+recovery for the documented 24-check subset and successful convergence across
+a chemically diverse benchmark set.
 
 ## Citation
 
-If ActiStruct supports your work, please cite the repository metadata in `CITATION.cff`. Update the DOI after archival release.
+If ActiStruct supports your work, please cite the repository metadata in
+`CITATION.cff`. Update the DOI after archival release.
 
 ## Acknowledgments
-ActiStruct was developed with selective AI-assisted support for code review, debugging guidance, documentation refinement, and release-workflow cleanup. Scientific direction, algorithmic design, implementation decisions, validation strategy, benchmark interpretation, and release responsibility remain with the project maintainer.
+
+ActiStruct was developed with selective AI-assisted support for code review,
+debugging guidance, documentation refinement, and release-workflow cleanup.
+Scientific direction, algorithmic design, implementation decisions, validation
+strategy, benchmark interpretation, and release responsibility remain with the
+project maintainer.
 
 ## License
 
