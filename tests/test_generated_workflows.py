@@ -72,7 +72,7 @@ def assert_system_is_valid(module_name: str) -> None:
 
 def test_all_generated_workflows_import_and_build() -> None:
     modules = generated_workflow_modules()
-    assert len(modules) == 51
+    assert len(modules) == 50
     for module_name in modules:
         assert_system_is_valid(module_name)
 

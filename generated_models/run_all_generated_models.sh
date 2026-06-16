@@ -52,7 +52,6 @@ MOLECULES=(
 BATTERY=(
   generated_models/bulk_licoo2_generated_qe_active_inverse.py
   generated_models/bulk_nacoo2_qe_active_inverse.py
-  generated_models/bulk_lifepo4_qe_active_inverse.py
   generated_models/bulk_limn2o4_qe_active_inverse.py
   generated_models/bulk_limnpo4_qe_active_inverse.py
   generated_models/bulk_litio2_qe_active_inverse.py

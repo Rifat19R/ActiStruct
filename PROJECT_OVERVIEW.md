@@ -2,9 +2,9 @@
 
 ## Current State
 
-ActiStruct is a research codebase for active-learning inverse design of atomistic structures with Python, ASE, Gaussian-process surrogate modeling, differential-evolution acquisition, and Quantum ESPRESSO. The repository currently contains 51 generated workflow scripts and 51 final text reports. The public repository lists only the completed 51-workflow report set.
+ActiStruct is a research codebase for active-learning inverse design of atomistic structures with Python, ASE, Gaussian-process surrogate modeling, differential-evolution acquisition, and Quantum ESPRESSO. The repository currently contains 50 generated workflow scripts and 50 final text reports. The public repository lists only the completed 50-workflow report set.
 
-The project should be presented as a completed software benchmark and reproducible workflow demonstration, not as a claim that every one of the 51 systems is fully literature-validated. The strongest quantitative validation currently reported is a 24-system scalar structural sanity subset with about 0.68% mean absolute percentage deviation against documented structural references.
+The project should be presented as a completed software benchmark and reproducible workflow demonstration, not as a claim that every one of the 50 systems is fully literature-validated. The strongest quantitative validation currently reported is a 23-system scalar structural sanity subset with about 0.71% mean absolute percentage deviation against documented structural references.
 
 ## Workflow
 
@@ -14,7 +14,7 @@ structure variables -> ASE builder -> QE labels -> Gaussian process -> active qu
 
 Each generated workflow defines a module-level ASE structure builder, one or two physically meaningful variables, Quantum ESPRESSO pseudopotential names and numerical settings, active-learning settings, and a system-level `SYSTEM` object consumed by the shared engine.
 
-The shared engine is `qe_active_inverse_common.py`. Generated workflows live in `generated_models/`. Manual standalone examples live in `examples/manual_qe/` and are not part of the 51-report generated benchmark.
+The shared engine is `qe_active_inverse_common.py`. Generated workflows live in `generated_models/`. Manual standalone examples live in `examples/manual_qe/` and are not part of the 50-report generated benchmark.
 
 ## Benchmark Scope
 
@@ -23,9 +23,9 @@ The shared engine is `qe_active_inverse_common.py`. Generated workflows live in 
 | Bulk solids and common crystals | 20 |
 | Two-dimensional materials | 6 |
 | Molecules | 6 |
-| Battery/perovskite/intermetallic systems | 11 |
+| Battery/perovskite/intermetallic systems | 10 |
 | Surface structure-search models | 8 |
-| **Total generated workflows** | **51** |
+| **Total generated workflows** | **50** |
 
 Run the generated benchmark through the top-level wrapper:
 
@@ -55,12 +55,12 @@ The current public tables should therefore use careful labels such as `QE object
 
 The repository supports these claims:
 
-1. The 51 generated workflows import and define valid `SYSTEM` objects.
-2. The 51 final reports contain completed `FINAL RESULT` sections.
-3. The 24 scalar structural sanity checks show close agreement with documented references.
+1. The 50 generated workflows import and define valid `SYSTEM` objects.
+2. The 50 final reports contain completed `FINAL RESULT` sections.
+3. The 23 scalar structural sanity checks show close agreement with documented references.
 4. The framework records QE settings, pseudopotential filenames, variables, convergence metadata, plots, and reports in a reproducible layout.
 
-The repository does not claim that all 51 systems are fully literature-validated. Literature-quality validation requires primary-paper or curated-database references, consistent pseudopotentials and cutoffs, and clearly defined reference-energy conventions.
+The repository does not claim that all 50 systems are fully literature-validated. Literature-quality validation requires primary-paper or curated-database references, consistent pseudopotentials and cutoffs, and clearly defined reference-energy conventions.
 
 ## Reference Policy
 
@@ -82,7 +82,7 @@ Public reports intentionally avoid local machine paths. Runtime caches and QE sc
 | Path | Purpose |
 | --- | --- |
 | `qe_active_inverse_common.py` | Shared active-learning and inverse-design engine |
-| `generated_models/` | 51 generated benchmark workflows |
+| `generated_models/` | 50 generated benchmark workflows |
 | `generated_models/run_all_generated_models.sh` | Canonical generated-suite runner |
 | `run.sh` | Top-level wrapper around the generated-suite runner |
 | `tests/test_generated_workflows.py` | Automatic import/build/config checks for every generated workflow |

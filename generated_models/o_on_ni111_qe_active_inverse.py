@@ -36,7 +36,7 @@ SYSTEM = ActiveSystem(
     n_candidates=81,
     random_state=142,
     category='Surface adsorption',
-    notes="Total-energy-only objective for the generated 51-system benchmark.",
+    notes="Total-energy-only objective for the generated 50-system benchmark.",
 )
 
 

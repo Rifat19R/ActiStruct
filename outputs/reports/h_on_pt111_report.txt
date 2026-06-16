@@ -11,7 +11,7 @@ conv_thr: 5e-09   mixing_beta: 0.3
 spin_polarized: False   relax: False
 energy_per_atom: False
 Computed quantity: Structure-search QE objective (eV)
-Notes: Structure-search QE objective for the generated 51-workflow benchmark.
+Notes: Structure-search QE objective for the generated 50-workflow benchmark.
 ================================================================================
 
 Iteration 1

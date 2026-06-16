@@ -1,7 +1,7 @@
 """
 qe_active_inverse_common.py
 ============================
-Shared engine for the ActiStruct 51-workflow benchmark.
+Shared engine for the ActiStruct 50-workflow benchmark.
 
 Implements:
   - Variable / ActiveSystem dataclasses (the public API)

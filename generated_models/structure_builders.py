@@ -1,4 +1,4 @@
-"""Reusable ASE structure builders for the generated 51-system benchmark."""
+"""Reusable ASE structure builders for the generated 50-system benchmark."""
 
 from __future__ import annotations
 
@@ -146,12 +146,6 @@ def build_rocksalt_litio2(a: float) -> Atoms:
         [0.5, 0.0, 0.0],
         [0.0, 0.5, 0.0],
     ])
-    return atoms
-
-
-def build_lifepo4(a: float) -> Atoms:
-    atoms = Atoms("Li4Fe4P4O16", cell=[a, 1.55 * a, 1.35 * a], pbc=True)
-    atoms.set_scaled_positions(np.mod(np.arange(28)[:, None] * np.array([[0.173, 0.271, 0.119]]), 1.0))
     return atoms
 
 

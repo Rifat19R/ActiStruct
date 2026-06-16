@@ -54,7 +54,7 @@ def fig1() -> None:
     ax.text(dx, dy, "Converged?", ha="center", va="center", weight="bold")
     ax.add_patch(FancyArrowPatch((centers[-1][0], y), (dx + 0.08, dy + 0.03), arrowstyle="->", mutation_scale=15))
     ax.add_patch(FancyArrowPatch((dx - 0.10, dy), (centers[1][0], y), connectionstyle="arc3,rad=-0.35", arrowstyle="->", mutation_scale=15))
-    ax.text(0.78, 0.18, "51-workflow benchmark\nmetals, semiconductors, oxides\n2D materials, molecules\nbattery, surfaces, intermetallics", bbox=dict(boxstyle="round", fc="white", ec="gray"))
+    ax.text(0.78, 0.18, "50-workflow benchmark\nmetals, semiconductors, oxides\n2D materials, molecules\nbattery, surfaces, intermetallics", bbox=dict(boxstyle="round", fc="white", ec="gray"))
     fig.tight_layout()
     fig.savefig(FIGURE_DIR / "fig1_pipeline_schematic.png", dpi=300)
     plt.close(fig)

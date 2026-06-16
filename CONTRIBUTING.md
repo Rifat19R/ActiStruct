@@ -17,3 +17,10 @@ python tests/test_builders_and_config.py
 ## Style
 
 Use clear Python, explicit structure builders, and deterministic random seeds for active-learning workflows.
+
+## Issues and Support
+
+Use GitHub Issues to report bugs, request features, ask support questions, or
+flag unclear documentation. Please include the operating system, Python version,
+Quantum ESPRESSO version, relevant environment variables, the command you ran,
+and the shortest log excerpt that reproduces the problem.

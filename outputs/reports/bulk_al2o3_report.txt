@@ -10,7 +10,7 @@ kpts: (6, 6, 4)   smearing: gaussian 0.01 Ry
 spin_polarized: False   relax: False
 energy_per_atom: True
 Computed quantity: Total energy per atom objective (eV/atom)
-Notes: Structure-search QE objective for the generated 51-workflow benchmark.
+Notes: Structure-search QE objective for the generated 50-workflow benchmark.
 ================================================================================
 
 Iteration 1

@@ -17,7 +17,7 @@ two-dimensional materials, battery materials, and surface adsorption systems.
 ## What Is Included
 
 - Shared active-learning engine: `qe_active_inverse_common.py`
-- 51 generated QE benchmark workflows: `generated_models/`
+- 50 generated QE benchmark workflows: `generated_models/`
 - Standalone manual QE examples: `examples/manual_qe/`
 - Direct QE/PBE grid-validation tools: `analysis/direct_grid_validation.py`
 - Structure builders for molecules, crystals, 2D materials, cathode models, and adsorption systems
@@ -45,17 +45,17 @@ acquisition function. Caches prevent repeated QE calculations.
 
 ## Current Output Status
 
-The local benchmark set contains 51 generated workflows, and the repository
-keeps only those 51 final benchmark reports.
+The local benchmark set contains 50 generated workflows, and the repository
+keeps only those 50 final benchmark reports.
 
 Summary from the local reports:
 
-- Generated benchmark scripts: 51
-- Generated benchmark reports with `FINAL RESULT`: 51 / 51
-- Total final report files: 51
-- Total final reports: 51 / 51
-- Structural sanity subset: 24 scalar checks show about 0.68% mean absolute
-  percentage deviation; this is not a claim that all 51 workflows are fully
+- Generated benchmark scripts: 50
+- Generated benchmark reports with `FINAL RESULT`: 50 / 50
+- Total final report files: 50
+- Total final reports: 50 / 50
+- Structural sanity subset: 23 scalar checks show about 0.71% mean absolute
+  percentage deviation; this is not a claim that all 50 workflows are fully
   literature-validated
 
 See:
@@ -80,6 +80,7 @@ ActiStruct/
 |-- requirements.txt
 |-- pyproject.toml
 |-- CITATION.cff
+|-- CODE_OF_CONDUCT.md
 |-- CHANGELOG.md
 |-- SECURITY.md
 |-- LICENSE
