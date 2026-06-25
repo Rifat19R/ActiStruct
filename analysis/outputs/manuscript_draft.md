@@ -66,10 +66,15 @@ The generated analysis package converts the existing run reports into CSV files,
 
 ## 6. Current Preflight Status
 
-The current preflight check reports two blockers:
+The current preflight check passes in the local environment, with one tooling
+warning:
 
-1. The 23-reference scalar subset is useful for sanity checking, but the full 50-workflow set should not be described as fully literature-validated without additional reference curation.
-2. `pdflatex` is not available in the current environment, so LaTeX table compilation could not be tested.
+1. `pdflatex` is not available in the current environment, so LaTeX table compilation could not be tested.
+
+The validation caveat remains scientific rather than infrastructural: the
+conventional benchmark subset is useful for sanity checking, but the full
+50-workflow set should not be described as fully literature-validated without
+additional reference curation.
 
 All required CSV files, the six main figures, the three LaTeX table files, the SI figures, `CITATION.cff`, `requirements.txt`, and `environment.yml` are present.
 
