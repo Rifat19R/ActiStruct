@@ -2,7 +2,7 @@
 
 ## Abstract
 
-We present an automated active-learning workflow for total-energy optimization across a 50-workflow benchmark spanning simple metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery-relevant crystals, surface structure-search geometries, and intermetallics. The workflow couples ASE structure generation, Quantum ESPRESSO single-point calculations with SSSP 1.3.0 PBE efficiency pseudopotentials, Gaussian-process surrogate modeling, and lower-confidence-bound acquisition optimized with differential evolution. Parsed reports are available for 50 of 50 workflows. Across the current report set, all systems reached the implemented convergence criterion, requiring 6.2 QE evaluations on average. The primary optimized structural parameter has an overall mean absolute deviation of 6.31% from the PBE literature references, with substantially lower errors for the conventional bulk and molecular subsets and larger deviations for prototype battery and surface-height models. The present draft is therefore positioned as a reproducible workflow and data-efficiency benchmark, with the prototype categories identified as requiring careful reference conventions before manuscript-level quantitative claims.
+We present an automated active-learning workflow for total-energy optimization across a 50-workflow benchmark spanning simple metals, semiconductors, ionic oxides, two-dimensional materials, molecules, battery-relevant crystals, surface structure-search geometries, and intermetallics. The workflow couples ASE structure generation, Quantum ESPRESSO single-point calculations with SSSP 1.3.0 PBE efficiency pseudopotentials, Gaussian-process surrogate modeling, and lower-confidence-bound acquisition optimized with differential evolution. Parsed reports are available for 50 of 50 workflows. Across the current report set, all systems reached the implemented convergence criterion, requiring 6.0 QE evaluations on average. The primary optimized structural parameter has an overall mean absolute deviation of 3.58% from the PBE literature references, with substantially lower errors for the conventional bulk and molecular subsets and larger deviations for prototype battery and surface-height models. The present draft is therefore positioned as a reproducible workflow and data-efficiency benchmark, with the prototype categories identified as requiring careful reference conventions before manuscript-level quantitative claims.
 
 ## 1. Introduction
 
@@ -34,19 +34,19 @@ The benchmark contains 50 target workflows grouped into metals, semiconductors, 
 - Ionic oxides: N=6, MAE vs PBE=1.07%, mean QE calls=6.0, converged=100%.
 - 2D materials: N=6, MAE vs PBE=0.28%, mean QE calls=6.0, converged=100%.
 - Molecules: N=6, MAE vs PBE=0.80%, mean QE calls=6.8, converged=100%.
-- Battery materials: N=8, MAE vs PBE=5.83%, mean QE calls=5.4, converged=100%.
-- Surface adsorption: N=8, MAE vs PBE=30.91%, mean QE calls=8.8, converged=100%.
+- Battery materials: N=8, MAE vs PBE=1.75%, mean QE calls=4.8, converged=100%.
+- Surface adsorption: N=8, MAE vs PBE=17.90%, mean QE calls=8.0, converged=100%.
 - Heusler/intermetallic: N=2, MAE vs PBE=2.09%, mean QE calls=5.0, converged=100%.
 
 ## 4. Results and Discussion
 
 ### 4.1 Workflow and Convergence
 
-Figure 1 summarizes the closed-loop workflow from structure construction to QE evaluation, GP fitting, acquisition optimization, and convergence. Figure 2 shows representative convergence histories parsed directly from the run reports. The full benchmark converged according to the implemented criterion for 100% of systems. The average number of successful QE evaluations was 6.2, with category means ranging from 4.8 to 8.8.
+Figure 1 summarizes the closed-loop workflow from structure construction to QE evaluation, GP fitting, acquisition optimization, and convergence. Figure 2 shows representative convergence histories parsed directly from the run reports. The full benchmark converged according to the implemented criterion for 100% of systems. The average number of successful QE evaluations was 6.0, with category means ranging from 4.8 to 8.0.
 
 ### 4.2 Structural Accuracy
 
-Figure 3 compares the optimized primary structural parameter against the PBE literature values listed in the benchmark specification. The overall mean absolute deviation is 6.31% for the primary parameter. For one-dimensional systems the mean deviation is 6.87%, while the currently parsed two-dimensional subset gives 2.08%. Conventional FCC metals, BCC metals, semiconductors, 2D materials, molecules, and most simple oxides remain near the expected PBE ranges. The largest deviations are concentrated in prototype battery structures and surface-height-only models. Systems exceeding 3% primary-parameter error include: bulk_al2o3, bulk_licoo2, bulk_nacoo2, bulk_limn2o4, bulk_litio2, h_on_cu111, o_on_cu111, co_on_cu111, h_on_ni111, o_on_ni111, co_on_ni111, h_on_pt111, co_on_pt111, bulk_co2feal.
+Figure 3 compares the optimized primary structural parameter against the PBE literature values listed in the benchmark specification. The overall mean absolute deviation is 3.58% for the primary parameter. For one-dimensional systems the mean deviation is 3.83%, while the currently parsed two-dimensional subset gives 1.29%. Conventional FCC metals, BCC metals, semiconductors, 2D materials, molecules, and most simple oxides remain near the expected PBE ranges. The largest deviations are concentrated in prototype battery structures and surface-height-only models. Systems exceeding 3% primary-parameter error include: bulk_al2o3, bulk_limn2o4, h_on_cu111, o_on_cu111, co_on_cu111, h_on_ni111, o_on_ni111, co_on_ni111, h_on_pt111, co_on_pt111, bulk_co2feal.
 
 ### 4.3 Data Efficiency
 

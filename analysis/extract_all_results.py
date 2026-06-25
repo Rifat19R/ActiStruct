@@ -5,6 +5,7 @@ import csv
 from publication_data import (
     MATERIALS,
     RAW_DIR,
+    ROOT,
     choose_report_by_key,
     ensure_dirs,
     parse_best_params,
@@ -25,6 +26,10 @@ FIELDS = [
     "exp_param1", "exp_param2", "abs_error_param1", "pct_error_param1",
     "abs_error_param2", "pct_error_param2", "report_file",
 ]
+
+
+def report_path_for_csv(path):
+    return str(path.relative_to(ROOT))
 
 
 def main() -> None:
@@ -71,7 +76,7 @@ def main() -> None:
             "pct_error_param1": pct_error(best1, meta.lit_pbe_param1),
             "abs_error_param2": err2,
             "pct_error_param2": pct_error(best2, meta.lit_pbe_param2),
-            "report_file": str(path),
+            "report_file": report_path_for_csv(path),
         })
         rows.append(row)
 
