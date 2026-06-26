@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import csv
 
-from actistruct.datasets.qe_records import QE_RECORD_FIELDS, build_records, write_records_csv
+from actistruct.datasets.qe_records import (
+    QE_RECORD_FIELDS,
+    build_records,
+    split_records_by_failure_reason,
+    write_records_csv,
+)
 
 
 SUCCESS_INPUT = """
@@ -81,3 +86,21 @@ def test_write_records_csv_uses_stable_columns_and_json_pseudos(tmp_path) -> Non
     )
     assert rows[0]["pseudopotentials"] == '{"H":"H.pbe-rrkjus_psl.1.0.0.UPF"}'
 
+
+def test_split_records_by_failure_reason_quarantines_invalid_geometry(tmp_path) -> None:
+    success = tmp_path / "outputs" / "qe_runs" / "h2_r0p900000_pid1_attempt1"
+    failed = tmp_path / "outputs" / "qe_runs_bulk_li2nav2po43" / "a8p1700_pid2_att1"
+    success.mkdir(parents=True)
+    failed.mkdir(parents=True)
+    (success / "espresso.pwi").write_text(SUCCESS_INPUT, encoding="utf-8")
+    (success / "espresso.pwo").write_text(SUCCESS_OUTPUT, encoding="utf-8")
+    (failed / "espresso.pwi").write_text(SUCCESS_INPUT, encoding="utf-8")
+    (failed / "espresso.pwo").write_text(FAILED_OUTPUT, encoding="utf-8")
+    records = build_records([tmp_path / "outputs"], base_path=tmp_path)
+
+    kept, quarantined = split_records_by_failure_reason(records, {"geometry_overlap"})
+
+    assert len(kept) == 1
+    assert len(quarantined) == 1
+    assert kept[0].failure_reason is None
+    assert quarantined[0].failure_reason == "geometry_overlap"

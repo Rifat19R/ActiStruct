@@ -74,31 +74,39 @@ metadata into a structured schema:
 This parser should support both successful and failed QE outputs, because
 failed calculations are part of the scientific reliability signal.
 
-## QE Reliability Records - First Evidence Set
+## QE Reliability Records - Expanded Evidence Set
 
-The first real parsed-record dataset is:
+The main parsed-record dataset is:
 
 ```text
 data/parsed_records/qe_reliability_records.csv
 ```
 
-It contains five real local QE calculations:
+It now contains 976 real local QE records:
 
-- 3 successful H2 single-point outputs from `outputs/qe_runs/`.
-- 2 failed Li2NaV2(PO4)3 outputs from `outputs/qe_runs_bulk_li2nav2po43/`.
+- 589 converged records.
+- 387 non-converged or non-completed records.
+- Failure labels include `qe_error`, `job_not_completed`, and
+  `scf_not_converged`.
 
-The successful rows include energies, SCF iteration counts, forces, pressure,
-wall time, cutoffs, k-points, smearing, mixing beta, pseudopotential filenames,
-and calculation hashes. The failed rows are intentionally included and labeled
-with `failure_reason=geometry_overlap`.
+The rows include energies where available, SCF iteration counts, forces,
+pressure, wall time, cutoffs, k-points, smearing, mixing beta,
+pseudopotential filenames, failure reasons, and calculation hashes.
 
-The Li2NaV2(PO4)3 overlap rows are legacy local QE scratch outputs from an
-invalid geometry, not a valid failed chemistry result. They cannot be converted
-into successful calculations after the fact without rerunning from a corrected
-crystallographic builder. The code now includes a pre-QE minimum-distance
-validator in `qe_active_inverse_common.py`, so exact or near-exact atomic
-overlaps are skipped before launching Quantum ESPRESSO.
+Legacy invalid-geometry records are quarantined separately:
 
-This is an evidence seed for reliability-aware active learning, not yet a full
-benchmark dataset. The next step is to scale the same builder over a curated
-set of successful, unconverged, and failed QE runs while preserving provenance.
+```text
+data/parsed_records/qe_invalid_geometry_records.csv
+```
+
+That quarantine file contains 90 `geometry_overlap` records. Those records are
+invalid structure-generation/scratch failures, not meaningful electronic-
+structure failures. They cannot be converted into successful calculations after
+the fact without rerunning from corrected crystallographic builders. The code
+now includes a pre-QE minimum-distance validator in
+`qe_active_inverse_common.py`, so exact or near-exact atomic overlaps are
+skipped before launching Quantum ESPRESSO.
+
+This is now a useful local evidence dataset for reliability-aware active
+learning, but it still needs curation before manuscript-level modeling because
+some records are local scratch attempts rather than planned benchmark cases.

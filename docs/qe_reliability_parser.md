@@ -53,10 +53,19 @@ python -m actistruct.datasets.qe_records \
   outputs/qe_runs/h2_r0p620000_pid237608_attempt1/espresso.pwo
 ```
 
-The first committed CSV includes three successful H2 outputs and two failed
-Li2NaV2(PO4)3 geometry-overlap outputs. Failed jobs are included by design.
+The main committed CSV is built from local ActiStruct QE outputs:
 
-The Li2NaV2(PO4)3 rows are legacy invalid-geometry scratch outputs. The shared
-QE engine now validates minimum interatomic distance before launching QE, so
-future exact-overlap candidates are rejected cheaply instead of consuming a QE
-job.
+```text
+data/parsed_records/qe_reliability_records.csv
+```
+
+Invalid geometry-overlap records are quarantined separately:
+
+```text
+data/parsed_records/qe_invalid_geometry_records.csv
+```
+
+Failed jobs are included by design, but invalid structure-generation failures
+are separated from the main reliability dataset. The shared QE engine validates
+minimum interatomic distance before launching QE, so future exact-overlap
+candidates are rejected cheaply instead of consuming a QE job.

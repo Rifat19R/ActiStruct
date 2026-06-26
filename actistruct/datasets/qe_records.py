@@ -68,6 +68,22 @@ def write_records_csv(
             writer.writerow(_csv_row(record))
 
 
+def split_records_by_failure_reason(
+    records: Iterable[QEReliabilityRecord],
+    excluded_reasons: set[str],
+) -> tuple[list[QEReliabilityRecord], list[QEReliabilityRecord]]:
+    """Split records into kept and excluded groups by failure reason."""
+
+    kept: list[QEReliabilityRecord] = []
+    excluded: list[QEReliabilityRecord] = []
+    for record in records:
+        if record.failure_reason in excluded_reasons:
+            excluded.append(record)
+        else:
+            kept.append(record)
+    return kept, excluded
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("roots", nargs="+", help="QE output files or directories to scan")
@@ -81,9 +97,29 @@ def main(argv: list[str] | None = None) -> int:
         default=".",
         help="Base path used to make input/output paths repo-relative",
     )
+    parser.add_argument(
+        "--exclude-failure-reason",
+        action="append",
+        default=[],
+        help="Failure reason to exclude from the main CSV; may be repeated",
+    )
+    parser.add_argument(
+        "--quarantine-output",
+        help="Optional CSV path for excluded records",
+    )
     args = parser.parse_args(argv)
 
     records = build_records(args.roots, base_path=args.base_path)
+    excluded_reasons = set(args.exclude_failure_reason)
+    if excluded_reasons:
+        records, excluded = split_records_by_failure_reason(records, excluded_reasons)
+        if args.quarantine_output:
+            write_records_csv(excluded, args.quarantine_output)
+            print(
+                f"Wrote {len(excluded)} quarantined QE records to "
+                f"{args.quarantine_output}"
+            )
+
     write_records_csv(records, args.output)
     print(f"Wrote {len(records)} QE reliability records to {args.output}")
     return 0
@@ -145,4 +181,3 @@ def _material_id_from_path(path: Path) -> str:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
