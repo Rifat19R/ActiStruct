@@ -56,7 +56,7 @@ workflows.
 
 ## Next Implementation Priority
 
-Add a QE reliability parser that extracts completed and failed calculation
+The QE reliability parser now extracts completed and failed calculation
 metadata into a structured schema:
 
 - convergence status,
@@ -74,3 +74,24 @@ metadata into a structured schema:
 This parser should support both successful and failed QE outputs, because
 failed calculations are part of the scientific reliability signal.
 
+## QE Reliability Records - First Evidence Set
+
+The first real parsed-record dataset is:
+
+```text
+data/parsed_records/qe_reliability_records.csv
+```
+
+It contains five real local QE calculations:
+
+- 3 successful H2 single-point outputs from `outputs/qe_runs/`.
+- 2 failed Li2NaV2(PO4)3 outputs from `outputs/qe_runs_bulk_li2nav2po43/`.
+
+The successful rows include energies, SCF iteration counts, forces, pressure,
+wall time, cutoffs, k-points, smearing, mixing beta, pseudopotential filenames,
+and calculation hashes. The failed rows are intentionally included and labeled
+with `failure_reason=geometry_overlap`.
+
+This is an evidence seed for reliability-aware active learning, not yet a full
+benchmark dataset. The next step is to scale the same builder over a curated
+set of successful, unconverged, and failed QE runs while preserving provenance.

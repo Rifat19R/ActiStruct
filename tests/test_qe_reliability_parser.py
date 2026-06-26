@@ -103,3 +103,16 @@ def test_parse_scf_not_converged_but_energy_present() -> None:
     assert record.failure_reason == "scf_not_converged"
     assert record.energy_ev == pytest.approx(-9.25 * RY_TO_EV)
 
+
+def test_parse_geometry_overlap_failure() -> None:
+    output = """
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine check_atoms (1):
+     atoms #   1 and #   2 overlap!
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+"""
+
+    record = parse_qe_output_text(output)
+
+    assert record.converged is False
+    assert record.failure_reason == "geometry_overlap"

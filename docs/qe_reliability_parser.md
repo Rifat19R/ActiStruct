@@ -41,3 +41,17 @@ The parser is intended for metadata extraction and dataset-building. It does
 not replace ASE, pymatgen, or domain-specific QE parsers for full trajectory,
 wavefunction, or density analysis.
 
+## Dataset Builder
+
+The companion builder scans QE output files or directories and writes stable
+CSV records:
+
+```bash
+python -m actistruct.datasets.qe_records \
+  --base-path . \
+  --output data/parsed_records/qe_reliability_records.csv \
+  outputs/qe_runs/h2_r0p620000_pid237608_attempt1/espresso.pwo
+```
+
+The first committed CSV includes three successful H2 outputs and two failed
+Li2NaV2(PO4)3 geometry-overlap outputs. Failed jobs are included by design.

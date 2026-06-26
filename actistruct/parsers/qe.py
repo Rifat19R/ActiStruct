@@ -178,6 +178,10 @@ def _failure_reason(text: str, job_done: bool, converged: bool) -> str | None:
         return "scf_not_converged"
     if "could not find namelist" in text:
         return "invalid_input_namelist"
+    if "atoms #" in text and "overlap" in text:
+        return "geometry_overlap"
+    if "S matrix not positive definite" in text or "atoms too close" in text:
+        return "geometry_instability"
     if "Error in routine" in text or "from " in text and "error #" in text:
         return "qe_error"
     if not job_done:
@@ -254,4 +258,3 @@ def _calculation_hash(output_text: str, input_text: str | None) -> str:
         hasher.update(input_text.encode("utf-8", errors="replace"))
     hasher.update(output_text.encode("utf-8", errors="replace"))
     return hasher.hexdigest()
-
