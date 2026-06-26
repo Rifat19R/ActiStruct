@@ -20,8 +20,8 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
-from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +33,7 @@ DEFAULT_PREDICTIONS = ROOT / "data" / "qe_reliability_predictions_v03.csv"
 LABEL_COLUMN = "success"
 FAILURE_LABEL_COLUMN = "failure_label"
 THRESHOLDS = [0.3, 0.4, 0.5, 0.6, 0.7]
+FAILURE_RISK_THRESHOLDS = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50]
 
 POST_RUN_EXCLUDED_COLUMNS = {
     "converged",
@@ -53,6 +54,7 @@ ELEMENT_DATA = {
     "C": {"atomic_number": 6, "atomic_mass": 12.011, "electronegativity": 2.55},
     "N": {"atomic_number": 7, "atomic_mass": 14.007, "electronegativity": 3.04},
     "O": {"atomic_number": 8, "atomic_mass": 15.999, "electronegativity": 3.44},
+    "F": {"atomic_number": 9, "atomic_mass": 18.998, "electronegativity": 3.98},
     "Na": {"atomic_number": 11, "atomic_mass": 22.990, "electronegativity": 0.93},
     "Mg": {"atomic_number": 12, "atomic_mass": 24.305, "electronegativity": 1.31},
     "Al": {"atomic_number": 13, "atomic_mass": 26.982, "electronegativity": 1.61},
@@ -80,13 +82,53 @@ ELEMENT_DATA = {
     "Pb": {"atomic_number": 82, "atomic_mass": 207.2, "electronegativity": 2.33},
 }
 
+ATOMIC_RADIUS_PM = {
+    "H": 53.0,
+    "Li": 167.0,
+    "C": 67.0,
+    "N": 56.0,
+    "O": 48.0,
+    "F": 42.0,
+    "Na": 190.0,
+    "Mg": 145.0,
+    "Al": 118.0,
+    "Si": 111.0,
+    "P": 98.0,
+    "S": 88.0,
+    "K": 243.0,
+    "Ca": 194.0,
+    "Ti": 176.0,
+    "V": 171.0,
+    "Fe": 156.0,
+    "Co": 152.0,
+    "Ni": 149.0,
+    "Cu": 145.0,
+    "Zn": 142.0,
+    "As": 114.0,
+    "Sr": 219.0,
+    "Mo": 190.0,
+    "Ag": 165.0,
+    "I": 140.0,
+    "Ba": 253.0,
+    "W": 193.0,
+    "Pt": 177.0,
+    "Au": 174.0,
+    "Pb": 154.0,
+}
+
 TRANSITION_METALS = {
     "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
     "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
     "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg",
 }
 
+METAL_ELEMENTS = {
+    "Li", "Na", "Mg", "Al", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
+    "Co", "Ni", "Cu", "Zn", "Sr", "Mo", "Ag", "Ba", "W", "Pt", "Au", "Pb",
+}
+
 ELEMENT_COUNT_COLUMNS = [f"element_count_{symbol}" for symbol in sorted(ELEMENT_DATA)]
+ELEMENT_FRACTION_COLUMNS = [f"element_fraction_{symbol}" for symbol in sorted(ELEMENT_DATA)]
 
 FEATURE_COLUMNS = [
     "material_id",
@@ -103,16 +145,29 @@ FEATURE_COLUMNS = [
     "n_species",
     "elements",
     "atomic_number_mean",
+    "atomic_number_std",
     "atomic_number_min",
     "atomic_number_max",
     "atomic_mass_mean",
+    "atomic_mass_std",
     "electronegativity_mean",
+    "electronegativity_std",
+    "atomic_radius_mean",
+    "atomic_radius_std",
+    "metal_fraction",
+    "transition_metal_fraction",
     "has_transition_metal",
     "has_oxygen",
     "has_hydrogen",
+    "has_fluorine",
+    "has_sulfur",
+    "has_heavy_element",
     "ecutrho_over_ecutwfc",
+    "natoms_times_kpoints",
+    "natoms_times_ecutwfc",
     "volume_per_atom",
     *ELEMENT_COUNT_COLUMNS,
+    *ELEMENT_FRACTION_COLUMNS,
 ]
 
 
@@ -181,6 +236,7 @@ def build_ml_rows(records: Iterable[dict[str, str]]) -> list[dict[str, object]]:
         row = {
             "record_id": index,
             FAILURE_LABEL_COLUMN: failure_label,
+            "failure_taxonomy": failure_taxonomy(failure_label),
             LABEL_COLUMN: 1 if failure_label == "success" else 0,
             "material_id": record.get("material_id") or "unknown",
             "ecutwfc": ecutwfc,
@@ -195,7 +251,7 @@ def build_ml_rows(records: Iterable[dict[str, str]]) -> list[dict[str, object]]:
             "n_species": len(elements),
             "elements": " ".join(elements) or "unknown",
         }
-        row.update(build_element_descriptors(elements, ecutwfc, ecutrho))
+        row.update(build_element_descriptors(elements, ecutwfc, ecutrho, k1 * k2 * k3))
         rows.append(row)
     return rows
 
@@ -204,6 +260,7 @@ def build_element_descriptors(
     elements: Iterable[str],
     ecutwfc: float | None = None,
     ecutrho: float | None = None,
+    kpoint_product: int | None = None,
 ) -> dict[str, object]:
     symbols = sorted({symbol for symbol in elements if symbol})
     known = [ELEMENT_DATA[symbol] for symbol in symbols if symbol in ELEMENT_DATA]
@@ -214,33 +271,73 @@ def build_element_descriptors(
         for item in known
         if item.get("electronegativity") is not None
     ]
+    atomic_radii = [ATOMIC_RADIUS_PM[symbol] for symbol in symbols if symbol in ATOMIC_RADIUS_PM]
+    n_known = len(known)
     descriptors: dict[str, object] = {
         "n_atoms": None,
         "atomic_number_mean": _mean_or_none(atomic_numbers),
+        "atomic_number_std": _std_or_none(atomic_numbers),
         "atomic_number_min": min(atomic_numbers) if atomic_numbers else None,
         "atomic_number_max": max(atomic_numbers) if atomic_numbers else None,
         "atomic_mass_mean": _mean_or_none(atomic_masses),
+        "atomic_mass_std": _std_or_none(atomic_masses),
         "electronegativity_mean": _mean_or_none(electronegativities),
+        "electronegativity_std": _std_or_none(electronegativities),
+        "atomic_radius_mean": _mean_or_none(atomic_radii),
+        "atomic_radius_std": _std_or_none(atomic_radii),
+        "metal_fraction": (
+            sum(1 for symbol in symbols if symbol in METAL_ELEMENTS) / n_known
+            if n_known
+            else None
+        ),
+        "transition_metal_fraction": (
+            sum(1 for symbol in symbols if symbol in TRANSITION_METALS) / n_known
+            if n_known
+            else None
+        ),
         "has_transition_metal": int(any(symbol in TRANSITION_METALS for symbol in symbols)),
         "has_oxygen": int("O" in symbols),
         "has_hydrogen": int("H" in symbols),
+        "has_fluorine": int("F" in symbols),
+        "has_sulfur": int("S" in symbols),
+        "has_heavy_element": int(any(value >= 56.0 for value in atomic_numbers)),
         "ecutrho_over_ecutwfc": (
             ecutrho / ecutwfc
             if ecutwfc is not None and ecutrho is not None and ecutwfc > 0
             else None
         ),
+        "natoms_times_kpoints": None,
+        "natoms_times_ecutwfc": None,
         "volume_per_atom": None,
     }
     for column in ELEMENT_COUNT_COLUMNS:
         symbol = column.removeprefix("element_count_")
         descriptors[column] = int(symbol in symbols)
+    for column in ELEMENT_FRACTION_COLUMNS:
+        symbol = column.removeprefix("element_fraction_")
+        descriptors[column] = (1.0 / len(symbols)) if symbol in symbols and symbols else 0.0
     return descriptors
+
+
+def failure_taxonomy(failure_label: str | None) -> str:
+    label = (failure_label or "success").strip() or "success"
+    if label == "success":
+        return "success"
+    if label == "qe_error":
+        return "setup_error"
+    if label == "scf_not_converged":
+        return "scf_not_converged"
+    if label == "job_not_completed":
+        return "runtime_incomplete"
+    if label in {"invalid_geometry", "geometry_overlap", "overlap"}:
+        return "invalid_geometry"
+    return "unknown_failure"
 
 
 def write_ml_table(rows: list[dict[str, object]], path: str | Path) -> None:
     out = Path(path)
     out.parent.mkdir(parents=True, exist_ok=True)
-    columns = ["record_id", FAILURE_LABEL_COLUMN, LABEL_COLUMN, *FEATURE_COLUMNS]
+    columns = ["record_id", FAILURE_LABEL_COLUMN, "failure_taxonomy", LABEL_COLUMN, *FEATURE_COLUMNS]
     with out.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
@@ -702,6 +799,10 @@ def _float_or_none(raw: str | None) -> float | None:
 
 def _mean_or_none(values: list[float]) -> float | None:
     return float(np.mean(values)) if values else None
+
+
+def _std_or_none(values: list[float]) -> float | None:
+    return float(np.std(values)) if values else None
 
 
 def _metrics_table(results: list[ModelResult]) -> str:

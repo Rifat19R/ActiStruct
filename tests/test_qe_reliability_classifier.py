@@ -11,9 +11,16 @@ from analysis.train_qe_reliability_classifier import (
     build_ml_rows,
     build_element_descriptors,
     experiment_specs,
+    failure_taxonomy,
     make_split,
     train_experiments,
     write_ml_table,
+)
+from analysis.qe_reliability_generalization_fix import (
+    FAILURE_RISK_THRESHOLDS,
+    _diagnosis_prediction_rows,
+    repeated_group_risk_experiment,
+    run_v031_diagnosis,
 )
 
 
@@ -26,8 +33,10 @@ def test_build_ml_rows_creates_binary_success_label() -> None:
     rows = build_ml_rows(records)
 
     assert rows[0]["failure_label"] == "success"
+    assert rows[0]["failure_taxonomy"] == "success"
     assert rows[0]["success"] == 1
     assert rows[1]["failure_label"] == "scf_not_converged"
+    assert rows[1]["failure_taxonomy"] == "scf_not_converged"
     assert rows[1]["success"] == 0
 
 
@@ -62,8 +71,12 @@ def test_descriptor_generation_from_setup_metadata() -> None:
     assert row["has_hydrogen"] == 1
     assert row["atomic_number_min"] == 1.0
     assert row["atomic_number_max"] == 78.0
+    assert row["atomic_number_std"] > 0.0
+    assert row["atomic_radius_mean"] is not None
+    assert row["transition_metal_fraction"] > 0.0
     assert row["ecutrho_over_ecutwfc"] == 8.0
     assert row["element_count_Pt"] == 1
+    assert row["element_fraction_Pt"] > 0.0
     assert row["element_count_O"] == 1
     assert row["element_count_C"] == 0
 
@@ -86,9 +99,24 @@ def test_write_ml_table_has_expected_columns(tmp_path) -> None:
         reader = csv.DictReader(handle)
         saved = list(reader)
 
-    assert reader.fieldnames == ["record_id", "failure_label", "success", *FEATURE_COLUMNS]
+    assert reader.fieldnames == [
+        "record_id",
+        "failure_label",
+        "failure_taxonomy",
+        "success",
+        *FEATURE_COLUMNS,
+    ]
     assert saved[0]["success"] == "1"
     assert "final_energy_ry" not in reader.fieldnames
+
+
+def test_failure_taxonomy_mapping() -> None:
+    assert failure_taxonomy("success") == "success"
+    assert failure_taxonomy("qe_error") == "setup_error"
+    assert failure_taxonomy("scf_not_converged") == "scf_not_converged"
+    assert failure_taxonomy("job_not_completed") == "runtime_incomplete"
+    assert failure_taxonomy("invalid_geometry") == "invalid_geometry"
+    assert failure_taxonomy("weird") == "unknown_failure"
 
 
 def test_class_weight_model_setup() -> None:
@@ -155,6 +183,57 @@ def test_threshold_sweep_is_reported_for_trained_models() -> None:
     assert all(item.confusion for item in trained.threshold_metrics)
 
 
+def test_group_split_diagnosis_output_columns(tmp_path) -> None:
+    rows = _ml_fixture()
+    prediction_rows = _diagnosis_prediction_rows(
+        rows[:2],
+        y_test_success=[row["success"] for row in rows[:2]],
+        success_prob=[0.95, 0.80],
+        failure_risk=[0.05, 0.20],
+    )
+
+    assert {
+        "material_id",
+        "true_label",
+        "failure_reason",
+        "failure_taxonomy",
+        "predicted_success_probability",
+        "predicted_failure_risk",
+        "predicted_label_t_0p05",
+        "predicted_label_t_0p50",
+    } <= set(prediction_rows[0])
+
+    input_path = tmp_path / "records.csv"
+    report_path = tmp_path / "diagnosis.md"
+    predictions_path = tmp_path / "diagnosis.csv"
+    _write_records_fixture(input_path)
+
+    run_v031_diagnosis(input_path, report_path, predictions_path, random_state=0)
+
+    assert report_path.exists()
+    with predictions_path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        assert "predicted_label_t_0p05" in (reader.fieldnames or [])
+
+
+def test_repeated_group_risk_experiment_outputs_thresholds_and_ood() -> None:
+    rows = _ml_fixture()
+
+    metrics, predictions = repeated_group_risk_experiment(rows, random_state=0, n_splits=2)
+
+    assert metrics
+    assert {metric.threshold for metric in metrics} == set(FAILURE_RISK_THRESHOLDS)
+    assert predictions
+    assert {
+        "setup_error_risk",
+        "scf_failure_risk",
+        "runtime_incomplete_risk",
+        "total_failure_risk",
+        "ood_distance",
+        "ood_flag",
+    } <= set(predictions[0])
+
+
 def _record(
     failure_reason: str,
     converged: str,
@@ -214,3 +293,30 @@ def _ml_fixture() -> list[dict[str, object]]:
             ecutrho="640.0",
         ))
     return build_ml_rows(records)
+
+
+def _write_records_fixture(path) -> None:
+    records = []
+    for idx in range(12):
+        records.append(_record(
+            "",
+            "True",
+            "-1.0",
+            "12.0",
+            material_id=f"ok_{idx % 4}",
+            pseudopotentials='{"H":"H.UPF"}',
+        ))
+        records.append(_record(
+            "qe_error",
+            "False",
+            "",
+            "99.0",
+            material_id=f"bad_{idx % 4}",
+            pseudopotentials='{"C":"C.UPF","O":"O.UPF","Pt":"Pt.UPF"}',
+            ecutwfc="80.0",
+            ecutrho="640.0",
+        ))
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(records[0]))
+        writer.writeheader()
+        writer.writerows(records)
