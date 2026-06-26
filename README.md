@@ -221,6 +221,9 @@ python analysis/simulated_failure_aware_al_benchmark_v05.py
 python analysis/simulated_failure_aware_al_benchmark_v051.py
 ```
 
+For a no-DFT walkthrough of the reliability-aware benchmark track, see
+[`docs/reliability_aware_quickstart_v063.md`](docs/reliability_aware_quickstart_v063.md).
+
 ## Quantum ESPRESSO Setup (for the underlying GP/LCB engine)
 
 ActiStruct expects Quantum ESPRESSO to be configured through environment
