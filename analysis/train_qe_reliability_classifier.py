@@ -21,16 +21,18 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "parsed_records" / "qe_reliability_records.csv"
 DEFAULT_TABLE = ROOT / "data" / "qe_reliability_ml_table.csv"
-DEFAULT_REPORT = ROOT / "reports" / "qe_reliability_classifier_v02_ablation.md"
-DEFAULT_PREDICTIONS = ROOT / "data" / "qe_reliability_predictions_v02.csv"
+DEFAULT_REPORT = ROOT / "reports" / "qe_reliability_classifier_v03_generalization.md"
+DEFAULT_PREDICTIONS = ROOT / "data" / "qe_reliability_predictions_v03.csv"
 
 LABEL_COLUMN = "success"
 FAILURE_LABEL_COLUMN = "failure_label"
+THRESHOLDS = [0.3, 0.4, 0.5, 0.6, 0.7]
 
 POST_RUN_EXCLUDED_COLUMNS = {
     "converged",
@@ -45,6 +47,47 @@ POST_RUN_EXCLUDED_COLUMNS = {
     "calculation_hash",
 }
 
+ELEMENT_DATA = {
+    "H": {"atomic_number": 1, "atomic_mass": 1.008, "electronegativity": 2.20},
+    "Li": {"atomic_number": 3, "atomic_mass": 6.94, "electronegativity": 0.98},
+    "C": {"atomic_number": 6, "atomic_mass": 12.011, "electronegativity": 2.55},
+    "N": {"atomic_number": 7, "atomic_mass": 14.007, "electronegativity": 3.04},
+    "O": {"atomic_number": 8, "atomic_mass": 15.999, "electronegativity": 3.44},
+    "Na": {"atomic_number": 11, "atomic_mass": 22.990, "electronegativity": 0.93},
+    "Mg": {"atomic_number": 12, "atomic_mass": 24.305, "electronegativity": 1.31},
+    "Al": {"atomic_number": 13, "atomic_mass": 26.982, "electronegativity": 1.61},
+    "Si": {"atomic_number": 14, "atomic_mass": 28.085, "electronegativity": 1.90},
+    "P": {"atomic_number": 15, "atomic_mass": 30.974, "electronegativity": 2.19},
+    "S": {"atomic_number": 16, "atomic_mass": 32.06, "electronegativity": 2.58},
+    "K": {"atomic_number": 19, "atomic_mass": 39.098, "electronegativity": 0.82},
+    "Ca": {"atomic_number": 20, "atomic_mass": 40.078, "electronegativity": 1.00},
+    "Ti": {"atomic_number": 22, "atomic_mass": 47.867, "electronegativity": 1.54},
+    "V": {"atomic_number": 23, "atomic_mass": 50.942, "electronegativity": 1.63},
+    "Fe": {"atomic_number": 26, "atomic_mass": 55.845, "electronegativity": 1.83},
+    "Co": {"atomic_number": 27, "atomic_mass": 58.933, "electronegativity": 1.88},
+    "Ni": {"atomic_number": 28, "atomic_mass": 58.693, "electronegativity": 1.91},
+    "Cu": {"atomic_number": 29, "atomic_mass": 63.546, "electronegativity": 1.90},
+    "Zn": {"atomic_number": 30, "atomic_mass": 65.38, "electronegativity": 1.65},
+    "As": {"atomic_number": 33, "atomic_mass": 74.922, "electronegativity": 2.18},
+    "Sr": {"atomic_number": 38, "atomic_mass": 87.62, "electronegativity": 0.95},
+    "Mo": {"atomic_number": 42, "atomic_mass": 95.95, "electronegativity": 2.16},
+    "Ag": {"atomic_number": 47, "atomic_mass": 107.868, "electronegativity": 1.93},
+    "I": {"atomic_number": 53, "atomic_mass": 126.904, "electronegativity": 2.66},
+    "Ba": {"atomic_number": 56, "atomic_mass": 137.327, "electronegativity": 0.89},
+    "W": {"atomic_number": 74, "atomic_mass": 183.84, "electronegativity": 2.36},
+    "Pt": {"atomic_number": 78, "atomic_mass": 195.084, "electronegativity": 2.28},
+    "Au": {"atomic_number": 79, "atomic_mass": 196.967, "electronegativity": 2.54},
+    "Pb": {"atomic_number": 82, "atomic_mass": 207.2, "electronegativity": 2.33},
+}
+
+TRANSITION_METALS = {
+    "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
+    "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
+    "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg",
+}
+
+ELEMENT_COUNT_COLUMNS = [f"element_count_{symbol}" for symbol in sorted(ELEMENT_DATA)]
+
 FEATURE_COLUMNS = [
     "material_id",
     "ecutwfc",
@@ -56,8 +99,20 @@ FEATURE_COLUMNS = [
     "smearing",
     "mixing_beta",
     "pseudo_family",
+    "n_atoms",
     "n_species",
     "elements",
+    "atomic_number_mean",
+    "atomic_number_min",
+    "atomic_number_max",
+    "atomic_mass_mean",
+    "electronegativity_mean",
+    "has_transition_metal",
+    "has_oxygen",
+    "has_hydrogen",
+    "ecutrho_over_ecutwfc",
+    "volume_per_atom",
+    *ELEMENT_COUNT_COLUMNS,
 ]
 
 
@@ -74,6 +129,16 @@ class SplitData:
     test_idx: np.ndarray
     feature_columns: list[str]
     groups: np.ndarray
+
+
+@dataclass(frozen=True)
+class ThresholdResult:
+    threshold: float
+    precision: float
+    recall: float
+    failure_recall: float
+    f1: float
+    confusion: list[list[int]]
 
 
 @dataclass(frozen=True)
@@ -96,6 +161,7 @@ class ModelResult:
     roc_auc: float | None = None
     confusion: list[list[int]] | None = None
     top_features: list[tuple[str, float]] | None = None
+    threshold_metrics: list[ThresholdResult] | None = None
 
 
 def read_records(path: str | Path) -> list[dict[str, str]]:
@@ -108,14 +174,17 @@ def build_ml_rows(records: Iterable[dict[str, str]]) -> list[dict[str, object]]:
     for index, record in enumerate(records):
         failure_label = record.get("failure_reason") or "success"
         pseudos = _parse_pseudos(record.get("pseudopotentials", ""))
+        elements = sorted(pseudos)
         k1, k2, k3 = _parse_kpoints(record.get("kpoints", ""))
-        rows.append({
+        ecutwfc = _float_or_none(record.get("ecutwfc"))
+        ecutrho = _float_or_none(record.get("ecutrho"))
+        row = {
             "record_id": index,
             FAILURE_LABEL_COLUMN: failure_label,
             LABEL_COLUMN: 1 if failure_label == "success" else 0,
             "material_id": record.get("material_id") or "unknown",
-            "ecutwfc": _float_or_none(record.get("ecutwfc")),
-            "ecutrho": _float_or_none(record.get("ecutrho")),
+            "ecutwfc": ecutwfc,
+            "ecutrho": ecutrho,
             "k1": k1,
             "k2": k2,
             "k3": k3,
@@ -123,10 +192,49 @@ def build_ml_rows(records: Iterable[dict[str, str]]) -> list[dict[str, object]]:
             "smearing": record.get("smearing") or "unknown",
             "mixing_beta": _float_or_none(record.get("mixing_beta")),
             "pseudo_family": record.get("pseudo_family") or "unknown",
-            "n_species": len(pseudos),
-            "elements": " ".join(sorted(pseudos)) or "unknown",
-        })
+            "n_species": len(elements),
+            "elements": " ".join(elements) or "unknown",
+        }
+        row.update(build_element_descriptors(elements, ecutwfc, ecutrho))
+        rows.append(row)
     return rows
+
+
+def build_element_descriptors(
+    elements: Iterable[str],
+    ecutwfc: float | None = None,
+    ecutrho: float | None = None,
+) -> dict[str, object]:
+    symbols = sorted({symbol for symbol in elements if symbol})
+    known = [ELEMENT_DATA[symbol] for symbol in symbols if symbol in ELEMENT_DATA]
+    atomic_numbers = [float(item["atomic_number"]) for item in known]
+    atomic_masses = [float(item["atomic_mass"]) for item in known]
+    electronegativities = [
+        float(item["electronegativity"])
+        for item in known
+        if item.get("electronegativity") is not None
+    ]
+    descriptors: dict[str, object] = {
+        "n_atoms": None,
+        "atomic_number_mean": _mean_or_none(atomic_numbers),
+        "atomic_number_min": min(atomic_numbers) if atomic_numbers else None,
+        "atomic_number_max": max(atomic_numbers) if atomic_numbers else None,
+        "atomic_mass_mean": _mean_or_none(atomic_masses),
+        "electronegativity_mean": _mean_or_none(electronegativities),
+        "has_transition_metal": int(any(symbol in TRANSITION_METALS for symbol in symbols)),
+        "has_oxygen": int("O" in symbols),
+        "has_hydrogen": int("H" in symbols),
+        "ecutrho_over_ecutwfc": (
+            ecutrho / ecutwfc
+            if ecutwfc is not None and ecutrho is not None and ecutwfc > 0
+            else None
+        ),
+        "volume_per_atom": None,
+    }
+    for column in ELEMENT_COUNT_COLUMNS:
+        symbol = column.removeprefix("element_count_")
+        descriptors[column] = int(symbol in symbols)
+    return descriptors
 
 
 def write_ml_table(rows: list[dict[str, object]], path: str | Path) -> None:
@@ -194,11 +302,13 @@ def write_predictions(rows: list[dict[str, object]], path: str | Path) -> None:
     fields = [
         "experiment",
         "model",
+        "threshold",
         "record_id",
         "material_id",
         "failure_label",
         "true_success",
         "predicted_success",
+        "success_probability",
         "predicted_failure_risk",
         "split",
     ]
@@ -216,7 +326,7 @@ def render_report(
 ) -> str:
     total_rows = max((r.n_train + r.n_test for r in results if r.status == "trained"), default=0)
     lines = [
-        "# QE Reliability Classifier v0.2 Ablation",
+        "# QE Reliability Classifier v0.3 Generalization",
         "",
         "## Purpose",
         "",
@@ -255,9 +365,34 @@ def render_report(
         "count, convergence flags, and failure labels. They are outcomes or "
         "post-run diagnostics, not valid pre-run predictors.",
         "",
-        "## Metrics",
+        "## Descriptor Features",
+        "",
+        "v0.3 adds pre-run descriptors derived from setup metadata: species count, "
+        "element presence/count indicators, atomic number/mass/electronegativity "
+        "summaries, transition-metal/oxygen/hydrogen flags, `ecutrho/ecutwfc`, "
+        "and k-point product.",
+        "",
+        "`n_atoms` and `volume_per_atom` are included as nullable columns because "
+        "the current parsed reliability records do not carry trustworthy atom "
+        "counts or cell volumes. Element counts are species-presence indicators "
+        "from pseudopotential declarations, not stoichiometric atom counts.",
+        "",
+        "## Default Threshold Metrics",
         "",
         _metrics_table(results),
+        "",
+        "## Threshold Sweep",
+        "",
+        "Thresholds are applied to `success_probability`. Higher thresholds are "
+        "more conservative: they classify more calculations as risky, which can "
+        "improve failure recall at the cost of rejecting more potentially "
+        "successful candidates.",
+        "",
+        _threshold_table(results),
+        "",
+        "## Generalization Readout",
+        "",
+        _generalization_summary(results),
         "",
         "## Feature Sets",
         "",
@@ -273,21 +408,26 @@ def render_report(
         "",
         "- The observed failure fraction is not a target to hide. It is the "
         "training signal for failure-risk-aware acquisition.",
-        "- The random split can overestimate performance because related records "
-        "from the same material can appear in both train and test sets.",
-        "- The group split is stricter and should be treated as the more honest "
-        "generalization test.",
+        "- The random split measures in-domain interpolation over current records "
+        "and can overestimate performance because related records can appear in "
+        "both train and test sets.",
+        "- The group split is the stricter held-out-material test and should guide "
+        "deployment caution.",
+        "- Missing atom counts and cell volumes limit descriptor strength. Current "
+        "element indicators describe species presence, not full composition.",
         "- `material_id` is pre-run metadata, but it can encode local workflow "
         "history. The no-material ablation helps quantify that dependence.",
         "- The model does not inspect atomic geometry directly, so it should not "
         "replace the pre-QE overlap validator.",
-        "- Metrics are v0.2 engineering evidence, not a publication-level claim.",
+        "- Metrics are v0.3 engineering evidence, not a publication-level claim.",
         "",
         "## Next Step",
         "",
         "Connect predicted failure risk to Bayesian acquisition, for example by "
         "using `score = acquisition_value - lambda_failure * failure_risk` for "
-        "maximization or adding a failure penalty for minimization.",
+        "maximization or adding a failure penalty for minimization. Choose the "
+        "operating threshold from the grouped split, where possible, because it "
+        "is the more honest proxy for new-material behavior.",
         "",
     ]
     return "\n".join(lines)
@@ -393,11 +533,13 @@ def _evaluate_model(
 ) -> tuple[ModelResult, list[dict[str, object]]]:
     pipeline = Pipeline([
         ("vectorizer", DictVectorizer(sparse=False)),
+        ("imputer", SimpleImputer(strategy="constant", fill_value=0.0, keep_empty_features=True)),
         ("model", estimator),
     ])
     pipeline.fit(X_train, y_train)
-    pred = pipeline.predict(X_test)
     prob = _positive_probabilities(pipeline, X_test)
+    pred = (prob >= 0.5).astype(int) if prob is not None else pipeline.predict(X_test)
+    threshold_metrics = _threshold_metrics(y_test, prob)
     feature_names = list(pipeline.named_steps["vectorizer"].get_feature_names_out())
     model = pipeline.named_steps["model"]
     result = ModelResult(
@@ -419,26 +561,32 @@ def _evaluate_model(
         roc_auc=roc_auc_score(y_test, prob) if prob is not None and len(set(y_test)) > 1 else None,
         confusion=confusion_matrix(y_test, pred).tolist(),
         top_features=_top_features(model, feature_names),
+        threshold_metrics=threshold_metrics,
     )
-    predictions = [
-        {
-            "experiment": spec.name,
-            "model": model_name,
-            "record_id": row["record_id"],
-            "material_id": row["material_id"],
-            "failure_label": row[FAILURE_LABEL_COLUMN],
-            "true_success": int(y_true),
-            "predicted_success": int(y_pred),
-            "predicted_failure_risk": "" if prob is None else 1.0 - float(p_success),
-            "split": "test",
-        }
+    predictions: list[dict[str, object]] = []
+    prediction_thresholds = THRESHOLDS if prob is not None else [0.5]
+    success_probabilities = prob if prob is not None else np.asarray(pred, dtype=float)
+    for threshold in prediction_thresholds:
+        threshold_pred = (success_probabilities >= threshold).astype(int)
         for row, y_true, y_pred, p_success in zip(
             test_rows,
             y_test,
-            pred,
-            prob if prob is not None else [np.nan] * len(pred),
-        )
-    ]
+            threshold_pred,
+            success_probabilities,
+        ):
+            predictions.append({
+                "experiment": spec.name,
+                "model": model_name,
+                "threshold": threshold,
+                "record_id": row["record_id"],
+                "material_id": row["material_id"],
+                "failure_label": row[FAILURE_LABEL_COLUMN],
+                "true_success": int(y_true),
+                "predicted_success": int(y_pred),
+                "success_probability": float(p_success),
+                "predicted_failure_risk": 1.0 - float(p_success),
+                "split": "test",
+            })
     return result, predictions
 
 
@@ -474,6 +622,23 @@ def _positive_probabilities(pipeline: Pipeline, X_test: list[dict[str, object]])
         scores = pipeline.decision_function(X_test)
         return 1.0 / (1.0 + np.exp(-scores))
     return None
+
+
+def _threshold_metrics(y_true: np.ndarray, probabilities: np.ndarray | None) -> list[ThresholdResult] | None:
+    if probabilities is None:
+        return None
+    results: list[ThresholdResult] = []
+    for threshold in THRESHOLDS:
+        pred = (probabilities >= threshold).astype(int)
+        results.append(ThresholdResult(
+            threshold=threshold,
+            precision=precision_score(y_true, pred, zero_division=0),
+            recall=recall_score(y_true, pred, zero_division=0),
+            failure_recall=recall_score(y_true, pred, pos_label=0, zero_division=0),
+            f1=f1_score(y_true, pred, zero_division=0),
+            confusion=confusion_matrix(y_true, pred).tolist(),
+        ))
+    return results
 
 
 def _top_features(model: object, feature_names: list[str], limit: int = 15) -> list[tuple[str, float]] | None:
@@ -535,6 +700,10 @@ def _float_or_none(raw: str | None) -> float | None:
         return None
 
 
+def _mean_or_none(values: list[float]) -> float | None:
+    return float(np.mean(values)) if values else None
+
+
 def _metrics_table(results: list[ModelResult]) -> str:
     lines = [
         "| Experiment | Model | Status | Train | Test | Train S/F | Test S/F | Accuracy | Precision | Recall | Failure Recall | F1 | ROC-AUC |",
@@ -551,6 +720,63 @@ def _metrics_table(results: list[ModelResult]) -> str:
             f"{_fmt(result.f1)} | {_fmt(result.roc_auc)} |"
         )
     return "\n".join(lines)
+
+
+def _threshold_table(results: list[ModelResult]) -> str:
+    lines = [
+        "| Experiment | Model | Threshold | Precision | Recall | Failure Recall | F1 | Confusion [[TN, FP], [FN, TP]] |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |",
+    ]
+    for result in results:
+        for item in result.threshold_metrics or []:
+            lines.append(
+                f"| {result.experiment} | {result.model} | {item.threshold:.1f} | "
+                f"{_fmt(item.precision)} | {_fmt(item.recall)} | "
+                f"{_fmt(item.failure_recall)} | {_fmt(item.f1)} | {item.confusion} |"
+            )
+    return "\n".join(lines)
+
+
+def _generalization_summary(results: list[ModelResult]) -> str:
+    random_rf = _result_by_name(results, "baseline_random_split", "RandomForestClassifier")
+    group_rf = _result_by_name(results, "material_group_split", "RandomForestClassifier")
+    lines = [
+        "- In-domain performance is represented by `baseline_random_split`.",
+        "- Out-of-domain performance is represented by `material_group_split`, "
+        "where complete `material_id` groups are held out.",
+    ]
+    if random_rf and group_rf:
+        random_best = _best_failure_recall(random_rf)
+        group_best = _best_failure_recall(group_rf)
+        lines.extend([
+            f"- Random-split RandomForest default failure recall: {_fmt(random_rf.failure_recall)}.",
+            f"- Group-split RandomForest default failure recall: {_fmt(group_rf.failure_recall)}.",
+            f"- Best random-split threshold failure recall: {_fmt(random_best)}.",
+            f"- Best group-split threshold failure recall: {_fmt(group_best)}.",
+        ])
+        if group_best is not None and group_rf.failure_recall is not None:
+            verdict = "improves" if group_best > group_rf.failure_recall else "does not improve"
+            lines.append(
+                f"- Threshold tuning {verdict} group-split failure recall relative "
+                "to the default 0.5 operating point."
+            )
+    return "\n".join(lines)
+
+
+def _result_by_name(
+    results: list[ModelResult],
+    experiment: str,
+    model: str,
+) -> ModelResult | None:
+    for result in results:
+        if result.experiment == experiment and result.model == model and result.status == "trained":
+            return result
+    return None
+
+
+def _best_failure_recall(result: ModelResult) -> float | None:
+    values = [item.failure_recall for item in result.threshold_metrics or []]
+    return max(values) if values else None
 
 
 def _feature_sets(results: list[ModelResult]) -> str:

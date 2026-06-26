@@ -6,7 +6,10 @@ from analysis.train_qe_reliability_classifier import (
     ExperimentSpec,
     FEATURE_COLUMNS,
     POST_RUN_EXCLUDED_COLUMNS,
+    THRESHOLDS,
+    _models,
     build_ml_rows,
+    build_element_descriptors,
     experiment_specs,
     make_split,
     train_experiments,
@@ -36,6 +39,43 @@ def test_ml_rows_exclude_post_run_leakage_fields() -> None:
         assert field not in rows[0]
 
 
+def test_descriptor_generation_from_setup_metadata() -> None:
+    rows = build_ml_rows([
+        _record(
+            "",
+            "True",
+            "-1.0",
+            "12.0",
+            material_id="ptoh",
+            pseudopotentials='{"Pt":"Pt.UPF","O":"O.UPF","H":"H.UPF"}',
+            ecutwfc="50.0",
+            ecutrho="400.0",
+        )
+    ])
+    row = rows[0]
+
+    assert row["n_species"] == 3
+    assert row["n_atoms"] is None
+    assert row["volume_per_atom"] is None
+    assert row["has_transition_metal"] == 1
+    assert row["has_oxygen"] == 1
+    assert row["has_hydrogen"] == 1
+    assert row["atomic_number_min"] == 1.0
+    assert row["atomic_number_max"] == 78.0
+    assert row["ecutrho_over_ecutwfc"] == 8.0
+    assert row["element_count_Pt"] == 1
+    assert row["element_count_O"] == 1
+    assert row["element_count_C"] == 0
+
+
+def test_descriptor_helper_handles_unknown_elements() -> None:
+    descriptors = build_element_descriptors(["Xx"], ecutwfc=0.0, ecutrho=400.0)
+
+    assert descriptors["atomic_number_mean"] is None
+    assert descriptors["ecutrho_over_ecutwfc"] is None
+    assert descriptors["has_transition_metal"] == 0
+
+
 def test_write_ml_table_has_expected_columns(tmp_path) -> None:
     rows = build_ml_rows([_record("", "True", "-1.0", "12.0")])
     out = tmp_path / "ml.csv"
@@ -49,6 +89,13 @@ def test_write_ml_table_has_expected_columns(tmp_path) -> None:
     assert reader.fieldnames == ["record_id", "failure_label", "success", *FEATURE_COLUMNS]
     assert saved[0]["success"] == "1"
     assert "final_energy_ry" not in reader.fieldnames
+
+
+def test_class_weight_model_setup() -> None:
+    models = dict(_models(random_state=0))
+
+    assert models["LogisticRegression"].class_weight == "balanced"
+    assert models["RandomForestClassifier"].class_weight == "balanced"
 
 
 def test_no_material_id_ablation_removes_material_feature() -> None:
@@ -91,7 +138,21 @@ def test_train_experiments_returns_ablation_results_and_predictions() -> None:
     assert ("baseline_random_split", "RandomForestClassifier") in trained
     assert trained[("baseline_random_split", "RandomForestClassifier")].failure_recall is not None
     assert predictions
-    assert {"experiment", "model", "predicted_failure_risk"} <= set(predictions[0])
+    assert {"experiment", "model", "threshold", "predicted_failure_risk"} <= set(predictions[0])
+
+
+def test_threshold_sweep_is_reported_for_trained_models() -> None:
+    rows = _ml_fixture()
+
+    results, _ = train_experiments(rows, random_state=0)
+
+    trained = next(
+        result for result in results
+        if result.status == "trained" and result.model == "RandomForestClassifier"
+    )
+    assert trained.threshold_metrics is not None
+    assert [item.threshold for item in trained.threshold_metrics] == THRESHOLDS
+    assert all(item.confusion for item in trained.threshold_metrics)
 
 
 def _record(
@@ -99,9 +160,14 @@ def _record(
     converged: str,
     final_energy_ry: str,
     wall_time: str,
+    *,
+    material_id: str = "h2",
+    pseudopotentials: str = '{"H":"H.UPF"}',
+    ecutwfc: str = "50.0",
+    ecutrho: str = "400.0",
 ) -> dict[str, str]:
     return {
-        "material_id": "h2",
+        "material_id": material_id,
         "qe_input_path": "in",
         "qe_output_path": "out",
         "converged": converged,
@@ -113,52 +179,38 @@ def _record(
         "pressure_kbar": "1.0",
         "wall_time": wall_time,
         "failure_reason": failure_reason,
-        "ecutwfc": "50.0",
-        "ecutrho": "400.0",
+        "ecutwfc": ecutwfc,
+        "ecutrho": ecutrho,
         "kpoints": "1 1 1 0 0 0",
         "smearing": "gaussian",
         "mixing_beta": "0.4",
         "pseudo_family": "PSLibrary",
-        "pseudopotentials": '{"H":"H.UPF"}',
+        "pseudopotentials": pseudopotentials,
         "calculation_hash": "abc",
     }
 
 
 def _ml_fixture() -> list[dict[str, object]]:
-    rows = []
+    records = []
     for idx in range(18):
-        rows.append({
-            "record_id": len(rows),
-            "failure_label": "success",
-            "success": 1,
-            "material_id": f"ok_{idx % 6}",
-            "ecutwfc": 50.0,
-            "ecutrho": 400.0,
-            "k1": 1,
-            "k2": 1,
-            "k3": 1,
-            "kpoint_product": 1,
-            "smearing": "gaussian",
-            "mixing_beta": 0.4,
-            "pseudo_family": "PSLibrary",
-            "n_species": 1,
-            "elements": "H",
-        })
-        rows.append({
-            "record_id": len(rows),
-            "failure_label": "qe_error",
-            "success": 0,
-            "material_id": f"bad_{idx % 6}",
-            "ecutwfc": 80.0,
-            "ecutrho": 640.0,
-            "k1": 6,
-            "k2": 6,
-            "k3": 1,
-            "kpoint_product": 36,
-            "smearing": "mv",
-            "mixing_beta": 0.2,
-            "pseudo_family": "ONCV",
-            "n_species": 3,
-            "elements": "C O Pt",
-        })
-    return rows
+        records.append(_record(
+            "",
+            "True",
+            "-1.0",
+            "12.0",
+            material_id=f"ok_{idx % 6}",
+            pseudopotentials='{"H":"H.UPF"}',
+            ecutwfc="50.0",
+            ecutrho="400.0",
+        ))
+        records.append(_record(
+            "qe_error",
+            "False",
+            "",
+            "99.0",
+            material_id=f"bad_{idx % 6}",
+            pseudopotentials='{"C":"C.UPF","O":"O.UPF","Pt":"Pt.UPF"}',
+            ecutwfc="80.0",
+            ecutrho="640.0",
+        ))
+    return build_ml_rows(records)
