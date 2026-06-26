@@ -29,7 +29,7 @@ FIELDS = [
 
 
 def report_path_for_csv(path):
-    return str(path.relative_to(ROOT))
+    return path.relative_to(ROOT).as_posix()
 
 
 def main() -> None:

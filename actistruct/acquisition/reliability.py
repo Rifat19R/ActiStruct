@@ -88,6 +88,8 @@ def rank_candidates(
     for candidate in candidates:
         predicted_value = float(candidate["predicted_value"])
         uncertainty = float(candidate["uncertainty"])
+        if math.isnan(uncertainty):
+            raise ValueError("uncertainty must not be NaN")
         if uncertainty < 0:
             raise ValueError("uncertainty must be non-negative")
         failure_risk = _optional_risk(candidate.get("failure_risk"))

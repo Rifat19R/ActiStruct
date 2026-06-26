@@ -44,9 +44,13 @@ This offline benchmark compares candidate-selection policies using existing comp
 - `failure_aware_lcb_balanced` selected 0 known failures at top-10 with mean risk 0.152.
 - `failure_aware_lcb_aggressive` selected 0 known failures at top-10 with mean risk 0.066.
 
+`failure_aware_lcb_mild` preserved the same known failed-selection count as `lcb_only` at top-10 (0) while changing mean predicted failure risk from 0.152 to 0.152. `failure_aware_lcb_balanced` preserved the same known failed-selection count as `lcb_only` at top-10 (0) while changing mean predicted failure risk from 0.152 to 0.152. `failure_aware_lcb_aggressive` preserved the same known failed-selection count as `lcb_only` at top-10 (0) while changing mean predicted failure risk from 0.152 to 0.066.
+
 ## Scientific Caveats
 
 - This is a simulated policy benchmark, not a live GP retraining study.
 - The LCB uncertainty proxy uses existing v0.3.2 OOD distances because no new GP/QE jobs are launched here.
+- `predicted_value` is a constant placeholder (0.0) for every candidate in this offline simulation, since no live GP energy model is being queried. Policy differences therefore come entirely from the uncertainty proxy and the failure-risk penalty, not from a predicted energy signal.
+- Each candidate's failure risk comes from a single v0.3.2 held-out group split in which that material was not used for training (not averaged across the 20 repeated splits). Because split-to-split risk variance is known to be large, the absolute risk value used for any one candidate here could differ under a different held-out split.
 - Failure-risk generalization still has high split-to-split variance, so failure risk should remain a soft penalty for DFT triage, not a hard rejection rule.
 - Known failures/successes are evaluated from completed records after selection; failed records are not deleted or relabeled.

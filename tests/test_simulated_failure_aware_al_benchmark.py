@@ -7,6 +7,7 @@ from analysis.simulated_failure_aware_al_benchmark_v05 import (
     OUTPUT_COLUMNS,
     POLICIES,
     TOP_K_VALUES,
+    _record_energies,
     load_candidates,
     run_benchmark,
     write_table,
@@ -42,12 +43,19 @@ def test_failure_aware_policy_does_not_hard_delete_candidates() -> None:
 
 
 def test_gamma_zero_matches_lcb_only_behavior() -> None:
+    """gamma=0 (the lcb_only policy) must rank purely by predicted_value/uncertainty,
+    independent of failure_risk — i.e. it must not act as a hidden, hard-coded
+    failure-risk penalty."""
     candidates = _candidates()
+    high_risk_variant = [dict(c, failure_risk=1.0) for c in candidates]
 
-    lcb = rank_candidates(candidates, gamma=0.0)
-    gamma_zero = rank_candidates(candidates, gamma=0.0)
+    lcb_baseline = rank_candidates(candidates, gamma=0.0)
+    lcb_with_high_risk = rank_candidates(high_risk_variant, gamma=0.0)
 
-    assert [row["candidate_id"] for row in gamma_zero] == [row["candidate_id"] for row in lcb]
+    assert [row["candidate_id"] for row in lcb_with_high_risk] == [
+        row["candidate_id"] for row in lcb_baseline
+    ]
+    assert all(row["failure_penalty"] == 0.0 for row in lcb_with_high_risk)
 
 
 def test_output_columns_are_present(tmp_path) -> None:
@@ -66,6 +74,21 @@ def test_load_candidates_from_real_artifacts() -> None:
 
     assert candidates
     assert {"candidate_id", "true_failure", "failure_risk", "predicted_value", "uncertainty"} <= set(candidates[0])
+
+
+def test_record_energies_never_substitutes_rydberg_for_ev(tmp_path) -> None:
+    """energy_ev and final_energy_ry are different units. A row missing
+    energy_ev must be skipped, not silently filled in with the Ry value."""
+    records = tmp_path / "records.csv"
+    with records.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["energy_ev", "final_energy_ry"])
+        writer.writeheader()
+        writer.writerow({"energy_ev": "-100.0", "final_energy_ry": "-7.35"})
+        writer.writerow({"energy_ev": "", "final_energy_ry": "-7.35"})
+
+    energies = _record_energies(records)
+
+    assert energies == {"0": -100.0}
 
 
 def _candidates() -> list[dict[str, object]]:
