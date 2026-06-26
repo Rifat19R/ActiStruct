@@ -44,7 +44,7 @@ def test_failure_aware_policy_does_not_hard_delete_candidates() -> None:
 
 def test_gamma_zero_matches_lcb_only_behavior() -> None:
     """gamma=0 (the lcb_only policy) must rank purely by predicted_value/uncertainty,
-    independent of failure_risk — i.e. it must not act as a hidden, hard-coded
+    independent of failure_risk - i.e. it must not act as a hidden, hard-coded
     failure-risk penalty."""
     candidates = _candidates()
     high_risk_variant = [dict(c, failure_risk=1.0) for c in candidates]
