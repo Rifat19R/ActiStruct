@@ -2,10 +2,11 @@
 
 Do not commit pseudopotential files to this repository.
 
-The QE scripts use SSSP 1.3.0 PBE efficiency pseudopotentials from:
+The QE scripts use SSSP 1.3.0 PBE efficiency pseudopotentials. Point
+`ESPRESSO_PSEUDO` at your own local copy (see `docs/qe_setup.md`):
 
-```text
-/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency
+```bash
+export ESPRESSO_PSEUDO=/path/to/SSSP_1.3.0_PBE_efficiency
 ```
 
 Required external files:
