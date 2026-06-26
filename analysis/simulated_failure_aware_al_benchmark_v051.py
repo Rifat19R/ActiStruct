@@ -564,9 +564,16 @@ def _read_v050_top10(v050_table_path: str | Path) -> dict[str, dict[str, str]]:
 
 def _safe_claim(summary: list[dict[str, object]]) -> str:
     """Decide, from the aggregate numbers themselves, which pre-approved
-    sentence is supported. Never force a positive result."""
+    sentence is supported. Never force a positive result.
+
+    A mean failure-count reduction is only called "clear" if it is at least
+    as large as its own standard error of the mean (mean/SEM >= 1); a
+    negative mean smaller than its trial-to-trial noise is reported as a
+    small, noisy reduction rather than a headline improvement."""
     top10 = [row for row in summary if row["top_k"] == 10]
-    improved_pool_modes = []
+    clear_pools: list[str] = []
+    noisy_pools: list[str] = []
+    absent_pools: list[str] = []
     for pool_mode in POOL_MODES:
         aggressive = next(
             (r for r in top10 if r["pool_mode"] == pool_mode and r["policy"] == "failure_aware_aggressive"),
@@ -574,36 +581,64 @@ def _safe_claim(summary: list[dict[str, object]]) -> str:
         )
         if aggressive is None:
             continue
-        if aggressive["mean_delta_failures_vs_lcb"] < 0:
-            improved_pool_modes.append(pool_mode)
+        mean_delta = float(aggressive["mean_delta_failures_vs_lcb"])
+        std_delta = float(aggressive["std_delta_failures_vs_lcb"])
+        n_trials = int(aggressive["n_trials"])
+        sem = std_delta / (n_trials ** 0.5) if n_trials > 0 else 0.0
+        if mean_delta < 0 and sem > 0 and abs(mean_delta) >= sem:
+            clear_pools.append(pool_mode)
+        elif mean_delta < 0:
+            noisy_pools.append(pool_mode)
+        else:
+            absent_pools.append(pool_mode)
 
-    risk_reduced = all(
-        r["mean_delta_risk_vs_lcb"] <= 0
-        for r in top10
-        if r["policy"] == "failure_aware_aggressive"
+    risk_reduced_pools = [
+        r["pool_mode"] for r in top10
+        if r["policy"] == "failure_aware_aggressive" and r["mean_delta_risk_vs_lcb"] <= 0
+    ]
+    risk_reduced_all = len(risk_reduced_pools) == sum(
+        1 for r in top10 if r["policy"] == "failure_aware_aggressive"
     )
 
-    if improved_pool_modes:
-        pools_str = ", ".join(f"`{p}`" for p in improved_pool_modes)
-        claim = (
-            "In repeated offline stress tests, failure-aware LCB reduced mean "
-            f"predicted failure risk and, under {pools_str}, reduced known "
-            "failed selections (mean delta vs. LCB-only < 0 at top-10) "
-            "relative to LCB-only."
+    sentences = ["ActiStruct v0.5.1 extends the v0.5.0 offline benchmark into repeated stress tests."]
+    if risk_reduced_all:
+        sentences.append(
+            f"Across {N_TRIALS} trials, failure-aware LCB reduced the mean "
+            "predicted failure risk in all tested pool modes."
         )
     else:
-        claim = (
+        pools_str = ", ".join(f"`{p}`" for p in risk_reduced_pools) if risk_reduced_pools else "no pool modes"
+        sentences.append(
+            f"Across {N_TRIALS} trials, failure-aware LCB reduced the mean "
+            f"predicted failure risk in {pools_str} (not all tested pool modes)."
+        )
+
+    if clear_pools:
+        clear_str = " and ".join(f"`{p}`" for p in clear_pools)
+        failure_sentence = (
+            "It also reduced known failed selections relative to LCB-only "
+            f"most clearly in {clear_str}"
+        )
+        if noisy_pools:
+            noisy_str = " and ".join(f"`{p}`" for p in noisy_pools)
+            failure_sentence += f", while behavior was weaker (small, noisy mean reduction) in {noisy_str}"
+        if absent_pools:
+            absent_str = " and ".join(f"`{p}`" for p in absent_pools)
+            failure_sentence += f" and not universally better in {absent_str}"
+        failure_sentence += "."
+        sentences.append(failure_sentence)
+    else:
+        sentences.append(
             "Failure-aware LCB reduced predicted risk but did not "
             "consistently reduce known failed selections across stress-test "
             "pools."
         )
-    if not risk_reduced:
-        claim += (
-            " Mean predicted risk reduction under the aggressive penalty was "
-            "not consistent across every pool mode at top-10; see the "
-            "per-pool tables above."
-        )
-    return claim
+
+    sentences.append(
+        "These results support failure risk as a soft DFT triage signal, "
+        "not a guarantee of live DFT savings."
+    )
+    return " ".join(sentences)
 
 
 def _repo_path(path: str | Path) -> str:

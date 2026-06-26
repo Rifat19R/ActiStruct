@@ -111,11 +111,13 @@ def test_report_includes_safe_claim_wording() -> None:
     report_text = render_report(rows, summary, "unused.csv", n_base_candidates=len(_candidates()), n_trials=3)
 
     assert "## Safe Claims" in report_text
+    assert "reduced the mean predicted failure risk" in report_text
     safe_phrases = (
-        "reduced mean predicted failure risk",
+        "most clearly in",
         "did not consistently reduce known failed selections",
     )
     assert any(phrase in report_text for phrase in safe_phrases)
+    assert "soft DFT triage signal, not a guarantee of live DFT savings" in report_text
     assert "ActiStruct guarantees fewer failed DFT jobs" not in report_text
     assert "always outperforms" not in report_text
     assert "proves live DFT savings" not in report_text

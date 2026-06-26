@@ -136,7 +136,7 @@ v0.5.0 ran a single offline trial on the full natural candidate pool (no repeate
 
 ## Safe Claims
 
-In repeated offline stress tests, failure-aware LCB reduced mean predicted failure risk and, under `normal_pool`, `failure_enriched_pool`, `heldout_material_pool`, reduced known failed selections (mean delta vs. LCB-only < 0 at top-10) relative to LCB-only.
+ActiStruct v0.5.1 extends the v0.5.0 offline benchmark into repeated stress tests. Across 50 trials, failure-aware LCB reduced the mean predicted failure risk in all tested pool modes. It also reduced known failed selections relative to LCB-only most clearly in `normal_pool` and `failure_enriched_pool`, while behavior was weaker (small, noisy mean reduction) in `heldout_material_pool` and not universally better in `high_uncertainty_pool`. These results support failure risk as a soft DFT triage signal, not a guarantee of live DFT savings.
 
 ## Next Steps
 
