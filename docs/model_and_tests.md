@@ -99,34 +99,52 @@ QE workflows use ASE's `Espresso` calculator. Each calculation:
 
 ## Tests
 
-Tests live in:
+The current test command for the full repository is:
 
-```text
-tests/test_builders_and_config.py
+```bash
+pytest -q
 ```
 
-They check:
+This collects **73 tests** across `tests/`, none of which launch Quantum
+ESPRESSO. The suite spans both the original GP/LCB engine described above
+and the reliability-aware layer documented in
+`reports/actistruct_technical_report_v06.md`:
 
-- H2 Lennard-Jones target behavior.
-- H2O builder returns 3 atoms and correct angle.
-- CH4 builder returns 5 atoms, equal C-H bonds, and tetrahedral angle.
-- Graphene builder returns 12 atoms.
-- Bulk Cu builder returns 4 atoms.
-- Bulk Si builder returns 8 atoms.
-- Bulk MgO builder returns 8 atoms with 4 Mg and 4 O.
-- H/Pt(111) builder returns 12 Pt atoms and 1 H adsorbate.
-- Bulk LiCoO2 builder returns 12 atoms with 3 Li, 3 Co, and 6 O.
-- H/Cu(111) builder returns 12 Cu atoms, 1 H adsorbate, and 4 fixed bottom Cu atoms.
-- QE scripts point to existing SSSP pseudopotentials.
-- H2 QE uses spin-correct H atom reference.
+- `tests/test_builders_and_config.py` — the original GP/LCB engine smoke
+  test: structure builders return the right atom counts/geometry (H2, H2O,
+  CH4, graphene, bulk Cu/Si/MgO, H/Pt(111), bulk LiCoO2, H/Cu(111)), and QE
+  scripts point to existing SSSP pseudopotentials with a spin-correct H atom
+  reference for H2.
+- `tests/test_generated_workflows.py` — confirms all 50 generated benchmark
+  workflows import and build without launching QE.
+- `tests/test_qe_reliability_parser.py` — QE `pw.x` output parsing,
+  including successful runs, namelist errors, and SCF-not-converged cases.
+- `tests/test_qe_records_dataset.py` — dataset builder: scans success/failed
+  runs, writes stable CSV columns, quarantines invalid-geometry records.
+- `tests/test_qe_reliability_summary.py` — dataset summary counts/labels and
+  report rendering.
+- `tests/test_qe_reliability_classifier.py` — classifier training, the
+  binary success label, and leakage-control checks (post-run fields are
+  excluded from features).
+- `tests/test_failure_aware_acquisition.py` — failure-aware GP/LCB scoring:
+  soft-penalty behavior, NaN/negative-uncertainty rejection, malformed
+  failure-risk handling, and exact LCB fallback when risk is absent or
+  gamma = 0.
+- `tests/test_simulated_failure_aware_al_benchmark.py` — the v0.5.0 offline
+  benchmark (policy/top-k coverage, no hard deletion of candidates).
+- `tests/test_simulated_failure_aware_al_benchmark_v051.py` — the v0.5.1
+  repeated-trial stress benchmark (pool modes, delta-vs-LCB columns, report
+  caveats and safe-claim wording).
+- `tests/test_analysis_paths.py` — path-handling regressions for the
+  original manuscript/benchmark-extraction scripts (OS-independent paths,
+  preflight-check failure behavior).
 
-Run:
+Legacy direct-invocation smoke tests are also still runnable individually:
 
 ```bash
 python tests/test_builders_and_config.py
+python tests/test_generated_workflows.py
 ```
-
-These tests do not launch Quantum ESPRESSO.
 
 ## Reproducibility Notes
 

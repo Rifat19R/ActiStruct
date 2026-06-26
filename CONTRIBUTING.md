@@ -6,13 +6,23 @@ Contributions should keep ActiStruct reproducible, conservative, and easy to aud
 
 - Keep generated benchmark scripts small and explicit.
 - Do not commit pseudopotential binaries.
+- Do not commit private paths or machine-specific files (personal directory
+  paths, usernames, hostnames).
 - Keep raw QE scratch output out of git unless there is a specific archival reason.
 - Prefer adding reports, plots, and concise analysis summaries over large transient files.
-- Run smoke tests before submitting changes:
+- Do not run QE/DFT as part of normal tests; the test suite is offline by design.
+- Do not delete or relabel failed records to improve metrics — failures are
+  training signal, not noise to be cleaned away.
+- Install and run the full test suite before submitting changes:
 
 ```bash
-python tests/test_builders_and_config.py
+pip install -r requirements.txt
+pip install -e ".[test]"
+pytest -q
 ```
+
+This currently passes with 73 tests. See `docs/model_and_tests.md` for what
+each test file covers.
 
 ## Style
 

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "actistruct"
 version = "0.1.0"
-description = "Active-learning inverse design workflows for DFT structure optimization with ASE and Quantum ESPRESSO."
+description = "Reliability-aware active-learning workflow for DFT-guided materials discovery with QE parsing, uncertainty-aware GP/LCB ranking, and failure-risk triage."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -21,6 +21,8 @@ keywords = [
   "materials-science",
   "atomistic-simulation",
   "structure-optimization",
+  "reliability-aware-al",
+  "failure-risk-triage",
 ]
 dependencies = [
   "numpy",
@@ -28,6 +30,7 @@ dependencies = [
   "matplotlib",
   "scikit-learn",
   "ase",
+  "pillow",
 ]
 
 [project.optional-dependencies]
