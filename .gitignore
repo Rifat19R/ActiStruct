@@ -6,6 +6,12 @@ __pycache__/
 .ipynb_checkpoints/
 *.egg-info/
 
+# OS/editor scratch files.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
 # Local scratch files
 local_artifacts/
 *.tmp

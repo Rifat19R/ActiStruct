@@ -186,9 +186,14 @@ cd <ACTISTRUCT_ROOT>
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+pip install -e ".[test]"
 ```
 
 Required Python packages: numpy, scipy, matplotlib, scikit-learn, ase.
+`pip install -e ".[test]"` additionally installs `pytest` (declared as the
+`test` optional-dependency in `pyproject.toml`) — `pytest -q` will fail with
+"command not found" if this step is skipped and `pytest` isn't already
+available globally.
 
 Run the full test suite (no QE/DFT is launched by any test):
 
