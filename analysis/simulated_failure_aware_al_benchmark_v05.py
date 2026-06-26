@@ -175,11 +175,22 @@ def render_report(rows: list[dict[str, object]], table_path: str | Path, n_candi
         "",
         _gamma_interpretation(rows),
         "",
+        _safe_claim_sentence(rows),
+        "",
         "## Scientific Caveats",
         "",
         "- This is a simulated policy benchmark, not a live GP retraining study.",
         "- The LCB uncertainty proxy uses existing v0.3.2 OOD distances because no "
         "new GP/QE jobs are launched here.",
+        "- `predicted_value` is a constant placeholder (0.0) for every candidate in "
+        "this offline simulation, since no live GP energy model is being queried. "
+        "Policy differences therefore come entirely from the uncertainty proxy and "
+        "the failure-risk penalty, not from a predicted energy signal.",
+        "- Each candidate's failure risk comes from a single v0.3.2 held-out group "
+        "split in which that material was not used for training (not averaged "
+        "across the 20 repeated splits). Because split-to-split risk variance is "
+        "known to be large, the absolute risk value used for any one candidate "
+        "here could differ under a different held-out split.",
         "- Failure-risk generalization still has high split-to-split variance, so "
         "failure risk should remain a soft penalty for DFT triage, not a hard "
         "rejection rule.",
@@ -188,6 +199,43 @@ def render_report(rows: list[dict[str, object]], table_path: str | Path, n_candi
         "",
     ])
     return "\n".join(lines)
+
+
+def _safe_claim_sentence(rows: list[dict[str, object]]) -> str:
+    """Compare each failure-aware policy to lcb_only at top-10 and state only what
+    the numbers actually support. Never claim a failure-count reduction unless the
+    table shows strictly fewer known failures than lcb_only."""
+    top10 = {row["policy"]: row for row in rows if int(row["top_k"]) == 10}
+    lcb = top10.get("lcb_only")
+    if lcb is None:
+        return ""
+    lcb_failures = int(lcb["known_failures_selected"])
+    lcb_risk = float(lcb["mean_failure_risk"])
+    sentences = []
+    for policy in ("failure_aware_lcb_mild", "failure_aware_lcb_balanced", "failure_aware_lcb_aggressive"):
+        row = top10.get(policy)
+        if row is None:
+            continue
+        failures = int(row["known_failures_selected"])
+        risk = float(row["mean_failure_risk"])
+        if failures < lcb_failures:
+            sentences.append(
+                f"`{policy}` reduced known failed selections at top-10 from "
+                f"{lcb_failures} (`lcb_only`) to {failures}."
+            )
+        elif failures > lcb_failures:
+            sentences.append(
+                f"`{policy}` selected more known failures at top-10 ({failures}) "
+                f"than `lcb_only` ({lcb_failures}); failure-aware re-ranking did "
+                "not help in this sample."
+            )
+        else:
+            sentences.append(
+                f"`{policy}` preserved the same known failed-selection count as "
+                f"`lcb_only` at top-10 ({failures}) while changing mean predicted "
+                f"failure risk from {lcb_risk:.3f} to {risk:.3f}."
+            )
+    return " ".join(sentences)
 
 
 def write_report(text: str, path: str | Path) -> None:
@@ -233,10 +281,12 @@ def _best_success(selected: list[dict[str, object]]) -> dict[str, object]:
 
 
 def _record_energies(records_path: str | Path) -> dict[str, float]:
+    # Only energy_ev is used. final_energy_ry is a different unit (Rydberg) and
+    # must never be substituted here without an explicit Ry->eV conversion.
     energies: dict[str, float] = {}
     with Path(records_path).open(newline="", encoding="utf-8") as handle:
         for idx, row in enumerate(csv.DictReader(handle)):
-            energy = _float(row.get("energy_ev")) or _float(row.get("final_energy_ry"))
+            energy = _float(row.get("energy_ev"))
             if energy is not None:
                 energies[str(idx)] = energy
     return energies

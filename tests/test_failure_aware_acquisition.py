@@ -114,6 +114,15 @@ def test_negative_uncertainty_rejected() -> None:
         ])
 
 
+def test_nan_uncertainty_rejected() -> None:
+    import pytest
+
+    with pytest.raises(ValueError, match="uncertainty"):
+        rank_candidates([
+            {"candidate_id": "bad", "predicted_value": 0.0, "uncertainty": float("nan")},
+        ])
+
+
 def test_output_csv_has_required_columns(tmp_path) -> None:
     rows = rank_candidates([
         {"candidate_id": "a", "predicted_value": 0.0, "uncertainty": 0.0, "failure_risk": 0.1},
