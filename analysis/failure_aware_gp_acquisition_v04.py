@@ -14,13 +14,14 @@ from actistruct.acquisition import (  # noqa: E402
     DEFAULT_BETA,
     DEFAULT_FAILURE_RISK_THRESHOLD,
     DEFAULT_GAMMA,
+    GAMMA_MODES,
     rank_candidates,
 )
 
 
 DEFAULT_INPUT = ROOT / "data" / "qe_reliability_predictions_v032.csv"
-DEFAULT_TABLE = ROOT / "data" / "failure_aware_gp_acquisition_v04.csv"
-DEFAULT_REPORT = ROOT / "reports" / "failure_aware_gp_acquisition_v04.md"
+DEFAULT_TABLE = ROOT / "data" / "failure_aware_gp_acquisition_v041.csv"
+DEFAULT_REPORT = ROOT / "reports" / "failure_aware_gp_acquisition_v041.md"
 
 OUTPUT_COLUMNS = [
     "rank",
@@ -28,8 +29,12 @@ OUTPUT_COLUMNS = [
     "predicted_value",
     "uncertainty",
     "failure_risk",
+    "base_lcb_score",
     "failure_penalty",
     "acquisition_score",
+    "rank_without_failure_risk",
+    "rank_with_failure_risk",
+    "rank_shift",
     "risk_flag",
     "selection_reason",
 ]
@@ -40,7 +45,8 @@ def read_v032_candidates(path: str | Path, limit: int = 50) -> list[dict[str, ob
     seen: set[str] = set()
     with Path(path).open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
-            if row.get("threshold") != "0.1":
+            threshold = _float(row.get("threshold"))
+            if threshold is None or abs(threshold - DEFAULT_FAILURE_RISK_THRESHOLD) > 1e-12:
                 continue
             candidate_id = str(row["record_id"])
             if candidate_id in seen:
@@ -74,6 +80,17 @@ def rank_failure_aware_candidates(
     )
 
 
+def rank_gamma_modes(
+    candidates: list[dict[str, object]],
+    beta: float = DEFAULT_BETA,
+    failure_risk_threshold: float = DEFAULT_FAILURE_RISK_THRESHOLD,
+) -> dict[str, list[dict[str, object]]]:
+    return {
+        mode: rank_failure_aware_candidates(candidates, beta, gamma, failure_risk_threshold)
+        for mode, gamma in GAMMA_MODES.items()
+    }
+
+
 def write_ranked_candidates(rows: list[dict[str, object]], path: str | Path) -> None:
     out = Path(path)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -88,10 +105,15 @@ def write_ranked_candidates(rows: list[dict[str, object]], path: str | Path) -> 
         writer.writerows(rows)
 
 
-def render_report(rows: list[dict[str, object]], table_path: str | Path) -> str:
+def render_report(
+    rows: list[dict[str, object]],
+    table_path: str | Path,
+    mode_rows: dict[str, list[dict[str, object]]] | None = None,
+) -> str:
     elevated = sum(row["risk_flag"] == "elevated" for row in rows)
+    modes_text = ", ".join(f"`{name}={value}`" for name, value in GAMMA_MODES.items())
     lines = [
-        "# Failure-Aware GP Acquisition v0.4",
+        "# Failure-Aware GP Acquisition v0.4.1",
         "",
         "## Purpose",
         "",
@@ -108,6 +130,7 @@ def render_report(rows: list[dict[str, object]], table_path: str | Path) -> str:
         "",
         f"Defaults: `beta={DEFAULT_BETA}`, `gamma={DEFAULT_GAMMA}`, "
         f"`failure_risk_threshold={DEFAULT_FAILURE_RISK_THRESHOLD}`.",
+        f"Gamma modes: {modes_text}.",
         "",
         "Candidates are never hard rejected by failure risk. Elevated-risk "
         "candidates are only penalized in the acquisition score.",
@@ -118,29 +141,54 @@ def render_report(rows: list[dict[str, object]], table_path: str | Path) -> str:
         f"- Ranked candidates: **{len(rows)}**",
         f"- Elevated-risk candidates: **{elevated}**",
         "",
-        "## Top Candidates",
+        "## Default Top Candidates",
         "",
-        "| Rank | Candidate | Failure risk | Penalty | Score | Risk flag | Reason |",
-        "| ---: | --- | ---: | ---: | ---: | --- | --- |",
+        "| Rank | Candidate | Base LCB | Failure risk | Penalty | Score | Base rank | Risk rank | Shift | Risk flag |",
+        "| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
     ]
     for row in rows[:10]:
         risk = row["failure_risk"]
         risk_text = "NA" if risk == "" else f"{float(risk):.3f}"
         lines.append(
-            f"| {row['rank']} | `{row['candidate_id']}` | {risk_text} | "
+            f"| {row['rank']} | `{row['candidate_id']}` | "
+            f"{float(row['base_lcb_score']):.3f} | {risk_text} | "
             f"{float(row['failure_penalty']):.3f} | "
             f"{float(row['acquisition_score']):.3f} | "
-            f"{row['risk_flag']} | {row['selection_reason']} |"
+            f"{row['rank_without_failure_risk']} | "
+            f"{row['rank_with_failure_risk']} | {row['rank_shift']} | "
+            f"{row['risk_flag']} |"
         )
+    if mode_rows:
+        lines.extend(["", "## Gamma Mode Top-10 Changes", ""])
+        for mode, ranked in mode_rows.items():
+            top = ranked[:10]
+            avg_risk = sum(_risk_or_zero(row["failure_risk"]) for row in top) / max(len(top), 1)
+            shifted = sum(1 for row in top if int(row["rank_shift"]) != 0)
+            lines.extend([
+                f"### {mode} gamma = {GAMMA_MODES[mode]}",
+                "",
+                f"- Top-10 mean failure risk: **{avg_risk:.3f}**",
+                f"- Top-10 candidates shifted by risk penalty: **{shifted}**",
+                "",
+                "| Rank | Candidate | Failure risk | Score | Base rank | Shift |",
+                "| ---: | --- | ---: | ---: | ---: | ---: |",
+            ])
+            for row in top:
+                risk = row["failure_risk"]
+                risk_text = "NA" if risk == "" else f"{float(risk):.3f}"
+                lines.append(
+                    f"| {row['rank']} | `{row['candidate_id']}` | {risk_text} | "
+                    f"{float(row['acquisition_score']):.3f} | "
+                    f"{row['rank_without_failure_risk']} | {row['rank_shift']} |"
+                )
+            lines.append("")
     lines.extend([
         "",
         "## Scientific Caveat",
         "",
-        "The included CSV is an offline integration artifact. In production, "
-        "`predicted_value` and `uncertainty` should come from the active GP "
-        "surrogate for proposed candidates; the same ranking function now "
-        "accepts optional `failure_risk` and falls back to original LCB if it "
-        "is absent.",
+        "The included CSV is an offline integration artifact. The production "
+        "engine now exposes an optional `failure_risk_provider` on `ActiveSystem`; "
+        "when it is absent, the original DE LCB path is preserved.",
         "",
     ])
     return "\n".join(lines)
@@ -165,8 +213,9 @@ def main(argv: list[str] | None = None) -> int:
 
     candidates = read_v032_candidates(args.input, args.limit)
     ranked = rank_failure_aware_candidates(candidates, args.beta, args.gamma, args.failure_risk_threshold)
+    mode_rows = rank_gamma_modes(candidates, args.beta, args.failure_risk_threshold)
     write_ranked_candidates(ranked, args.table)
-    write_report(render_report(ranked, args.table), args.report)
+    write_report(render_report(ranked, args.table, mode_rows), args.report)
     print(f"Wrote {args.table}")
     print(f"Wrote {args.report}")
     return 0
@@ -179,6 +228,12 @@ def _float(raw: str | None) -> float | None:
         return float(raw)
     except ValueError:
         return None
+
+
+def _risk_or_zero(value: object) -> float:
+    if value == "":
+        return 0.0
+    return float(value)
 
 
 def _repo_path(path: str | Path) -> str:

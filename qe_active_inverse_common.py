@@ -82,6 +82,12 @@ from scipy.optimize import differential_evolution
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
 
+from actistruct.acquisition import (
+    DEFAULT_FAILURE_RISK_THRESHOLD,
+    GAMMA_MODES,
+    rank_candidates,
+)
+
 try:
     from ase.calculators.espresso import EspressoProfile
 except ImportError:
@@ -184,6 +190,9 @@ class ActiveSystem:
     uncertainty_threshold       : GP std above which a point is queried (eV)
     active_labels_per_iter      : how many uncertain points to label per iter
     kappa           : exploration weight in LCB (higher = more exploration)
+    failure_risk_provider : optional callable that receives candidate params
+                     and returns failure risk in [0, 1] or None.
+    failure_risk_gamma_mode : mild/balanced/aggressive soft penalty scale.
     convergence_uncertainty     : stop when GP std at best point < this (eV)
     convergence_predicted_improvement : stop when DE finds no gain > this (eV)
     retries         : QE retry attempts on failure
@@ -222,6 +231,10 @@ class ActiveSystem:
     uncertainty_threshold:           float = 0.03
     active_labels_per_iter:          int   = 2
     kappa:            float = 1.0
+    failure_risk_provider: Callable | None = None
+    failure_risk_gamma_mode: str = "balanced"
+    failure_risk_gamma: float | None = None
+    failure_risk_threshold: float = DEFAULT_FAILURE_RISK_THRESHOLD
     convergence_uncertainty:         float = 0.03
     convergence_predicted_improvement: float = 0.001
     retries:          int   = 2
@@ -717,8 +730,18 @@ def _propose_inverse(
     model:          GPModel,
     system:         ActiveSystem,
     candidate_grid: np.ndarray,
-) -> tuple[tuple[float, ...], float, float, float]:
+) -> tuple[tuple[float, ...], float, float, float, dict[str, object]]:
     """Minimise LCB via DE. Returns (params, mean, std, predicted_improvement)."""
+    risk_ranked = _rank_failure_aware_grid(model, system, candidate_grid)
+    if risk_ranked:
+        top = risk_ranked[0]
+        best_x = tuple(float(v) for v in top["params"])
+        mean_at = np.array([float(top["predicted_value"])])
+        std_at = np.array([float(top["uncertainty"])])
+        coarse_mean, _ = model.predict(candidate_grid)
+        improvement = float(max(0.0, float(np.min(coarse_mean)) - float(mean_at[0])))
+        return best_x, float(mean_at[0]), float(std_at[0]), improvement, top
+
     bounds = [(v.lo, v.hi) for v in system.variables]
 
     def _lcb(x: np.ndarray) -> float:
@@ -735,7 +758,81 @@ def _propose_inverse(
     # predicted_improvement uses coarse grid (for reporting only — not for proposal)
     coarse_mean, _ = model.predict(candidate_grid)
     improvement = float(max(0.0, float(np.min(coarse_mean)) - float(mean_at[0])))
-    return best_x, float(mean_at[0]), float(std_at[0]), improvement
+    base_score = float(mean_at[0] - system.kappa * std_at[0])
+    metadata = {
+        "candidate_id": _candidate_id(best_x),
+        "base_lcb_score": base_score,
+        "failure_penalty": 0.0,
+        "acquisition_score": base_score,
+        "rank_without_failure_risk": 1,
+        "rank_with_failure_risk": 1,
+        "rank_shift": 0,
+        "risk_flag": "missing",
+        "selection_reason": "ranked by original DE LCB; failure_risk missing",
+    }
+    return best_x, float(mean_at[0]), float(std_at[0]), improvement, metadata
+
+
+def _rank_failure_aware_grid(
+    model: GPModel,
+    system: ActiveSystem,
+    candidate_grid: np.ndarray,
+) -> list[dict[str, object]]:
+    if system.failure_risk_provider is None:
+        return []
+    mean, std = model.predict(candidate_grid)
+    candidates: list[dict[str, object]] = []
+    has_risk = False
+    for params, predicted_value, uncertainty in zip(candidate_grid, mean, std):
+        param_tuple = tuple(float(v) for v in params)
+        risk = _clean_failure_risk(system.failure_risk_provider(param_tuple))
+        if risk is not None:
+            has_risk = True
+        candidates.append({
+            "candidate_id": _candidate_id(param_tuple),
+            "params": param_tuple,
+            "predicted_value": float(predicted_value),
+            "uncertainty": float(uncertainty),
+            "failure_risk": risk,
+        })
+    if not has_risk:
+        return []
+    gamma = _failure_risk_gamma(system)
+    return rank_candidates(
+        candidates,
+        objective="minimize",
+        beta=system.kappa,
+        gamma=gamma,
+        failure_risk_threshold=system.failure_risk_threshold,
+    )
+
+
+def _failure_risk_gamma(system: ActiveSystem) -> float:
+    if system.failure_risk_gamma is not None:
+        return float(system.failure_risk_gamma)
+    try:
+        return GAMMA_MODES[system.failure_risk_gamma_mode]
+    except KeyError as exc:
+        raise ValueError(
+            "failure_risk_gamma_mode must be one of "
+            f"{', '.join(sorted(GAMMA_MODES))}"
+        ) from exc
+
+
+def _candidate_id(params: tuple[float, ...]) -> str:
+    return "|".join(f"{value:.8g}" for value in params)
+
+
+def _clean_failure_risk(value: object) -> float | None:
+    if value in (None, ""):
+        return None
+    try:
+        risk = float(value)
+    except (TypeError, ValueError):
+        return None
+    if np.isnan(risk):
+        return None
+    return float(np.clip(risk, 0.0, 1.0))
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -933,13 +1030,19 @@ def run_system(system: ActiveSystem) -> None:
             print(msg); report.append(msg)
 
         # Inverse design step (DE acquisition)
-        proposal, pred_mean, pred_std, pred_improvement = _propose_inverse(
+        proposal, pred_mean, pred_std, pred_improvement, acquisition_info = _propose_inverse(
             model, system, candidate_grid
         )
         msg = (
             f"  Inverse proposal: {_fmt(system, proposal)}\n"
             f"    GP E={pred_mean:.8f} ± {pred_std:.8f} eV   "
-            f"predicted improvement={pred_improvement:.8f} eV"
+            f"predicted improvement={pred_improvement:.8f} eV\n"
+            f"    base LCB={float(acquisition_info['base_lcb_score']):.8f}   "
+            f"failure penalty={float(acquisition_info['failure_penalty']):.8f}   "
+            f"acquisition={float(acquisition_info['acquisition_score']):.8f}\n"
+            f"    risk flag={acquisition_info['risk_flag']}   "
+            f"rank shift={acquisition_info['rank_shift']}   "
+            f"{acquisition_info['selection_reason']}"
         )
         print(msg); report.append(msg)
 

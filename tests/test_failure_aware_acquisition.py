@@ -8,6 +8,7 @@ from actistruct.acquisition import (
 )
 from analysis.failure_aware_acquisition_demo import build_demo_rows
 from analysis.failure_aware_gp_acquisition_v04 import OUTPUT_COLUMNS, write_ranked_candidates
+from qe_active_inverse_common import ActiveSystem, Variable, _rank_failure_aware_grid
 
 
 def test_failure_penalty_increases_minimization_score() -> None:
@@ -49,6 +50,8 @@ def test_old_lcb_behavior_preserved_when_failure_risk_missing() -> None:
     assert ranked[0]["acquisition_score"] == lcb_minimization_score(0.8, 0.0, beta=2.0)
     assert ranked[0]["failure_risk"] == ""
     assert ranked[0]["risk_flag"] == "missing"
+    assert ranked[0]["base_lcb_score"] == ranked[0]["acquisition_score"]
+    assert "rank_shift" in ranked[0]
 
 
 def test_gamma_zero_preserves_old_ranking() -> None:
@@ -87,6 +90,30 @@ def test_threshold_creates_correct_risk_flag() -> None:
     assert flags == {"low": "low", "elevated": "elevated"}
 
 
+def test_bad_failure_risk_does_not_crash_and_is_missing() -> None:
+    candidates = [
+        {"candidate_id": "bad", "predicted_value": 0.0, "uncertainty": 0.0, "failure_risk": "not-a-number"},
+        {"candidate_id": "nan", "predicted_value": 1.0, "uncertainty": 0.0, "failure_risk": float("nan")},
+        {"candidate_id": "clip", "predicted_value": 2.0, "uncertainty": 0.0, "failure_risk": 3.0},
+    ]
+
+    ranked = rank_candidates(candidates)
+    by_id = {row["candidate_id"]: row for row in ranked}
+
+    assert by_id["bad"]["risk_flag"] == "missing"
+    assert by_id["nan"]["risk_flag"] == "missing"
+    assert by_id["clip"]["failure_risk"] == 1.0
+
+
+def test_negative_uncertainty_rejected() -> None:
+    import pytest
+
+    with pytest.raises(ValueError, match="uncertainty"):
+        rank_candidates([
+            {"candidate_id": "bad", "predicted_value": 0.0, "uncertainty": -0.1},
+        ])
+
+
 def test_output_csv_has_required_columns(tmp_path) -> None:
     rows = rank_candidates([
         {"candidate_id": "a", "predicted_value": 0.0, "uncertainty": 0.0, "failure_risk": 0.1},
@@ -99,6 +126,25 @@ def test_output_csv_has_required_columns(tmp_path) -> None:
     with out.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         assert set(OUTPUT_COLUMNS) <= set(reader.fieldnames or [])
+
+
+def test_actual_gp_proposal_path_can_call_failure_aware_ranking() -> None:
+    system = _system_with_risk(lambda params: 0.9 if params[0] < 0.5 else 0.0)
+
+    ranked = _rank_failure_aware_grid(_FakeModel(), system, [[0.0], [1.0]])
+
+    assert ranked
+    assert ranked[0]["candidate_id"] == "1"
+    assert ranked[0]["rank_without_failure_risk"] == 2
+    assert ranked[0]["rank_shift"] > 0
+
+
+def test_actual_gp_path_falls_back_when_failure_risk_missing() -> None:
+    system = _system_with_risk(lambda params: None)
+
+    ranked = _rank_failure_aware_grid(_FakeModel(), system, [[0.0], [1.0]])
+
+    assert ranked == []
 
 
 def test_demo_penalty_changes_top_ranked_risk() -> None:
@@ -129,3 +175,28 @@ def test_demo_penalty_changes_top_ranked_risk() -> None:
 
     assert no_penalty_top["material_id"] == "risky"
     assert penalty_top["material_id"] == "safe"
+
+
+class _FakeModel:
+    def predict(self, values):
+        import numpy as np
+
+        arr = np.atleast_2d(np.array(values, dtype=float))
+        mean = arr[:, 0] * 0.2
+        std = np.zeros(len(arr))
+        return mean, std
+
+
+def _system_with_risk(provider) -> ActiveSystem:
+    return ActiveSystem(
+        key="unit",
+        title="unit",
+        builder=lambda x: None,
+        variables=(Variable("x", 0.0, 1.0, (0.0, 1.0)),),
+        pseudopotentials={"H": "H.UPF"},
+        ecutwfc=30.0,
+        ecutrho=240.0,
+        kpts=(1, 1, 1),
+        failure_risk_provider=provider,
+        failure_risk_gamma_mode="aggressive",
+    )

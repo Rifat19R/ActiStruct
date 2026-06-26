@@ -1,10 +1,16 @@
 from __future__ import annotations
 
+import math
 from collections.abc import Iterable
 
 DEFAULT_BETA = 2.0
 DEFAULT_GAMMA = 1.0
 DEFAULT_FAILURE_RISK_THRESHOLD = 0.10
+GAMMA_MODES = {
+    "mild": 0.1,
+    "balanced": 0.3,
+    "aggressive": 1.0,
+}
 
 
 def failure_aware_minimization_score(
@@ -82,6 +88,8 @@ def rank_candidates(
     for candidate in candidates:
         predicted_value = float(candidate["predicted_value"])
         uncertainty = float(candidate["uncertainty"])
+        if uncertainty < 0:
+            raise ValueError("uncertainty must be non-negative")
         failure_risk = _optional_risk(candidate.get("failure_risk"))
         applied_risk = 0.0 if failure_risk is None else failure_risk
         failure_penalty_value = gamma * applied_risk if failure_risk is not None else 0.0
@@ -102,19 +110,23 @@ def rank_candidates(
         item["predicted_value"] = predicted_value
         item["uncertainty"] = uncertainty
         item["failure_risk"] = "" if failure_risk is None else failure_risk
+        item["base_lcb_score"] = base_score
         item["failure_penalty"] = failure_penalty_value
         item["acquisition_score"] = score
         item["failure_aware_score"] = score
         item["risk_flag"] = _risk_flag(failure_risk, failure_risk_threshold)
         item["selection_reason"] = _selection_reason(failure_risk, gamma)
-        item["_base_score"] = base_score
         scored.append(item)
 
     reverse = objective == "maximize"
+    base_ranked = sorted(scored, key=lambda item: float(item["base_lcb_score"]), reverse=reverse)
+    base_ranks = {str(item["candidate_id"]): rank for rank, item in enumerate(base_ranked, start=1)}
     ranked = sorted(scored, key=lambda item: float(item["acquisition_score"]), reverse=reverse)
     for rank, item in enumerate(ranked, start=1):
         item["rank"] = rank
-        item.pop("_base_score", None)
+        item["rank_without_failure_risk"] = base_ranks[str(item["candidate_id"])]
+        item["rank_with_failure_risk"] = rank
+        item["rank_shift"] = item["rank_without_failure_risk"] - rank
     return ranked
 
 
@@ -125,7 +137,13 @@ def _bounded_risk(value: float) -> float:
 def _optional_risk(value: object) -> float | None:
     if value in (None, ""):
         return None
-    return _bounded_risk(float(value))
+    try:
+        risk = float(value)
+    except (TypeError, ValueError):
+        return None
+    if math.isnan(risk):
+        return None
+    return _bounded_risk(risk)
 
 
 def _risk_flag(failure_risk: float | None, threshold: float) -> str:
