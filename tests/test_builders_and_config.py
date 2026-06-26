@@ -7,6 +7,9 @@ important constants, and local pseudopotential paths.
 from pathlib import Path
 import sys
 
+import pytest
+from ase import Atoms
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANUAL_QE_EXAMPLES = PROJECT_ROOT / "examples" / "manual_qe"
@@ -28,6 +31,23 @@ def test_h2_lj_target_shape():
     e_stretched = h2_dimer.h2_lj_energy(2.0)
     assert abs(e_eq + 4.5) < 1e-8
     assert e_stretched > e_eq
+
+
+def test_pre_qe_geometry_validator_rejects_exact_overlap():
+    from qe_active_inverse_common import _validate_no_atomic_overlap
+
+    atoms = Atoms("HH", positions=[(0, 0, 0), (0, 0, 0)], cell=[10, 10, 10], pbc=True)
+
+    with pytest.raises(ValueError, match="Atomic overlap"):
+        _validate_no_atomic_overlap(atoms)
+
+
+def test_pre_qe_geometry_validator_allows_h2_bond():
+    from qe_active_inverse_common import _validate_no_atomic_overlap
+
+    atoms = Atoms("HH", positions=[(0, 0, 0), (0, 0, 0.62)], cell=[10, 10, 10], pbc=True)
+
+    _validate_no_atomic_overlap(atoms)
 
 
 def test_graphene_builder_has_12_atoms():

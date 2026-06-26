@@ -92,6 +92,13 @@ wall time, cutoffs, k-points, smearing, mixing beta, pseudopotential filenames,
 and calculation hashes. The failed rows are intentionally included and labeled
 with `failure_reason=geometry_overlap`.
 
+The Li2NaV2(PO4)3 overlap rows are legacy local QE scratch outputs from an
+invalid geometry, not a valid failed chemistry result. They cannot be converted
+into successful calculations after the fact without rerunning from a corrected
+crystallographic builder. The code now includes a pre-QE minimum-distance
+validator in `qe_active_inverse_common.py`, so exact or near-exact atomic
+overlaps are skipped before launching Quantum ESPRESSO.
+
 This is an evidence seed for reliability-aware active learning, not yet a full
 benchmark dataset. The next step is to scale the same builder over a curated
 set of successful, unconverged, and failed QE runs while preserving provenance.

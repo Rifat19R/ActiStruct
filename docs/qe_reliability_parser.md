@@ -55,3 +55,8 @@ python -m actistruct.datasets.qe_records \
 
 The first committed CSV includes three successful H2 outputs and two failed
 Li2NaV2(PO4)3 geometry-overlap outputs. Failed jobs are included by design.
+
+The Li2NaV2(PO4)3 rows are legacy invalid-geometry scratch outputs. The shared
+QE engine now validates minimum interatomic distance before launching QE, so
+future exact-overlap candidates are rejected cheaply instead of consuming a QE
+job.

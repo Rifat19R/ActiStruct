@@ -114,6 +114,7 @@ PW_X = next(
 QE_COMMAND = os.environ.get("ESPRESSO_COMMAND", f"mpirun -np {N_PROCS} {PW_X}")
 QE_CONV_THR = 5e-9
 QE_MIXING_BETA = 0.3
+MIN_INTERATOMIC_DISTANCE_A = 0.25
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -388,6 +389,31 @@ def _build_calculator(system: ActiveSystem, directory: Path, prefix: str) -> Esp
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# Internal helpers — geometry validation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def _validate_no_atomic_overlap(
+    atoms: Atoms,
+    min_distance: float = MIN_INTERATOMIC_DISTANCE_A,
+) -> None:
+    """Reject exact or near-exact atomic overlaps before launching QE.
+
+    This is intentionally conservative. It catches pathological duplicate
+    positions while allowing chemically short bonds such as H2.
+    """
+    if len(atoms) < 2:
+        return
+    distances = atoms.get_all_distances(mic=True)
+    np.fill_diagonal(distances, np.inf)
+    min_seen = float(np.min(distances))
+    if min_seen < min_distance:
+        raise ValueError(
+            f"Atomic overlap detected before QE: minimum interatomic distance "
+            f"{min_seen:.4f} Å is below {min_distance:.4f} Å."
+        )
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Internal helpers — single QE run
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -439,6 +465,7 @@ def _get_reference_energies(
             ref_energies.append(cached)
             continue
         atoms   = ref_fn()
+        _validate_no_atomic_overlap(atoms)
         prefix  = f"ref{i}"
         workdir = paths["qedir"] / f"reference_{i}_pid{os.getpid()}"
         energy  = _run_one_qe(system, atoms, workdir, prefix, system.retries)
@@ -470,6 +497,11 @@ def _compute_energy(
         return cached
 
     atoms = system.builder(*params)
+    try:
+        _validate_no_atomic_overlap(atoms)
+    except ValueError as exc:
+        print(f"    WARNING: invalid geometry skipped before QE: {exc}")
+        return None
     tag   = "_".join(
         f"{v.name}{p:.4f}".replace(".", "p").replace("-", "m")
         for v, p in zip(system.variables, params)
