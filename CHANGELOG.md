@@ -2,6 +2,21 @@
 
 All notable changes to ActiStruct are documented here.
 
+## v0.5.1 - 2026-06-27
+
+### Added
+
+- Repeated-trial (50 trials) offline stress benchmark for failure-aware
+  GP/LCB acquisition across four candidate-pool modes. No QE/DFT jobs were
+  run. See `docs/releases/v0.5.1.md` for the full release note and
+  `reports/actistruct_status_v051.md` for the broader project status.
+
+### Notes
+
+- Results support failure risk as a soft DFT triage signal, not a guarantee
+  of live DFT savings. See the release note for the conservative safe claim
+  and known limitations.
+
 ## 0.1.0 - 2026-06-15
 
 ### Added
