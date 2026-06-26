@@ -1,0 +1,977 @@
+failure_label,success,material_id,ecutwfc,ecutrho,k1,k2,k3,kpoint_product,smearing,mixing_beta,pseudo_family,n_species,elements
+success,1,h2_r0p620000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_r0p900000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_r1p300000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h_atom,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+job_not_completed,0,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+job_not_completed,0,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
+success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
+success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+job_not_completed,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
+job_not_completed,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+job_not_completed,0,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+job_not_completed,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+job_not_completed,0,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
+success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+job_not_completed,0,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+job_not_completed,0,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+job_not_completed,0,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+job_not_completed,0,bulk_sio2,80.0,640.0,8,8,8,512,gaussian,0.3,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+job_not_completed,0,h_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
