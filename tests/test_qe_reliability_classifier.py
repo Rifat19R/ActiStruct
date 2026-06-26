@@ -3,10 +3,13 @@ from __future__ import annotations
 import csv
 
 from analysis.train_qe_reliability_classifier import (
+    ExperimentSpec,
     FEATURE_COLUMNS,
     POST_RUN_EXCLUDED_COLUMNS,
     build_ml_rows,
-    train_models,
+    experiment_specs,
+    make_split,
+    train_experiments,
     write_ml_table,
 )
 
@@ -43,56 +46,52 @@ def test_write_ml_table_has_expected_columns(tmp_path) -> None:
         reader = csv.DictReader(handle)
         saved = list(reader)
 
-    assert reader.fieldnames == ["failure_label", "success", *FEATURE_COLUMNS]
+    assert reader.fieldnames == ["record_id", "failure_label", "success", *FEATURE_COLUMNS]
     assert saved[0]["success"] == "1"
     assert "final_energy_ry" not in reader.fieldnames
 
 
-def test_train_models_returns_baselines_on_separable_fixture() -> None:
-    rows = []
-    for idx in range(12):
-        rows.append({
-            "failure_label": "success",
-            "success": 1,
-            "material_id": f"ok_{idx % 3}",
-            "ecutwfc": 50.0,
-            "ecutrho": 400.0,
-            "k1": 1,
-            "k2": 1,
-            "k3": 1,
-            "kpoint_product": 1,
-            "smearing": "gaussian",
-            "mixing_beta": 0.4,
-            "pseudo_family": "PSLibrary",
-            "n_species": 1,
-            "elements": "H",
-        })
-        rows.append({
-            "failure_label": "qe_error",
-            "success": 0,
-            "material_id": f"bad_{idx % 3}",
-            "ecutwfc": 80.0,
-            "ecutrho": 640.0,
-            "k1": 6,
-            "k2": 6,
-            "k3": 1,
-            "kpoint_product": 36,
-            "smearing": "mv",
-            "mixing_beta": 0.2,
-            "pseudo_family": "ONCV",
-            "n_species": 3,
-            "elements": "C O Pt",
-        })
+def test_no_material_id_ablation_removes_material_feature() -> None:
+    specs = {spec.name: spec for spec in experiment_specs()}
 
-    results, split = train_models(rows, random_state=0)
+    assert "material_id" in specs["baseline_random_split"].feature_columns
+    assert "material_id" not in specs["no_material_id_random_split"].feature_columns
 
-    trained = {result.name: result for result in results if result.status == "trained"}
-    assert split["n_total"] == 24
-    assert split["n_train"] == 19
-    assert split["n_test"] == 5
-    assert "LogisticRegression" in trained
-    assert "RandomForestClassifier" in trained
-    assert trained["RandomForestClassifier"].confusion is not None
+
+def test_group_split_holds_out_material_groups() -> None:
+    rows = _ml_fixture()
+    spec = ExperimentSpec("material_group_split", "group", FEATURE_COLUMNS)
+
+    split = make_split(rows, spec, random_state=0)
+
+    train_groups = {rows[int(idx)]["material_id"] for idx in split.train_idx}
+    test_groups = {rows[int(idx)]["material_id"] for idx in split.test_idx}
+    assert train_groups
+    assert test_groups
+    assert train_groups.isdisjoint(test_groups)
+
+
+def test_train_experiments_returns_ablation_results_and_predictions() -> None:
+    rows = _ml_fixture()
+
+    results, predictions = train_experiments(rows, random_state=0)
+
+    trained = {
+        (result.experiment, result.model): result
+        for result in results
+        if result.status == "trained"
+    }
+    experiments = {result.experiment for result in results}
+    assert {
+        "baseline_random_split",
+        "no_material_id_random_split",
+        "material_group_split",
+    } <= experiments
+    assert ("baseline_random_split", "LogisticRegression") in trained
+    assert ("baseline_random_split", "RandomForestClassifier") in trained
+    assert trained[("baseline_random_split", "RandomForestClassifier")].failure_recall is not None
+    assert predictions
+    assert {"experiment", "model", "predicted_failure_risk"} <= set(predictions[0])
 
 
 def _record(
@@ -124,3 +123,42 @@ def _record(
         "calculation_hash": "abc",
     }
 
+
+def _ml_fixture() -> list[dict[str, object]]:
+    rows = []
+    for idx in range(18):
+        rows.append({
+            "record_id": len(rows),
+            "failure_label": "success",
+            "success": 1,
+            "material_id": f"ok_{idx % 6}",
+            "ecutwfc": 50.0,
+            "ecutrho": 400.0,
+            "k1": 1,
+            "k2": 1,
+            "k3": 1,
+            "kpoint_product": 1,
+            "smearing": "gaussian",
+            "mixing_beta": 0.4,
+            "pseudo_family": "PSLibrary",
+            "n_species": 1,
+            "elements": "H",
+        })
+        rows.append({
+            "record_id": len(rows),
+            "failure_label": "qe_error",
+            "success": 0,
+            "material_id": f"bad_{idx % 6}",
+            "ecutwfc": 80.0,
+            "ecutrho": 640.0,
+            "k1": 6,
+            "k2": 6,
+            "k3": 1,
+            "kpoint_product": 36,
+            "smearing": "mv",
+            "mixing_beta": 0.2,
+            "pseudo_family": "ONCV",
+            "n_species": 3,
+            "elements": "C O Pt",
+        })
+    return rows

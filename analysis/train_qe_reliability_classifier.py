@@ -19,14 +19,15 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
 )
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from sklearn.pipeline import Pipeline
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "parsed_records" / "qe_reliability_records.csv"
 DEFAULT_TABLE = ROOT / "data" / "qe_reliability_ml_table.csv"
-DEFAULT_REPORT = ROOT / "reports" / "qe_reliability_classifier_v0.md"
+DEFAULT_REPORT = ROOT / "reports" / "qe_reliability_classifier_v02_ablation.md"
+DEFAULT_PREDICTIONS = ROOT / "data" / "qe_reliability_predictions_v02.csv"
 
 LABEL_COLUMN = "success"
 FAILURE_LABEL_COLUMN = "failure_label"
@@ -61,12 +62,36 @@ FEATURE_COLUMNS = [
 
 
 @dataclass(frozen=True)
-class ModelResult:
+class ExperimentSpec:
     name: str
+    split: str
+    feature_columns: list[str]
+
+
+@dataclass(frozen=True)
+class SplitData:
+    train_idx: np.ndarray
+    test_idx: np.ndarray
+    feature_columns: list[str]
+    groups: np.ndarray
+
+
+@dataclass(frozen=True)
+class ModelResult:
+    experiment: str
+    model: str
     status: str
+    feature_columns: list[str]
+    n_train: int
+    n_test: int
+    train_success: int
+    train_failure: int
+    test_success: int
+    test_failure: int
     accuracy: float | None = None
     precision: float | None = None
     recall: float | None = None
+    failure_recall: float | None = None
     f1: float | None = None
     roc_auc: float | None = None
     confusion: list[list[int]] | None = None
@@ -80,11 +105,12 @@ def read_records(path: str | Path) -> list[dict[str, str]]:
 
 def build_ml_rows(records: Iterable[dict[str, str]]) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    for record in records:
+    for index, record in enumerate(records):
         failure_label = record.get("failure_reason") or "success"
         pseudos = _parse_pseudos(record.get("pseudopotentials", ""))
         k1, k2, k3 = _parse_kpoints(record.get("kpoints", ""))
         rows.append({
+            "record_id": index,
             FAILURE_LABEL_COLUMN: failure_label,
             LABEL_COLUMN: 1 if failure_label == "success" else 0,
             "material_id": record.get("material_id") or "unknown",
@@ -106,74 +132,91 @@ def build_ml_rows(records: Iterable[dict[str, str]]) -> list[dict[str, object]]:
 def write_ml_table(rows: list[dict[str, object]], path: str | Path) -> None:
     out = Path(path)
     out.parent.mkdir(parents=True, exist_ok=True)
-    columns = [FAILURE_LABEL_COLUMN, LABEL_COLUMN, *FEATURE_COLUMNS]
+    columns = ["record_id", FAILURE_LABEL_COLUMN, LABEL_COLUMN, *FEATURE_COLUMNS]
     with out.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
         writer.writerows(rows)
 
 
-def train_models(
+def experiment_specs() -> list[ExperimentSpec]:
+    no_material = [col for col in FEATURE_COLUMNS if col != "material_id"]
+    return [
+        ExperimentSpec("baseline_random_split", "random", FEATURE_COLUMNS),
+        ExperimentSpec("no_material_id_random_split", "random", no_material),
+        ExperimentSpec("material_group_split", "group", FEATURE_COLUMNS),
+    ]
+
+
+def make_split(
+    rows: list[dict[str, object]],
+    spec: ExperimentSpec,
+    random_state: int = 42,
+) -> SplitData:
+    y = np.array([int(row[LABEL_COLUMN]) for row in rows], dtype=int)
+    groups = np.array([str(row["material_id"]) for row in rows])
+    all_idx = np.arange(len(rows))
+    if spec.split == "group":
+        splitter = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=random_state)
+        train_idx, test_idx = next(splitter.split(all_idx, y, groups))
+    else:
+        train_idx, test_idx = train_test_split(
+            all_idx,
+            test_size=0.2,
+            random_state=random_state,
+            stratify=y,
+        )
+    return SplitData(train_idx, test_idx, spec.feature_columns, groups)
+
+
+def train_experiments(
     rows: list[dict[str, object]],
     random_state: int = 42,
-) -> tuple[list[ModelResult], dict[str, object]]:
-    X_rows = [{col: row[col] for col in FEATURE_COLUMNS} for row in rows]
-    y = np.array([int(row[LABEL_COLUMN]) for row in rows], dtype=int)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_rows,
-        y,
-        test_size=0.2,
-        random_state=random_state,
-        stratify=y,
-    )
-    split_info = {
-        "n_total": len(rows),
-        "n_train": len(X_train),
-        "n_test": len(X_test),
-        "n_success": int(np.sum(y)),
-        "n_failure": int(len(y) - np.sum(y)),
-    }
+) -> tuple[list[ModelResult], list[dict[str, object]]]:
+    results: list[ModelResult] = []
+    predictions: list[dict[str, object]] = []
+    for spec in experiment_specs():
+        split = make_split(rows, spec, random_state)
+        experiment_results, experiment_predictions = _train_one_experiment(
+            rows,
+            spec,
+            split,
+            random_state,
+        )
+        results.extend(experiment_results)
+        predictions.extend(experiment_predictions)
+    return results, predictions
 
-    models: list[tuple[str, object]] = [
-        (
-            "LogisticRegression",
-            LogisticRegression(
-                max_iter=5000,
-                solver="liblinear",
-                class_weight="balanced",
-            ),
-        ),
-        (
-            "RandomForestClassifier",
-            RandomForestClassifier(
-                n_estimators=300,
-                random_state=random_state,
-                class_weight="balanced",
-                min_samples_leaf=2,
-            ),
-        ),
-    ]
-    catboost_result = _make_catboost(random_state)
-    if catboost_result is not None:
-        models.append(("CatBoostClassifier", catboost_result))
 
-    results = [
-        _evaluate_model(name, estimator, X_train, X_test, y_train, y_test)
-        for name, estimator in models
+def write_predictions(rows: list[dict[str, object]], path: str | Path) -> None:
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fields = [
+        "experiment",
+        "model",
+        "record_id",
+        "material_id",
+        "failure_label",
+        "true_success",
+        "predicted_success",
+        "predicted_failure_risk",
+        "split",
     ]
-    if catboost_result is None:
-        results.append(ModelResult("CatBoostClassifier", "skipped: dependency not installed"))
-    return results, split_info
+    with out.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def render_report(
     results: list[ModelResult],
-    split_info: dict[str, object],
     table_path: str | Path,
+    predictions_path: str | Path,
     input_path: str | Path,
 ) -> str:
+    total_rows = max((r.n_train + r.n_test for r in results if r.status == "trained"), default=0)
     lines = [
-        "# QE Reliability Classifier v0.1",
+        "# QE Reliability Classifier v0.2 Ablation",
         "",
         "## Purpose",
         "",
@@ -182,23 +225,29 @@ def render_report(
         "is `success=1` when `failure_label == \"success\"`; all other failure "
         "labels are `success=0`.",
         "",
-        "## Data",
+        "The goal is not to reduce the failure count by relabeling data. The "
+        "failure rows are the signal needed to learn failure risk. The right "
+        "way to improve success rate is to use this model later as a penalty "
+        "inside active acquisition.",
+        "",
+        "## Files",
         "",
         f"- Input records: `{_repo_path(input_path)}`",
         f"- ML table: `{_repo_path(table_path)}`",
-        f"- Total rows: **{split_info['n_total']}**",
-        f"- Train rows: **{split_info['n_train']}**",
-        f"- Test rows: **{split_info['n_test']}**",
-        f"- Success rows: **{split_info['n_success']}**",
-        f"- Failure rows: **{split_info['n_failure']}**",
+        f"- Predictions: `{_repo_path(predictions_path)}`",
+        f"- Rows modeled: **{total_rows}**",
         "",
-        "## Features Used",
+        "## Experiments",
         "",
-        ", ".join(f"`{col}`" for col in FEATURE_COLUMNS),
+        "- `baseline_random_split`: current leakage-safe setup metadata.",
+        "- `no_material_id_random_split`: removes `material_id` to test whether "
+        "the model relies on local material/workflow identity.",
+        "- `material_group_split`: holds out whole `material_id` groups to test "
+        "cross-material generalization.",
         "",
         "## Leakage Controls",
         "",
-        "The classifier excludes post-run or result-derived fields:",
+        "Excluded post-run or result-derived fields:",
         "",
         ", ".join(f"`{col}`" for col in sorted(POST_RUN_EXCLUDED_COLUMNS)),
         "",
@@ -210,6 +259,10 @@ def render_report(
         "",
         _metrics_table(results),
         "",
+        "## Feature Sets",
+        "",
+        _feature_sets(results),
+        "",
         "## Confusion Matrices",
         "",
         *[_confusion_block(result) for result in results if result.confusion],
@@ -218,16 +271,17 @@ def render_report(
         *[_features_block(result) for result in results if result.top_features],
         "## Scientific Caveats",
         "",
-        "- The current dataset is local and scratch-heavy, so the model may learn "
-        "project-specific workflow patterns rather than general DFT reliability.",
-        "- `material_id` is a pre-run metadata field, but it can encode local "
-        "workflow history and should be ablated in the next version.",
+        "- The observed failure fraction is not a target to hide. It is the "
+        "training signal for failure-risk-aware acquisition.",
+        "- The random split can overestimate performance because related records "
+        "from the same material can appear in both train and test sets.",
+        "- The group split is stricter and should be treated as the more honest "
+        "generalization test.",
+        "- `material_id` is pre-run metadata, but it can encode local workflow "
+        "history. The no-material ablation helps quantify that dependence.",
         "- The model does not inspect atomic geometry directly, so it should not "
         "replace the pre-QE overlap validator.",
-        "- Metrics are a v0.1 baseline on one train/test split, not a publication "
-        "claim.",
-        "- Records from other electronic-structure codes must be modeled with "
-        "source-code provenance preserved.",
+        "- Metrics are v0.2 engineering evidence, not a publication-level claim.",
         "",
         "## Next Step",
         "",
@@ -250,26 +304,93 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--table", default=str(DEFAULT_TABLE))
     parser.add_argument("--report", default=str(DEFAULT_REPORT))
+    parser.add_argument("--predictions", default=str(DEFAULT_PREDICTIONS))
     args = parser.parse_args(argv)
 
     records = read_records(args.input)
     rows = build_ml_rows(records)
     write_ml_table(rows, args.table)
-    results, split_info = train_models(rows)
-    write_report(render_report(results, split_info, args.table, args.input), args.report)
+    results, predictions = train_experiments(rows)
+    write_predictions(predictions, args.predictions)
+    write_report(
+        render_report(results, args.table, args.predictions, args.input),
+        args.report,
+    )
     print(f"Wrote {args.table}")
+    print(f"Wrote {args.predictions}")
     print(f"Wrote {args.report}")
     return 0
 
 
+def _train_one_experiment(
+    rows: list[dict[str, object]],
+    spec: ExperimentSpec,
+    split: SplitData,
+    random_state: int,
+) -> tuple[list[ModelResult], list[dict[str, object]]]:
+    y = np.array([int(row[LABEL_COLUMN]) for row in rows], dtype=int)
+    train_rows = [rows[int(i)] for i in split.train_idx]
+    test_rows = [rows[int(i)] for i in split.test_idx]
+    X_train = [_features(row, split.feature_columns) for row in train_rows]
+    X_test = [_features(row, split.feature_columns) for row in test_rows]
+    y_train = y[split.train_idx]
+    y_test = y[split.test_idx]
+
+    models = _models(random_state)
+    results: list[ModelResult] = []
+    predictions: list[dict[str, object]] = []
+    for model_name, estimator in models:
+        if estimator is None:
+            results.append(_skipped_result(spec, model_name, split, y_train, y_test))
+            continue
+        result, model_predictions = _evaluate_model(
+            spec,
+            model_name,
+            estimator,
+            X_train,
+            X_test,
+            y_train,
+            y_test,
+            test_rows,
+        )
+        results.append(result)
+        predictions.extend(model_predictions)
+    return results, predictions
+
+
+def _models(random_state: int) -> list[tuple[str, object | None]]:
+    return [
+        (
+            "LogisticRegression",
+            LogisticRegression(
+                max_iter=5000,
+                solver="liblinear",
+                class_weight="balanced",
+            ),
+        ),
+        (
+            "RandomForestClassifier",
+            RandomForestClassifier(
+                n_estimators=300,
+                random_state=random_state,
+                class_weight="balanced",
+                min_samples_leaf=2,
+            ),
+        ),
+        ("CatBoostClassifier", _make_catboost(random_state)),
+    ]
+
+
 def _evaluate_model(
-    name: str,
+    spec: ExperimentSpec,
+    model_name: str,
     estimator: object,
     X_train: list[dict[str, object]],
     X_test: list[dict[str, object]],
     y_train: np.ndarray,
     y_test: np.ndarray,
-) -> ModelResult:
+    test_rows: list[dict[str, object]],
+) -> tuple[ModelResult, list[dict[str, object]]]:
     pipeline = Pipeline([
         ("vectorizer", DictVectorizer(sparse=False)),
         ("model", estimator),
@@ -279,17 +400,71 @@ def _evaluate_model(
     prob = _positive_probabilities(pipeline, X_test)
     feature_names = list(pipeline.named_steps["vectorizer"].get_feature_names_out())
     model = pipeline.named_steps["model"]
-    return ModelResult(
-        name=name,
+    result = ModelResult(
+        experiment=spec.name,
+        model=model_name,
         status="trained",
+        feature_columns=spec.feature_columns,
+        n_train=len(y_train),
+        n_test=len(y_test),
+        train_success=int(np.sum(y_train)),
+        train_failure=int(len(y_train) - np.sum(y_train)),
+        test_success=int(np.sum(y_test)),
+        test_failure=int(len(y_test) - np.sum(y_test)),
         accuracy=accuracy_score(y_test, pred),
         precision=precision_score(y_test, pred, zero_division=0),
         recall=recall_score(y_test, pred, zero_division=0),
+        failure_recall=recall_score(y_test, pred, pos_label=0, zero_division=0),
         f1=f1_score(y_test, pred, zero_division=0),
         roc_auc=roc_auc_score(y_test, prob) if prob is not None and len(set(y_test)) > 1 else None,
         confusion=confusion_matrix(y_test, pred).tolist(),
         top_features=_top_features(model, feature_names),
     )
+    predictions = [
+        {
+            "experiment": spec.name,
+            "model": model_name,
+            "record_id": row["record_id"],
+            "material_id": row["material_id"],
+            "failure_label": row[FAILURE_LABEL_COLUMN],
+            "true_success": int(y_true),
+            "predicted_success": int(y_pred),
+            "predicted_failure_risk": "" if prob is None else 1.0 - float(p_success),
+            "split": "test",
+        }
+        for row, y_true, y_pred, p_success in zip(
+            test_rows,
+            y_test,
+            pred,
+            prob if prob is not None else [np.nan] * len(pred),
+        )
+    ]
+    return result, predictions
+
+
+def _skipped_result(
+    spec: ExperimentSpec,
+    model_name: str,
+    split: SplitData,
+    y_train: np.ndarray,
+    y_test: np.ndarray,
+) -> ModelResult:
+    return ModelResult(
+        experiment=spec.name,
+        model=model_name,
+        status="skipped: dependency not installed",
+        feature_columns=spec.feature_columns,
+        n_train=len(y_train),
+        n_test=len(y_test),
+        train_success=int(np.sum(y_train)),
+        train_failure=int(len(y_train) - np.sum(y_train)),
+        test_success=int(np.sum(y_test)),
+        test_failure=int(len(y_test) - np.sum(y_test)),
+    )
+
+
+def _features(row: dict[str, object], feature_columns: list[str]) -> dict[str, object]:
+    return {col: row[col] for col in feature_columns}
 
 
 def _positive_probabilities(pipeline: Pipeline, X_test: list[dict[str, object]]) -> np.ndarray | None:
@@ -362,15 +537,29 @@ def _float_or_none(raw: str | None) -> float | None:
 
 def _metrics_table(results: list[ModelResult]) -> str:
     lines = [
-        "| Model | Status | Accuracy | Precision | Recall | F1 | ROC-AUC |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
+        "| Experiment | Model | Status | Train | Test | Train S/F | Test S/F | Accuracy | Precision | Recall | Failure Recall | F1 | ROC-AUC |",
+        "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for result in results:
         lines.append(
-            f"| {result.name} | {result.status} | {_fmt(result.accuracy)} | "
-            f"{_fmt(result.precision)} | {_fmt(result.recall)} | "
+            f"| {result.experiment} | {result.model} | {result.status} | "
+            f"{result.n_train} | {result.n_test} | "
+            f"{result.train_success}/{result.train_failure} | "
+            f"{result.test_success}/{result.test_failure} | "
+            f"{_fmt(result.accuracy)} | {_fmt(result.precision)} | "
+            f"{_fmt(result.recall)} | {_fmt(result.failure_recall)} | "
             f"{_fmt(result.f1)} | {_fmt(result.roc_auc)} |"
         )
+    return "\n".join(lines)
+
+
+def _feature_sets(results: list[ModelResult]) -> str:
+    seen: dict[str, list[str]] = {}
+    for result in results:
+        seen.setdefault(result.experiment, result.feature_columns)
+    lines = ["| Experiment | Features |", "| --- | --- |"]
+    for name, columns in seen.items():
+        lines.append(f"| {name} | {', '.join(f'`{col}`' for col in columns)} |")
     return "\n".join(lines)
 
 
@@ -378,7 +567,7 @@ def _confusion_block(result: ModelResult) -> str:
     tn, fp = result.confusion[0]
     fn, tp = result.confusion[1]
     return (
-        f"### {result.name}\n\n"
+        f"### {result.experiment} / {result.model}\n\n"
         "|  | Predicted failure | Predicted success |\n"
         "| --- | ---: | ---: |\n"
         f"| Actual failure | {tn} | {fp} |\n"
@@ -387,7 +576,12 @@ def _confusion_block(result: ModelResult) -> str:
 
 
 def _features_block(result: ModelResult) -> str:
-    lines = [f"### {result.name}", "", "| Feature | Weight/importances |", "| --- | ---: |"]
+    lines = [
+        f"### {result.experiment} / {result.model}",
+        "",
+        "| Feature | Weight/importances |",
+        "| --- | ---: |",
+    ]
     for name, value in result.top_features or []:
         lines.append(f"| `{name}` | {value:.6g} |")
     lines.append("")

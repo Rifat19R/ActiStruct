@@ -1,977 +1,977 @@
-failure_label,success,material_id,ecutwfc,ecutrho,k1,k2,k3,kpoint_product,smearing,mixing_beta,pseudo_family,n_species,elements
-success,1,h2_r0p620000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_r0p900000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_r1p300000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h_atom,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
-success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
-success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
-success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
-success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
-success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
-success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
-success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
-success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
-success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
-success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
-job_not_completed,0,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
-job_not_completed,0,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
-success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
-success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
-success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
-success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
-success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
-success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
-success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
-success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
-success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
-success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
-success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
-success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
-success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
-success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
-success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
-success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
-success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
-success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
-success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
-success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
-success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
-success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
-success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
-success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
-success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
-success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
-success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
-success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
-success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
-success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
-success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
-success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
-success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
-success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
-success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
-success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
-success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
-success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
-success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
-success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
-success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
-success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
-success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
-success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
-success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
-success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
-success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
-success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
-success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
-success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
-success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
-success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-job_not_completed,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
-success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
-job_not_completed,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-job_not_completed,0,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
-scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
-job_not_completed,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
-job_not_completed,0,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
-success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
-job_not_completed,0,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
-success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
-success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
-success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
-success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
-success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
-success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
-success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
-success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
-success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
-success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
-success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
-success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
-success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
-success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-job_not_completed,0,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-job_not_completed,0,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
-job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
-success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
-success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
-success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
-success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
-success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
-success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
-success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
-success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
-success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
-success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
-success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
-success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
-success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
-success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
-success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
-success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
-success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-job_not_completed,0,bulk_sio2,80.0,640.0,8,8,8,512,gaussian,0.3,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
-success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
-success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
-success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
-success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
-success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
-success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
-success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
-success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
-success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
-success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
-success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
-success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
-success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
-success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
-success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
-success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
-success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
-success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
-success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
-success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
-success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
-success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
-success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
-success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
-success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
-success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
-success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
-success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
-success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
-success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
-success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
-success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
-success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
-success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
-success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
-success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
-success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
-success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
-success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-job_not_completed,0,h_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
-success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
-success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
-success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
-success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
-success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
-success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
-success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
-success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
-success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
-success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
-success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
-success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
-success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
-success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
-success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
-success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
-success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
-success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
-success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
-success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
-success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
-success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
-success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
-success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
-success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
-success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
-success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
-success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
-success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
-success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
-success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
-success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
-success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
-success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
-success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
-success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
-success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
-success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+record_id,failure_label,success,material_id,ecutwfc,ecutrho,k1,k2,k3,kpoint_product,smearing,mixing_beta,pseudo_family,n_species,elements
+0,success,1,h2_r0p620000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+1,job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+2,job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+3,job_not_completed,0,h2_r0p774544,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+4,success,1,h2_r0p900000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+5,success,1,h2_r1p300000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+6,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+7,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+8,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+9,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+10,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+11,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+12,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+13,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+14,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+15,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+16,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+17,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+18,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+19,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+20,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+21,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+22,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+23,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+24,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+25,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+26,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+27,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+28,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+29,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+30,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+31,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+32,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+33,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+34,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+35,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+36,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+37,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+38,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+39,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+40,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+41,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+42,job_not_completed,0,h2_r1p984848,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+43,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+44,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+45,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+46,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+47,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+48,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+49,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+50,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+51,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+52,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+53,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+54,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+55,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+56,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+57,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+58,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+59,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+60,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+61,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+62,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+63,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+64,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+65,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+66,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+67,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+68,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+69,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+70,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+71,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+72,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+73,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+74,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+75,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+76,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+77,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+78,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+79,job_not_completed,0,h2_r2p000000,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+80,success,1,h_atom,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+81,success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+82,success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+83,success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+84,success,1,aln_2d,60.0,480.0,8,8,1,64,gaussian,0.4,PSLibrary,2,Al N
+85,success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+86,success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+87,success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+88,success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+89,success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+90,success,1,bulk_ag,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Ag
+91,success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+92,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+93,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+94,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+95,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+96,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+97,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+98,success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+99,success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+100,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+101,success,1,bulk_al,30.0,240.0,8,8,8,512,mv,0.4,PSLibrary,1,Al
+102,success,1,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+103,job_not_completed,0,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+104,job_not_completed,0,bulk_al,50.0,400.0,12,12,12,1728,mv,0.4,PSLibrary,1,Al
+105,success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+106,success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+107,success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+108,success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+109,success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+110,success,1,bulk_al2o3,70.0,560.0,6,6,4,144,gaussian,0.4,PSLibrary,2,Al O
+111,success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+112,success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+113,success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+114,success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+115,success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+116,success,1,bulk_alas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Al As
+117,success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+118,success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+119,success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+120,success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+121,success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+122,success,1,bulk_au,60.0,480.0,12,12,12,1728,mv,0.4,ONCV,1,Au
+123,success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+124,success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+125,success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+126,success,1,bulk_batio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,Ba O Ti
+127,success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+128,success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+129,success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+130,success,1,bulk_cao,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Ca O
+131,success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+132,success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+133,success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+134,success,1,bulk_co2feal,70.0,560.0,8,8,8,512,mv,0.4,PSLibrary,3,Al Co Fe
+135,success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+136,success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+137,success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+138,success,1,bulk_cspbi3,70.0,560.0,4,4,4,64,gaussian,0.4,PSLibrary,3,Cs I Pb
+139,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+140,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+141,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+142,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+143,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+144,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+145,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+146,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+147,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+148,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+149,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+150,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+151,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+152,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+153,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+154,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+155,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+156,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+157,success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+158,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+159,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+160,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+161,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+162,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+163,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+164,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+165,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+166,job_not_completed,0,bulk_cu,50.0,400.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+167,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+168,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+169,job_not_completed,0,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+170,success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+171,success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+172,success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+173,success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+174,success,1,bulk_cu,70.0,560.0,12,12,12,1728,gaussian,0.4,PSLibrary,1,Cu
+175,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+176,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+177,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+178,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+179,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+180,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+181,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+182,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+183,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+184,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+185,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+186,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+187,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+188,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+189,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+190,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+191,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+192,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+193,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+194,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+195,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+196,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+197,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+198,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+199,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+200,success,1,bulk_cu_generated,70.0,560.0,12,12,12,1728,mv,0.4,PSLibrary,1,Cu
+201,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+202,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+203,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+204,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+205,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+206,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+207,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+208,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+209,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+210,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+211,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+212,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+213,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+214,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+215,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+216,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+217,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+218,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+219,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+220,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+221,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+222,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+223,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+224,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+225,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.3,PSLibrary,1,Fe
+226,success,1,bulk_fe,70.0,560.0,14,14,14,2744,mv,0.4,PSLibrary,1,Fe
+227,success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+228,success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+229,success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+230,success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+231,success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+232,success,1,bulk_gaas,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,As Ga
+233,success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+234,success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+235,success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+236,success,1,bulk_ge,50.0,400.0,8,8,8,512,gaussian,0.4,USPP,1,Ge
+237,success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+238,success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+239,success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+240,success,1,bulk_inp,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,In P
+241,success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
+242,success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
+243,success,1,bulk_li2nav2po43,70.0,560.0,2,2,1,4,mv,0.4,PSLibrary,5,Li Na O P V
+244,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+245,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+246,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+247,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+248,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+249,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+250,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+251,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+252,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+253,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+254,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+255,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+256,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+257,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+258,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+259,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+260,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+261,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+262,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+263,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+264,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+265,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+266,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+267,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+268,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+269,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+270,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+271,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+272,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+273,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+274,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+275,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+276,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+277,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+278,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+279,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+280,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+281,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+282,job_not_completed,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+283,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+284,success,1,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+285,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+286,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+287,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+288,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+289,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+290,scf_not_converged,0,bulk_licoo2_generated,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Li O
+291,success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+292,success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+293,success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+294,success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+295,success,1,bulk_lifepo4,70.0,560.0,4,3,2,24,mv,0.3,PSLibrary,4,Fe Li O P
+296,success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+297,success,1,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
+298,job_not_completed,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+299,success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+300,success,1,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
+301,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+302,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+303,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+304,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+305,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+306,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+307,job_not_completed,0,bulk_lifepo4,70.0,560.0,3,3,3,27,mv,0.4,PSLibrary,4,Fe Li O P
+308,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+309,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+310,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,mv,0.4,PSLibrary,4,Fe Li O P
+311,success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+312,success,1,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
+313,success,1,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+314,success,1,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
+315,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+316,scf_not_converged,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+317,job_not_completed,0,bulk_lifepo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Fe Li O P
+318,job_not_completed,0,bulk_lifepo4,70.0,560.0,4,4,2,32,mv,0.4,PSLibrary,4,Fe Li O P
+319,success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+320,job_not_completed,0,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+321,success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+322,success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+323,success,1,bulk_limn2o4,70.0,560.0,4,4,4,64,mv,0.4,PSLibrary,3,Li Mn O
+324,success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+325,success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+326,success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+327,success,1,bulk_limnpo4,50.0,400.0,2,2,2,8,gaussian,0.4,PSLibrary,4,Li Mn O P
+328,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+329,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+330,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+331,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+332,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+333,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+334,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+335,success,1,bulk_litio2,70.0,560.0,6,6,3,108,gaussian,0.4,PSLibrary,3,Li O Ti
+336,success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+337,success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+338,success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+339,success,1,bulk_litio2,80.0,640.0,6,6,3,108,gaussian,0.3,PSLibrary,3,Li O Ti
+340,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+341,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+342,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+343,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+344,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+345,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+346,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+347,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+348,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+349,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+350,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+351,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+352,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+353,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+354,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+355,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+356,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+357,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+358,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+359,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+360,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.4,PSLibrary,2,Mg O
+361,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+362,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+363,success,1,bulk_mgo_generated,70.0,560.0,8,8,8,512,gaussian,0.3,PSLibrary,2,Mg O
+364,success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+365,success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+366,success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+367,success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+368,success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+369,success,1,bulk_mo,70.0,560.0,14,14,14,2744,mv,0.4,ONCV,1,Mo
+370,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+371,success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+372,success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+373,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+374,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+375,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+376,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+377,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+378,job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+379,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+380,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+381,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+382,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+383,success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+384,success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+385,job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+386,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+387,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+388,success,1,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+389,job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+390,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+391,success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+392,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+393,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+394,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+395,success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+396,job_not_completed,0,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+397,job_not_completed,0,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+398,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+399,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+400,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+401,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+402,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+403,scf_not_converged,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+404,success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+405,success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+406,success,1,bulk_nacoo2,80.0,640.0,6,6,2,72,mv,0.3,PSLibrary,3,Co Na O
+407,job_not_completed,0,bulk_nacoo2,80.0,640.0,8,8,4,256,mv,0.3,PSLibrary,3,Co Na O
+408,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+409,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+410,success,1,bulk_nacoo2,70.0,560.0,6,6,3,108,mv,0.4,PSLibrary,3,Co Na O
+411,success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+412,success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+413,success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+414,success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+415,success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+416,success,1,bulk_ni,60.0,480.0,12,12,12,1728,mv,0.4,USPP,1,Ni
+417,success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+418,success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+419,success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+420,success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+421,success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+422,success,1,bulk_nial,70.0,560.0,10,10,10,1000,mv,0.4,PSLibrary,2,Al Ni
+423,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+424,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+425,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+426,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+427,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+428,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+429,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+430,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+431,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+432,success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+433,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+434,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+435,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+436,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+437,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+438,job_not_completed,0,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+439,success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+440,success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+441,success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+442,success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+443,success,1,bulk_si,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+444,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+445,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+446,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+447,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+448,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+449,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+450,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+451,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+452,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+453,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+454,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+455,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+456,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+457,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+458,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+459,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+460,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+461,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+462,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+463,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+464,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.4,PSLibrary,1,Si
+465,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+466,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+467,success,1,bulk_si_generated,50.0,400.0,8,8,8,512,gaussian,0.3,PSLibrary,1,Si
+468,success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+469,success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+470,success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+471,success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+472,success,1,bulk_sic,60.0,480.0,8,8,8,512,gaussian,0.4,PSLibrary,2,C Si
+473,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+474,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+475,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+476,job_not_completed,0,bulk_sio2,80.0,640.0,8,8,8,512,gaussian,0.3,PSLibrary,2,O Si
+477,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+478,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+479,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+480,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+481,success,1,bulk_sio2,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,2,O Si
+482,success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+483,success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+484,success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+485,success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+486,success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+487,success,1,bulk_srtio3,70.0,560.0,6,6,6,216,gaussian,0.4,PSLibrary,3,O Sr Ti
+488,success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+489,success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+490,success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+491,success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+492,success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+493,success,1,bulk_tio2,70.0,560.0,8,8,10,640,gaussian,0.4,PSLibrary,2,O Ti
+494,success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+495,success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+496,success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+497,success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+498,success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+499,success,1,bulk_w,70.0,560.0,14,14,14,2744,mv,0.4,USPP,1,W
+500,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+501,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+502,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+503,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+504,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+505,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+506,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+507,success,1,bulk_zno,70.0,560.0,8,8,6,384,gaussian,0.4,PSLibrary,2,O Zn
+508,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+509,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+510,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+511,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+512,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+513,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+514,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+515,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+516,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+517,success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+518,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+519,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+520,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+521,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+522,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+523,job_not_completed,0,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+524,success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+525,success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+526,success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+527,success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+528,success,1,ch4,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+529,success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+530,success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+531,success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+532,success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+533,success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+534,success,1,ch4_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C H
+535,success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+536,success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+537,success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+538,success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+539,success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+540,success,1,co,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,C O
+541,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+542,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+543,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+544,success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+545,success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+546,success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+547,success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+548,success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+549,success,1,co_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C Cu O
+550,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+551,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+552,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+553,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+554,success,1,co_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Cu O
+555,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+556,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+557,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+558,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+559,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+560,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+561,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+562,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+563,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+564,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+565,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+566,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+567,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+568,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+569,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+570,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+571,success,1,co_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C Ni O
+572,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+573,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+574,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+575,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+576,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+577,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+578,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+579,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+580,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+581,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+582,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+583,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+584,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+585,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+586,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+587,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+588,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+589,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+590,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+591,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+592,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+593,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+594,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+595,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+596,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+597,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+598,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+599,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+600,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+601,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+602,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+603,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+604,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+605,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+606,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+607,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+608,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+609,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+610,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+611,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+612,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+613,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+614,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+615,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+616,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+617,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+618,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+619,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+620,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+621,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+622,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+623,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+624,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+625,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+626,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+627,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+628,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+629,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+630,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+631,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+632,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+633,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+634,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+635,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+636,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+637,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+638,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+639,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+640,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+641,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+642,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+643,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+644,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+645,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+646,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+647,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+648,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+649,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+650,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+651,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+652,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+653,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+654,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+655,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+656,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+657,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+658,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+659,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+660,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+661,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+662,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+663,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+664,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+665,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+666,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+667,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+668,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+669,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+670,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+671,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+672,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+673,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+674,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+675,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+676,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+677,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+678,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+679,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+680,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+681,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+682,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+683,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+684,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+685,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+686,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+687,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+688,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+689,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+690,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+691,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+692,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+693,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+694,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+695,qe_error,0,co_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,3,C O Pt
+696,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+697,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+698,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+699,success,1,co_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,3,C O Pt
+700,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+701,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+702,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+703,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+704,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+705,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+706,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+707,success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+708,success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+709,success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+710,success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+711,success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+712,success,1,graphene_generated,50.0,400.0,8,8,1,64,gaussian,0.4,PSLibrary,1,C
+713,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+714,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+715,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+716,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+717,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+718,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+719,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+720,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+721,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+722,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+723,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+724,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+725,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+726,success,1,h2_generated,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,1,H
+727,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+728,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+729,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+730,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+731,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+732,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+733,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+734,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+735,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+736,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+737,success,1,h2o,50.0,400.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+738,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+739,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+740,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+741,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+742,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+743,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+744,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+745,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+746,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+747,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+748,success,1,h2o_generated,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H O
+749,success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+750,success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+751,success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+752,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+753,success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+754,success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+755,success,1,h_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu H
+756,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+757,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+758,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+759,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+760,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+761,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+762,success,1,h_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu H
+763,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+764,job_not_completed,0,h_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Ni
+765,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+766,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+767,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+768,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+769,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+770,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+771,success,1,h_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Ni
+772,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+773,success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+774,success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+775,success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+776,success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+777,success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+778,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+779,success,1,h_on_pt111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,H Pt
+780,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+781,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+782,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+783,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+784,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+785,success,1,h_on_pt111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,H Pt
+786,success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+787,success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+788,success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+789,success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+790,success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+791,success,1,hbn,60.0,480.0,8,8,1,64,gaussian,0.4,USPP,2,B N
+792,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+793,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+794,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+795,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+796,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+797,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+798,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+799,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+800,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+801,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+802,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+803,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+804,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+805,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+806,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+807,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+808,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+809,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+810,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+811,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+812,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+813,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+814,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+815,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+816,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+817,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+818,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+819,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+820,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+821,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+822,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+823,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+824,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+825,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+826,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+827,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+828,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+829,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+830,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+831,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+832,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+833,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+834,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+835,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+836,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+837,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+838,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+839,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+840,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+841,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+842,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+843,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+844,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+845,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+846,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+847,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+848,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+849,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+850,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+851,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+852,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+853,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+854,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+855,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+856,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+857,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+858,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+859,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+860,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+861,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+862,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+863,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+864,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+865,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+866,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+867,success,1,mos2,70.0,560.0,6,6,1,36,gaussian,0.4,ONCV,2,Mo S
+868,success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+869,success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+870,success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+871,success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+872,success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+873,success,1,n2,60.0,480.0,1,1,1,1,gaussian,0.4,mixed_or_unknown,1,N
+874,success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+875,success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+876,success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+877,success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+878,success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+879,success,1,nh3,60.0,480.0,1,1,1,1,gaussian,0.4,PSLibrary,2,H N
+880,success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+881,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+882,success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+883,success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+884,success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+885,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+886,success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+887,success,1,o_on_cu111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Cu O
+888,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+889,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+890,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+891,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+892,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+893,success,1,o_on_cu111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Cu O
+894,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+895,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+896,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+897,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+898,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+899,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+900,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+901,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+902,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+903,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+904,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+905,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+906,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+907,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+908,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+909,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+910,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+911,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+912,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+913,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+914,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+915,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+916,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+917,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+918,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+919,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+920,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+921,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+922,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+923,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+924,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+925,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+926,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+927,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+928,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+929,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+930,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+931,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+932,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+933,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+934,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+935,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+936,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+937,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+938,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+939,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+940,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+941,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+942,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+943,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+944,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+945,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+946,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+947,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+948,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+949,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+950,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+951,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+952,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+953,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+954,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+955,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+956,qe_error,0,o_on_ni111,80.0,640.0,6,6,1,36,mv,0.3,PSLibrary,2,Ni O
+957,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+958,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+959,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+960,success,1,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+961,scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+962,scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+963,scf_not_converged,0,o_on_ni111,70.0,560.0,4,4,1,16,mv,0.4,PSLibrary,2,Ni O
+964,success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+965,success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+966,success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+967,success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+968,success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+969,success,1,silicene,50.0,400.0,6,6,1,36,gaussian,0.4,PSLibrary,1,Si
+970,success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+971,success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+972,success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+973,success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+974,success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
+975,success,1,ws2,70.0,560.0,6,6,1,36,gaussian,0.4,USPP,2,S W
