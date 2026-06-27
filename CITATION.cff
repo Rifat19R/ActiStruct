@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "ActiStruct: Active-Learning Inverse Design for DFT Structure Optimization"
+title: "ActiStruct: Reliability-Aware Active Learning for DFT-Guided Materials Discovery"
 message: "If you use ActiStruct, please cite this software."
 type: software
 authors:
@@ -7,9 +7,9 @@ authors:
     given-names: "Md. Rifat"
     orcid: "https://orcid.org/0000-0003-0520-4654"
 version: "0.7.2"
-date-released: "2026-06-16"
+date-released: "2026-06-27"
 repository-code: "https://github.com/Rifat19R/ActiStruct"
-abstract: "Active-learning inverse-design workflows coupling Gaussian-process surrogate models, ASE, and Quantum ESPRESSO for DFT-based structure optimization across atomistic benchmark systems."
+abstract: "ActiStruct is a reliability-aware active-learning workflow for DFT-guided materials discovery. It combines QE/PBE output parsing, uncertainty-aware GP/LCB ranking, and failure-risk triage to support conservative candidate selection and future live validation workflows."
 keywords:
   - inverse-design
   - active-learning
@@ -21,4 +21,6 @@ keywords:
   - materials-science
   - atomistic-simulation
   - structure-optimization
+  - reliability-aware-al
+  - failure-risk-triage
 license: MIT

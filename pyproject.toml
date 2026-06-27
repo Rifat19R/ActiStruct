@@ -23,6 +23,7 @@ keywords = [
   "structure-optimization",
   "reliability-aware-al",
   "failure-risk-triage",
+  "uncertainty-aware-ranking",
 ]
 dependencies = [
   "numpy",
