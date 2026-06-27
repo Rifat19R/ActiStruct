@@ -6,6 +6,15 @@ for DFT-guided materials discovery**. It does not replace Quantum ESPRESSO
 including failures and uncertainty, to help triage which candidate
 calculations are worth running next.
 
+```text
+ML predicts. Uncertainty ranks. Failure risk warns. QE/PBE validates.
+```
+
+**Current release: v0.7.2** — `pytest -q` passes **81 tests**. v0.7.2 adds
+a QE-free dry-run candidate selector that produces review-only candidate
+proposal rows for future live-validation planning (see
+[`docs/releases/v0.7.2.md`](docs/releases/v0.7.2.md)).
+
 ## Topics
 
 `inverse-design` `active-learning` `dft` `quantum-espresso` `ase`
@@ -39,8 +48,8 @@ The scientific identity is intentionally conservative:
 ```text
 ML predicts.
 Uncertainty ranks.
-Failure-risk penalizes risky candidates.
-QE/PBE validates final claims.
+Failure risk warns.
+QE/PBE validates.
 ```
 
 ## Implemented Components
@@ -64,6 +73,16 @@ QE/PBE validates final claims.
   and `analysis/simulated_failure_aware_al_benchmark_v051.py`. Simulated,
   reproducible comparisons of candidate-selection policies using completed
   records; no new QE/DFT jobs are launched by these scripts.
+- **Live-validation planning (v0.7–v0.7.2)** — a conservative, design-only
+  path toward future live QE/PBE validation: a batch-design specification
+  (`reports/live_qe_validation_batch_design_v070.md`), a candidate-source
+  audit confirming no historical record may be reused as a future candidate
+  (`reports/live_candidate_source_audit_v071.md`), and a QE-free dry-run
+  candidate selector that writes schema-valid, review-only candidate rows
+  with every prediction/acquisition field explicitly `not_computed`
+  (`analysis/dry_run_live_candidate_selector_v072.py`,
+  `reports/dry_run_live_candidate_selector_v072.md`). No live QE/PBE batch
+  has been run yet.
 - **Original 50-workflow QE/PBE benchmark** — generated structure-optimization
   workflows across bulk solids, 2D materials, molecules, battery/perovskite
   systems, and surfaces (see `PROJECT_OVERVIEW.md` for that benchmark's own
@@ -133,6 +152,10 @@ ActiStruct does **not** claim:
 
 ## Limitations
 
+- ActiStruct is a **research prototype**. Final scientific claims must be
+  supported by QE/PBE validation, not by offline simulation alone.
+- Failure risk is used as a **soft triage signal, not a hard rejection
+  rule** — it re-ranks candidates, it never rejects them outright.
 - Failure-risk recall has large split-to-split variance on held-out
   materials; it should not be used as a hard accept/reject filter.
 - The v0.5.x benchmarks use a constant `predicted_value = 0.0` placeholder
@@ -201,10 +224,11 @@ Run the full test suite (no QE/DFT is launched by any test):
 pytest -q
 ```
 
-This currently passes with **73 tests** covering the reliability parser,
-dataset builder, classifier, failure-aware acquisition scoring, and the
-v0.5.0/v0.5.1 offline benchmarks, plus the original generated-workflow smoke
-tests.
+This currently passes with **81 tests** covering the reliability parser,
+dataset builder, classifier, failure-aware acquisition scoring, the
+v0.5.0/v0.5.1 offline benchmarks, the reliability-aware quickstart, the
+QE-free dry-run candidate selector, and the original generated-workflow
+smoke tests. See `docs/model_and_tests.md` for the full breakdown.
 
 Legacy direct-invocation smoke tests are also still available:
 
