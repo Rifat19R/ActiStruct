@@ -6,7 +6,7 @@ authors:
   - family-names: "Khandaker"
     given-names: "Md. Rifat"
     orcid: "https://orcid.org/0000-0003-0520-4654"
-version: "0.1.0"
+version: "0.7.2"
 date-released: "2026-06-16"
 repository-code: "https://github.com/Rifat19R/ActiStruct"
 abstract: "Active-learning inverse-design workflows coupling Gaussian-process surrogate models, ASE, and Quantum ESPRESSO for DFT-based structure optimization across atomistic benchmark systems."
