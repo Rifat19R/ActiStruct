@@ -302,6 +302,8 @@ candidate-source audit for future live validation is documented in
 [`reports/live_candidate_source_audit_v071.md`](reports/live_candidate_source_audit_v071.md).
 A QE-free dry-run candidate selector is documented in
 [`reports/dry_run_live_candidate_selector_v072.md`](reports/dry_run_live_candidate_selector_v072.md).
+Release notes for the QE-free dry-run candidate selector are available in
+[`docs/releases/v0.7.2.md`](docs/releases/v0.7.2.md).
 
 ## Citation
 
