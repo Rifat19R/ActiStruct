@@ -2,6 +2,26 @@
 
 All notable changes to ActiStruct are documented here.
 
+## v0.7.2 - 2026-06-27
+
+### Added
+
+- Added a QE-free dry-run candidate selector for future live QE/PBE
+  validation planning.
+- Generates schema-valid, review-only candidate rows in
+  `data/dry_run_live_candidates_v072.csv`.
+- Adds `reports/dry_run_live_candidate_selector_v072.md` and tests for
+  no-QE/no-live-validation behavior.
+- Marks prediction, uncertainty, failure-risk, and acquisition fields as
+  `not_computed` where no validated model score is available.
+
+### Notes
+
+- Does not run QE/PBE, create executable QE inputs, reuse historical
+  completed records, or claim live DFT savings. See
+  `docs/releases/v0.7.2.md` for the full release note and safe claim.
+- Test suite: `81 passed`.
+
 ## v0.5.1 - 2026-06-27
 
 ### Added
