@@ -105,7 +105,7 @@ The current test command for the full repository is:
 pytest -q
 ```
 
-This collects **74 tests** across `tests/`, none of which launch Quantum
+This collects **81 tests** across `tests/`, none of which launch Quantum
 ESPRESSO. The suite spans both the original GP/LCB engine described above
 and the reliability-aware layer documented in
 `reports/actistruct_technical_report_v06.md`:
@@ -141,6 +141,11 @@ and the reliability-aware layer documented in
 - `tests/test_reliability_aware_quickstart.py` — runs the optional
   `examples/reliability_aware_quickstart.py` helper and checks its output
   includes the safe-claim caveat and all four v0.5.1 pool-mode names.
+- `tests/test_dry_run_live_candidate_selector_v072.py` — checks the
+  QE-free dry-run candidate selector runs safely, writes schema-valid
+  review-only rows, excludes historical outcome columns, keeps the
+  no-QE/no-live-validation caveats, and requires `dry_run_only`/
+  review-required status on every row.
 
 Legacy direct-invocation smoke tests are also still runnable individually:
 

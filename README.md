@@ -300,6 +300,8 @@ The future live QE/PBE validation-batch design is documented in
 No DFT has been run for this design; it is a design-only document. The
 candidate-source audit for future live validation is documented in
 [`reports/live_candidate_source_audit_v071.md`](reports/live_candidate_source_audit_v071.md).
+A QE-free dry-run candidate selector is documented in
+[`reports/dry_run_live_candidate_selector_v072.md`](reports/dry_run_live_candidate_selector_v072.md).
 
 ## Citation
 
