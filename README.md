@@ -295,6 +295,10 @@ offline v0.5.0/v0.5.1 benchmarks described above.
 - No GNN-based surrogate or v0.6 feature work is planned until the offline
   failure-aware acquisition path is validated live.
 
+The future live QE/PBE validation-batch design is documented in
+[`reports/live_qe_validation_batch_design_v070.md`](reports/live_qe_validation_batch_design_v070.md).
+No DFT has been run for this design; it is a design-only document.
+
 ## Citation
 
 If ActiStruct supports your work, please cite the repository metadata in
