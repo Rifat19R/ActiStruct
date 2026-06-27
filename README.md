@@ -297,7 +297,9 @@ offline v0.5.0/v0.5.1 benchmarks described above.
 
 The future live QE/PBE validation-batch design is documented in
 [`reports/live_qe_validation_batch_design_v070.md`](reports/live_qe_validation_batch_design_v070.md).
-No DFT has been run for this design; it is a design-only document.
+No DFT has been run for this design; it is a design-only document. The
+candidate-source audit for future live validation is documented in
+[`reports/live_candidate_source_audit_v071.md`](reports/live_candidate_source_audit_v071.md).
 
 ## Citation
 
