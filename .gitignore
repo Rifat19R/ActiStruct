@@ -1,6 +1,7 @@
 *.UPF
 *.upf
 qe/workdirs/
+logs/*.log
 qe/outputs/**/*.wfc*
 qe/outputs/**/*.save/
 *.tmp
