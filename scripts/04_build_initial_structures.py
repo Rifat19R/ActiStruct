@@ -27,28 +27,38 @@ from _common import PROJECT_ROOT, setup_logger  # noqa: E402
 logger = setup_logger("build_initial_structures", "bootstrap.log")
 
 
-def build_ferrocene() -> Atoms:
-    fe_cp_dist = 1.66
-    cc_bond = 1.40
-    ch_bond = 1.09
+def build_ferrocene(fe_cp_dist: float = 1.66, cc_bond: float = 1.40,
+                     ch_bond: float = 1.09, ring2_rotation_deg: float = 0.0) -> Atoms:
+    """ring2_rotation_deg rotates the z<0 ring relative to the z>0 ring
+    about the Fe-Cp axis (0 = eclipsed D5h, used for AL perturbation candidates)."""
     ring_radius = cc_bond / (2 * np.sin(np.pi / 5))
+    ring2_offset = np.deg2rad(ring2_rotation_deg)
 
     symbols = ["Fe"]
     positions = [[0.0, 0.0, 0.0]]
     for sign in (+1, -1):
         z = sign * fe_cp_dist
+        offset = ring2_offset if sign < 0 else 0.0
         for k in range(5):
-            angle = 2 * np.pi * k / 5
+            angle = 2 * np.pi * k / 5 + offset
             cx, cy = ring_radius * np.cos(angle), ring_radius * np.sin(angle)
             symbols.append("C")
             positions.append([cx, cy, z])
         for k in range(5):
-            angle = 2 * np.pi * k / 5
+            angle = 2 * np.pi * k / 5 + offset
             hr = ring_radius + ch_bond
             hx, hy = hr * np.cos(angle), hr * np.sin(angle)
             symbols.append("H")
             positions.append([hx, hy, z])
     return Atoms(symbols=symbols, positions=positions)
+
+
+def rotate_vector(v: np.ndarray, axis: np.ndarray, angle_rad: float) -> np.ndarray:
+    """Rodrigues' rotation formula: rotate v about unit axis by angle_rad."""
+    axis = axis / np.linalg.norm(axis)
+    return (v * np.cos(angle_rad)
+            + np.cross(axis, v) * np.sin(angle_rad)
+            + axis * np.dot(axis, v) * (1 - np.cos(angle_rad)))
 
 
 def build_mco_n(metal: str, mc_dist: float, co_dist: float, directions: np.ndarray) -> Atoms:
@@ -65,33 +75,67 @@ def build_mco_n(metal: str, mc_dist: float, co_dist: float, directions: np.ndarr
     return Atoms(symbols=symbols, positions=positions)
 
 
-def build_ni_co4() -> Atoms:
+def build_ni_co4(mc_dist: float = 1.838, co_dist: float = 1.127,
+                  tetra_angle_perturb_deg: float = 0.0) -> Atoms:
+    """tetra_angle_perturb_deg rotates one Ni-C direction towards its neighbor,
+    breaking the ideal Td angle locally (used for AL perturbation candidates)."""
     directions = np.array([
         [1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1],
     ], dtype=float)
-    return build_mco_n("Ni", mc_dist=1.838, co_dist=1.127, directions=directions)
+    if tetra_angle_perturb_deg != 0.0:
+        axis = np.cross(directions[0], directions[1])
+        directions[0] = rotate_vector(directions[0], axis, np.deg2rad(tetra_angle_perturb_deg))
+    return build_mco_n("Ni", mc_dist=mc_dist, co_dist=co_dist, directions=directions)
 
 
-def build_cr_co6() -> Atoms:
+def build_cr_co6(mc_dist: float = 1.918, co_dist: float = 1.171,
+                  axial_stretch: float = 0.0) -> Atoms:
+    """axial_stretch adds a tetragonal (Jahn-Teller-like) distortion: the +-z
+    Cr-C bonds are stretched/compressed relative to the four equatorial ones
+    (used for AL perturbation candidates)."""
     directions = np.array([
         [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1],
     ], dtype=float)
-    return build_mco_n("Cr", mc_dist=1.918, co_dist=1.171, directions=directions)
+    symbols = ["Cr"]
+    positions = [[0.0, 0.0, 0.0]]
+    for d in directions:
+        unit = d / np.linalg.norm(d)
+        bond = mc_dist + (axial_stretch if abs(d[2]) > 0 else 0.0)
+        c_pos = unit * bond
+        o_pos = unit * (bond + co_dist)
+        symbols += ["C", "O"]
+        positions += [c_pos.tolist(), o_pos.tolist()]
+    return Atoms(symbols=symbols, positions=positions)
 
 
-def build_fe_co5() -> Atoms:
-    axial_fe_c, axial_co = 1.807, 1.143
-    eq_fe_c, eq_co = 1.827, 1.153
-
+def build_fe_co5(axial_fe_c: float = 1.807, axial_co: float = 1.143,
+                  eq_fe_c: float = 1.827, eq_co: float = 1.153,
+                  eq_angle_perturb_deg: float = 0.0,
+                  berry_tilt_deg: float = 0.0) -> Atoms:
+    """eq_angle_perturb_deg shifts one equatorial C/O pair away from its ideal
+    120-degree spacing. berry_tilt_deg tilts both axial C/O groups towards
+    equatorial ligand 0, a simplified heuristic local coordinate towards the
+    TBP<->square-pyramidal (Berry pseudorotation) interconversion - NOT a
+    validated reaction-path coordinate, used only to seed AL candidates."""
     symbols = ["Fe"]
     positions = [[0.0, 0.0, 0.0]]
+
+    eq0_angle = 0.0
+    eq0_dir = np.array([np.cos(eq0_angle), np.sin(eq0_angle), 0.0])
+    tilt_axis = np.cross([0.0, 0.0, 1.0], eq0_dir)
+    tilt_rad = np.deg2rad(berry_tilt_deg)
+
     for sign in (+1, -1):
-        c_pos = [0.0, 0.0, sign * axial_fe_c]
-        o_pos = [0.0, 0.0, sign * (axial_fe_c + axial_co)]
+        axis_vec = np.array([0.0, 0.0, sign * 1.0])
+        if berry_tilt_deg != 0.0 and np.linalg.norm(tilt_axis) > 0:
+            axis_vec = rotate_vector(axis_vec, tilt_axis, tilt_rad)
+        c_pos = axis_vec * axial_fe_c
+        o_pos = axis_vec * (axial_fe_c + axial_co)
         symbols += ["C", "O"]
-        positions += [c_pos, o_pos]
+        positions += [c_pos.tolist(), o_pos.tolist()]
+
     for k in range(3):
-        angle = 2 * np.pi * k / 3
+        angle = 2 * np.pi * k / 3 + (np.deg2rad(eq_angle_perturb_deg) if k == 0 else 0.0)
         ux, uy = np.cos(angle), np.sin(angle)
         c_pos = [ux * eq_fe_c, uy * eq_fe_c, 0.0]
         o_pos = [ux * (eq_fe_c + eq_co), uy * (eq_fe_c + eq_co), 0.0]
