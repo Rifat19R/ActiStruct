@@ -1,0 +1,48 @@
+pseudo_family: actistruct_tmc_reliability_benchmark_SSSP_1.3.0_PBE_efficiency
+pseudo_dir: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency
+elements:
+  Fe:
+    filename: Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+  C:
+    filename: C.pbe-n-kjpaw_psl.1.0.0.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\C.pbe-n-kjpaw_psl.1.0.0.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+  H:
+    filename: H.pbe-rrkjus_psl.1.0.0.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\H.pbe-rrkjus_psl.1.0.0.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+  Ni:
+    filename: ni_pbe_v1.4.uspp.F.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\ni_pbe_v1.4.uspp.F.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+  O:
+    filename: O.pbe-n-kjpaw_psl.0.1.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\O.pbe-n-kjpaw_psl.0.1.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+  Cr:
+    filename: cr_pbe_v1.5.uspp.F.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\cr_pbe_v1.5.uspp.F.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+status: ready
+missing_elements: []
+naming_convention_warnings:
+- 'Ni: ''ni_pbe_v1.4.uspp.F.UPF'' does not match the ''_psl.'' SSSP-efficiency naming
+  convention seen for Fe/C/H/O in this directory. May be a different pseudopotential
+  family/accuracy tier - verify before use.'
+- 'Cr: ''cr_pbe_v1.5.uspp.F.UPF'' does not match the ''_psl.'' SSSP-efficiency naming
+  convention seen for Fe/C/H/O in this directory. May be a different pseudopotential
+  family/accuracy tier - verify before use.'

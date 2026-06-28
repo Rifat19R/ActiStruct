@@ -1,0 +1,14 @@
+*.UPF
+*.upf
+qe/workdirs/
+qe/outputs/**/*.wfc*
+qe/outputs/**/*.save/
+*.tmp
+*.bak
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+.env.*
+*.pkl
+*.joblib

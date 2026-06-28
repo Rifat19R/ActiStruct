@@ -1,0 +1,41 @@
+project:
+  name: actistruct_tmc_reliability_benchmark
+  root_dir: "D:/Research/Dr.Kulik_MIT"
+  actistruct_package: actistruct
+  actistruct_repo_dir: "D:/Rifat_kh/inverse_active"
+  actistruct_version: "0.7.2"
+  benchmark_version: v0
+
+paths:
+  pseudo_dir: "D:/Rifat_kh/SSSP_1.3.0_PBE_efficiency"
+  structures_dir: structures
+  qe_inputs_dir: qe/inputs
+  qe_outputs_dir: qe/outputs
+  data_dir: data
+  references_dir: references
+  reports_dir: reports
+
+qe:
+  pwx_path_wsl: "/home/duets/q-e-qe-7.4.1/bin/pw.x"
+  pwx_on_windows_path: false
+  pwx_on_wsl_default_path: false
+  run_environment: wsl_ubuntu
+  run_user: duets
+
+systems:
+  primary:
+    - ferrocene
+    - ni_co4
+    - cr_co6
+    - fe_co5
+  secondary:
+    - v_co6
+    - benzene_cr_co3
+    - ticl4
+
+policy:
+  allow_charged_complexes_phase1: false
+  allow_sse17_phase1: false
+  allow_ml_final_claims: false
+  keep_failed_calculations: true
+  require_reference_verification: true
