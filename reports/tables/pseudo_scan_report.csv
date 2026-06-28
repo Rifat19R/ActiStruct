@@ -1,0 +1,7 @@
+element,filename,exists,suggested_ecutwfc_ry,suggested_ecutrho_ry
+Fe,Fe.pbe-spn-kjpaw_psl.0.2.1.UPF,True,60,480
+C,C.pbe-n-kjpaw_psl.1.0.0.UPF,True,60,480
+H,H.pbe-rrkjus_psl.1.0.0.UPF,True,60,480
+Ni,ni_pbe_v1.4.uspp.F.UPF,True,60,480
+O,O.pbe-n-kjpaw_psl.0.1.UPF,True,60,480
+Cr,cr_pbe_v1.5.uspp.F.UPF,True,60,480
