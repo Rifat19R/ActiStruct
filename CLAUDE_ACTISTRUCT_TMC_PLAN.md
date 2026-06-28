@@ -9,6 +9,20 @@
 
 ---
 
+## 0.1 Verified Environment Corrections (2026-06-29, Phase 1)
+
+The assumptions above were written before the environment was inspected. Phase 1 inspection (`scripts/00_inspect_environment.py`) found the following corrections — treat these as authoritative over the original assumptions in the header and in Section 0:
+
+- **Working repo:** `D:/Research/Dr.Kulik_MIT`, git-initialized, phase 1 built on branch `feature/tmc-reliability-benchmark`.
+- **ActiStruct is not inside this working directory.** The real importable package is `actistruct` (not `inverse_active`), editable-installed from the canonical repo at `D:/Rifat_kh/inverse_active` (v0.7.2) into the global Windows Python 3.14.4 environment (`C:\Users\duets\AppData\Local\Python\pythoncore-3.14-64\python.exe`). That repo's own `.venv` is WSL-targeted (`/usr/bin/python3.12`) and not used for this project.
+- **QE binary:** `pw.x` v7.4.1 is not on Windows PATH and not on WSL's default PATH. It runs at the exact path `/home/duets/q-e-qe-7.4.1/bin/pw.x` under WSL Ubuntu (user `duets`). Confirmed runnable — smoke-tested against a generated `.in` file, parsed cleanly, pseudopotentials loaded, SCF setup began with no errors.
+- **Pseudopotential directory from WSL:** `/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency` (Windows path `D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency` translated for use by `pw.x`, which only runs under WSL). `scripts/06_build_qe_inputs.py` performs this translation automatically for `pseudo_dir`/`outdir`.
+- **Ni and Cr pseudopotentials need manual review.** `ni_pbe_v1.4.uspp.F.UPF` and `cr_pbe_v1.5.uspp.F.UPF` exist in the directory but don't match the `_psl.` SSSP-efficiency naming convention used by Fe/C/H/O in the same folder — may be a different pseudopotential family/accuracy tier. Flagged in `configs/pseudo_manifest_required.yaml` under `naming_convention_warnings`. Confirm these are the correct SSSP-efficiency pseudopotentials before any production (non-smoke-test) run.
+- **Phase 1 test status:** 23/23 tests passed (`pytest tests/ -v`), covering environment inspection, pseudo manifest, reference schema (no fabricated values), structure generation, and QE input building.
+- See `docs/PHASE1_SUMMARY.md` for the full phase 1 deliverable summary.
+
+---
+
 ## 0. Immediate Instruction to Claude Code
 
 You are acting as a senior scientific Python engineer and computational chemistry workflow assistant.
