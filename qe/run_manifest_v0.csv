@@ -1,0 +1,5 @@
+candidate_id,complex_id,calculation,input_path,source_structure,status
+ferrocene_initial,ferrocene,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ferrocene_initial.in,D:\Research\Dr.Kulik_MIT\structures\initial_xyz\ferrocene_initial.xyz,generated
+ni_co4_initial,ni_co4,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ni_co4_initial.in,D:\Research\Dr.Kulik_MIT\structures\initial_xyz\ni_co4_initial.xyz,generated
+cr_co6_initial,cr_co6,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\cr_co6_initial.in,D:\Research\Dr.Kulik_MIT\structures\initial_xyz\cr_co6_initial.xyz,generated
+fe_co5_initial,fe_co5,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\fe_co5_initial.in,D:\Research\Dr.Kulik_MIT\structures\initial_xyz\fe_co5_initial.xyz,generated

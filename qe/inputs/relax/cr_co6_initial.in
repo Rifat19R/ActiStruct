@@ -1,0 +1,48 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'cr_co6_initial'
+  pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
+  outdir = '/mnt/d/Research/Dr.Kulik_MIT/qe/workdirs/cr_co6_initial'
+  forc_conv_thr = 0.0001
+  etot_conv_thr = 1e-05
+  disk_io = 'low'
+/
+&SYSTEM
+  ibrav = 0
+  nat = 13
+  ntyp = 3
+  ecutwfc = 60
+  ecutrho = 480
+  occupations = 'fixed'
+  assume_isolated = 'mt'
+  nspin = 1
+/
+&ELECTRONS
+  conv_thr = 1e-08
+  mixing_beta = 0.3
+/
+&IONS
+/
+ATOMIC_SPECIES
+  C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
+  Cr  51.9961  cr_pbe_v1.5.uspp.F.UPF
+  O  15.9990  O.pbe-n-kjpaw_psl.0.1.UPF
+CELL_PARAMETERS (angstrom)
+  30.178000  0.000000  0.000000
+  0.000000  30.178000  0.000000
+  0.000000  0.000000  30.178000
+ATOMIC_POSITIONS (angstrom)
+  Cr  15.08900000  15.08900000  15.08900000
+  C  17.00700000  15.08900000  15.08900000
+  O  18.17800000  15.08900000  15.08900000
+  C  13.17100000  15.08900000  15.08900000
+  O  12.00000000  15.08900000  15.08900000
+  C  15.08900000  17.00700000  15.08900000
+  O  15.08900000  18.17800000  15.08900000
+  C  15.08900000  13.17100000  15.08900000
+  O  15.08900000  12.00000000  15.08900000
+  C  15.08900000  15.08900000  17.00700000
+  O  15.08900000  15.08900000  18.17800000
+  C  15.08900000  15.08900000  13.17100000
+  O  15.08900000  15.08900000  12.00000000
+K_POINTS gamma

@@ -1,0 +1,44 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'ni_co4_initial'
+  pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
+  outdir = '/mnt/d/Research/Dr.Kulik_MIT/qe/workdirs/ni_co4_initial'
+  forc_conv_thr = 0.0001
+  etot_conv_thr = 1e-05
+  disk_io = 'low'
+/
+&SYSTEM
+  ibrav = 0
+  nat = 9
+  ntyp = 3
+  ecutwfc = 60
+  ecutrho = 480
+  occupations = 'fixed'
+  assume_isolated = 'mt'
+  nspin = 1
+/
+&ELECTRONS
+  conv_thr = 1e-08
+  mixing_beta = 0.3
+/
+&IONS
+/
+ATOMIC_SPECIES
+  C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
+  Ni  58.6934  ni_pbe_v1.4.uspp.F.UPF
+  O  15.9990  O.pbe-n-kjpaw_psl.0.1.UPF
+CELL_PARAMETERS (angstrom)
+  27.423687  0.000000  0.000000
+  0.000000  27.423687  0.000000
+  0.000000  0.000000  27.423687
+ATOMIC_POSITIONS (angstrom)
+  Ni  13.71184355  13.71184355  13.71184355
+  C  14.77301334  14.77301334  14.77301334
+  O  15.42368710  15.42368710  15.42368710
+  C  14.77301334  12.65067375  12.65067375
+  O  15.42368710  12.00000000  12.00000000
+  C  12.65067375  14.77301334  12.65067375
+  O  12.00000000  15.42368710  12.00000000
+  C  12.65067375  12.65067375  14.77301334
+  O  12.00000000  12.00000000  15.42368710
+K_POINTS gamma
