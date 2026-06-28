@@ -39,7 +39,16 @@ Rifat ran `pw.x` on `ferrocene_initial.in` via WSL and hit `MPI_ABORT` (rank 1, 
 1. **Wrong input path used initially** (`qe_inputs/initial_relax/ferrocene.in`, which never existed) - the actual generated path is `qe/inputs/relax/ferrocene_initial.in`. Confirmed via the `CRASH` file QE wrote: `from read_input : error #1, opening input file`.
 2. **After fixing the path, the job ran but got OOM-killed** (and briefly destabilized the WSL VM). QE's own estimate: `Estimated total dynamical RAM > 54.79 GB` for a 2-process run, against 16 GB WSL RAM + 20 GB swap on a 32 GB host. Root cause: `vacuum_padding_angstrom: 12.0` (per side) inflated the cubic cell to ~28.3 A/side for a ~4.5 A molecule, driving a 375^3 dense FFT grid. Fixed by reducing to `6.0` (still standard for the `assume_isolated='mt'` correction) - new cell ~16.3 A/side, re-verified with a real `pw.x` run that reached `Estimated max dynamical RAM per process > 10.50 GB` and progressed cleanly through several SCF iterations (energy -525.36 -> -524.93 Ry, estimated accuracy 2.04 -> 0.88 Ry) with no memory error.
 
-All 4 `qe/inputs/relax/*.in` files were regenerated with the corrected padding.
+All 4 `qe/inputs/relax/*.in` files were regenerated with the corrected padding. While Rifat's ferrocene relax was actively running, the other 3 were individually smoke-tested (short, bounded runs, sequential so as not to starve the live job) to confirm the same fix holds across all primary systems:
+
+| System | RAM estimate/process | Pseudopotentials | Status |
+|---|---|---|---|
+| ferrocene | 10.50 GB | C, Fe, H | running for real, SCF converging cleanly |
+| ni_co4 | 8.29 GB | C, Ni, O | clean load, no errors |
+| cr_co6 | 13.81 GB | C, Cr, O | clean load, no errors |
+| fe_co5 | 13.03 GB | C, Fe, O | clean load, no errors |
+
+Cr(CO)6 and Fe(CO)5 run noticeably higher than ferrocene/Ni(CO)4 at the same 6 A padding - their M-C-O arm length is longer, so the cubic cell (and FFT grid) is bigger for the same padding. All 4 are individually under the 16 GB WSL ceiling, but **don't run two of these relax jobs concurrently** - e.g. cr_co6 (13.81 GB) alongside anything else would likely exceed 16 GB. Run them sequentially.
 
 ## Next action
 
