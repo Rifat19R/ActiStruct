@@ -4,6 +4,7 @@
 **Repo:** `D:/Research/Dr.Kulik_MIT`
 **Branch:** `feature/tmc-reliability-benchmark`
 **Tests:** 28/28 passed (`pytest tests/ -v`)
+**Real QE run status:** ferrocene relax confirmed running cleanly (several SCF iterations, energy converging) after fixing an OOM caused by oversized vacuum padding — see "First real relax attempt" below.
 
 ## Environment corrections vs. the original plan
 
@@ -30,6 +31,15 @@ The plan in `CLAUDE_ACTISTRUCT_TMC_PLAN.md` was written before the environment w
 ## Deliberately deferred
 
 - **`scripts/07`–`15`** (parser, dataset validation, ML baseline, uncertainty, acquisition, reference comparison, report, nebwalk demo) — all require real QE relax outputs that don't exist yet.
+
+## First real relax attempt (2026-06-29)
+
+Rifat ran `pw.x` on `ferrocene_initial.in` via WSL and hit `MPI_ABORT` (rank 1, errorcode 1). Two separate issues found and fixed in sequence:
+
+1. **Wrong input path used initially** (`qe_inputs/initial_relax/ferrocene.in`, which never existed) - the actual generated path is `qe/inputs/relax/ferrocene_initial.in`. Confirmed via the `CRASH` file QE wrote: `from read_input : error #1, opening input file`.
+2. **After fixing the path, the job ran but got OOM-killed** (and briefly destabilized the WSL VM). QE's own estimate: `Estimated total dynamical RAM > 54.79 GB` for a 2-process run, against 16 GB WSL RAM + 20 GB swap on a 32 GB host. Root cause: `vacuum_padding_angstrom: 12.0` (per side) inflated the cubic cell to ~28.3 A/side for a ~4.5 A molecule, driving a 375^3 dense FFT grid. Fixed by reducing to `6.0` (still standard for the `assume_isolated='mt'` correction) - new cell ~16.3 A/side, re-verified with a real `pw.x` run that reached `Estimated max dynamical RAM per process > 10.50 GB` and progressed cleanly through several SCF iterations (energy -525.36 -> -524.93 Ry, estimated accuracy 2.04 -> 0.88 Ry) with no memory error.
+
+All 4 `qe/inputs/relax/*.in` files were regenerated with the corrected padding.
 
 ## Next action
 

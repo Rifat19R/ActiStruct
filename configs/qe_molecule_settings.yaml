@@ -10,7 +10,7 @@ qe:
   kpoints: [1, 1, 1]
   gamma_only: true
   cell_type: cubic_supercell
-  vacuum_padding_angstrom: 12.0
+  vacuum_padding_angstrom: 6.0  # 12.0 OOM'd ferrocene relax (~55GB needed vs 16GB WSL+20GB swap); mt correction doesn't need more
   assume_isolated: mt
   conv_thr: 1.0e-8
   forc_conv_thr: 1.0e-4
