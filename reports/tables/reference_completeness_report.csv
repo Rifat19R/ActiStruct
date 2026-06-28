@@ -1,0 +1,5 @@
+complex_id,bond_lengths_count,angles_count,relative_energies_count,barriers_count,status
+ferrocene,0,0,0,0,needs_manual_review
+ni_co4,0,0,0,0,needs_manual_review
+cr_co6,0,0,0,0,needs_manual_review
+fe_co5,0,0,0,0,needs_manual_review

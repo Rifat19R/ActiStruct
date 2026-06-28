@@ -1,0 +1,52 @@
+ferrocene:
+  name: Ferrocene
+  formula: Fe(C5H5)2
+  charge: 0
+  spin_or_multiplicity: null
+  geometry_class: sandwich
+  reference_values:
+    bond_lengths: []
+    angles: []
+    relative_energies: []
+    barriers: []
+  sources: {}
+  status: needs_manual_review
+ni_co4:
+  name: Nickel tetracarbonyl
+  formula: Ni(CO)4
+  charge: 0
+  spin_or_multiplicity: null
+  geometry_class: tetrahedral
+  reference_values:
+    bond_lengths: []
+    angles: []
+    relative_energies: []
+    barriers: []
+  sources: {}
+  status: needs_manual_review
+cr_co6:
+  name: Chromium hexacarbonyl
+  formula: Cr(CO)6
+  charge: 0
+  spin_or_multiplicity: null
+  geometry_class: octahedral
+  reference_values:
+    bond_lengths: []
+    angles: []
+    relative_energies: []
+    barriers: []
+  sources: {}
+  status: needs_manual_review
+fe_co5:
+  name: Iron pentacarbonyl
+  formula: Fe(CO)5
+  charge: 0
+  spin_or_multiplicity: null
+  geometry_class: trigonal_bipyramidal
+  reference_values:
+    bond_lengths: []
+    angles: []
+    relative_energies: []
+    barriers: []
+  sources: {}
+  status: needs_manual_review
