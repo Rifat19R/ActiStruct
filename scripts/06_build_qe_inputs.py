@@ -19,6 +19,8 @@ from pathlib import Path, PureWindowsPath
 from ase.data import atomic_masses, atomic_numbers
 from ase.io import read
 
+ANGSTROM_TO_BOHR = 1.0 / 0.529177210903
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _common import PROJECT_ROOT, load_yaml, setup_logger  # noqa: E402
 
@@ -64,8 +66,10 @@ def build_input_file(candidate_id: str, xyz_path: Path, qe_cfg: dict,
     lines.append(f"  etot_conv_thr = {qe['etot_conv_thr']}")
     lines.append("  disk_io = '" + qe["disk_io"] + "'")
     lines.append("/")
+    celldm1_bohr = cell_len * ANGSTROM_TO_BOHR
     lines.append("&SYSTEM")
-    lines.append("  ibrav = 0")
+    lines.append("  ibrav = 1")
+    lines.append(f"  celldm(1) = {celldm1_bohr:.8f}")
     lines.append(f"  nat = {len(atoms)}")
     lines.append(f"  ntyp = {len(species)}")
     lines.append(f"  ecutwfc = {qe['ecutwfc_ry']}")
@@ -80,16 +84,13 @@ def build_input_file(candidate_id: str, xyz_path: Path, qe_cfg: dict,
     lines.append("/")
     if qe["calculation"] in ("relax", "vc-relax"):
         lines.append("&IONS")
+        lines.append(f"  trust_radius_min = {qe['ion_trust_radius_min_bohr']}")
         lines.append("/")
     lines.append("ATOMIC_SPECIES")
     for el in species:
         pseudo_file = pseudo_manifest["elements"][el]["filename"]
         mass = atomic_masses[atomic_numbers[el]]
         lines.append(f"  {el}  {mass:.4f}  {pseudo_file}")
-    lines.append(f"CELL_PARAMETERS (angstrom)")
-    lines.append(f"  {cell_len:.6f}  0.000000  0.000000")
-    lines.append(f"  0.000000  {cell_len:.6f}  0.000000")
-    lines.append(f"  0.000000  0.000000  {cell_len:.6f}")
     lines.append("ATOMIC_POSITIONS (angstrom)")
     for sym, pos in zip(symbols, shifted):
         lines.append(f"  {sym}  {pos[0]:.8f}  {pos[1]:.8f}  {pos[2]:.8f}")

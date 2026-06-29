@@ -45,3 +45,7 @@ def test_generated_relax_inputs_exist_for_all_primary_systems():
         assert "ATOMIC_POSITIONS" in content
         assert "K_POINTS gamma" in content
         assert f"prefix = '{complex_id}_initial'" in content
+        assert "ibrav = 1" in content, "must use cubic ibrav, not ibrav=0 (DISCOURAGED, caused cr_co6 bfgs noise)"
+        assert "celldm(1)" in content
+        assert "CELL_PARAMETERS" not in content, "ibrav=1 uses celldm(1), not an explicit cell matrix"
+        assert "trust_radius_min" in content, "needed so bfgs doesn't abort near-convergence (cr_co6 failure)"

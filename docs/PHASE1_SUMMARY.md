@@ -50,6 +50,21 @@ All 4 `qe/inputs/relax/*.in` files were regenerated with the corrected padding. 
 
 Cr(CO)6 and Fe(CO)5 run noticeably higher than ferrocene/Ni(CO)4 at the same 6 A padding - their M-C-O arm length is longer, so the cubic cell (and FFT grid) is bigger for the same padding. All 4 are individually under the 16 GB WSL ceiling, but **don't run two of these relax jobs concurrently** - e.g. cr_co6 (13.81 GB) alongside anything else would likely exceed 16 GB. Run them sequentially.
 
+## Second real run: ni_co4/cr_co6/fe_co5, and a genuine BFGS failure (2026-06-29)
+
+Rifat ran the sequential queue (ni_co4 -> cr_co6 -> fe_co5, `-np 4`). All 3 exited code 0, but **exit 0 does not mean converged** - checking each output explicitly:
+
+- **ni_co4**: converged, `bfgs converged in 9 scf cycles and 7 bfgs steps`, final energy -583.5691160575 Ry.
+- **fe_co5**: converged, `bfgs converged in 13 scf cycles and 10 bfgs steps`, final energy -629.6772928617 Ry.
+- **cr_co6**: did **not** converge - `bfgs failed after 10 scf cycles and 7 bfgs steps, convergence not achieved`. QE still printed `JOB DONE` and exited 0 (it reports the failure, it doesn't treat it as fatal), which is why the sequential loop reported "finished" for all three.
+
+Traced the cr_co6 trajectory step by step: `Total force` dropped cleanly from 0.2157 to 0.000394 Ry/au over the first ~6-7 BFGS steps (already very close to `forc_conv_thr = 1e-4`), but the trust radius collapsed to ~2.7e-5 bohr - below QE's default `trust_radius_min` floor - so BFGS aborted instead of taking smaller corrective steps. Two root-cause-targeted fixes (not threshold-loosening):
+
+1. **`ibrav=0` was the wrong cell specification.** QE itself warned `using ibrav=0 with symmetry is DISCOURAGED`, and `qe_molecule_settings.yaml` already specifies `cell_type: cubic_supercell`, which maps to `ibrav=1` + `celldm(1)`, not a generic `CELL_PARAMETERS` matrix. A generic matrix can carry tiny floating-point asymmetries that surface as force noise right where forces are supposed to vanish by symmetry - plausibly what triggered the oscillation. Fixed in `scripts/06_build_qe_inputs.py`: `ibrav=1`/`celldm(1)` everywhere, `CELL_PARAMETERS` card removed.
+2. **`trust_radius_min` lowered from QE's default to `1.0e-6` bohr** (new `ion_trust_radius_min_bohr` key in `qe_molecule_settings.yaml`, emitted in a non-empty `&IONS` block) so BFGS has room to keep refining instead of aborting when residual forces are already this close to the target.
+
+Applied uniformly to all 4 systems (the `ibrav=0` issue affects all of them, not just cr_co6). Re-verified with short smoke tests on all 4 regenerated inputs: `bravais-lattice index = 1` (was `0`), the DISCOURAGED warning is gone, identical symmetry detection (48 Sym. Ops. for cr_co6) and RAM estimates as before (cell sizes unchanged), no parse errors. `tests/test_qe_input_builder.py` now asserts `ibrav = 1`, `celldm(1)`, no `CELL_PARAMETERS`, and `trust_radius_min` are present, so this can't silently regress. Full multi-hour re-relax to confirm actual convergence is still Rifat's to run.
+
 ## Next action
 
-Rifat runs the 4 relax jobs via WSL `pw.x` using the inputs in `qe/inputs/relax/` (paths already WSL-translated). Once outputs land in `qe/outputs/relax/`, build `scripts/07_parse_qe_outputs.py` against real data — per the project's active-learning philosophy, ML/uncertainty/acquisition scaffolding should not be built ahead of having labeled QE rows to validate against.
+Rifat reruns all 4 with the latest regenerated inputs (`ibrav=1` + `trust_radius_min` fix) using `qe/inputs/relax/` (paths already WSL-translated). ni_co4/fe_co5 should reproduce their prior converged results; cr_co6 should now actually converge instead of failing. Once outputs land in `qe/outputs/relax/`, build `scripts/07_parse_qe_outputs.py` against real data — per the project's active-learning philosophy, ML/uncertainty/acquisition scaffolding should not be built ahead of having labeled QE rows to validate against.

@@ -8,7 +8,8 @@
   disk_io = 'low'
 /
 &SYSTEM
-  ibrav = 0
+  ibrav = 1
+  celldm(1) = 34.35144149
   nat = 13
   ntyp = 3
   ecutwfc = 60
@@ -22,15 +23,12 @@
   mixing_beta = 0.3
 /
 &IONS
+  trust_radius_min = 1e-06
 /
 ATOMIC_SPECIES
   C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
   Cr  51.9961  cr_pbe_v1.5.uspp.F.UPF
   O  15.9990  O.pbe-n-kjpaw_psl.0.1.UPF
-CELL_PARAMETERS (angstrom)
-  18.178000  0.000000  0.000000
-  0.000000  18.178000  0.000000
-  0.000000  0.000000  18.178000
 ATOMIC_POSITIONS (angstrom)
   Cr  9.08900000  9.08900000  9.08900000
   C  11.00700000  9.08900000  9.08900000

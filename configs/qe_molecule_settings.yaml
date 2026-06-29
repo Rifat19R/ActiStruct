@@ -18,6 +18,7 @@ qe:
   mixing_beta: 0.3
   max_seconds: null
   disk_io: low
+  ion_trust_radius_min_bohr: 1.0e-6  # default 1e-4 made cr_co6 bfgs abort while still oscillating near forc_conv_thr
 
 closed_shell_phase1:
   nspin: 1
