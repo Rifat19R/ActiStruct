@@ -1,0 +1,44 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'fe_co5__eq_angle_perturb_deg__-6'
+  pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
+  outdir = '/home/duets/qe_workdirs/fe_co5__eq_angle_perturb_deg__-6'
+  forc_conv_thr = 0.0001
+  etot_conv_thr = 1e-05
+  disk_io = 'low'
+/
+&SYSTEM
+  ibrav = 1
+  celldm(1) = 33.82609763
+  nat = 11
+  ntyp = 3
+  ecutwfc = 60
+  ecutrho = 480
+  occupations = 'fixed'
+  assume_isolated = 'mt'
+  nspin = 1
+/
+&ELECTRONS
+  conv_thr = 1e-08
+  mixing_beta = 0.3
+/
+&IONS
+  trust_radius_min = 1e-06
+/
+ATOMIC_SPECIES
+  C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
+  Fe  55.8450  Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+  O  15.9990  O.pbe-n-kjpaw_psl.0.1.UPF
+ATOMIC_POSITIONS (angstrom)
+  Fe  8.95239393  8.99567894  8.95000000
+  C  8.95239393  8.99567894  10.75700000
+  O  8.95239393  8.99567894  11.90000000
+  C  8.95239393  8.99567894  7.14300000
+  O  8.95239393  8.99567894  6.00000000
+  C  10.76938543  8.80470544  8.95000000
+  O  11.91606918  8.68418412  8.95000000
+  C  8.03889393  10.57790735  8.95000000
+  O  7.46239393  11.57643464  8.95000000
+  C  8.03889393  7.41345053  8.95000000
+  O  7.46239393  6.41492324  8.95000000
+K_POINTS gamma

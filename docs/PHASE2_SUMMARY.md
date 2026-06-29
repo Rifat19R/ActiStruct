@@ -130,6 +130,20 @@ fe_co5's "Berry-pseudorotation-like tilt" family was deliberately excluded from 
 
 Outputs: `data/processed/candidate_audit_v0.csv` (all 52, classified + audit status), `reports/candidate_audit_report_v0.md`. `tests/test_candidate_audit.py`: 15 tests (classification correctness, both rejection paths verified on synthetic bad data, duplicate detection, sign-alternation, and end-to-end checks on the real 52-candidate audit). **90/90 tests pass total.**
 
-## Next action (Phase 2B, pending Rifat's approval of the 12 selected candidates)
+## Phase 2B prep: candidate metadata, QE inputs, validation, batch runner, pre-run report
 
-Once the 12 representatives above are approved: generate their QE relax inputs (reusing `scripts/06_build_qe_inputs.py`'s machinery, extended to take arbitrary candidate structures rather than just the 4 initial ones), prepare batch execution scripts, then Rifat runs them. That expands the dataset to ~16 DFT points (4 reference + 12 perturbations) - still small, but enough to exercise the parser/dataset-validation/reference-comparison pipeline on non-trivial data. No ML pipeline work until after that campaign runs (per Rifat's staging: Stage 4 = ML infrastructure with an explicit "not yet scientifically meaningful" disclaimer, Stage 5 = active learning only after ~30-50 validated calculations).
+Per Rifat's review of the audit: added the requested metadata fields to every candidate (`parent_structure`, `perturbation_parameter`, `perturbation_direction`, `selection_reason`) directly in `scripts/05b_audit_perturbation_candidates.py`'s output - valuable once the dataset grows to dozens/hundreds of rows. One documented subtlety: `parent_structure` (e.g. `ferrocene_initial`) is the validated QE-relaxed reference despite the `_initial` naming artifact; the perturbation itself was applied to script 04's nominal parameterization, not literally to relaxed coordinates.
+
+`scripts/06_build_qe_inputs.py` extended with `--source {primary,candidates}` (default `primary`, unchanged/regression-tested): `--source candidates` reads `selected_as_representative=True` rows from `candidate_audit_v0.csv` and builds their QE relax inputs the same way as before (same `ibrav=1`, `trust_radius_min`, native-ext4 `outdir` fixes - all 3 historical bugs already baked in). Added `validate_generated_input()`, a static pre-execution check (ibrav/celldm present, trust_radius_min present for relax, outdir never on `/mnt/`, every referenced pseudopotential file actually exists on disk, no atom-overlap in the written `ATOMIC_POSITIONS` block) - run automatically after generation and verified to actually catch each failure mode via 4 deliberately-broken synthetic inputs in tests.
+
+All 12 generated inputs: passed static validation, and smoke-tested against the real `pw.x` v7.4.1 binary (no errors, `bravais-lattice index = 1` confirmed, RAM estimates 8.2-14.1 GB/process - cr_co6 candidates remain the heaviest, same as the first campaign).
+
+`scripts/06b_run_qe_candidates_batch.sh`: sequential WSL batch runner (syntax-checked via `bash -n`) - always sequential per the 16 GB RAM ceiling, and idempotent (skips any candidate whose output already shows `bfgs converged`/`JOB DONE`, since this project has already hit partial-failure reruns twice).
+
+`reports/pre_run_report_candidates_v0.md`: generated programmatically (can't drift from the actual inputs) - QE settings, full candidate metadata table, and the same "exit 0 != converged" + "never run in parallel" warnings baked in as explicit execution notes.
+
+`tests/test_qe_input_builder.py` grew by 12 tests (candidate-target loading, generated-input well-formedness, all 4 validator failure modes, pre-run report completeness). **103/103 tests pass total.**
+
+## Next action: hand off the 12-candidate batch to Rifat
+
+Same established pattern as the first campaign: Claude prepares inputs/scripts/validation, Rifat runs and monitors in his own WSL terminal (multi-hour job, his to watch). After these 12 relax: parser update (script 07 already handles any `runs/.../*.out` recursively - just point `--runs-dir` at `runs/perturbation_relax/`), re-validate (script 08), expanded reference comparison, dataset statistics, then `reports/tmc_benchmark_v0.1.md` covering both campaigns together (deliberately delayed past this point per Rifat - writing it now would mean rewriting it in days). Feature generation/ML infra (no performance claims) only after that.
