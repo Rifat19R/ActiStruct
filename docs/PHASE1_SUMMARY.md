@@ -3,8 +3,8 @@
 **Date:** 2026-06-29
 **Repo:** `D:/Research/Dr.Kulik_MIT`
 **Branch:** `feature/tmc-reliability-benchmark`
-**Tests:** 28/28 passed (`pytest tests/ -v`)
-**Real QE run status:** ferrocene relax confirmed running cleanly (several SCF iterations, energy converging) after fixing an OOM caused by oversized vacuum padding — see "First real relax attempt" below.
+**Status: Phase 1 complete.** All 4 primary systems (ferrocene, ni_co4, cr_co6, fe_co5) converged via real `pw.x` runs - final energies -525.3618442398 / -583.5691160575 / -536.0152471419 / -629.6772928617 Ry respectively, all `bfgs converged`, all `JOB DONE`. See "Third real run" below for the full fix history (OOM, BFGS trust-radius, 9p-mount checkpoint crash) that got there.
+**Tests:** 41/41 passed (`pytest tests/ -v`) as of Phase 2 kickoff (parser).
 
 ## Environment corrections vs. the original plan
 
@@ -80,6 +80,21 @@ Fix: added `qe.workdir_native_root: "/home/duets/qe_workdirs"` to `configs/proje
 
 **Action needed before any rerun:** create the native workdir first, e.g. `mkdir -p /home/duets/qe_workdirs/<candidate_id>` (not under `D:`).
 
-## Next action
+## Phase 1 closed out: all 4 systems converged (2026-06-29)
 
-Rifat reruns all 4 with the latest regenerated inputs (`ibrav=1` + `trust_radius_min` + native-ext4 `outdir`) using `qe/inputs/relax/`, after `mkdir -p /home/duets/qe_workdirs/<candidate_id>` for each. ni_co4/fe_co5 should reproduce their prior converged results; cr_co6 should now actually converge instead of failing; ferrocene should make it past its checkpoint write this time. Once outputs land in `qe/outputs/relax/`, build `scripts/07_parse_qe_outputs.py` against real data — per the project's active-learning philosophy, ML/uncertainty/acquisition scaffolding should not be built ahead of having labeled QE rows to validate against.
+Rifat reran cr_co6 and ferrocene with the fully-fixed inputs. Final confirmed results, all real `pw.x` data:
+
+| system_id | convergence | ionic steps | final energy (Ry) | key relaxed bond length(s) |
+|---|---|---|---|---|
+| ferrocene | converged (17 scf cycles, 15 bfgs steps) | 15 | -525.3618442398 | Fe-C (all 10): 2.044 A |
+| ni_co4 | converged (9 scf cycles, 7 bfgs steps) | 7 | -583.5691160575 | Ni-C (all 4): 1.812 A |
+| cr_co6 | converged (9 scf cycles, 7 bfgs steps) | 7 | -536.0152471419 | Cr-C (all 6): 1.900 A |
+| fe_co5 | converged (13 scf cycles, 10 bfgs steps) | 10 | -629.6772928617 | Fe-C axial: 1.802 A, equatorial: 1.800 A |
+
+All symmetry-preserving (equal bond lengths within each ligand set) - a good sanity signal that the `ibrav=0` noise fix actually worked. These are PBE/plane-wave numbers from this project's specific cutoffs/pseudopotentials, not yet compared against literature (`references/reference_values_tmc_v0.yaml` is still all `needs_manual_review`).
+
+**Phase 1 done criteria (CLAUDE_ACTISTRUCT_TMC_PLAN.md Sec 12) met:** scaffold, pseudo manifest, 4 initial structures, QE inputs for all 4, reference schema, all 4 systems actually converged via real QE, dry-run/help on all scripts, tests passing, limitations documented.
+
+## Phase 2: see docs/PHASE2_SUMMARY.md
+
+Phase 2 starts with `scripts/07_parse_qe_outputs.py` (production QE output parser) now that real, converged data exists for all 4 systems.
