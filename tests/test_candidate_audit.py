@@ -1,5 +1,4 @@
 import csv
-import json
 from pathlib import Path
 
 from _load import load_script
@@ -164,3 +163,53 @@ def test_real_audit_no_duplicates_among_52():
         rows = list(csv.DictReader(f))
     duplicates = [r for r in rows if r["is_duplicate_of"]]
     assert duplicates == [], f"unexpected duplicates found: {duplicates}"
+
+
+def test_build_selection_reason_for_rejected_candidate():
+    row = {"audit_status": "rejected", "rejection_reasons": ["atom_overlap: foo"],
+           "var_label": "x", "perturbation_family": "F", "perturbation_direction": "positive"}
+    reason = audit_mod.build_selection_reason(row, was_selected=False)
+    assert "rejected by audit" in reason
+    assert "atom_overlap" in reason
+
+
+def test_build_selection_reason_for_excluded_by_design():
+    row = {"audit_status": "accepted", "rejection_reasons": [],
+           "var_label": "berry_like_distortion_coordinate_degree",
+           "perturbation_family": "Berry-pseudorotation-like tilt", "perturbation_direction": "positive"}
+    reason = audit_mod.build_selection_reason(row, was_selected=False)
+    assert "excluded by design" in reason
+
+
+def test_build_selection_reason_for_selected_and_not_selected():
+    row = {"audit_status": "accepted", "rejection_reasons": [], "var_label": "x",
+           "perturbation_family": "Metal-ligand stretch", "perturbation_direction": "negative"}
+    selected_reason = audit_mod.build_selection_reason(row, was_selected=True)
+    not_selected_reason = audit_mod.build_selection_reason(row, was_selected=False)
+    assert "representative of Metal-ligand stretch" in selected_reason
+    assert "negative direction" in selected_reason
+    assert "not selected" in not_selected_reason
+
+
+def test_real_audit_has_all_requested_metadata_fields():
+    audit_path = PROJECT_ROOT / "data" / "processed" / "candidate_audit_v0.csv"
+    with audit_path.open(encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    required_fields = {
+        "candidate_id", "parent_structure", "perturbation_family", "perturbation_parameter",
+        "perturbation_direction", "magnitude", "expected_physical_effect", "selection_reason",
+    }
+    assert required_fields.issubset(rows[0].keys())
+    for row in rows:
+        assert row["parent_structure"] == f"{row['system_id']}_initial"
+        assert row["perturbation_direction"] in ("positive", "negative")
+        assert row["selection_reason"], f"{row['candidate_id']} has no selection_reason"
+
+
+def test_real_audit_selected_candidates_have_traceable_selection_reason():
+    audit_path = PROJECT_ROOT / "data" / "processed" / "candidate_audit_v0.csv"
+    with audit_path.open(encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    for row in rows:
+        if row["selected_as_representative"] == "True":
+            assert "representative of" in row["selection_reason"]

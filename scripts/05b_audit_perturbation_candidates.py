@@ -169,6 +169,17 @@ def select_representatives(audited_rows: list[dict]) -> set:
     return selected
 
 
+def build_selection_reason(row: dict, was_selected: bool) -> str:
+    if row["audit_status"] == "rejected":
+        return f"not eligible: rejected by audit ({'; '.join(row['rejection_reasons'])})"
+    if row["var_label"] in EXCLUDED_FROM_SELECTION:
+        return f"excluded by design: {EXCLUDED_FROM_SELECTION[row['var_label']]}"
+    if was_selected:
+        return (f"representative of {row['perturbation_family']} family "
+                f"({row['perturbation_direction']} direction, largest accepted magnitude in this slot)")
+    return f"not selected: another candidate in {row['perturbation_family']} was preferred for this system/sign slot"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true")
@@ -197,10 +208,14 @@ def main() -> int:
 
         classification = classify_candidate(variables)
         issues = check_overlaps(positions) + check_bond_sanity(positions, system_id)
+        var_label = classification["var_label"]
 
         audited_rows.append({
             "candidate_id": candidate_id,
             "system_id": system_id,
+            "parent_structure": f"{system_id}_initial",  # the validated relaxed QE result this perturbs from
+            "perturbation_parameter": var_label,
+            "perturbation_direction": "positive" if classification["magnitude"] >= 0 else "negative",
             **classification,
             "audit_status": "rejected" if issues else "accepted",
             "rejection_reasons": issues,
@@ -219,6 +234,7 @@ def main() -> int:
     selected_ids = select_representatives(audited_rows)
     for row in audited_rows:
         row["selected_as_representative"] = row["candidate_id"] in selected_ids
+        row["selection_reason"] = build_selection_reason(row, row["candidate_id"] in selected_ids)
 
     n_accepted = sum(1 for r in audited_rows if r["audit_status"] == "accepted")
     n_rejected = len(audited_rows) - n_accepted
@@ -269,10 +285,11 @@ def build_report(rows: list[dict]) -> str:
 
     lines.append("## Classification (all candidates)")
     lines.append("")
-    lines.append("| Candidate | System | Family | Magnitude | Expected effect |")
-    lines.append("|---|---|---|---|---|")
+    lines.append("| Candidate | Parent | Family | Parameter | Direction | Magnitude | Expected effect |")
+    lines.append("|---|---|---|---|---|---|---|")
     for r in sorted(rows, key=lambda r: (r["system_id"], r["perturbation_family"])):
-        lines.append(f"| {r['candidate_id']} | {r['system_id']} | {r['perturbation_family']} | "
+        lines.append(f"| {r['candidate_id']} | {r['parent_structure']} | {r['perturbation_family']} | "
+                      f"{r['perturbation_parameter']} | {r['perturbation_direction']} | "
                       f"{r['magnitude']} | {r['expected_physical_effect']} |")
     lines.append("")
 
@@ -290,12 +307,12 @@ def build_report(rows: list[dict]) -> str:
 
     lines.append("## Selected representatives")
     lines.append("")
-    lines.append("| Candidate | System | Family | Magnitude | Why selected |")
+    lines.append("| Candidate | System | Family | Magnitude | Selection reason |")
     lines.append("|---|---|---|---|---|")
     for r in rows:
         if r["selected_as_representative"]:
             lines.append(f"| {r['candidate_id']} | {r['system_id']} | {r['perturbation_family']} | "
-                          f"{r['magnitude']} | largest-magnitude accepted candidate in this family/sign-preference slot |")
+                          f"{r['magnitude']} | {r['selection_reason']} |")
     lines.append("")
     excluded_note = "; ".join(f"{k}: {v}" for k, v in EXCLUDED_FROM_SELECTION.items())
     lines.append(f"**Excluded from selection (by design, not by audit failure):** {excluded_note}")
@@ -317,6 +334,15 @@ def build_report(rows: list[dict]) -> str:
                   "a system's families rather than always tie-breaking the same direction - otherwise all "
                   "selected candidates would explore only one side of the PES, defeating the point of a "
                   "diverse subset.")
+    lines.append("- `parent_structure` (e.g. `ferrocene_initial`) refers to this project's validated, "
+                  "QE-relaxed reference structure for that system (status `validated` in "
+                  "`data/processed/full_dataset_v0.1.csv`) - the `_initial` suffix is a pre-existing "
+                  "candidate_id naming artifact from script 06, not an indication the parent is unrelaxed. "
+                  "Note the perturbation itself was applied to script 04's nominal (literature-typical) "
+                  "bond-length parameterization, not literally to the relaxed atom coordinates - the "
+                  "relaxed structure is the correct scientific reference point for interpreting/comparing "
+                  "results, even though it isn't the literal geometric starting point each candidate's "
+                  "internal coordinates were perturbed from.")
     lines.append("")
     return "\n".join(lines)
 
