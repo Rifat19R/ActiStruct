@@ -111,6 +111,25 @@ A real bug was caught and fixed while building the verdict logic: the first vers
 
 `tests/test_reference_comparison.py` (9 tests): nearest-neighbor measurement correctness, rotation-invariance of the axial/equatorial classifier (a synthetic structure rotated by an arbitrary axis/angle must classify the same atoms as axial), tolerance-flagging on a deliberately-wrong synthetic reference value, and end-to-end validation that the real dataset reaches `validated`. **75/75 tests pass total.**
 
-## Next action (Phase 2B, per Rifat's staged plan)
+## Phase 2B.0: candidate quality audit (`scripts/05b_audit_perturbation_candidates.py`)
 
-Phase 2A (reference validation) is done. Phase 2B: review the 52 perturbation candidates from script 05 for chemical reasonableness, label perturbation type, select 8-12 representative ones (2-3 per complex, not all 52), generate their QE inputs, and prepare batch execution scripts - still no ML pipeline work until after this expanded campaign runs (per Rifat's explicit staging: Stage 3 = second QE campaign with ~12-16 total data points, Stage 4 = ML infrastructure with an explicit "not yet scientifically meaningful" disclaimer, Stage 5 = active learning only after ~30-50 validated calculations).
+Per Rifat's explicit quality gate, added before generating any QE inputs for the 52 perturbation candidates: classify every candidate's perturbation family/magnitude/expected physical effect, reject anything chemically unreasonable (atom overlaps, unrealistic bond lengths reusing script 08's topology-aware checker, duplicate geometries via pairwise RMSD), then select a family-diverse representative subset rather than running all 52.
+
+**Result: all 52 candidates accepted** (0 rejected) - genuinely expected, not a sign the checks are broken: script 05's perturbation magnitudes were deliberately conservative, and angle-type perturbations preserve bond length by construction (`rotate_vector` only changes direction, not magnitude). Verified the rejection logic actually works via synthetic bad-structure tests (a deliberately dissociated Ni-C bond, two atoms 0.1 A apart) - both correctly flagged.
+
+**12 representatives selected** (3 per system x 4 systems), one per perturbation family, picking the largest-magnitude *accepted* candidate in each family. A real diversity bug was caught and fixed during development: naive magnitude tie-breaking always picked the negative-delta candidate (since negative deltas are listed first in script 05's per-family lists), so the first version of the selection explored only the compression direction for every single family - directly defeating the "span the perturbation space" goal. Fixed by alternating which sign is preferred across a system's families, so the selected set now covers both compression/elongation (or positive/negative angle) directions per system - verified by an explicit test (`test_real_audit_selected_set_spans_both_signs_per_system`).
+
+| System | Selected (family: magnitude) |
+|---|---|
+| ferrocene | Fe-Cp stretch: -0.05 A; Cp ring rotation: +36 deg; Cp ring radius: -0.03 A |
+| ni_co4 | Metal-ligand stretch: +0.06 A; C-O stretch: -0.04 A; Tetrahedral angle: -6 deg |
+| cr_co6 | Metal-ligand stretch: +0.06 A; C-O stretch: -0.04 A; Axial/equatorial distortion: -0.05 A |
+| fe_co5 | Axial Fe-C: -0.06 A; Equatorial Fe-C: +0.06 A; Equatorial angle: -6 deg |
+
+fe_co5's "Berry-pseudorotation-like tilt" family was deliberately excluded from selection (not by audit failure) - it's explicitly documented in script 05 as a heuristic, non-validated coordinate, deprioritized in favor of the 3 more standard families for the first follow-up campaign.
+
+Outputs: `data/processed/candidate_audit_v0.csv` (all 52, classified + audit status), `reports/candidate_audit_report_v0.md`. `tests/test_candidate_audit.py`: 15 tests (classification correctness, both rejection paths verified on synthetic bad data, duplicate detection, sign-alternation, and end-to-end checks on the real 52-candidate audit). **90/90 tests pass total.**
+
+## Next action (Phase 2B, pending Rifat's approval of the 12 selected candidates)
+
+Once the 12 representatives above are approved: generate their QE relax inputs (reusing `scripts/06_build_qe_inputs.py`'s machinery, extended to take arbitrary candidate structures rather than just the 4 initial ones), prepare batch execution scripts, then Rifat runs them. That expands the dataset to ~16 DFT points (4 reference + 12 perturbations) - still small, but enough to exercise the parser/dataset-validation/reference-comparison pipeline on non-trivial data. No ML pipeline work until after that campaign runs (per Rifat's staging: Stage 4 = ML infrastructure with an explicit "not yet scientifically meaningful" disclaimer, Stage 5 = active learning only after ~30-50 validated calculations).

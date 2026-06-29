@@ -1,0 +1,53 @@
+candidate_id,system_id,var_label,perturbation_family,expected_physical_effect,magnitude,magnitude_bucket,audit_status,rejection_reasons,is_duplicate_of,selected_as_representative
+ferrocene__fe_cp_dist__-0.05,ferrocene,fe_cp_centroid_distance_angstrom,Fe-Cp stretch,Changes Fe-ring distance; weakens/strengthens overall Fe-Cp bonding.,-0.05,large,accepted,[],,True
+ferrocene__fe_cp_dist__-0.02,ferrocene,fe_cp_centroid_distance_angstrom,Fe-Cp stretch,Changes Fe-ring distance; weakens/strengthens overall Fe-Cp bonding.,-0.02,small,accepted,[],,False
+ferrocene__fe_cp_dist__+0.02,ferrocene,fe_cp_centroid_distance_angstrom,Fe-Cp stretch,Changes Fe-ring distance; weakens/strengthens overall Fe-Cp bonding.,0.02,small,accepted,[],,False
+ferrocene__fe_cp_dist__+0.05,ferrocene,fe_cp_centroid_distance_angstrom,Fe-Cp stretch,Changes Fe-ring distance; weakens/strengthens overall Fe-Cp bonding.,0.05,large,accepted,[],,False
+ferrocene__ring2_rotation_deg__+9,ferrocene,cp_ring_rotation_angle_degree,Cp ring rotation,Rotates one Cp ring toward staggered conformation; tests rotational/conformational flexibility.,9.0,small,accepted,[],,False
+ferrocene__ring2_rotation_deg__+18,ferrocene,cp_ring_rotation_angle_degree,Cp ring rotation,Rotates one Cp ring toward staggered conformation; tests rotational/conformational flexibility.,18.0,large,accepted,[],,False
+ferrocene__ring2_rotation_deg__+27,ferrocene,cp_ring_rotation_angle_degree,Cp ring rotation,Rotates one Cp ring toward staggered conformation; tests rotational/conformational flexibility.,27.0,large,accepted,[],,False
+ferrocene__ring2_rotation_deg__+36,ferrocene,cp_ring_rotation_angle_degree,Cp ring rotation,Rotates one Cp ring toward staggered conformation; tests rotational/conformational flexibility.,36.0,large,accepted,[],,True
+ferrocene__cc_bond__-0.03,ferrocene,cp_ring_radius_perturbation_angstrom,Cp ring radius (C-C stretch),Expands/contracts the ring; probes ring strain and aromaticity-adjacent bonding.,-0.03,small,accepted,[],,True
+ferrocene__cc_bond__-0.015,ferrocene,cp_ring_radius_perturbation_angstrom,Cp ring radius (C-C stretch),Expands/contracts the ring; probes ring strain and aromaticity-adjacent bonding.,-0.015,small,accepted,[],,False
+ferrocene__cc_bond__+0.015,ferrocene,cp_ring_radius_perturbation_angstrom,Cp ring radius (C-C stretch),Expands/contracts the ring; probes ring strain and aromaticity-adjacent bonding.,0.015,small,accepted,[],,False
+ferrocene__cc_bond__+0.03,ferrocene,cp_ring_radius_perturbation_angstrom,Cp ring radius (C-C stretch),Expands/contracts the ring; probes ring strain and aromaticity-adjacent bonding.,0.03,small,accepted,[],,False
+ni_co4__mc_dist__-0.06,ni_co4,ni_c_distance_angstrom,Metal-ligand stretch,Direct Ni-C bond stretch/compression; probes the primary bonding interaction.,-0.06,large,accepted,[],,False
+ni_co4__mc_dist__-0.03,ni_co4,ni_c_distance_angstrom,Metal-ligand stretch,Direct Ni-C bond stretch/compression; probes the primary bonding interaction.,-0.03,small,accepted,[],,False
+ni_co4__mc_dist__+0.03,ni_co4,ni_c_distance_angstrom,Metal-ligand stretch,Direct Ni-C bond stretch/compression; probes the primary bonding interaction.,0.03,small,accepted,[],,False
+ni_co4__mc_dist__+0.06,ni_co4,ni_c_distance_angstrom,Metal-ligand stretch,Direct Ni-C bond stretch/compression; probes the primary bonding interaction.,0.06,large,accepted,[],,True
+ni_co4__co_dist__-0.04,ni_co4,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,-0.04,large,accepted,[],,True
+ni_co4__co_dist__-0.02,ni_co4,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,-0.02,small,accepted,[],,False
+ni_co4__co_dist__+0.02,ni_co4,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,0.02,small,accepted,[],,False
+ni_co4__co_dist__+0.04,ni_co4,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,0.04,large,accepted,[],,False
+ni_co4__tetra_angle_perturb_deg__-6,ni_co4,tetrahedral_angle_perturbation_degree,Tetrahedral angle distortion,Breaks ideal Td angle locally; probes angular bending stiffness.,-6.0,small,accepted,[],,True
+ni_co4__tetra_angle_perturb_deg__-3,ni_co4,tetrahedral_angle_perturbation_degree,Tetrahedral angle distortion,Breaks ideal Td angle locally; probes angular bending stiffness.,-3.0,small,accepted,[],,False
+ni_co4__tetra_angle_perturb_deg__+3,ni_co4,tetrahedral_angle_perturbation_degree,Tetrahedral angle distortion,Breaks ideal Td angle locally; probes angular bending stiffness.,3.0,small,accepted,[],,False
+ni_co4__tetra_angle_perturb_deg__+6,ni_co4,tetrahedral_angle_perturbation_degree,Tetrahedral angle distortion,Breaks ideal Td angle locally; probes angular bending stiffness.,6.0,small,accepted,[],,False
+cr_co6__mc_dist__-0.06,cr_co6,cr_c_distance_angstrom,Metal-ligand stretch,Direct Cr-C bond stretch/compression; probes the primary bonding interaction.,-0.06,large,accepted,[],,False
+cr_co6__mc_dist__-0.03,cr_co6,cr_c_distance_angstrom,Metal-ligand stretch,Direct Cr-C bond stretch/compression; probes the primary bonding interaction.,-0.03,small,accepted,[],,False
+cr_co6__mc_dist__+0.03,cr_co6,cr_c_distance_angstrom,Metal-ligand stretch,Direct Cr-C bond stretch/compression; probes the primary bonding interaction.,0.03,small,accepted,[],,False
+cr_co6__mc_dist__+0.06,cr_co6,cr_c_distance_angstrom,Metal-ligand stretch,Direct Cr-C bond stretch/compression; probes the primary bonding interaction.,0.06,large,accepted,[],,True
+cr_co6__co_dist__-0.04,cr_co6,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,-0.04,large,accepted,[],,True
+cr_co6__co_dist__-0.02,cr_co6,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,-0.02,small,accepted,[],,False
+cr_co6__co_dist__+0.02,cr_co6,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,0.02,small,accepted,[],,False
+cr_co6__co_dist__+0.04,cr_co6,c_o_distance_angstrom,Carbonyl C-O stretch,Stretches/compresses C-O; probes M->CO pi-backdonation strength indirectly.,0.04,large,accepted,[],,False
+cr_co6__axial_stretch__-0.05,cr_co6,axial_equatorial_distortion_angstrom,Octahedral axial/equatorial distortion,Tetragonal (Jahn-Teller-like) distortion; probes Oh angular/axial stiffness.,-0.05,large,accepted,[],,True
+cr_co6__axial_stretch__-0.02,cr_co6,axial_equatorial_distortion_angstrom,Octahedral axial/equatorial distortion,Tetragonal (Jahn-Teller-like) distortion; probes Oh angular/axial stiffness.,-0.02,small,accepted,[],,False
+cr_co6__axial_stretch__+0.02,cr_co6,axial_equatorial_distortion_angstrom,Octahedral axial/equatorial distortion,Tetragonal (Jahn-Teller-like) distortion; probes Oh angular/axial stiffness.,0.02,small,accepted,[],,False
+cr_co6__axial_stretch__+0.05,cr_co6,axial_equatorial_distortion_angstrom,Octahedral axial/equatorial distortion,Tetragonal (Jahn-Teller-like) distortion; probes Oh angular/axial stiffness.,0.05,large,accepted,[],,False
+fe_co5__axial_fe_c__-0.06,fe_co5,axial_fe_c_distance_angstrom,Axial Fe-C stretch,Stretches/compresses the two axial Fe-C bonds; probes TBP axial bonding.,-0.06,large,accepted,[],,True
+fe_co5__axial_fe_c__-0.03,fe_co5,axial_fe_c_distance_angstrom,Axial Fe-C stretch,Stretches/compresses the two axial Fe-C bonds; probes TBP axial bonding.,-0.03,small,accepted,[],,False
+fe_co5__axial_fe_c__+0.03,fe_co5,axial_fe_c_distance_angstrom,Axial Fe-C stretch,Stretches/compresses the two axial Fe-C bonds; probes TBP axial bonding.,0.03,small,accepted,[],,False
+fe_co5__axial_fe_c__+0.06,fe_co5,axial_fe_c_distance_angstrom,Axial Fe-C stretch,Stretches/compresses the two axial Fe-C bonds; probes TBP axial bonding.,0.06,large,accepted,[],,False
+fe_co5__eq_fe_c__-0.06,fe_co5,equatorial_fe_c_distance_angstrom,Equatorial Fe-C stretch,Stretches/compresses the three equatorial Fe-C bonds; probes TBP equatorial bonding.,-0.06,large,accepted,[],,False
+fe_co5__eq_fe_c__-0.03,fe_co5,equatorial_fe_c_distance_angstrom,Equatorial Fe-C stretch,Stretches/compresses the three equatorial Fe-C bonds; probes TBP equatorial bonding.,-0.03,small,accepted,[],,False
+fe_co5__eq_fe_c__+0.03,fe_co5,equatorial_fe_c_distance_angstrom,Equatorial Fe-C stretch,Stretches/compresses the three equatorial Fe-C bonds; probes TBP equatorial bonding.,0.03,small,accepted,[],,False
+fe_co5__eq_fe_c__+0.06,fe_co5,equatorial_fe_c_distance_angstrom,Equatorial Fe-C stretch,Stretches/compresses the three equatorial Fe-C bonds; probes TBP equatorial bonding.,0.06,large,accepted,[],,True
+fe_co5__eq_angle_perturb_deg__-6,fe_co5,equatorial_angle_perturbation_degree,Equatorial angle distortion,Breaks ideal 120-degree equatorial spacing; probes in-plane angular stiffness.,-6.0,small,accepted,[],,True
+fe_co5__eq_angle_perturb_deg__-3,fe_co5,equatorial_angle_perturbation_degree,Equatorial angle distortion,Breaks ideal 120-degree equatorial spacing; probes in-plane angular stiffness.,-3.0,small,accepted,[],,False
+fe_co5__eq_angle_perturb_deg__+3,fe_co5,equatorial_angle_perturbation_degree,Equatorial angle distortion,Breaks ideal 120-degree equatorial spacing; probes in-plane angular stiffness.,3.0,small,accepted,[],,False
+fe_co5__eq_angle_perturb_deg__+6,fe_co5,equatorial_angle_perturbation_degree,Equatorial angle distortion,Breaks ideal 120-degree equatorial spacing; probes in-plane angular stiffness.,6.0,small,accepted,[],,False
+fe_co5__berry_tilt_deg__-20,fe_co5,berry_like_distortion_coordinate_degree,Berry-pseudorotation-like tilt,"Heuristic local coordinate toward TBP<->square-pyramidal interconversion - NOT a validated reaction path, exploratory only.",-20.0,large,accepted,[],,False
+fe_co5__berry_tilt_deg__-10,fe_co5,berry_like_distortion_coordinate_degree,Berry-pseudorotation-like tilt,"Heuristic local coordinate toward TBP<->square-pyramidal interconversion - NOT a validated reaction path, exploratory only.",-10.0,small,accepted,[],,False
+fe_co5__berry_tilt_deg__+10,fe_co5,berry_like_distortion_coordinate_degree,Berry-pseudorotation-like tilt,"Heuristic local coordinate toward TBP<->square-pyramidal interconversion - NOT a validated reaction path, exploratory only.",10.0,small,accepted,[],,False
+fe_co5__berry_tilt_deg__+20,fe_co5,berry_like_distortion_coordinate_degree,Berry-pseudorotation-like tilt,"Heuristic local coordinate toward TBP<->square-pyramidal interconversion - NOT a validated reaction path, exploratory only.",20.0,large,accepted,[],,False
