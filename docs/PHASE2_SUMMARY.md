@@ -63,6 +63,54 @@ The first version of the bond-length sanity check used a flat distance-pair appr
 
 `tests/test_dataset_validation.py`: 18 tests (bond-topology false-positive regressions, reference/pseudopotential check units, all 6 `classify()` label paths, and end-to-end validation of the real 4-system dataset). **59/59 tests pass total** (41 prior + 18 new).
 
-## Next action
+## Step 3: reference validation (`scripts/13_compare_to_references.py`) - Phase 2A
 
-Dataset is validated and labeled. Next per the plan is feature building (`scripts/09_build_features.py`) - but with only 4 labeled rows total, this is far below any reasonable threshold for ML/uncertainty work (per the standing caution in `project-actistruct-kulik-plan` memory). Reasonable next steps in order of value: (1) get the missing reference values collected/verified to actually unlock `reliable` status, (2) generate more QE data (the 52 perturbation candidates from script 05 already exist and are unused), or (3) proceed to feature building anyway if Rifat wants to validate the pipeline mechanics ahead of having enough data for real model training.
+Rifat redirected the plan: no ML pipeline until the benchmark is scientifically trustworthy (Phase 2A = reference validation, Phase 2B = perturbation review, later phases = expanded QE campaign, ML infra, then AL only after ~30-50 validated calculations). This section covers Phase 2A.
+
+### Reference values populated from real literature (2026-06-29)
+
+`references/reference_values_tmc_v0.yaml` was filled in using `WebSearch`/`WebFetch` (not memorized training data) - every DOI was independently checked to actually resolve via `doi.org` redirect before being recorded:
+
+| System | Bond | Literature value | Source |
+|---|---|---|---|
+| ferrocene | Fe-C | 2.064 A | CRC Handbook 85th ed., citing Haaland & Nilsson 1968 (Acta Chem. Scand. 22, 2653, DOI `10.3891/acta.chem.scand.22-2653`) |
+| ferrocene | C-C (Cp ring) | 1.440 A | same |
+| ni_co4 | Ni-C | 1.838(2) A | Hedberg, Iijima, Hedberg 1979 (J. Chem. Phys. 70, 3224, DOI `10.1063/1.437911`) |
+| ni_co4 | C-O | 1.141(2) A | same |
+| cr_co6 | Cr-C | 1.916 A | Whitaker & Jeffery 1967 (Acta Cryst. 23, 977, DOI `10.1107/S0365110X67004153`) - 2 more neutron-diffraction sources listed for future cross-checking |
+| cr_co6 | C-O | 1.171 A | same |
+| fe_co5 | Fe-C axial/equatorial | 1.810(16) / 1.842(11) A | McClelland et al. 2001 (Inorg. Chem. 40, 1358, DOI `10.1021/ic001114e`) |
+| fe_co5 | C-O axial/equatorial | 1.142(23) / 1.149(16) A | same |
+
+Honesty constraint: most primary-source PDFs are publisher-paywalled and could not be opened directly (HTTP 403 on AIP/ACS/Wiley), so exact uncertainty digits are recorded only where directly quoted from an accessible abstract (ni_co4, fe_co5); ferrocene/cr_co6 values are real and DOI-verified but uncertainty is `null`. **`status` stays `needs_manual_review` for all 4 systems** - an AI web-fetch summary is not sufficient grounds to self-certify "verified"; Rifat should manually pull the PDFs to confirm before using these in any external communication (e.g. to Prof. Kulik).
+
+`tests/test_reference_data_integrity.py` (7 tests): DOI format/non-placeholder checks, source_id cross-references resolve, status correctly still requires manual review, uncertainty magnitudes are plausible, sources CSV/YAML stay consistent, and literature values themselves pass the same generic bond-length sanity ranges used on QE results.
+
+### Comparison script and results
+
+`scripts/13_compare_to_references.py` measures bond lengths directly from each system's relaxed geometry (`final_positions_angstrom`) and compares to the literature values above. Measurement is purely geometric - e.g. Fe(CO)5's axial-vs-equatorial split is determined from which `C-Fe-C` angle is closest to 180 degrees (verified rotation-invariant in tests), never from a hardcoded atom index or coordinate axis.
+
+**Result: all 4 systems `validated`** (within this project's stated tolerance of 0.03 A absolute OR 3% relative, whichever is looser):
+
+| System | Bond | QE (A) | Literature (A) | Delta (A) | % Error |
+|---|---|---|---|---|---|
+| ferrocene | Fe-C | 2.0437 | 2.0640 | -0.0203 | -0.98% |
+| ferrocene | C-C (Cp ring) | 1.4340 | 1.4400 | -0.0060 | -0.42% |
+| ni_co4 | Ni-C | 1.8119 | 1.8380 | -0.0261 | -1.42% |
+| ni_co4 | C-O | 1.1504 | 1.1410 | +0.0094 | +0.82% |
+| cr_co6 | Cr-C | 1.9001 | 1.9160 | -0.0158 | -0.83% |
+| cr_co6 | C-O | 1.1540 | 1.1710 | -0.0170 | -1.45% |
+| fe_co5 | Fe-C axial | 1.8025 | 1.8100 | -0.0075 | -0.41% |
+| fe_co5 | Fe-C equatorial | 1.8004 | 1.8420 | -0.0416 | -2.26% |
+| fe_co5 | C-O axial | 1.1527 | 1.1420 | +0.0107 | +0.94% |
+| fe_co5 | C-O equatorial | 1.1556 | 1.1490 | +0.0066 | +0.58% |
+
+All deviations are sub-2.3%, consistent with typical PBE-GGA vs. experiment agreement for 3d-metal carbonyls/sandwich compounds. Outputs: `reports/tables/reference_comparison_v0.csv`, `reports/reference_validation_v0.1.md`, and `data/processed/full_dataset_v0.1.csv` (script 08's labels upgraded `usable_with_caution` -> `validated` for all 4, additive - the original `full_dataset_v0.csv` is untouched).
+
+A real bug was caught and fixed while building the verdict logic: the first version required every compared bond's source to carry a DOI specifically, which incorrectly failed ferrocene (CRC Handbook citations don't have DOIs but are still fully documented print references). Fixed via `is_source_documented()`, which accepts DOI OR URL OR a complete print citation (title+authors+year+journal).
+
+`tests/test_reference_comparison.py` (9 tests): nearest-neighbor measurement correctness, rotation-invariance of the axial/equatorial classifier (a synthetic structure rotated by an arbitrary axis/angle must classify the same atoms as axial), tolerance-flagging on a deliberately-wrong synthetic reference value, and end-to-end validation that the real dataset reaches `validated`. **75/75 tests pass total.**
+
+## Next action (Phase 2B, per Rifat's staged plan)
+
+Phase 2A (reference validation) is done. Phase 2B: review the 52 perturbation candidates from script 05 for chemical reasonableness, label perturbation type, select 8-12 representative ones (2-3 per complex, not all 52), generate their QE inputs, and prepare batch execution scripts - still no ML pipeline work until after this expanded campaign runs (per Rifat's explicit staging: Stage 3 = second QE campaign with ~12-16 total data points, Stage 4 = ML infrastructure with an explicit "not yet scientifically meaningful" disclaimer, Stage 5 = active learning only after ~30-50 validated calculations).
