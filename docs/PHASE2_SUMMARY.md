@@ -47,6 +47,22 @@ Outputs:
 
 **41/41 tests pass** (28 from phase 1 + 13 new parser tests).
 
+## Step 2: dataset validation (`scripts/08_validate_dataset.py`)
+
+Reads `data/processed/initial_relax_parsed_v0.1.json` and labels every row `reliable` / `usable_with_caution` / `failed` / `needs_rerun` / `outlier`, per `CLAUDE_ACTISTRUCT_TMC_PLAN.md` Sec 7.9. Rows are never deleted - only labeled, with specific reasons recorded. Checks implemented: missing energy/geometry, non-converged, duplicate `system_id`, unrealistic bond lengths, extreme (implausibly small) energy, missing pseudopotentials, missing/unverified reference source, and surfaces every parser warning/failure.
+
+Outputs `data/processed/full_dataset_v0.csv` (all rows + `label`/`validation_issues`), `data/processed/reliable_subset_v0.csv` (rows with `label == reliable`), and `reports/dataset_validation_report_v0.md` (programmatically generated, same pattern as the parser summary).
+
+### Result on real data (2026-06-29)
+
+All 4 systems land in **`usable_with_caution`** - none reach `reliable` yet, and that's the correct, intentional outcome: `policy.require_reference_verification: true` plus every system still being `needs_manual_review` in `references/reference_values_tmc_v0.yaml` caps everything below `reliable` until real literature/database comparison happens. No bond-length or energy red flags on any system - the underlying QE relaxes are sound. The only caveats surfaced are already-known ones: ni_co4/cr_co6's pseudopotential naming caution, and the (harmless, pre-`ibrav=1`-fix) `DISCOURAGED` warning text still present in ni_co4/fe_co5's saved real outputs.
+
+### A real bug caught and fixed during development
+
+The first version of the bond-length sanity check used a flat distance-pair approach (any two atoms of a relevant element pair within a fixed radius) and produced **30+ false positives on ferrocene** - it was catching non-bonded 1,3-transannular C-C/C-H distances across the Cp ring (~2.3 A) as if they were real bonds. After narrowing to nearest-neighbor-only checking, a *second* false-positive class appeared: Ni(CO)4/Cr(CO)6/Fe(CO)5 were flagged for "unrealistic" C-C bonds, because their carbonyl carbons aren't bonded to each other at all (only to the metal and their own O) - the "nearest C-C" found was just the closest non-bonded inter-ligand distance. Fixed by making bond checks system-topology-aware (`EXPECTED_BOND_PAIRS`, derived from how `scripts/04_build_initial_structures.py` actually built each molecule, not an external claim) rather than assuming any element pair with a defined sanity range must be bonded everywhere it appears. `tests/test_dataset_validation.py` includes explicit regression tests for both false-positive classes plus a true-positive check (an artificially stretched Ni-C bond is still correctly flagged).
+
+`tests/test_dataset_validation.py`: 18 tests (bond-topology false-positive regressions, reference/pseudopotential check units, all 6 `classify()` label paths, and end-to-end validation of the real 4-system dataset). **59/59 tests pass total** (41 prior + 18 new).
+
 ## Next action
 
-Dataset preparation: build on `data/processed/initial_relax_parsed_v0.1.csv`/`.json` for the next pipeline stage (dataset validation / reliability labeling per `CLAUDE_ACTISTRUCT_TMC_PLAN.md` Sec 7.9, `scripts/08_validate_dataset.py`) once more QE data exists, or proceed per Rifat's direction.
+Dataset is validated and labeled. Next per the plan is feature building (`scripts/09_build_features.py`) - but with only 4 labeled rows total, this is far below any reasonable threshold for ML/uncertainty work (per the standing caution in `project-actistruct-kulik-plan` memory). Reasonable next steps in order of value: (1) get the missing reference values collected/verified to actually unlock `reliable` status, (2) generate more QE data (the 52 perturbation candidates from script 05 already exist and are unused), or (3) proceed to feature building anyway if Rifat wants to validate the pipeline mechanics ahead of having enough data for real model training.
