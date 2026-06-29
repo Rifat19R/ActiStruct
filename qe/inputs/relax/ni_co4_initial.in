@@ -2,7 +2,7 @@
   calculation = 'relax'
   prefix = 'ni_co4_initial'
   pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
-  outdir = '/mnt/d/Research/Dr.Kulik_MIT/qe/workdirs/ni_co4_initial'
+  outdir = '/home/duets/qe_workdirs/ni_co4_initial'
   forc_conv_thr = 0.0001
   etot_conv_thr = 1e-05
   disk_io = 'low'

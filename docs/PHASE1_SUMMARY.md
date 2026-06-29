@@ -65,6 +65,21 @@ Traced the cr_co6 trajectory step by step: `Total force` dropped cleanly from 0.
 
 Applied uniformly to all 4 systems (the `ibrav=0` issue affects all of them, not just cr_co6). Re-verified with short smoke tests on all 4 regenerated inputs: `bravais-lattice index = 1` (was `0`), the DISCOURAGED warning is gone, identical symmetry detection (48 Sym. Ops. for cr_co6) and RAM estimates as before (cell sizes unchanged), no parse errors. `tests/test_qe_input_builder.py` now asserts `ibrav = 1`, `celldm(1)`, no `CELL_PARAMETERS`, and `trust_radius_min` are present, so this can't silently regress. Full multi-hour re-relax to confirm actual convergence is still Rifat's to run.
 
+## Third real run: ferrocene crashed on checkpoint write, root cause was the 9p mount (2026-06-29)
+
+Rifat reran ferrocene (separately from the queue, since it wasn't part of it). It actually converged its SCF cleanly - 38 iterations, total energy -525.34303376 Ry, "convergence has been achieved" - but then crashed:
+
+```
+Error in routine create_directory (1):
+unable to create directory /mnt/d/Research/Dr.Kulik_MIT/qe/workdirs/ferrocene_initial/ferrocene_initial.save/
+```
+
+`mount`/`df -T` confirmed the actual mechanism: `/mnt/d` (where the repo and `outdir` lived) is mounted via **9p** (DrvFs) in WSL2, while `/home/duets` is native **ext4**. 9p is known to be unreliable for the kind of concurrent multi-MPI-rank directory creation QE does when writing a `.save/` checkpoint - exactly what failed here, right after the expensive SCF work was already done. (Also noted in passing: `D:` is at 90% capacity, 19 GB free - not the cause of this crash, but worth watching.)
+
+Fix: added `qe.workdir_native_root: "/home/duets/qe_workdirs"` to `configs/project_config.yaml`, and changed `scripts/06_build_qe_inputs.py` so `outdir` points there instead of under `D:` - `pseudo_dir` stays on `/mnt/d` since read-only access is far less risky than the write-heavy checkpoint pattern that failed. Applied to all 4 systems. Re-verified with a smoke test (cr_co6, since it's the heaviest): no errors, identical RAM estimate (13.81 GB, unaffected by the outdir change), `.save/` directory created cleanly on the native filesystem. `tests/test_qe_input_builder.py` now asserts `outdir` points at `/home/duets/qe_workdirs/...` and never at `/mnt/d`. 28/28 tests pass.
+
+**Action needed before any rerun:** create the native workdir first, e.g. `mkdir -p /home/duets/qe_workdirs/<candidate_id>` (not under `D:`).
+
 ## Next action
 
-Rifat reruns all 4 with the latest regenerated inputs (`ibrav=1` + `trust_radius_min` fix) using `qe/inputs/relax/` (paths already WSL-translated). ni_co4/fe_co5 should reproduce their prior converged results; cr_co6 should now actually converge instead of failing. Once outputs land in `qe/outputs/relax/`, build `scripts/07_parse_qe_outputs.py` against real data — per the project's active-learning philosophy, ML/uncertainty/acquisition scaffolding should not be built ahead of having labeled QE rows to validate against.
+Rifat reruns all 4 with the latest regenerated inputs (`ibrav=1` + `trust_radius_min` + native-ext4 `outdir`) using `qe/inputs/relax/`, after `mkdir -p /home/duets/qe_workdirs/<candidate_id>` for each. ni_co4/fe_co5 should reproduce their prior converged results; cr_co6 should now actually converge instead of failing; ferrocene should make it past its checkpoint write this time. Once outputs land in `qe/outputs/relax/`, build `scripts/07_parse_qe_outputs.py` against real data — per the project's active-learning philosophy, ML/uncertainty/acquisition scaffolding should not be built ahead of having labeled QE rows to validate against.

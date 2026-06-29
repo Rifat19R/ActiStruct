@@ -49,3 +49,6 @@ def test_generated_relax_inputs_exist_for_all_primary_systems():
         assert "celldm(1)" in content
         assert "CELL_PARAMETERS" not in content, "ibrav=1 uses celldm(1), not an explicit cell matrix"
         assert "trust_radius_min" in content, "needed so bfgs doesn't abort near-convergence (cr_co6 failure)"
+        assert "outdir = '/home/duets/qe_workdirs/" in content, \
+            "outdir must stay on native WSL ext4, not the 9p-mounted D: drive (caused a real .save/ create-directory crash)"
+        assert "/mnt/d" not in content.split("outdir")[1].split("\n")[0], "outdir must not point at the Windows-mounted drive"

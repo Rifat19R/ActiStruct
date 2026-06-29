@@ -21,6 +21,10 @@ qe:
   pwx_on_wsl_default_path: false
   run_environment: wsl_ubuntu
   run_user: duets
+  # outdir lives on native ext4 (/home), not the 9p-mounted D: drive - a real
+  # ferrocene run crashed writing its .save/ checkpoint under 9p after a
+  # fully converged 38-iteration SCF, "unable to create directory"
+  workdir_native_root: "/home/duets/qe_workdirs"
 
 systems:
   primary:

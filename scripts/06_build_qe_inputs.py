@@ -3,7 +3,12 @@
 Builds one relax candidate per primary system directly from
 structures/initial_xyz/ (perturbation candidates from script 05 are deferred
 to phase 2, after a first relax establishes a baseline). pw.x runs under WSL,
-so pseudo_dir/outdir paths are translated to /mnt/<drive>/... form.
+so pseudo_dir is translated to /mnt/<drive>/... form (read-only access is
+fine on the 9p-mounted Windows drive). outdir instead points to a native
+WSL/ext4 path (configs/project_config.yaml qe.workdir_native_root) - a real
+relax once crashed creating its .save/ checkpoint directory on the 9p mount
+after a fully converged SCF, so write-heavy scratch/checkpoint I/O stays off
+the Windows-mounted drive entirely.
 
 Usage:
     python scripts/06_build_qe_inputs.py
@@ -53,7 +58,8 @@ def build_input_file(candidate_id: str, xyz_path: Path, qe_cfg: dict,
             raise ValueError(f"No pseudopotential available for element {el} (candidate {candidate_id})")
 
     pseudo_dir_wsl = windows_to_wsl_path(project_cfg["paths"]["pseudo_dir"])
-    outdir_wsl = windows_to_wsl_path(str(PROJECT_ROOT / "qe" / "workdirs" / candidate_id))
+    workdir_native_root = project_cfg["qe"]["workdir_native_root"]
+    outdir_wsl = f"{workdir_native_root}/{candidate_id}"
 
     qe = qe_cfg["qe"]
     lines = []
