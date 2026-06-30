@@ -1,0 +1,207 @@
+{
+  "final_energy_ry": {
+    "unit": "Ry",
+    "type": "target",
+    "description": "DFT total energy from QE BFGS relaxation."
+  },
+  "final_energy_ev": {
+    "unit": "eV",
+    "type": "target",
+    "description": "DFT total energy in eV (= final_energy_ry \u00d7 13.6057)."
+  },
+  "delta_e_ry": {
+    "unit": "Ry",
+    "type": "target",
+    "description": "Energy relative to parent primary structure (NaN for primary rows)."
+  },
+  "delta_e_ev": {
+    "unit": "eV",
+    "type": "target",
+    "description": "delta_e_ry in eV (NaN for primary rows)."
+  },
+  "delta_e_meV": {
+    "unit": "meV",
+    "type": "target",
+    "description": "delta_e_ry in meV (NaN for primary rows)."
+  },
+  "energy_per_atom_ry": {
+    "unit": "Ry/atom",
+    "type": "feature",
+    "description": "Total energy divided by number of atoms. Partially normalises for system size, but cross-system comparison is still not physically meaningful (different stoichiometries)."
+  },
+  "n_atoms": {
+    "unit": "count",
+    "type": "feature",
+    "description": "Total number of atoms in the relaxed structure."
+  },
+  "ionic_steps": {
+    "unit": "steps",
+    "type": "meta",
+    "description": "BFGS geometry optimization steps to convergence. Proxy for relaxation difficulty."
+  },
+  "scf_iterations_total": {
+    "unit": "iterations",
+    "type": "meta",
+    "description": "Total SCF electronic iterations across all ionic steps."
+  },
+  "max_force_ry_per_bohr": {
+    "unit": "Ry/bohr",
+    "type": "meta",
+    "description": "Maximum residual force at end of relaxation (QE-reported)."
+  },
+  "z_metal": {
+    "unit": "Z",
+    "type": "feature",
+    "description": "Atomic number of the central transition metal (24=Cr, 26=Fe, 28=Ni)."
+  },
+  "n_ligands": {
+    "unit": "count",
+    "type": "feature",
+    "description": "Number of atoms within 2.5 \u00c5 of the metal center."
+  },
+  "ml_mean_angstrom": {
+    "unit": "\u00c5",
+    "type": "feature",
+    "description": "Mean metal\u2013ligand bond length (direct M-C or M-ring bond)."
+  },
+  "ml_std_angstrom": {
+    "unit": "\u00c5",
+    "type": "feature",
+    "description": "Standard deviation of M-L bond lengths. 0 for perfect symmetry."
+  },
+  "ml_min_angstrom": {
+    "unit": "\u00c5",
+    "type": "feature",
+    "description": "Shortest M-L bond length."
+  },
+  "ml_max_angstrom": {
+    "unit": "\u00c5",
+    "type": "feature",
+    "description": "Longest M-L bond length."
+  },
+  "lml_angle_mean_deg": {
+    "unit": "degrees",
+    "type": "feature",
+    "description": "Mean L-M-L angle over all ligand pairs. 90\u00b0 for perfect Oh/Td; varies for perturbed geometries."
+  },
+  "lml_angle_std_deg": {
+    "unit": "degrees",
+    "type": "feature",
+    "description": "Standard deviation of L-M-L angles. 0 for perfect symmetry."
+  },
+  "co_mean_angstrom": {
+    "unit": "\u00c5",
+    "type": "feature",
+    "description": "Mean C\u2013O bond length for carbonyl ligands. NaN for ferrocene."
+  },
+  "co_std_angstrom": {
+    "unit": "\u00c5",
+    "type": "feature",
+    "description": "Standard deviation of C-O bond lengths. NaN for ferrocene."
+  },
+  "cm_eig_00": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 0 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_01": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 1 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_02": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 2 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_03": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 3 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_04": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 4 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_05": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 5 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_06": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 6 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_07": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 7 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_08": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 8 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_09": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 9 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_10": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 10 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_11": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 11 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_12": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 12 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_13": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 13 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_14": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 14 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_15": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 15 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_16": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 16 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_17": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 17 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_18": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 18 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_19": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 19 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  },
+  "cm_eig_20": {
+    "unit": "dimensionless",
+    "type": "feature",
+    "description": "Coulomb matrix eigenvalue 20 (sorted by descending |value|). Zero-padded for structures with fewer than 21 atoms."
+  }
+}

@@ -104,14 +104,22 @@ reference values sourced from the peer-reviewed literature.
 
 | System | Key bond | DFT (Å) | Literature (Å) | Deviation | Source |
 |---|---|---|---|---|---|
-| ferrocene | Fe–C | 2.064 | 2.064 ± 0.003 | −0.0% | Haaland & Nilsson 1968, Acta Chem. Scand. 22, 2653 |
-| ni_co4 | Ni–C | 1.838 | 1.838 ± 0.002 | +0.0% | Hedberg et al. 1979, J. Chem. Phys. 70, 3224 |
-| cr_co6 | Cr–C | 1.916 | 1.918 ± 0.003 | −0.10% | Whitaker & Jeffery 1967, Acta Cryst. 23, 977 |
-| fe_co5 | Fe–C (ax) | 1.807 | 1.807 ± 0.003 | +0.0% | McClelland et al. 2001, Inorg. Chem. 40, 1358 |
-| fe_co5 | Fe–C (eq) | 1.842 | 1.833 ± 0.003 | +0.49% | McClelland et al. 2001, Inorg. Chem. 40, 1358 |
+| ferrocene | Fe–C | 2.0437 | 2.064 ± 0.003 | −0.98% | Haaland & Nilsson 1968, Acta Chem. Scand. 22, 2653 |
+| ferrocene | C–C (Cp) | 1.4340 | 1.440 | −0.42% | Haaland & Nilsson 1968 |
+| ni_co4 | Ni–C | 1.8119 | 1.838 ± 0.002 | −1.42% | Hedberg et al. 1979, J. Chem. Phys. 70, 3224 |
+| ni_co4 | C–O | 1.1504 | 1.141 ± 0.002 | +0.82% | Hedberg et al. 1979 |
+| cr_co6 | Cr–C | 1.9001 | 1.916 ± 0.003 | −0.83% | Whitaker & Jeffery 1967, Acta Cryst. 23, 977 |
+| cr_co6 | C–O | 1.1540 | 1.171 ± 0.003 | −1.45% | Whitaker & Jeffery 1967 |
+| fe_co5 | Fe–C (ax) | 1.8025 | 1.810 ± 0.003 | −0.41% | McClelland et al. 2001, Inorg. Chem. 40, 1358 |
+| fe_co5 | Fe–C (eq) | 1.8004 | 1.842 ± 0.003 | −2.26% | McClelland et al. 2001, Inorg. Chem. 40, 1358 |
+| fe_co5 | C–O (ax) | 1.1527 | 1.142 ± 0.003 | +0.94% | McClelland et al. 2001 |
+| fe_co5 | C–O (eq) | 1.1556 | 1.149 ± 0.003 | +0.58% | McClelland et al. 2001 |
 
-All deviations are within normal PBE-GGA-vs-experiment agreement (<1%). All four
-systems labelled `validated` by `scripts/13_compare_to_references.py`.
+All deviations are within normal PBE-GGA-vs-experiment agreement (max −2.26% for
+Fe(CO)₅ equatorial Fe–C, typical for this functional). PBE-GGA systematically
+underestimates bond lengths slightly relative to gas-phase electron diffraction
+data. All four systems labelled `validated` by `scripts/13_compare_to_references.py`
+(tolerance: 0.03 Å absolute or 3% relative, whichever is looser).
 
 > **Important:** reference status in `reference_values_tmc_v0.yaml` remains
 > `needs_manual_review` — web-fetched literature summaries were used to populate
