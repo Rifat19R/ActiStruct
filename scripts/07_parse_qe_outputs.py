@@ -323,6 +323,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runs-dir", default="runs/initial_relax",
                          help="Directory to recursively scan for QE outputs (default: runs/initial_relax)")
+    parser.add_argument("--output-prefix", default="initial_relax_parsed_v0.1",
+                         help="Stem for output files under data/processed/ "
+                              "(default: initial_relax_parsed_v0.1 → "
+                              "initial_relax_parsed_v0.1.csv/.json). "
+                              "Use a different prefix to avoid overwriting Phase 1 output "
+                              "when re-running for Phase 2B candidates.")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -348,8 +354,8 @@ def main() -> int:
         logger.info("Dry run: not writing dataset files")
         return 0
 
-    csv_path = PROJECT_ROOT / "data" / "processed" / "initial_relax_parsed_v0.1.csv"
-    json_path = PROJECT_ROOT / "data" / "processed" / "initial_relax_parsed_v0.1.json"
+    csv_path = PROJECT_ROOT / "data" / "processed" / f"{args.output_prefix}.csv"
+    json_path = PROJECT_ROOT / "data" / "processed" / f"{args.output_prefix}.json"
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
     with csv_path.open("w", newline="", encoding="utf-8") as f:

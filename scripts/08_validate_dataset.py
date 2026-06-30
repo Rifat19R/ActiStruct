@@ -183,9 +183,15 @@ def classify(record: dict, issues: list[str]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--input", default="data/processed/initial_relax_parsed_v0.1.json",
+                         help="Parsed JSON input (default: data/processed/initial_relax_parsed_v0.1.json). "
+                              "Pass a different path to validate a separate batch without overwriting "
+                              "Phase 1 output (e.g. data/processed/candidates_relax_parsed_v0.1.json).")
+    parser.add_argument("--output", default="data/processed/full_dataset_v0.csv",
+                         help="Validated CSV output (default: data/processed/full_dataset_v0.csv).")
     args = parser.parse_args()
 
-    parsed_path = PROJECT_ROOT / "data" / "processed" / "initial_relax_parsed_v0.1.json"
+    parsed_path = PROJECT_ROOT / args.input
     if not parsed_path.exists():
         logger.error("Parsed dataset not found at %s - run scripts/07_parse_qe_outputs.py first", parsed_path)
         return 1
@@ -238,7 +244,7 @@ def main() -> int:
 
     fieldnames = list(full_rows[0].keys())
 
-    full_path = PROJECT_ROOT / "data" / "processed" / "full_dataset_v0.csv"
+    full_path = PROJECT_ROOT / args.output
     write_csv(full_path, full_rows, fieldnames)
 
     reliable_rows = [r for r in full_rows if r["label"] == "reliable"]
@@ -247,7 +253,9 @@ def main() -> int:
     if not reliable_rows:
         logger.warning("No rows labeled 'reliable' yet - reliable_subset_v0.csv has headers only, no data rows")
 
-    report_path = PROJECT_ROOT / "reports" / "dataset_validation_report_v0.md"
+    output_stem = Path(args.output).stem  # e.g. "full_dataset_v0" or "full_dataset_candidates_v0"
+    report_name = output_stem.replace("full_dataset", "dataset_validation_report") + ".md"
+    report_path = PROJECT_ROOT / "reports" / report_name
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(build_report(full_rows, label_counts), encoding="utf-8")
     logger.info("Wrote %s", report_path)
