@@ -177,14 +177,20 @@ geometry.
 for expanding dataset diversity. They add computational cost without sampling new
 PES regions.
 
-### 7.2 Angle/distortion perturbations take harder relaxation paths
+### 7.2 In-plane angle distortions take harder relaxation paths
 
-The three angle/distortion perturbations (Ni(CO)₄ tetrahedral distortion, Cr(CO)₆
-axial distortion, Fe(CO)₅ equatorial angle distortion) required 11–38 ionic steps
-and 232–772 SCF iterations to converge — up to 5× more expensive than comparable
-stretch perturbations. Despite the higher cost, two of these three also returned
-to the same PES basin, indicating a corrugated but still funnel-like PES around
-the equilibrium geometry.
+Four angle/rotation candidates were tested across the four systems. Of these, the
+two in-plane angle distortions — Ni(CO)₄ tetrahedral distortion (38 BFGS steps,
+772 SCF iters) and Fe(CO)₅ equatorial angle distortion (35 BFGS steps, 625 SCF
+iters) — required 3–5× more steps than comparable stretch perturbations (7–15
+steps). Despite the higher cost, both returned to the same PES basin (|ΔE| < 0.1
+meV), indicating a corrugated but still funnel-like PES.
+
+By contrast, the Cr(CO)₆ axial distortion (11 BFGS steps) and ferrocene Cp ring
+rotation (15 BFGS steps) were not significantly more expensive than stretches —
+though the ring rotation found a genuinely different basin (§7.3). The "harder
+path" pattern is therefore specific to in-plane angle distortions in T_d and D₃h
+geometries, not a general property of all non-stretch perturbations.
 
 ### 7.3 Ferrocene Cp ring rotation reaches a distinct conformer
 

@@ -285,6 +285,12 @@ def write_diagnostics_report(
         a(f"| {label} | {n} | {mi_s} | {ms_s} | {md_s} | {mr_s} | {same}/{n} |")
     a("")
 
+    a("> **Note on mean |ΔE| for angle/rotation:** the 10.45 meV value is almost entirely "
+      "driven by the ferrocene Cp ring rotation (+41.68 meV, a genuine conformational "
+      "change). The other 3 angle perturbations all have |ΔE| < 0.11 meV — consistent "
+      "with stretches. Do not interpret the mean as representative of all angle "
+      "perturbations; use the per-candidate table (§3) for accurate comparison.")
+    a("")
     a("### 4b. Per-family summary")
     a("")
     a("| Family | N | Mean ionic steps | Mean SCF iters | Same-basin |")
@@ -375,13 +381,17 @@ def write_diagnostics_report(
       "variation). Stretch degrees of freedom in these rigid organometallics have no "
       "barrier — the PES is essentially monotonic back to the equilibrium bond length.")
     a("")
-    a("### 8.2 Angle/rotation perturbations: harder relaxation path")
+    a("### 8.2 In-plane angle distortions: harder relaxation path")
     a("")
     angle_hard = [m for m in angle_metrics if (m["ionic_steps"] or 0) > 15]
+    angle_hard_names = [m["candidate_id"] for m in angle_hard]
     a(f"{len(angle_hard)}/{len(angle_metrics)} angle/rotation perturbations required >15 "
-      "ionic steps to converge (vs typical 7–12 for stretches). This indicates a more "
-      "corrugated PES region — the optimizer must traverse a longer path even when the "
-      "endpoint is the same basin.")
+      f"ionic steps ({', '.join(angle_hard_names)}). "
+      "This pattern is specific to in-plane angle distortions in T_d/D3h geometries — "
+      "not a general property of all angle perturbations. "
+      "The Cp ring rotation (15 steps) and the Cr(CO)6 axial distortion (11 steps) "
+      "are not significantly more expensive than stretches, despite also being "
+      "non-stretch perturbations.")
     a("")
     a("### 8.3 Ferrocene Cp ring rotation — different conformer found")
     a("")

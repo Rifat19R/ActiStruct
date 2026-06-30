@@ -56,6 +56,8 @@
 | Stretch | 8 | 9.8 | 260.2 | 0.28 | 0.0524 | 8/8 |
 | Angle / rotation | 4 | 24.8 | 479.0 | 10.45 | 0.2497 | 3/4 |
 
+> **Note on mean |ΔE| for angle/rotation:** the 10.45 meV value is almost entirely driven by the ferrocene Cp ring rotation (+41.68 meV, a genuine conformational change). The other 3 angle perturbations all have |ΔE| < 0.11 meV — consistent with stretches. Do not interpret the mean as representative of all angle perturbations; use the per-candidate table (§3) for accurate comparison.
+
 ### 4b. Per-family summary
 
 | Family | N | Mean ionic steps | Mean SCF iters | Same-basin |
@@ -118,9 +120,9 @@ Geometric near-duplicates of parent (RMS disp < 0.05 Å): 5/12
 
 All 8/8 bond-stretch perturbations relaxed back to the parent basin (|ΔE| < 10 meV, mean RMSD consistent with small geometry variation). Stretch degrees of freedom in these rigid organometallics have no barrier — the PES is essentially monotonic back to the equilibrium bond length.
 
-### 8.2 Angle/rotation perturbations: harder relaxation path
+### 8.2 In-plane angle distortions: harder relaxation path
 
-2/4 angle/rotation perturbations required >15 ionic steps to converge (vs typical 7–12 for stretches). This indicates a more corrugated PES region — the optimizer must traverse a longer path even when the endpoint is the same basin.
+2/4 angle/rotation perturbations required >15 ionic steps (fe_co5__eq_angle_perturb_deg__-6, ni_co4__tetra_angle_perturb_deg__-6). This pattern is specific to in-plane angle distortions in T_d/D3h geometries — not a general property of all angle perturbations. The Cp ring rotation (15 steps) and the Cr(CO)6 axial distortion (11 steps) are not significantly more expensive than stretches, despite also being non-stretch perturbations.
 
 ### 8.3 Ferrocene Cp ring rotation — different conformer found
 
