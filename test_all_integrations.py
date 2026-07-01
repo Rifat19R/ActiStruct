@@ -159,17 +159,25 @@ print("\n[3] QE DFT  " + "-" * 49)
 _qe_attempt = [0]
 
 if USE_REAL_QE:
-    from ase.calculators.espresso import Espresso
+    # ASE 3.22+ requires EspressoProfile to locate pw.x and the pseudo directory.
+    # Passing only pseudopotentials/pseudo_dir kwargs is not enough — ASE won't know
+    # how to invoke pw.x without an explicit command in the profile.
+    from ase.calculators.espresso import Espresso, EspressoProfile
+
+    _qe_profile = EspressoProfile(
+        command=str(QE_BIN),
+        pseudo_dir=str(pseudo_dir),
+    )
 
     def qe_runner(input_data: dict) -> tuple:
         _qe_attempt[0] += 1
         calc_dir = WORKDIR / f"qe_attempt{_qe_attempt[0]}"
         calc_dir.mkdir(exist_ok=True)
         calc = Espresso(
+            profile=_qe_profile,
             input_data=input_data,
             pseudopotentials={"Al": al_pseudo},
             kpts=(4, 4, 4),
-            pseudo_dir=str(pseudo_dir),
             directory=str(calc_dir),
         )
         atoms_run = build_al(4.05)
@@ -183,9 +191,8 @@ if USE_REAL_QE:
             return None, text
 
 else:
-    def qe_runner(input_data: dict) -> tuple:
+    def qe_runner(_input_data: dict) -> tuple:
         _qe_attempt[0] += 1
-        # Realistic mock: same energy formula, simulates a QE timing delay
         time.sleep(0.1)
         return _bm_energy(4.05), "JOB DONE."
 
