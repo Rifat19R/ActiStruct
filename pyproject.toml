@@ -44,7 +44,17 @@ Issues = "https://github.com/Rifat19R/ActiStruct/issues"
 
 [tool.setuptools]
 py-modules = ["qe_active_inverse_common"]
-packages = ["actistruct", "actistruct.acquisition", "actistruct.datasets", "actistruct.parsers", "generated_models"]
+packages = [
+  "actistruct",
+  "actistruct.acquisition",
+  "actistruct.datasets",
+  "actistruct.parsers",
+  "actistruct.core",
+  "actistruct.debug",
+  "actistruct.gnn",
+  "actistruct.dashboard",
+  "generated_models",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

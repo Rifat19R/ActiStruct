@@ -1,0 +1,255 @@
+"""Phase 2 — GNN encoder and hybrid GP surrogate tests.
+
+Test 1: GEOMETRY SENSITIVITY (the test that validates the fix)
+    Two CaAlN2-like structures with identical composition but different bond
+    lengths must produce embeddings that differ. A mean-pool-of-atom-numbers
+    stub would fail this test — the RBF + message-passing must pass it.
+
+Test 2: PERMUTATION ROBUSTNESS
+    Same structure with atom order shuffled → embedding must be near-identical.
+    Message passing is inherently permutation-invariant; this catches accidental
+    order-dependence.
+
+Test 3: MULTI-FIDELITY CONFIG SWITCH
+    LF and HF fidelity must produce different ecutwfc/kpts values.
+
+Test 4: OVERFIT SANITY CHECK (replaces the old "returns a finite number" bar)
+    Fit the full pipeline on 5-10 synthetic (structure, energy) pairs.
+    Training loss must decrease over epochs.
+    Predictions on training data must correlate with targets (R² > 0.8).
+    This proves gradients are flowing through the encoder into something
+    meaningful, not just that the code runs without crashing.
+"""
+from __future__ import annotations
+
+import math
+
+import numpy as np
+import pytest
+import torch
+from ase import Atoms
+
+from actistruct.gnn.config import GNNConfig, MultiFidelityConfig
+from actistruct.gnn.encoder import SchNetEncoder
+from actistruct.gnn.surrogate import HybridGPSurrogate
+
+
+# ── helper: build synthetic CaAlN2-like structures ───────────────────────────
+
+def _make_hexagonal_nitride(a: float, c: float) -> Atoms:
+    """Minimal hexagonal Ca-Al-N2 unit (4 atoms, P6_3mc-like arrangement).
+
+    This is a synthetic structure for testing geometry sensitivity — it is not
+    the true relaxed CaAlN2 geometry. Real calculations should use a properly
+    built structure from ase.build or a CIF file.
+    """
+    positions = np.array([
+        [0.0,      0.0,      0.0  ],   # Ca
+        [a / 2.0,  a / 2.0,  c / 2.0],  # Al
+        [0.0,      0.0,      c * 0.375],  # N
+        [a / 2.0,  a / 2.0,  c * 0.875],  # N
+    ])
+    cell = [
+        [a,   0.0, 0.0],
+        [0.0,  a,  0.0],
+        [0.0, 0.0,  c ],
+    ]
+    return Atoms(
+        symbols=["Ca", "Al", "N", "N"],
+        positions=positions,
+        cell=cell,
+        pbc=True,
+    )
+
+
+def _make_config(small: bool = True) -> GNNConfig:
+    """Return a tiny config for fast tests (not production accuracy)."""
+    return GNNConfig(
+        embedding_dim=16,
+        num_interactions=2,
+        n_gaussians=10,
+        cutoff=5.0,
+        max_epochs=50,
+        patience=10,
+        lr=1e-3,
+        random_state=42,
+    )
+
+
+# ── Test 1: Geometry sensitivity ──────────────────────────────────────────────
+
+class TestGeometrySensitivity:
+    """The embedding must change when bond lengths change."""
+
+    def test_different_bond_lengths_different_embeddings(self):
+        config  = _make_config()
+        encoder = SchNetEncoder(config)
+        encoder.eval()
+
+        # Two CaAlN2-like structures: same composition, very different lattice params.
+        s1 = _make_hexagonal_nitride(a=3.15, c=5.00)   # near-equilibrium
+        s2 = _make_hexagonal_nitride(a=3.80, c=6.20)   # stretched lattice
+
+        emb1 = encoder.embed(s1)
+        emb2 = encoder.embed(s2)
+
+        diff = float(np.linalg.norm(emb1 - emb2))
+        assert diff > 1e-3, (
+            f"Geometry sensitivity test FAILED: embeddings differ by only {diff:.2e}. "
+            "The encoder is not sensitive to bond lengths. "
+            "Check that neighbor-list distances are being used in message passing."
+        )
+
+    def test_same_structure_same_embedding(self):
+        """Sanity: identical structures must produce identical embeddings."""
+        config  = _make_config()
+        encoder = SchNetEncoder(config)
+        encoder.eval()
+
+        s = _make_hexagonal_nitride(a=3.15, c=5.00)
+        emb1 = encoder.embed(s)
+        emb2 = encoder.embed(s)
+
+        diff = float(np.linalg.norm(emb1 - emb2))
+        assert diff < 1e-8, f"Same structure gave different embeddings (diff={diff:.2e})."
+
+
+# ── Test 2: Permutation robustness ───────────────────────────────────────────
+
+class TestPermutationRobustness:
+
+    def test_shuffled_atom_order_same_embedding(self):
+        config  = _make_config()
+        encoder = SchNetEncoder(config)
+        encoder.eval()
+
+        s = _make_hexagonal_nitride(a=3.15, c=5.00)
+
+        # Shuffle atom indices (Ca, Al, N, N → N, Ca, N, Al or similar).
+        perm = [2, 0, 3, 1]
+        s_shuffled = Atoms(
+            symbols=[s.symbols[i] for i in perm],
+            positions=s.positions[perm],
+            cell=s.cell,
+            pbc=True,
+        )
+
+        emb_orig    = encoder.embed(s)
+        emb_shuffle = encoder.embed(s_shuffled)
+
+        diff = float(np.linalg.norm(emb_orig - emb_shuffle))
+        assert diff < 1e-3, (
+            f"Permutation robustness FAILED: shuffling atoms changed embedding by {diff:.2e}. "
+            "Mean-pool should be permutation-invariant."
+        )
+
+
+# ── Test 3: Multi-fidelity config switch ─────────────────────────────────────
+
+class TestMultiFidelityConfig:
+
+    def test_lf_and_hf_have_different_ecutwfc(self):
+        mf = MultiFidelityConfig()
+        lf = mf.qe_params("low")
+        hf = mf.qe_params("high")
+        assert lf["ecutwfc"] != hf["ecutwfc"], "LF and HF should have different ecutwfc"
+        assert lf["ecutwfc"] == pytest.approx(30.0)
+        assert hf["ecutwfc"] == pytest.approx(60.0)
+
+    def test_lf_and_hf_have_different_kpts(self):
+        mf = MultiFidelityConfig()
+        assert mf.qe_params("low")["kpts"]  == (2, 2, 2)
+        assert mf.qe_params("high")["kpts"] == (6, 6, 6)
+
+    def test_invalid_fidelity_raises(self):
+        mf = MultiFidelityConfig()
+        with pytest.raises(ValueError, match="fidelity"):
+            mf.qe_params("medium")
+
+
+# ── Test 4: Overfit sanity check ──────────────────────────────────────────────
+
+class TestOverfitSanityCheck:
+    """Full pipeline on small synthetic data — training loss must decrease
+    and predictions on training set must correlate with targets (R² > 0.8)."""
+
+    def _make_dataset(self, n: int = 8):
+        """Generate n synthetic (atoms, energy) pairs with varied lattice params."""
+        rng = np.random.default_rng(0)
+        structures, energies = [], []
+        a_vals = np.linspace(3.0, 3.8, n)
+        for a in a_vals:
+            c = a * 1.6 + rng.uniform(-0.05, 0.05)
+            s = _make_hexagonal_nitride(a=a, c=c)
+            structures.append(s)
+            # Synthetic energy: rough Birch-Murnaghan-like trend per atom.
+            energies.append(-134.0 + 50.0 * (a - 3.2) ** 2)
+        return structures, energies
+
+    def test_training_loss_decreases(self):
+        config    = _make_config()
+        surrogate = HybridGPSurrogate(config)
+        structs, energies = self._make_dataset(n=8)
+
+        history = surrogate.pretrain(structs, energies)
+
+        assert len(history["train_loss"]) >= 2, "No epochs recorded in history."
+        first_loss = history["train_loss"][0]
+        last_loss  = history["train_loss"][-1]
+        assert last_loss < first_loss, (
+            f"Training loss did not decrease: {first_loss:.6f} → {last_loss:.6f}. "
+            "Gradients may not be flowing through the encoder."
+        )
+
+    def test_gp_predictions_correlate_with_targets(self):
+        """After pretraining + GP fit, predictions on training data must have R² > 0.8."""
+        config    = _make_config()
+        surrogate = HybridGPSurrogate(config)
+
+        structs, energies = self._make_dataset(n=8)
+
+        # Pretrain on all data (small dataset — intentional overfit test).
+        surrogate.pretrain(structs, energies)
+
+        # Need at least 2 HF points for GP. Use the same data for this test.
+        surrogate.fit(structs, energies)
+
+        means, _ = surrogate.predict_batch(structs)
+        targets  = np.array([e / len(s) for e, s in zip(energies, structs)])
+
+        ss_res = float(np.sum((means - targets) ** 2))
+        ss_tot = float(np.sum((targets - targets.mean()) ** 2))
+        r2     = 1.0 - ss_res / ss_tot if ss_tot > 0 else 1.0
+
+        assert r2 > 0.8, (
+            f"GP R² on training data is {r2:.3f} (< 0.8). "
+            "The surrogate is not fitting the training data — "
+            "check that the encoder produces informative embeddings."
+        )
+
+    def test_encoder_frozen_after_pretrain(self):
+        """After pretrain(), no encoder parameter should require grad."""
+        config    = _make_config()
+        surrogate = HybridGPSurrogate(config)
+        structs, energies = self._make_dataset(n=6)
+        surrogate.pretrain(structs, energies)
+
+        for name, param in surrogate.encoder.named_parameters():
+            assert not param.requires_grad, (
+                f"Parameter {name} still requires grad after pretrain() freeze. "
+                "The GP fit step must not backprop into the encoder."
+            )
+
+    def test_predict_returns_finite_values(self):
+        config    = _make_config()
+        surrogate = HybridGPSurrogate(config)
+        structs, energies = self._make_dataset(n=6)
+        surrogate.pretrain(structs, energies)
+        surrogate.fit(structs, energies)
+
+        s_test = _make_hexagonal_nitride(a=3.3, c=5.3)
+        mean, std = surrogate.predict(s_test)
+
+        assert math.isfinite(mean), f"Predicted mean is not finite: {mean}"
+        assert math.isfinite(std),  f"Predicted std is not finite: {std}"
+        assert std >= 0.0,          f"Predicted std is negative: {std}"
