@@ -3,9 +3,10 @@
 Architecture (honest naming — see blueprint §2.3)
 -------------------------------------------------
 This is FROZEN-EMBEDDING TRANSFER LEARNING, not Kennedy-O'Hagan co-kriging:
-  Step 1: Pretrain SchNetEncoder on LF (cheap) energy data.
+  Step 1: Pretrain SchNetEncoder + a small energy head (Linear→SiLU→Linear→scalar)
+          on LF (cheap) energy data.
           Loss: MSE of predicted vs true energy-per-atom.
-          Optimizer: Adam, lr from GNNConfig.
+          Optimizer: Adam over encoder + energy_head params, lr from GNNConfig.
           Early stopping: patience epochs on held-out val set.
   Step 2: FREEZE encoder weights (requires_grad_(False)) — this is explicit
           and intentional. The GP fit step must NOT silently backprop into
@@ -54,6 +55,12 @@ class HybridGPSurrogate:
     def __init__(self, config: GNNConfig | None = None) -> None:
         self.config = config or GNNConfig()
         self.encoder = SchNetEncoder(self.config)
+        D = self.config.embedding_dim
+        self._energy_head = nn.Sequential(
+            nn.Linear(D, D // 2),
+            nn.SiLU(),
+            nn.Linear(D // 2, 1),
+        )
         self._gp: GaussianProcessRegressor | None = None
         self._is_pretrained = False
         self._is_fitted = False
@@ -100,8 +107,11 @@ class HybridGPSurrogate:
         val_structs   = [lf_structures[i] for i in sorted(val_idx)]
         val_targets   = torch.tensor(energies_per_atom[sorted(val_idx)])
 
-        optimizer = torch.optim.Adam(self.encoder.parameters(), lr=self.config.lr)
-        loss_fn   = nn.MSELoss()
+        optimizer = torch.optim.Adam(
+            list(self.encoder.parameters()) + list(self._energy_head.parameters()),
+            lr=self.config.lr,
+        )
+        loss_fn = nn.MSELoss()
 
         history: dict[str, list[float]] = {"train_loss": [], "val_loss": []}
         best_val  = float("inf")
@@ -113,8 +123,7 @@ class HybridGPSurrogate:
             train_loss = 0.0
             for atoms, target in zip(train_structs, train_targets):
                 optimizer.zero_grad()
-                pred  = self.encoder(atoms).mean()   # scalar: mean of embedding → crude energy proxy during pretraining
-                # Use a dedicated output head for energy prediction.
+                pred  = self._energy_head(self.encoder(atoms)).squeeze()
                 loss  = loss_fn(pred, target)
                 loss.backward()
                 optimizer.step()
@@ -123,13 +132,15 @@ class HybridGPSurrogate:
 
             # Validation pass (no grad).
             self.encoder.eval()
+            self._energy_head.eval()
             val_loss = 0.0
             with torch.no_grad():
                 for atoms, target in zip(val_structs, val_targets):
-                    pred     = self.encoder(atoms).mean()
+                    pred     = self._energy_head(self.encoder(atoms)).squeeze()
                     val_loss += loss_fn(pred, target).item()
             val_loss /= len(val_structs)
             self.encoder.train()
+            self._energy_head.train()
 
             history["train_loss"].append(train_loss)
             history["val_loss"].append(val_loss)
@@ -149,8 +160,10 @@ class HybridGPSurrogate:
         # Rationale: the "cheap LF pretraining, expensive HF fine-tuning"
         # claim is only scientifically honest if we do not let the GP fit
         # step silently propagate gradients back into the encoder.
+        # Note: energy_head is NOT frozen — it is simply unused after pretraining.
         self.encoder.requires_grad_(False)
         self.encoder.eval()
+        self._energy_head.eval()
         self._is_pretrained = True
 
         print(f"[GNN] Pretraining done. Final train_loss={history['train_loss'][-1]:.6f}, "
