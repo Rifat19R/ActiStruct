@@ -1,0 +1,233 @@
+{
+  "al_demo_version": "0.1.0",
+  "feature_set": "combined",
+  "disclaimer": "Retrospective demonstration with 12 training points. No predictive or statistical conclusions should be drawn. AL benefit requires >= 30-50 validated calculations per system.",
+  "comparison": {
+    "al_steps": [
+      {
+        "step": 1,
+        "selected_id": "cr_co6__co_dist__-0.04",
+        "y_true": 0.4012,
+        "predicted_value": 0.0,
+        "uncertainty_at_selection": 1.0,
+        "pool_mean_uncertainty": 1.0,
+        "holdout_mae": 0.317125,
+        "holdout_mean_std": 0.024950945790159728,
+        "train_n": 1
+      },
+      {
+        "step": 2,
+        "selected_id": "fe_co5__axial_fe_c__-0.06",
+        "y_true": -0.6683,
+        "predicted_value": 0.4012,
+        "uncertainty_at_selection": 0.031780497164141414,
+        "pool_mean_uncertainty": 0.027881198014212953,
+        "holdout_mae": 0.23794220020545515,
+        "holdout_mean_std": 0.5153833481430873,
+        "train_n": 2
+      },
+      {
+        "step": 3,
+        "selected_id": "fe_co5__eq_angle_perturb_deg__-6",
+        "y_true": 0.0286,
+        "predicted_value": -0.13355,
+        "uncertainty_at_selection": 0.5347499987361938,
+        "pool_mean_uncertainty": 0.4851194095436265,
+        "holdout_mae": 0.16357576017382897,
+        "holdout_mean_std": 0.4432619779244865,
+        "train_n": 3
+      },
+      {
+        "step": 4,
+        "selected_id": "ferrocene__cc_bond__-0.03",
+        "y_true": 0.2376,
+        "predicted_value": -0.0795,
+        "uncertainty_at_selection": 0.4432619749479298,
+        "pool_mean_uncertainty": 0.4432486080043909,
+        "holdout_mae": 0.08426587997072577,
+        "holdout_mean_std": 0.4076943585762609,
+        "train_n": 4
+      },
+      {
+        "step": 5,
+        "selected_id": "ferrocene__ring2_rotation_deg__+36",
+        "y_true": 41.6781,
+        "predicted_value": -0.00022499999999999604,
+        "uncertainty_at_selection": 0.4076952987724746,
+        "pool_mean_uncertainty": 0.4076952984899496,
+        "holdout_mae": 2.1789660985696306,
+        "holdout_mean_std": 5.23077338999671,
+        "train_n": 5
+      },
+      {
+        "step": 6,
+        "selected_id": "ni_co4__mc_dist__+0.06",
+        "y_true": 0.2563,
+        "predicted_value": 8.33544,
+        "uncertainty_at_selection": 17.16364640599558,
+        "pool_mean_uncertainty": 11.869468524642338,
+        "holdout_mae": 0.22665855805371304,
+        "holdout_mean_std": 0.8750290340722262,
+        "train_n": 6
+      },
+      {
+        "step": 7,
+        "selected_id": "ni_co4__tetra_angle_perturb_deg__-6",
+        "y_true": -0.1008,
+        "predicted_value": 1.0279593340281519,
+        "uncertainty_at_selection": 7.3952112680698106,
+        "pool_mean_uncertainty": 4.05474789221664,
+        "holdout_mae": 0.2603736010553528,
+        "holdout_mean_std": 0.666284316321682,
+        "train_n": 7
+      },
+      {
+        "step": 8,
+        "selected_id": "cr_co6__mc_dist__+0.06",
+        "y_true": 0.3054,
+        "predicted_value": 0.4041116992362106,
+        "uncertainty_at_selection": 0.5004784476577776,
+        "pool_mean_uncertainty": 0.5004784476577776,
+        "holdout_mae": 0.24752783383750443,
+        "holdout_mean_std": 0.5260151623483094,
+        "train_n": 8
+      }
+    ],
+    "al_holdout_mae": [
+      0.317125,
+      0.23794220020545515,
+      0.16357576017382897,
+      0.08426587997072577,
+      2.1789660985696306,
+      0.22665855805371304,
+      0.2603736010553528,
+      0.24752783383750443
+    ],
+    "random_mean_mae": [
+      5.1953179999999985,
+      3.7441943449629402,
+      4.897216574563488,
+      4.886489056683946,
+      4.054694464996406,
+      2.4204927783869525,
+      0.8384104655019329,
+      0.24752783383751653
+    ],
+    "random_std_mae": [
+      13.441432718784146,
+      7.53621681472679,
+      6.623992199183908,
+      5.212600886161902,
+      4.198628040253522,
+      4.065465646649881,
+      2.48885464662081,
+      8.41174012507902e-15
+    ],
+    "n_random_trials": 50,
+    "holdout_ids": [
+      "ferrocene__fe_cp_dist__-0.05",
+      "ni_co4__co_dist__-0.04",
+      "cr_co6__axial_stretch__-0.05",
+      "fe_co5__eq_fe_c__+0.06"
+    ]
+  },
+  "convergence_correlation": {
+    "pearson_r": 0.24366109785178885,
+    "pearson_p": 0.4453674453005614,
+    "spearman_r": 0.021015794050150385,
+    "spearman_p": 0.948311888497252,
+    "per_candidate": [
+      {
+        "system_id": "cr_co6__axial_stretch__-0.05",
+        "uncertainty": 0.05137741354585088,
+        "scf_iterations": 232,
+        "delta_e_meV": -0.0
+      },
+      {
+        "system_id": "cr_co6__co_dist__-0.04",
+        "uncertainty": 0.0513026093019977,
+        "scf_iterations": 188,
+        "delta_e_meV": 0.4012
+      },
+      {
+        "system_id": "cr_co6__mc_dist__+0.06",
+        "uncertainty": 0.05122348712752465,
+        "scf_iterations": 228,
+        "delta_e_meV": 0.3054
+      },
+      {
+        "system_id": "fe_co5__axial_fe_c__-0.06",
+        "uncertainty": 0.05141232557913177,
+        "scf_iterations": 232,
+        "delta_e_meV": -0.6683
+      },
+      {
+        "system_id": "fe_co5__eq_angle_perturb_deg__-6",
+        "uncertainty": 0.05129954786698739,
+        "scf_iterations": 625,
+        "delta_e_meV": 0.0286
+      },
+      {
+        "system_id": "fe_co5__eq_fe_c__+0.06",
+        "uncertainty": 0.05138224180509028,
+        "scf_iterations": 224,
+        "delta_e_meV": 0.0001
+      },
+      {
+        "system_id": "ferrocene__cc_bond__-0.03",
+        "uncertainty": 0.0513215759871292,
+        "scf_iterations": 327,
+        "delta_e_meV": 0.2376
+      },
+      {
+        "system_id": "ferrocene__fe_cp_dist__-0.05",
+        "uncertainty": 0.05132315850585504,
+        "scf_iterations": 308,
+        "delta_e_meV": 0.0
+      },
+      {
+        "system_id": "ferrocene__ring2_rotation_deg__+36",
+        "uncertainty": 0.05144044532214505,
+        "scf_iterations": 287,
+        "delta_e_meV": 41.6781
+      },
+      {
+        "system_id": "ni_co4__co_dist__-0.04",
+        "uncertainty": 0.05117340933619319,
+        "scf_iterations": 265,
+        "delta_e_meV": 0.3362
+      },
+      {
+        "system_id": "ni_co4__mc_dist__+0.06",
+        "uncertainty": 0.051173303730791375,
+        "scf_iterations": 310,
+        "delta_e_meV": 0.2563
+      },
+      {
+        "system_id": "ni_co4__tetra_angle_perturb_deg__-6",
+        "uncertainty": 0.05143969634344125,
+        "scf_iterations": 772,
+        "delta_e_meV": -0.1008
+      }
+    ]
+  },
+  "efficiency": {
+    "n_stretch": 5,
+    "n_angle_rotation": 3,
+    "stretch_ranks": [
+      1,
+      2,
+      4,
+      6,
+      8
+    ],
+    "angle_rotation_ranks": [
+      3,
+      5,
+      7
+    ],
+    "stretch_mean_rank": 4.2,
+    "angle_mean_rank": 5.0,
+    "n_total": 8
+  }
+}
