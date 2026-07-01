@@ -6,17 +6,31 @@ Verifies:
   - All 20 records survive
   - Every line is valid JSON
   - No interleaved partial writes (each line decodes cleanly)
+
+Note on start method: we use 'forkserver' on Linux and 'spawn' on Windows/macOS.
+Python 3.12+ deprecates os.fork() when the calling process is multi-threaded
+(pytest itself is multi-threaded). 'forkserver' creates a dedicated clean-state
+server process that is single-threaded and can safely fork, eliminating the
+DeprecationWarning from multiprocessing/popen_fork.py.
 """
 from __future__ import annotations
 
 import json
 import multiprocessing
+import sys
 import tempfile
 from pathlib import Path
 
 import pytest
 
 from actistruct.core.ledger import append_record, make_record, read_records
+
+# Use forkserver on Linux (avoids fork-in-multithreaded-process DeprecationWarning
+# on Python 3.12+). Fall back to spawn on Windows/macOS where forkserver is
+# unavailable.
+_MP_CTX = multiprocessing.get_context(
+    "forkserver" if sys.platform == "linux" else "spawn"
+)
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -44,7 +58,7 @@ def test_concurrent_writes_no_lost_records():
 
         args = [(str(ledger_path), worker_id) for worker_id in range(4)]
 
-        with multiprocessing.Pool(processes=4) as pool:
+        with _MP_CTX.Pool(processes=4) as pool:
             pool.map(_worker_write, args)
 
         records = read_records(ledger_path)
@@ -60,7 +74,7 @@ def test_all_lines_valid_json():
         ledger_path = Path(tmpdir) / "run_ledger.jsonl"
 
         args = [(str(ledger_path), worker_id) for worker_id in range(4)]
-        with multiprocessing.Pool(processes=4) as pool:
+        with _MP_CTX.Pool(processes=4) as pool:
             pool.map(_worker_write, args)
 
         with ledger_path.open("r", encoding="utf-8") as f:

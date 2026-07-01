@@ -186,10 +186,14 @@ class HybridGPSurrogate:
         # Extract frozen embeddings — no gradient tracking.
         X = np.stack([self.encoder.embed(s) for s in hf_structures])  # (n_hf, D)
 
+        # Bounds must cover the embedding-space length scales that arise from
+        # frozen SchNet embeddings. GNN embeddings live in a high-dimensional
+        # space (embedding_dim=64) where inter-point distances can be large;
+        # 10.0 is too tight and causes ConvergenceWarning on small datasets.
         kernel = (
             ConstantKernel(1.0, (1e-3, 1e3))
-            * RBF(length_scale=1.0, length_scale_bounds=(1e-2, 10.0))
-            + WhiteKernel(noise_level=1e-4, noise_level_bounds=(1e-8, 1e-1))
+            * RBF(length_scale=1.0, length_scale_bounds=(1e-2, 1e5))
+            + WhiteKernel(noise_level=1e-4, noise_level_bounds=(1e-10, 1.0))
         )
         self._gp = GaussianProcessRegressor(
             kernel=kernel,
