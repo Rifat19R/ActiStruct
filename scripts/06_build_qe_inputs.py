@@ -32,7 +32,7 @@ from ase.io import read
 ANGSTROM_TO_BOHR = 1.0 / 0.529177210903
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import PROJECT_ROOT, load_yaml, setup_logger  # noqa: E402
+from _common import PROJECT_ROOT, load_yaml, resolve_path, setup_logger  # noqa: E402
 
 logger = setup_logger("build_qe_inputs", "bootstrap.log")
 
@@ -118,6 +118,7 @@ def build_input_file(candidate_id: str, xyz_path: Path, qe_cfg: dict,
 def validate_generated_input(in_path: Path, pseudo_dir: Path, overlap_threshold_angstrom: float = 0.5) -> list[str]:
     """Static, pre-execution sanity check on an already-written .in file -
     catches generation bugs before any CPU time is spent on pw.x."""
+    pseudo_dir = resolve_path(str(pseudo_dir))
     text = in_path.read_text(encoding="utf-8")
     issues = []
 

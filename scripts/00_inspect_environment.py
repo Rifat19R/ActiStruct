@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import PROJECT_ROOT, load_yaml, setup_logger  # noqa: E402
+from _common import PROJECT_ROOT, load_yaml, resolve_path, setup_logger  # noqa: E402
 
 logger = setup_logger("inspect_environment", "bootstrap.log")
 
@@ -63,7 +63,7 @@ def check_pwx(qe_cfg: dict) -> dict:
 
 
 def check_pseudo_dir(pseudo_dir: str, required_elements: list[str]) -> dict:
-    pdir = Path(pseudo_dir)
+    pdir = resolve_path(pseudo_dir)
     result = {"pseudo_dir": pseudo_dir, "exists": pdir.exists(), "elements_found": {}}
     if not pdir.exists():
         return result
