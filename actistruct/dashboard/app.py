@@ -206,11 +206,11 @@ with tab_3d:
 
     sample_xyz = """\
 4
-CaAlN2 synthetic test structure
-Ca   0.000000   0.000000   0.000000
-Al   1.575000   1.575000   2.500000
-N    0.000000   0.000000   1.875000
-N    1.575000   1.575000   4.375000"""
+Generic 4-atom test structure (replace with your system)
+Fe   0.000000   0.000000   0.000000
+Fe   1.435000   1.435000   1.435000
+Fe   2.870000   0.000000   0.000000
+Fe   0.000000   2.870000   2.870000"""
 
     xyz_input = st.text_area(
         "XYZ structure (paste here)",

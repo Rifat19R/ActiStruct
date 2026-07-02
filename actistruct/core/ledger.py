@@ -123,7 +123,7 @@ def make_record(
     Schema
     ------
     timestamp       ISO 8601 UTC
-    system          e.g. "CaAlN2"
+    system          e.g. "Ti3C2_O"
     candidate_id    UUID string
     fidelity        "low" | "high"
     params          {"ecutwfc": 30.0, "kpts": [2,2,2], ...}

@@ -40,7 +40,7 @@ def _worker_write(args: tuple) -> None:
     ledger_path, worker_id = args
     for i in range(5):
         rec = make_record(
-            system="CaAlN2",
+            system="test_material",
             fidelity="low",
             params={"worker": worker_id, "record": i, "ecutwfc": 30.0},
             energy=-(worker_id * 10 + i) * 1.23,
@@ -94,7 +94,7 @@ def test_record_schema_fields_present():
     with tempfile.TemporaryDirectory() as tmpdir:
         ledger_path = Path(tmpdir) / "run_ledger.jsonl"
         rec = make_record(
-            system="CaAlN2",
+            system="test_material",
             fidelity="high",
             params={"ecutwfc": 60.0, "kpts": [6, 6, 6]},
             energy=-134.5,
@@ -114,7 +114,7 @@ def test_record_schema_fields_present():
         }
         missing = required - set(r.keys())
         assert not missing, f"Missing ledger fields: {missing}"
-        assert r["system"] == "CaAlN2"
+        assert r["system"] == "test_material"
         assert r["fidelity"] == "high"
         assert r["converged"] is True
         assert r["energy"] == pytest.approx(-134.5)
@@ -131,7 +131,7 @@ def test_failed_record_schema():
     with tempfile.TemporaryDirectory() as tmpdir:
         ledger_path = Path(tmpdir) / "run_ledger.jsonl"
         rec = make_record(
-            system="CaAlN2",
+            system="test_material",
             fidelity="low",
             params={"ecutwfc": 30.0},
             energy=None,

@@ -39,7 +39,7 @@ def _write_ledger(path: Path, records: list[dict]) -> None:
 
 
 def _make_record(
-    system: str = "CaAlN2",
+    system: str = "test_material",
     fidelity: str = "high",
     energy: float | None = -134.5,
     converged: bool = True,

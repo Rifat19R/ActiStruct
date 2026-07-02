@@ -188,7 +188,7 @@ class TestRunDftWithRecovery:
                 "electrons": {"conv_thr": 5e-9, "electron_maxstep": 200, "mixing_beta": 0.7},
             }
             energy, failure, actions = run_dft_with_recovery(
-                runner, base, system_name="CaAlN2", fidelity="high",
+                runner, base, system_name="test_material", fidelity="high",
                 params={"a": 3.15}, ledger_path=ledger, retry_wait_s=0,
             )
             assert energy == pytest.approx(-134.5)
@@ -211,7 +211,7 @@ class TestRunDftWithRecovery:
             ledger = Path(tmpdir) / "ledger.jsonl"
             base = {"system": {}, "electrons": {}}
             energy, failure, actions = run_dft_with_recovery(
-                counting_runner, base, system_name="CaAlN2", fidelity="low",
+                counting_runner, base, system_name="test_material", fidelity="low",
                 params={"a": 3.10}, ledger_path=ledger, retry_wait_s=0,
             )
             assert energy is None
@@ -236,7 +236,7 @@ class TestRunDftWithRecovery:
                 "electrons": {"conv_thr": 5e-9, "electron_maxstep": 200, "mixing_beta": 0.7},
             }
             energy, failure, actions = run_dft_with_recovery(
-                runner_that_succeeds_second_time, base, system_name="CaAlN2",
+                runner_that_succeeds_second_time, base, system_name="test_material",
                 fidelity="high", params={"a": 3.15}, ledger_path=ledger, retry_wait_s=0,
             )
             assert energy == pytest.approx(-130.0)

@@ -11,8 +11,8 @@ Usage
 -----
 The hook point in qe_active_inverse_common.py is _run_one_qe() (lines 433-460).
 Rather than modifying the shared engine (which would break the 50-workflow
-benchmark suite), new CaAlN2 v2 workflows call run_dft_with_recovery() directly
-and pass their own QE runner callable.
+benchmark suite), new v2 workflows (Ti3C2-O HER, etc.) call run_dft_with_recovery()
+directly and pass their own QE runner callable.
 """
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ def run_dft_with_recovery(
         Base QE input_data dict (the same nested dict ASE's Espresso takes).
 
     system_name:
-        String identifier logged in the ledger (e.g. "CaAlN2").
+        String identifier logged in the ledger (e.g. "Ti3C2_O").
 
     fidelity:
         "low" | "high" — logged in the ledger.

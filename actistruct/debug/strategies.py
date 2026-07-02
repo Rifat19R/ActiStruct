@@ -10,11 +10,11 @@ Design decision (explicit):
   This matches how an experienced QE user escalates manually: each retry
   starts from the best-known-so-far settings, not from scratch.
 
-Physics constraints for CaAlN2 (hexagonal nitride):
-  - Ca/Al/N are closed-shell → do NOT touch nspin unless the error is
-    specifically an eigenvalue-occupation internal error.
-  - Start with gaussian smearing (appropriate for a semiconductor/electride).
-  - Escalate to methfessel-paxton with larger degauss if oscillation persists.
+General physics constraints (applicable to most systems):
+  - Do NOT touch nspin automatically; spin affects eigenvalue occupation
+    in a way that cannot be fixed by blind escalation.
+  - Start with gaussian smearing as a safe default for non-metals.
+  - Escalate to methfessel-paxton with larger degauss for metals/d-band systems.
   - Soften mixing_beta first (most common fix for charge oscillation).
   - Never touch pseudopotentials or cell volume automatically.
 """

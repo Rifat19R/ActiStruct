@@ -3,11 +3,11 @@
 Python dataclasses only (no YAML) — consistent with the existing repo convention
 of @dataclass Config in each workflow script.
 
-Physics notes for CaAlN2 (hexagonal nitride):
+Default fidelity parameters (system-agnostic):
   - LF: 30 Ry / 300 Ry / [2,2,2] — trend-capturing only, cheap screening.
   - HF: 60 Ry / 600 Ry / [6,6,6] — converged energetics, production accuracy.
-  - cutoff=6.0 Å covers Ca–Al (~3.2 Å), Ca–N (~2.5 Å), and second-shell Ca–Ca.
-  - n_gaussians=50 gives sufficient RBF resolution for the 0–6 Å distance range.
+  - cutoff=6.0 A covers first and second shells for most transition metal oxides.
+  - n_gaussians=50 gives sufficient RBF resolution for the 0-6 A distance range.
 """
 from __future__ import annotations
 

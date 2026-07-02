@@ -1,12 +1,12 @@
-"""Phase 2 — GNN encoder and hybrid GP surrogate tests.
+"""Phase 2 -- GNN encoder and hybrid GP surrogate tests.
 
 Test 1: GEOMETRY SENSITIVITY (the test that validates the fix)
-    Two CaAlN2-like structures with identical composition but different bond
+    Two synthetic slabs with identical composition but different bond
     lengths must produce embeddings that differ. A mean-pool-of-atom-numbers
-    stub would fail this test — the RBF + message-passing must pass it.
+    stub would fail this test -- the RBF + message-passing must pass it.
 
 Test 2: PERMUTATION ROBUSTNESS
-    Same structure with atom order shuffled → embedding must be near-identical.
+    Same structure with atom order shuffled -> embedding must be near-identical.
     Message passing is inherently permutation-invariant; this catches accidental
     order-dependence.
 
@@ -16,7 +16,7 @@ Test 3: MULTI-FIDELITY CONFIG SWITCH
 Test 4: OVERFIT SANITY CHECK (replaces the old "returns a finite number" bar)
     Fit the full pipeline on 5-10 synthetic (structure, energy) pairs.
     Training loss must decrease over epochs.
-    Predictions on training data must correlate with targets (R² > 0.8).
+    Predictions on training data must correlate with targets (R2 > 0.8).
     This proves gradients are flowing through the encoder into something
     meaningful, not just that the code runs without crashing.
 """
@@ -34,14 +34,13 @@ from actistruct.gnn.encoder import SchNetEncoder
 from actistruct.gnn.surrogate import HybridGPSurrogate
 
 
-# ── helper: build synthetic CaAlN2-like structures ───────────────────────────
+# ── helper: build generic synthetic 4-atom slab ──────────────────────────────
 
-def _make_hexagonal_nitride(a: float, c: float) -> Atoms:
-    """Minimal hexagonal Ca-Al-N2 unit (4 atoms, P6_3mc-like arrangement).
+def _make_test_slab(a: float, c: float) -> Atoms:
+    """Minimal 4-atom hexagonal unit for geometry-sensitivity tests.
 
-    This is a synthetic structure for testing geometry sensitivity — it is not
-    the true relaxed CaAlN2 geometry. Real calculations should use a properly
-    built structure from ase.build or a CIF file.
+    Composition (Ca/Al/N2) is arbitrary — only the geometry matters here.
+    Not tied to any specific material system.
     """
     positions = np.array([
         [0.0,      0.0,      0.0  ],   # Ca
@@ -86,9 +85,9 @@ class TestGeometrySensitivity:
         encoder = SchNetEncoder(config)
         encoder.eval()
 
-        # Two CaAlN2-like structures: same composition, very different lattice params.
-        s1 = _make_hexagonal_nitride(a=3.15, c=5.00)   # near-equilibrium
-        s2 = _make_hexagonal_nitride(a=3.80, c=6.20)   # stretched lattice
+        # Two synthetic slabs: same composition, very different lattice params.
+        s1 = _make_test_slab(a=3.15, c=5.00)   # near-equilibrium
+        s2 = _make_test_slab(a=3.80, c=6.20)   # stretched lattice
 
         emb1 = encoder.embed(s1)
         emb2 = encoder.embed(s2)
@@ -106,7 +105,7 @@ class TestGeometrySensitivity:
         encoder = SchNetEncoder(config)
         encoder.eval()
 
-        s = _make_hexagonal_nitride(a=3.15, c=5.00)
+        s = _make_test_slab(a=3.15, c=5.00)
         emb1 = encoder.embed(s)
         emb2 = encoder.embed(s)
 
@@ -123,7 +122,7 @@ class TestPermutationRobustness:
         encoder = SchNetEncoder(config)
         encoder.eval()
 
-        s = _make_hexagonal_nitride(a=3.15, c=5.00)
+        s = _make_test_slab(a=3.15, c=5.00)
 
         # Shuffle atom indices (Ca, Al, N, N → N, Ca, N, Al or similar).
         perm = [2, 0, 3, 1]
@@ -180,7 +179,7 @@ class TestOverfitSanityCheck:
         a_vals = np.linspace(3.0, 3.8, n)
         for a in a_vals:
             c = a * 1.6 + rng.uniform(-0.05, 0.05)
-            s = _make_hexagonal_nitride(a=a, c=c)
+            s = _make_test_slab(a=a, c=c)
             structures.append(s)
             # Synthetic energy: rough Birch-Murnaghan-like trend per atom.
             energies.append(-134.0 + 50.0 * (a - 3.2) ** 2)
@@ -247,7 +246,7 @@ class TestOverfitSanityCheck:
         surrogate.pretrain(structs, energies)
         surrogate.fit(structs, energies)
 
-        s_test = _make_hexagonal_nitride(a=3.3, c=5.3)
+        s_test = _make_test_slab(a=3.3, c=5.3)
         mean, std = surrogate.predict(s_test)
 
         assert math.isfinite(mean), f"Predicted mean is not finite: {mean}"
