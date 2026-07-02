@@ -60,7 +60,12 @@ class TroubleshootingStrategy:
         #          M-P requires larger degauss than gaussian for metals)
         [("system",    "smearing",    "methfessel-paxton"),
          ("system",    "degauss",     0.03)],
-        # Group 4: more SCF iterations as final resort before human review
+        # Group 4: more SCF iterations as final resort before human review.
+        # Value is 300, NOT the 40 mentioned in an early blueprint draft.
+        # Reason: 40 < QE's default of 100, so it would make convergence
+        # HARDER, not easier. 300 gives a generous ceiling without reaching
+        # the point of pathological oscillation where human review is safer
+        # than running longer. Changing to 40 would be a regression.
         [("electrons", "electron_maxstep", 300)],
     ]
 

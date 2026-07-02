@@ -9,8 +9,6 @@ from ase import Atoms
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from pathlib import Path
-
 from qe_active_inverse_common import ActiveSystem, Variable, run_system
 
 
@@ -74,10 +72,16 @@ SYSTEM = ActiveSystem(
         Variable("a", 4.55, 4.75, (4.58, _CIF_A, 4.72)),
     ),
     pseudopotentials={
-        'Li': 'li_pbe_v1.4.uspp.F.UPF',
-        'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF',
-        'P': 'P.pbe-n-rrkjus_psl.1.0.0.UPF',
-        'O': 'O.pbe-n-kjpaw_psl.0.1.UPF',
+        'Li': 'li_pbe_v1.4.uspp.F.UPF',        # USPP (SSSP 1.3.0)
+        'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF', # PAW  (SSSP 1.3.0)
+        'P':  'P.pbe-n-rrkjus_psl.1.0.0.UPF',   # USPP (SSSP 1.3.0)
+        'O':  'O.pbe-n-kjpaw_psl.0.1.UPF',      # PAW  (SSSP 1.3.0)
+        # WARNING: Li+P are USPP; Fe+O are PAW. This is a MIXED pseudopotential
+        # calculation (2 USPP + 2 PAW). QE may reject it with an immediate
+        # status-1 exit ("You have mixed US and PAW; this is not yet
+        # implemented") depending on the QE version. Do NOT enable
+        # use_recovery here until this has been verified to run at all.
+        # If mixed types fail, replace with a fully-PAW or fully-USPP set.
     },
     ecutwfc=70.0,
     ecutrho=560.0,
@@ -92,8 +96,11 @@ SYSTEM = ActiveSystem(
     random_state=135,
     category='Battery materials',
     notes="CIF-derived Li4Fe4P4O16 orthorhombic cell; fractional coordinates fixed while a scales b and c.",
-    use_recovery=True,
-    recovery_ledger_path=Path("/home/alchemist/actistruct_data/LiFePO4/recovery.jsonl"),
+    # use_recovery intentionally disabled: SSSP pseudos are mixed PAW+USPP
+    # (Li/P=USPP, Fe/O=PAW). QE may crash immediately on this mismatch,
+    # which is not a failure mode the escalation strategy can fix.
+    # Re-enable only after confirming all-PAW or all-USPP replacement set.
+    use_recovery=False,
 )
 
 
