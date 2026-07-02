@@ -121,7 +121,7 @@ def run_dft_with_recovery(
         last_failure = failure_type
         print(
             f"  [recovery] attempt {attempt}/{max_attempts} "
-            f"→ {failure_type} | actions so far: {strategy.actions_applied}"
+            f"-> {failure_type} | actions so far: {strategy.actions_applied}"
         )
 
         # GEOMETRY_CRASH cannot be fixed with electronic parameter changes.
