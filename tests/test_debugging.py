@@ -119,18 +119,26 @@ class TestTroubleshootingStrategy:
         assert merged["electrons"]["mixing_beta"] == pytest.approx(0.3)
 
     def test_actions_are_cumulative_by_attempt_3(self):
-        """Attempt 3 must contain BOTH attempt 1's and attempt 2's changes."""
+        """Group 3 must contain group 1 + 2's changes, plus its own.
+
+        Group 1: mixing_beta=0.3
+        Group 2: smearing=gaussian, degauss=0.02  (applied together)
+        Group 3: smearing=methfessel-paxton, degauss=0.03  (applied together)
+        After group 3: mixing_beta=0.3 still present AND degauss=0.03 (not 0.02).
+        """
         s = TroubleshootingStrategy(self._base())
-        s.next_input()   # step 1: mixing_beta=0.3
-        s.next_input()   # step 2: smearing=gaussian
-        merged = s.next_input()  # step 3: degauss=0.02
+        s.next_input()   # group 1: mixing_beta=0.3
+        s.next_input()   # group 2: smearing=gaussian, degauss=0.02
+        merged = s.next_input()  # group 3: smearing=methfessel-paxton, degauss=0.03
 
         assert merged is not None
-        # mixing_beta from step 1 must still be present
+        # mixing_beta from group 1 must still be present (cumulative)
         assert merged["electrons"]["mixing_beta"] == pytest.approx(0.3), \
-            "Step 1 change (mixing_beta) was lost by step 3 — actions are not cumulative!"
-        # degauss from step 3 must be present
-        assert merged["system"]["degauss"] == pytest.approx(0.02)
+            "Group 1 change (mixing_beta) was lost by group 3 — actions are not cumulative!"
+        # group 3 switches smearing AND updates degauss together
+        assert merged["system"]["smearing"] == "methfessel-paxton"
+        assert merged["system"]["degauss"] == pytest.approx(0.03), \
+            "Group 3 must set degauss=0.03 alongside methfessel-paxton (they are coupled)."
 
     def test_base_dict_not_mutated(self):
         base = self._base()
@@ -149,10 +157,11 @@ class TestTroubleshootingStrategy:
         assert len(none_results) >= 5, "Strategy did not stop returning None after exhaustion."
 
     def test_actions_applied_list_grows(self):
+        """Group 1 = 1 action, group 2 = 2 actions (smearing + degauss together)."""
         s = TroubleshootingStrategy(self._base())
-        s.next_input()
-        s.next_input()
-        assert len(s.actions_applied) == 2
+        s.next_input()   # group 1: 1 action  → len 1
+        s.next_input()   # group 2: 2 actions  → len 3
+        assert len(s.actions_applied) == 3
 
     def test_exhausted_flag(self):
         s = TroubleshootingStrategy(self._base())

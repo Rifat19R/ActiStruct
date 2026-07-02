@@ -1,12 +1,14 @@
 """Cumulative escalation strategy for QE SCF convergence failures.
 
 Design decision (explicit):
-  Actions are CUMULATIVE. Each retry keeps every previously applied fix and
-  adds the next one on top. A system that needs softer mixing AND larger
-  smearing to converge gets both by attempt 3, not just the smearing fix
-  in isolation. This matches how an experienced QE user would manually
-  escalate: each attempt starts from the best-known-so-far settings, not
-  from scratch.
+  Actions are applied in GROUPS, cumulatively. All parameters within a group
+  change in the same retry because they are physically coupled:
+    - switching smearing method and updating degauss must happen together
+      (applying methfessel-paxton with gaussian degauss=0.02 is wrong)
+    - each group keeps every previously applied group's changes on top
+
+  This matches how an experienced QE user escalates manually: each retry
+  starts from the best-known-so-far settings, not from scratch.
 
 Physics constraints for CaAlN2 (hexagonal nitride):
   - Ca/Al/N are closed-shell → do NOT touch nspin unless the error is
@@ -22,7 +24,11 @@ from typing import Any
 
 
 class TroubleshootingStrategy:
-    """Applies cumulative escalation actions to a QE input_data dict.
+    """Applies cumulative escalation action groups to a QE input_data dict.
+
+    Each call to ``next_input()`` applies one full group and returns the
+    merged dict. Groups are cumulative: group 3 always includes all changes
+    from groups 1 and 2 as well.
 
     Parameters
     ----------
@@ -36,24 +42,26 @@ class TroubleshootingStrategy:
     while True:
         next_params = strategy.next_input()
         if next_params is None:
-            # exhausted — needs human review
-            break
-        # run QE with next_params, log actions via strategy.actions_applied
+            break  # exhausted — needs human review
+        # run QE with next_params
+        # log actions via strategy.actions_applied
     """
 
-    # Each tuple is (section, key, value) — applied cumulatively.
-    # Order matters: soften electronics first, then smearing escalation.
-    _ACTIONS: list[tuple[str, str, Any]] = [
-        # Step 1: soften mixing to calm charge-density oscillations.
-        ("electrons", "mixing_beta",      0.3),
-        # Step 2: switch to gaussian with slightly larger degauss.
-        ("system",    "smearing",         "gaussian"),
-        ("system",    "degauss",          0.02),
-        # Step 3: escalate to Methfessel-Paxton if gaussian still oscillates.
-        ("system",    "smearing",         "methfessel-paxton"),
-        ("system",    "degauss",          0.03),
-        # Step 4: give the SCF more iterations before giving up.
-        ("electrons", "electron_maxstep", 300),
+    # Each group is applied atomically in one retry.
+    # Smearing method and degauss always change together — they are
+    # physically coupled (M-P smearing needs higher degauss than gaussian).
+    _GROUPS: list[list[tuple[str, str, Any]]] = [
+        # Group 1: soften mixing to calm charge-density oscillations
+        [("electrons", "mixing_beta", 0.3)],
+        # Group 2: gaussian smearing + matched degauss (both at once)
+        [("system",    "smearing",    "gaussian"),
+         ("system",    "degauss",     0.02)],
+        # Group 3: Methfessel-Paxton + larger degauss (both at once —
+        #          M-P requires larger degauss than gaussian for metals)
+        [("system",    "smearing",    "methfessel-paxton"),
+         ("system",    "degauss",     0.03)],
+        # Group 4: more SCF iterations as final resort before human review
+        [("electrons", "electron_maxstep", 300)],
     ]
 
     def __init__(self, base_input_data: dict[str, Any]) -> None:
@@ -67,25 +75,25 @@ class TroubleshootingStrategy:
         self.actions_applied: list[str] = []
 
     def next_input(self) -> dict[str, dict[str, Any]] | None:
-        """Apply the next escalation action cumulatively and return the merged dict.
+        """Apply the next escalation group cumulatively and return the merged dict.
 
-        Returns None when all actions are exhausted — caller should log the
-        candidate as unrecoverable and move on.
+        All parameters within a group are applied in the same retry.
+        Returns None when all groups are exhausted — caller should log the
+        candidate as unrecoverable and seek human review.
         """
-        if self._step >= len(self._ACTIONS):
+        if self._step >= len(self._GROUPS):
             return None
 
-        section, key, value = self._ACTIONS[self._step]
+        group = self._GROUPS[self._step]
         self._step += 1
 
-        if section not in self._applied:
-            self._applied[section] = {}
-        self._applied[section][key] = value
+        for section, key, value in group:
+            if section not in self._applied:
+                self._applied[section] = {}
+            self._applied[section][key] = value
+            self.actions_applied.append(f"{section}.{key}={value}")
 
-        action_label = f"{section}.{key}={value}"
-        self.actions_applied.append(action_label)
-
-        # Merge base + all accumulated changes.
+        # Merge base + all accumulated group changes.
         merged: dict[str, dict[str, Any]] = {}
         for sec, inner in self._base.items():
             merged[sec] = dict(inner)
@@ -98,10 +106,10 @@ class TroubleshootingStrategy:
 
     @property
     def exhausted(self) -> bool:
-        """True when no more escalation actions remain."""
-        return self._step >= len(self._ACTIONS)
+        """True when no more escalation groups remain."""
+        return self._step >= len(self._GROUPS)
 
     @property
     def num_actions(self) -> int:
-        """Total number of available escalation steps."""
-        return len(self._ACTIONS)
+        """Number of escalation groups (= maximum retries before exhaustion)."""
+        return len(self._GROUPS)

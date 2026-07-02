@@ -35,8 +35,10 @@ PSEUDO_SEARCH = [
     Path.home() / "pseudo",
     Path("/usr/share/espresso/pseudo"),
 ]
-WORKDIR = Path(tempfile.mkdtemp(prefix="actistruct_it_"))
-LEDGER  = WORKDIR / "integration_ledger.jsonl"
+WORKDIR      = Path(tempfile.mkdtemp(prefix="actistruct_it_"))
+# Two separate ledgers: demo/debug runs must NOT pollute campaign statistics.
+DEMO_LEDGER  = WORKDIR / "debug_demo.jsonl"    # section [2] mock runs only
+MAIN_LEDGER  = WORKDIR / "campaign.jsonl"      # sections [3]+[4] real data only
 
 SEP  = "=" * 62
 DASH = "-" * 50
@@ -125,11 +127,11 @@ base_input = {
     "electrons": {"conv_thr": 1e-8, "electron_maxstep": 100, "mixing_beta": 0.7},
 }
 strat = TroubleshootingStrategy(base_input)
-for step in range(1, 5):
+for step in range(1, strat.num_actions + 1):   # show all 4 groups
     inp = strat.next_input()
     if inp is None:
         break
-    print(f"    step {step}: {strat.actions_applied}")
+    print(f"    group {step}: {strat.actions_applied}")
 
 # 2c. Recovery wrapper: mock fails twice then converges
 print("\n  Recovery wrapper demo (fail x2, then succeed):")
@@ -144,7 +146,7 @@ def _mock_failing_runner(input_data):
 e_rec, _, acts_rec = run_dft_with_recovery(
     _mock_failing_runner, base_input,
     system_name="Al", fidelity="low",
-    params={"a": 4.05, "note": "recovery_demo"}, ledger_path=LEDGER, retry_wait_s=0,
+    params={"a": 4.05, "note": "recovery_demo"}, ledger_path=DEMO_LEDGER, retry_wait_s=0,
 )
 print(f"    Result: E = {e_rec:.4f} eV after {_fail_count[0]} attempts")
 print(f"    Actions applied: {acts_rec}")
@@ -209,7 +211,7 @@ e_qe, fail_qe, acts_qe = run_dft_with_recovery(
         "electrons": {"conv_thr": 1e-8, "mixing_beta": 0.7, "electron_maxstep": 100},
     },
     system_name="Al", fidelity="high",
-    params={"a": 4.05, "ecutwfc": 30.0, "source": run_label}, ledger_path=LEDGER,
+    params={"a": 4.05, "ecutwfc": 30.0, "source": run_label}, ledger_path=MAIN_LEDGER,
     retry_wait_s=0,
 )
 dt_qe = time.time() - t0
@@ -240,9 +242,18 @@ a_hf = np.array([3.95, 4.00, 4.05, 4.10, 4.15, 4.20])
 hf_structs  = [build_al(float(a)) for a in a_hf]
 
 if e_qe is not None:
+    # Anchor synthetic HF dataset to the real QE energy at a=4.05 A.
+    # The toy model (_bm_energy) gives the correct parabolic SHAPE near the
+    # minimum but a wrong absolute value (~-57 eV vs true PAW ~-537 eV).
+    # Shift = E_real_QE - E_toy_model at the same geometry.
+    # This shift is applied uniformly to all HF points so the GP learns in
+    # the real DFT energy scale.  In a real campaign all HF points come from
+    # pw.x directly and no shift is needed.
     qe_shift    = e_qe - _bm_energy(4.05)
     hf_energies = [_bm_energy(a) + qe_shift + float(rng.normal(0, 0.005)) for a in a_hf]
-    print(f"  HF data anchored to real QE (shift = {qe_shift:+.4f} eV)")
+    print(f"  HF anchor: E_QE({4.05:.2f}A)={e_qe:.4f} eV, "
+          f"toy_model={_bm_energy(4.05):.4f} eV, shift={qe_shift:+.4f} eV")
+    print(f"  (shift applied to all 6 synthetic HF points to put GP in real DFT scale)")
 else:
     hf_energies = [_bm_energy(a) + float(rng.normal(0, 0.005)) for a in a_hf]
 
@@ -284,7 +295,7 @@ for a_t in scan_points:
     mean, std = surrogate.predict(build_al(float(a_t)))
     bar_len = max(0, int((a_t - 3.90) / (4.25 - 3.90) * 20))
     bar = "#" * bar_len + "." * (20 - bar_len)
-    print(f"    a={a_t:.3f} A  |{bar}|  E={mean:+.4f} +/- {std:.5f} eV/atom")
+    print(f"    a={a_t:.3f} A  |{bar}|  E={mean:+.4f} +/- {std:.8f} eV/atom")
 
 # Log GP predictions to ledger
 means_hf, _ = surrogate.predict_batch(hf_structs)
@@ -293,7 +304,7 @@ for a, mean_e in zip(a_hf, means_hf):
         system="Al", fidelity="high",
         params={"a": float(a), "ecutwfc": 30.0, "source": "GP"},
         energy=float(mean_e), converged=True,
-    ), ledger_path=LEDGER)
+    ), ledger_path=MAIN_LEDGER)
 
 print("  [4] GNN Surrogate  [OK]")
 
@@ -303,7 +314,7 @@ print("  [4] GNN Surrogate  [OK]")
 # =============================================================
 print("\n[5] Dashboard / Ledger Stats " + "-" * 33)
 
-df    = load_ledger(LEDGER)
+df    = load_ledger(MAIN_LEDGER)
 stats = get_summary_stats(df)
 
 print(f"  Total runs     : {stats['total_runs']}")
