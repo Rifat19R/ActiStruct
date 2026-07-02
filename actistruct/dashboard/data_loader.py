@@ -1,15 +1,23 @@
-"""Dashboard data loader — reads the Phase 0 JSONL ledger into a DataFrame.
+"""Dashboard data loader — reads Phase 0/1/2 JSONL ledgers into a DataFrame.
 
-Design decisions
-----------------
-- Reads the JSONL ledger directly via pandas.read_json(lines=True).
-- Falls back to an on-demand SQLite mirror (compile_db.py) if the caller
-  requests SQL-style filtering; the SQLite file must live under the native
-  Linux/Windows home dir, NOT under /mnt/d/ (NTFS concurrent-write hazard).
-- Checks for expected columns before using them and raises a clear, user-
-  friendly error instead of a bare KeyError on an empty or malformed ledger.
-- Returns an empty DataFrame with the correct schema columns when the ledger
-  has no records yet — the dashboard shows a friendly "no data yet" state.
+Ledger architecture (per-system, not global)
+--------------------------------------------
+Each material campaign writes its own JSONL ledger:
+  /home/alchemist/actistruct_data/<system>/recovery.jsonl   <- recovery-enabled runs
+  /home/alchemist/actistruct_data/<system>/campaign.jsonl   <- full AL campaign
+
+Use load_ledger() for a single file, load_multi_ledger() to aggregate across
+all systems under a root directory. The 'system' field in every record
+already tags which material it belongs to — the dashboard can filter by it.
+
+Other design decisions
+----------------------
+- Reads JSONL directly via pandas.read_json(lines=True).
+- Checks for required columns before using them; raises ValueError on schema
+  mismatch rather than a bare KeyError.
+- Returns an empty DataFrame (correct schema, zero rows) for missing/empty
+  ledgers — the dashboard shows a friendly "no data yet" state.
+- load_multi_ledger() skips corrupted files and adds 'source_file' provenance.
 """
 from __future__ import annotations
 
@@ -20,6 +28,11 @@ import pandas as pd
 
 from actistruct.core.ledger import DEFAULT_LEDGER_PATH
 
+# Default root for per-system ledgers on the native Linux FS.
+MULTI_LEDGER_ROOT = Path("/home/alchemist/actistruct_data")
+
+# Glob patterns searched inside MULTI_LEDGER_ROOT/<system>/.
+MULTI_LEDGER_PATTERNS = ("*/recovery.jsonl", "*/campaign.jsonl")
 
 # Minimal required columns — all written by make_record() in ledger.py.
 REQUIRED_COLUMNS = {
@@ -84,6 +97,46 @@ def load_ledger(
     return df
 
 
+def load_multi_ledger(
+    root_dir: Path | str = MULTI_LEDGER_ROOT,
+    patterns: tuple[str, ...] = MULTI_LEDGER_PATTERNS,
+) -> pd.DataFrame:
+    """Load and concatenate ledgers from all systems under root_dir.
+
+    Globs root_dir/<system>/recovery.jsonl and root_dir/<system>/campaign.jsonl.
+    Skips missing, empty, or schema-incompatible files silently.
+
+    The 'system' column already identifies the material for each record
+    (written by make_record() at run time). The added 'source_file' column
+    gives provenance for debugging.
+
+    Returns an empty DataFrame (correct schema) if no ledger files are found.
+    """
+    root = Path(root_dir)
+    frames: list[pd.DataFrame] = []
+
+    for pattern in patterns:
+        for ledger_path in sorted(root.glob(pattern)):
+            try:
+                df = load_ledger(ledger_path)
+            except ValueError:
+                continue
+            if not df.empty:
+                df = df.copy()
+                df["source_file"] = str(ledger_path)
+                frames.append(df)
+
+    if not frames:
+        empty = _EMPTY_DF.copy()
+        empty["source_file"] = pd.Series(dtype="str")
+        return empty
+
+    combined = pd.concat(frames, ignore_index=True)
+    if "timestamp" in combined.columns:
+        combined = combined.sort_values("timestamp").reset_index(drop=True)
+    return combined
+
+
 def get_summary_stats(df: pd.DataFrame) -> dict[str, Any]:
     """Compute dashboard summary statistics from a loaded ledger DataFrame."""
     if df.empty:
@@ -123,7 +176,7 @@ def atoms_to_xyz_string(atoms: Any) -> str:
     The XYZ format: first line = number of atoms, second = comment, then
     one line per atom: symbol x y z (coordinates in Angstrom).
     """
-    lines = [str(len(atoms)), f"ActiStruct structure — {atoms.get_chemical_formula()}"]
+    lines = [str(len(atoms)), f"ActiStruct structure - {atoms.get_chemical_formula()}"]
     for symbol, pos in zip(atoms.get_chemical_symbols(), atoms.get_positions()):
         lines.append(f"{symbol}  {pos[0]:.6f}  {pos[1]:.6f}  {pos[2]:.6f}")
     return "\n".join(lines)

@@ -25,6 +25,7 @@ from actistruct.dashboard.data_loader import (
     atoms_to_xyz_string,
     get_summary_stats,
     load_ledger,
+    load_multi_ledger,
 )
 
 
@@ -201,3 +202,67 @@ def test_atoms_to_xyz_string():
         symbol = parts[0]
         x, y, z = float(parts[1]), float(parts[2]), float(parts[3])
         assert symbol in {"Ca", "Al", "N"}
+
+
+# ── Test 7: load_multi_ledger ─────────────────────────────────────────────────
+
+def test_load_multi_ledger_aggregates_two_systems():
+    """load_multi_ledger must concatenate records from multiple system dirs."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        _write_ledger(
+            root / "system_a" / "recovery.jsonl",
+            [_make_record(system="system_a"), _make_record(system="system_a")],
+        )
+        _write_ledger(
+            root / "system_b" / "campaign.jsonl",
+            [_make_record(system="system_b", converged=False, failure_type="SCF_CONVERGENCE")],
+        )
+
+        df = load_multi_ledger(root)
+
+        assert len(df) == 3
+        assert set(df["system"].unique()) == {"system_a", "system_b"}
+        assert "source_file" in df.columns
+        assert df[df["system"] == "system_a"].shape[0] == 2
+        assert df[df["system"] == "system_b"].shape[0] == 1
+
+
+def test_load_multi_ledger_empty_root_returns_empty_df():
+    """load_multi_ledger on an empty or nonexistent root must not crash."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        df = load_multi_ledger(Path(tmpdir) / "nonexistent")
+        assert isinstance(df, pd.DataFrame)
+        assert df.empty
+        for col in REQUIRED_COLUMNS:
+            assert col in df.columns
+
+
+def test_load_multi_ledger_skips_corrupted_file():
+    """A corrupted ledger in one system dir must not crash the entire load."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        _write_ledger(
+            root / "good_system" / "recovery.jsonl",
+            [_make_record(system="good_system")],
+        )
+        bad_dir = root / "bad_system"
+        bad_dir.mkdir()
+        (bad_dir / "recovery.jsonl").write_text('{"broken": true\n', encoding="utf-8")
+
+        df = load_multi_ledger(root)
+
+        assert len(df) == 1
+        assert df.iloc[0]["system"] == "good_system"
+
+
+def test_load_multi_ledger_deduplicates_patterns():
+    """A file matching only one pattern should appear exactly once."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        _write_ledger(
+            root / "only_recovery" / "recovery.jsonl",
+            [_make_record(system="only_recovery")],
+        )
+        df = load_multi_ledger(root)
+        assert len(df) == 1

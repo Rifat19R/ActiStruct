@@ -28,43 +28,69 @@ from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import streamlit as st
 
 from actistruct.core.ledger import DEFAULT_LEDGER_PATH
 from actistruct.dashboard.data_loader import (
-    atoms_to_xyz_string,
+    MULTI_LEDGER_ROOT,
     get_summary_stats,
     load_ledger,
+    load_multi_ledger,
 )
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="ActiStruct v2 — Active Learning Dashboard",
-    page_icon="⚗️",
+    page_title="ActiStruct v2 -- Active Learning Dashboard",
+    page_icon=None,
     layout="wide",
 )
 
-# ── Sidebar — ledger path ─────────────────────────────────────────────────────
+# ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.title("ActiStruct v2")
-ledger_path = st.sidebar.text_input(
-    "Ledger path",
-    value=str(DEFAULT_LEDGER_PATH),
-    help="Path to the run_ledger.jsonl file produced by Phase 0/1/2.",
+
+load_mode = st.sidebar.radio(
+    "Load mode",
+    ["Single ledger", "Multi-system (all campaigns)"],
+    help=(
+        "Single ledger: point at one JSONL file.\n"
+        "Multi-system: globs actistruct_data/*/recovery.jsonl and "
+        "actistruct_data/*/campaign.jsonl — aggregates all systems."
+    ),
 )
 
-if st.sidebar.button("🔄 Refresh"):
+if load_mode == "Single ledger":
+    ledger_input = st.sidebar.text_input(
+        "Ledger path",
+        value=str(DEFAULT_LEDGER_PATH),
+        help="Path to a single run_ledger.jsonl or campaign.jsonl.",
+    )
+else:
+    ledger_input = st.sidebar.text_input(
+        "Campaign root directory",
+        value=str(MULTI_LEDGER_ROOT),
+        help="Root dir containing <system>/recovery.jsonl and <system>/campaign.jsonl.",
+    )
+
+if st.sidebar.button("Refresh"):
     st.cache_data.clear()
 
 
 @st.cache_data(ttl=30)
-def _load(path: str) -> pd.DataFrame:
+def _load_single(path: str) -> pd.DataFrame:
     return load_ledger(Path(path))
+
+
+@st.cache_data(ttl=30)
+def _load_multi(root: str) -> pd.DataFrame:
+    return load_multi_ledger(Path(root))
 
 
 # ── Load data ─────────────────────────────────────────────────────────────────
 try:
-    df = _load(ledger_path)
+    if load_mode == "Single ledger":
+        df = _load_single(ledger_input)
+    else:
+        df = _load_multi(ledger_input)
     load_error = None
 except ValueError as exc:
     df = pd.DataFrame()
