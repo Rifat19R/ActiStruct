@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "actistruct"
 version = "2.0.0"
-description = "Active-learning workflow for DFT-guided materials discovery: GNN+GP surrogate, autonomous QE fault recovery, multi-fidelity oracle, and Streamlit monitoring dashboard."
+description = "Active-learning workflow for DFT-guided materials discovery: GNN+GP surrogate, autonomous QE fault recovery, multi-fidelity oracle, and Streamlit dashboard."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -26,7 +26,6 @@ keywords = [
   "hydrogen-evolution",
   "atomistic-simulation",
   "structure-optimization",
-  "reliability-aware-al",
 ]
 dependencies = [
   "numpy",
@@ -34,11 +33,13 @@ dependencies = [
   "matplotlib",
   "scikit-learn",
   "ase",
+  "torch",
   "pillow",
 ]
 
 [project.optional-dependencies]
 test = ["pytest"]
+dashboard = ["streamlit", "plotly", "stmol", "py3Dmol"]
 
 [project.urls]
 Homepage = "https://github.com/Rifat19R/ActiStruct"
