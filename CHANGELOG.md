@@ -2,6 +2,54 @@
 
 All notable changes to ActiStruct are documented here.
 
+## v2.0.0 - 2026-07-04
+
+### Added
+
+- **GNN encoder** (`actistruct/gnn/encoder.py`): SchNet-style geometry-aware
+  message passing with neighbor list, Gaussian RBF expansion, and mean-pool
+  aggregation. Produces distinct embeddings for identical-composition structures
+  with different bond lengths (verified by test).
+- **HybridGPSurrogate** (`actistruct/gnn/surrogate.py`): Frozen-embedding
+  transfer learning. Pretrain encoder on LF energies, freeze weights, fit a
+  GP (`ConstantKernel * RBF`, `alpha=1e-4`) on HF embeddings after
+  `StandardScaler`. Drop-in for the existing `GPModel` interface.
+- **Debug and recovery engine** (`actistruct/debug/`): `DFTFailureAnalyzer`
+  (regex classifier, 4 failure types), `TroubleshootingStrategy` (4 cumulative
+  escalation groups), `run_dft_with_recovery()` (wraps static SCF with
+  automatic fault detection and ledger logging).
+- **Append-only JSONL ledger** (`actistruct/core/ledger.py`): NTFS-safe
+  atomic writes using `O_CREAT | O_EXCL`; one record per DFT attempt.
+- **NTFS-safe atomic cache** (`actistruct/core/atomic_cache.py`).
+- **Streamlit dashboard** (`actistruct/dashboard/`): 4-tab campaign monitor
+  (scorecard, energy landscape, 3D structure viewer, full run log). Multi-ledger
+  support; handles empty ledger gracefully.
+- **Ti3C2-O HER oracle** (`examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`):
+  `DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV`; `FIDELITY` env var
+  switches LF (ecutwfc=40) vs HF (ecutwfc=60); full caching per fidelity level.
+  SSSP 1.3.0 PBE efficiency pseudos. LF static verified: -25973.017 eV, JOB DONE.
+- **Ti3C2-O demo** (`demo_ti3c2_o.py`): no-QE end-to-end demo exercising all
+  4 phases on the real 28-atom slab geometry.
+- **UV design variable sensitivity tests** (`tests/test_hybrid_surrogate.py`):
+  3 new tests confirming (u,v) fractional-coordinate design variable produces
+  distinct embeddings across atop/hollow/bridge adsorption sites.
+
+### Changed
+
+- `HybridGPSurrogate`: replaced `WhiteKernel` with fixed `alpha=1e-4`;
+  added `StandardScaler` before GP fit to eliminate `ConvergenceWarning`.
+- `GNNConfig`: added per-system cutoff guidance; Ti3C2-O default 5.0 A.
+- `generated_models/bulk_lifepo4_qe_active_inverse.py`: updated pseudo-mixing
+  comment to per-combination verification rule.
+- Package version bumped from 0.7.2 to 2.0.0.
+
+### Notes
+
+- Test suite: **128 passed, 0 warnings** (Python 3.12, WSL2).
+- HF ionic relaxation for Ti3C2-O slab deferred: OOM at ecutwfc=60 on WSL2
+  default 3.7 GB RAM; requires `.wslconfig memory=6GB` or a compute cluster.
+- All source files: ASCII-only (no Unicode in comments, docstrings, or output).
+
 ## v0.7.2 - 2026-06-27
 
 ### Added
