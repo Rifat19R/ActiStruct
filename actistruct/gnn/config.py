@@ -1,13 +1,19 @@
 """Configuration dataclasses for the Phase 2 GNN surrogate.
 
-Python dataclasses only (no YAML) — consistent with the existing repo convention
+Python dataclasses only (no YAML) -- consistent with the existing repo convention
 of @dataclass Config in each workflow script.
 
 Default fidelity parameters (system-agnostic):
-  - LF: 30 Ry / 300 Ry / [2,2,2] — trend-capturing only, cheap screening.
-  - HF: 60 Ry / 600 Ry / [6,6,6] — converged energetics, production accuracy.
+  - LF: 30 Ry / 300 Ry / [2,2,2] -- trend-capturing only, cheap screening.
+  - HF: 60 Ry / 600 Ry / [6,6,6] -- converged energetics, production accuracy.
   - cutoff=6.0 A covers first and second shells for most transition metal oxides.
   - n_gaussians=50 gives sufficient RBF resolution for the 0-6 A distance range.
+
+Per-system cutoff guidance:
+  - Ti3C2-O MXene (HER campaign): use cutoff=5.0 A.
+    Ti-C ~2.1 A, Ti-O ~2.0 A (1st shell to ~2.5 A); 2nd shell Ti-Ti/O-O ~3.1 A.
+    5.0 A captures both shells with margin to distinguish hollow vs atop H sites.
+    The CaAlN2-era default of 6.0 A is not appropriate here (Ca-Al ~3.2 A).
 """
 from __future__ import annotations
 
@@ -38,7 +44,7 @@ class MultiFidelityConfig:
 class GNNConfig:
     """Hyperparameters for the SchNet-style GNN encoder."""
     # Geometry
-    cutoff:           float = 6.0    # Angstrom — neighbour search radius
+    cutoff:           float = 6.0    # Angstrom -- neighbour search radius
     n_gaussians:      int   = 50     # RBF basis centres spanning [0, cutoff]
 
     # Network depth / width

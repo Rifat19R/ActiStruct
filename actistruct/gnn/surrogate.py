@@ -1,23 +1,23 @@
 """Hybrid GNN + GP surrogate for multi-fidelity active learning.
 
-Architecture (honest naming — see blueprint §2.3)
+Architecture (honest naming -- see blueprint sec 2.3)
 -------------------------------------------------
 This is FROZEN-EMBEDDING TRANSFER LEARNING, not Kennedy-O'Hagan co-kriging:
-  Step 1: Pretrain SchNetEncoder + a small energy head (Linear→SiLU→Linear→scalar)
+  Step 1: Pretrain SchNetEncoder + a small energy head (Linear->SiLU->Linear->scalar)
           on LF (cheap) energy data.
           Loss: MSE of predicted vs true energy-per-atom.
           Optimizer: Adam over encoder + energy_head params, lr from GNNConfig.
           Early stopping: patience epochs on held-out val set.
-  Step 2: FREEZE encoder weights (requires_grad_(False)) — this is explicit
+  Step 2: FREEZE encoder weights (requires_grad_(False)) -- this is explicit
           and intentional. The GP fit step must NOT silently backprop into
-          the encoder. The "cheap LF pretraining → expensive HF fine-tuning"
+          the encoder. The "cheap LF pretraining -> expensive HF fine-tuning"
           story is only true if the encoder is frozen before the GP sees HF data.
   Step 3: Compute frozen embeddings for all HF data points.
   Step 4: Fit sklearn GaussianProcessRegressor on those embeddings.
           GP provides calibrated uncertainty estimates for active learning.
 
 A true multi-fidelity discrepancy correction (delta(x) = E_HF - rho*E_LF)
-is a stretch goal — not implemented here. The current approach is a
+is a stretch goal -- not implemented here. The current approach is a
 well-established transfer-learning baseline and is scientifically sound.
 
 Predict interface
@@ -37,7 +37,8 @@ import torch
 import torch.nn as nn
 from ase import Atoms
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
+from sklearn.gaussian_process.kernels import ConstantKernel, RBF
+from sklearn.preprocessing import StandardScaler
 
 from actistruct.gnn.config import GNNConfig
 from actistruct.gnn.encoder import SchNetEncoder
@@ -62,10 +63,11 @@ class HybridGPSurrogate:
             nn.Linear(D // 2, 1),
         )
         self._gp: GaussianProcessRegressor | None = None
+        self._scaler: StandardScaler | None = None
         self._is_pretrained = False
         self._is_fitted = False
 
-    # ── Pretraining on LF data ────────────────────────────────────────────────
+    # -- Pretraining on LF data ------------------------------------------------
 
     def pretrain(
         self,
@@ -156,11 +158,11 @@ class HybridGPSurrogate:
                           f"(val_loss={val_loss:.6f})")
                     break
 
-        # FREEZE encoder — must happen before GP fit.
+        # FREEZE encoder -- must happen before GP fit.
         # Rationale: the "cheap LF pretraining, expensive HF fine-tuning"
         # claim is only scientifically honest if we do not let the GP fit
         # step silently propagate gradients back into the encoder.
-        # Note: energy_head is NOT frozen — it is simply unused after pretraining.
+        # Note: energy_head is NOT frozen -- it is simply unused after pretraining.
         self.encoder.requires_grad_(False)
         self.encoder.eval()
         self._energy_head.eval()
@@ -170,7 +172,7 @@ class HybridGPSurrogate:
               f"val_loss={history['val_loss'][-1]:.6f}")
         return history
 
-    # ── Fitting GP on HF embeddings ───────────────────────────────────────────
+    # -- Fitting GP on HF embeddings -------------------------------------------
 
     def fit(
         self,
@@ -196,30 +198,43 @@ class HybridGPSurrogate:
             e / len(s) for e, s in zip(hf_energies_ev, hf_structures)
         ], dtype=np.float64)
 
-        # Extract frozen embeddings — no gradient tracking.
+        # Extract frozen embeddings -- no gradient tracking.
         X = np.stack([self.encoder.embed(s) for s in hf_structures])  # (n_hf, D)
 
-        # Bounds must cover the embedding-space length scales that arise from
-        # frozen SchNet embeddings. GNN embeddings live in a high-dimensional
-        # space (embedding_dim=64) where inter-point distances can be large;
-        # 10.0 is too tight and causes ConvergenceWarning on small datasets.
+        # Standardize embeddings before GP fit so the kernel length scale is
+        # invariant to the random encoder initialization and embedding_dim.
+        # Without this, raw SchNet embeddings have wildly different per-dim
+        # scales (std varies ~20x across dims) and pairwise distances that
+        # depend on the random initial weights, causing ConvergenceWarnings
+        # when the optimizer wants length scales below the lower bound.
+        # After StandardScaler: per-dim std=1, pairwise distances ~1-12,
+        # optimal length scale ~3-5 -- well within (1e-2, 1e5).
+        self._scaler = StandardScaler()
+        X_fit = self._scaler.fit_transform(X)
+
+        # WhiteKernel was removed: with small HF datasets (5-20 points),
+        # noise estimation from data is unreliable and collapses to the
+        # lower bound on clean/synthetic data, causing ConvergenceWarnings.
+        # Fixed alpha=1e-4 provides numerical regularization without
+        # optimization (no lower-bound to hit) and is appropriate for
+        # DFT energies where convergence noise ~1e-4 eV/atom.
         kernel = (
             ConstantKernel(1.0, (1e-3, 1e3))
             * RBF(length_scale=1.0, length_scale_bounds=(1e-2, 1e5))
-            + WhiteKernel(noise_level=1e-4, noise_level_bounds=(1e-10, 1.0))
         )
         self._gp = GaussianProcessRegressor(
             kernel=kernel,
+            alpha=1e-4,
             n_restarts_optimizer=5,
             random_state=self.config.random_state,
             normalize_y=True,
         )
-        self._gp.fit(X, energies_pa)
+        self._gp.fit(X_fit, energies_pa)
         self._is_fitted = True
         print(f"[GP] Fitted on {len(hf_structures)} HF structures. "
               f"Kernel: {self._gp.kernel_}")
 
-    # ── Prediction ────────────────────────────────────────────────────────────
+    # -- Prediction ------------------------------------------------------------
 
     def predict(self, atoms: Atoms) -> tuple[float, float]:
         """Return (mean_energy_per_atom_ev, uncertainty_ev) for one structure.
@@ -230,7 +245,7 @@ class HybridGPSurrogate:
         """
         if not self._is_fitted:
             raise RuntimeError("Call fit() before predict().")
-        emb = self.encoder.embed(atoms).reshape(1, -1)
+        emb = self._scaler.transform(self.encoder.embed(atoms).reshape(1, -1))
         mean, std = self._gp.predict(emb, return_std=True)
         return float(mean[0]), float(std[0])
 
@@ -240,6 +255,6 @@ class HybridGPSurrogate:
         """Predict mean and std for a list of structures."""
         if not self._is_fitted:
             raise RuntimeError("Call fit() before predict_batch().")
-        X = np.stack([self.encoder.embed(s) for s in structures])
+        X = self._scaler.transform(np.stack([self.encoder.embed(s) for s in structures]))
         mean, std = self._gp.predict(X, return_std=True)
         return mean, std

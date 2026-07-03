@@ -76,12 +76,12 @@ SYSTEM = ActiveSystem(
         'Fe': 'Fe.pbe-spn-kjpaw_psl.0.2.1.UPF', # PAW  (SSSP 1.3.0)
         'P':  'P.pbe-n-rrkjus_psl.1.0.0.UPF',   # USPP (SSSP 1.3.0)
         'O':  'O.pbe-n-kjpaw_psl.0.1.UPF',      # PAW  (SSSP 1.3.0)
-        # WARNING: Li+P are USPP; Fe+O are PAW. This is a MIXED pseudopotential
-        # calculation (2 USPP + 2 PAW). QE may reject it with an immediate
-        # status-1 exit ("You have mixed US and PAW; this is not yet
-        # implemented") depending on the QE version. Do NOT enable
-        # use_recovery here until this has been verified to run at all.
-        # If mixed types fail, replace with a fully-PAW or fully-USPP set.
+        # NOTE: Li+P are USPP; Fe+O are PAW (mixed types within SSSP 1.3.0 efficiency).
+        # This specific Li/Fe/P/O combination has NOT been verified with a static
+        # QE run on this build. Project rule: PAW+USPP mixing is not automatically
+        # fatal on this QE install (Ti/C/O verified JOB DONE 2026-07-02), but each
+        # NEW mixed combination requires its own minimal static run before use.
+        # Do not enable use_recovery or run a campaign until that static test is done.
     },
     ecutwfc=70.0,
     ecutrho=560.0,
@@ -96,10 +96,9 @@ SYSTEM = ActiveSystem(
     random_state=135,
     category='Battery materials',
     notes="CIF-derived Li4Fe4P4O16 orthorhombic cell; fractional coordinates fixed while a scales b and c.",
-    # use_recovery intentionally disabled: SSSP pseudos are mixed PAW+USPP
-    # (Li/P=USPP, Fe/O=PAW). QE may crash immediately on this mismatch,
-    # which is not a failure mode the escalation strategy can fix.
-    # Re-enable only after confirming all-PAW or all-USPP replacement set.
+    # use_recovery disabled: LiFePO4 is outside the MXene HER research scope
+    # (Phase 2 target is Ti3C2-O). Also, the Li/Fe/P/O mixed-pseudo combination
+    # has not been verified with a static run on this QE build.
     use_recovery=False,
 )
 

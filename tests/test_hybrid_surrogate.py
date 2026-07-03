@@ -34,12 +34,12 @@ from actistruct.gnn.encoder import SchNetEncoder
 from actistruct.gnn.surrogate import HybridGPSurrogate
 
 
-# ── helper: build generic synthetic 4-atom slab ──────────────────────────────
+# -- helper: build generic synthetic 4-atom slab ------------------------------
 
 def _make_test_slab(a: float, c: float) -> Atoms:
     """Minimal 4-atom hexagonal unit for geometry-sensitivity tests.
 
-    Composition (Ca/Al/N2) is arbitrary — only the geometry matters here.
+    Composition (Ca/Al/N2) is arbitrary -- only the geometry matters here.
     Not tied to any specific material system.
     """
     positions = np.array([
@@ -75,7 +75,7 @@ def _make_config(small: bool = True) -> GNNConfig:
     )
 
 
-# ── Test 1: Geometry sensitivity ──────────────────────────────────────────────
+# -- Test 1: Geometry sensitivity ----------------------------------------------
 
 class TestGeometrySensitivity:
     """The embedding must change when bond lengths change."""
@@ -113,7 +113,7 @@ class TestGeometrySensitivity:
         assert diff < 1e-8, f"Same structure gave different embeddings (diff={diff:.2e})."
 
 
-# ── Test 2: Permutation robustness ───────────────────────────────────────────
+# -- Test 2: Permutation robustness -------------------------------------------
 
 class TestPermutationRobustness:
 
@@ -124,7 +124,7 @@ class TestPermutationRobustness:
 
         s = _make_test_slab(a=3.15, c=5.00)
 
-        # Shuffle atom indices (Ca, Al, N, N → N, Ca, N, Al or similar).
+        # Shuffle atom indices (Ca, Al, N, N -> N, Ca, N, Al or similar).
         perm = [2, 0, 3, 1]
         s_shuffled = Atoms(
             symbols=[s.symbols[i] for i in perm],
@@ -143,7 +143,7 @@ class TestPermutationRobustness:
         )
 
 
-# ── Test 3: Multi-fidelity config switch ─────────────────────────────────────
+# -- Test 3: Multi-fidelity config switch -------------------------------------
 
 class TestMultiFidelityConfig:
 
@@ -166,11 +166,11 @@ class TestMultiFidelityConfig:
             mf.qe_params("medium")
 
 
-# ── Test 4: Overfit sanity check ──────────────────────────────────────────────
+# -- Test 4: Overfit sanity check ----------------------------------------------
 
 class TestOverfitSanityCheck:
-    """Full pipeline on small synthetic data — training loss must decrease
-    and predictions on training set must correlate with targets (R² > 0.8)."""
+    """Full pipeline on small synthetic data -- training loss must decrease
+    and predictions on training set must correlate with targets (R^2 > 0.8)."""
 
     def _make_dataset(self, n: int = 8):
         """Generate n synthetic (atoms, energy) pairs with varied lattice params."""
@@ -196,18 +196,18 @@ class TestOverfitSanityCheck:
         first_loss = history["train_loss"][0]
         last_loss  = history["train_loss"][-1]
         assert last_loss < first_loss, (
-            f"Training loss did not decrease: {first_loss:.6f} → {last_loss:.6f}. "
+            f"Training loss did not decrease: {first_loss:.6f} -> {last_loss:.6f}. "
             "Gradients may not be flowing through the encoder."
         )
 
     def test_gp_predictions_correlate_with_targets(self):
-        """After pretraining + GP fit, predictions on training data must have R² > 0.8."""
+        """After pretraining + GP fit, predictions on training data must have R^2 > 0.8."""
         config    = _make_config()
         surrogate = HybridGPSurrogate(config)
 
         structs, energies = self._make_dataset(n=8)
 
-        # Pretrain on all data (small dataset — intentional overfit test).
+        # Pretrain on all data (small dataset -- intentional overfit test).
         surrogate.pretrain(structs, energies)
 
         # Need at least 2 HF points for GP. Use the same data for this test.
@@ -221,8 +221,8 @@ class TestOverfitSanityCheck:
         r2     = 1.0 - ss_res / ss_tot if ss_tot > 0 else 1.0
 
         assert r2 > 0.8, (
-            f"GP R² on training data is {r2:.3f} (< 0.8). "
-            "The surrogate is not fitting the training data — "
+            f"GP R^2 on training data is {r2:.3f} (< 0.8). "
+            "The surrogate is not fitting the training data -- "
             "check that the encoder produces informative embeddings."
         )
 
@@ -252,3 +252,96 @@ class TestOverfitSanityCheck:
         assert math.isfinite(mean), f"Predicted mean is not finite: {mean}"
         assert math.isfinite(std),  f"Predicted std is not finite: {std}"
         assert std >= 0.0,          f"Predicted std is negative: {std}"
+
+
+# -- helper: build slab + adsorbed H at fractional (u, v) ---------------------
+
+def _make_slab_with_h(u: float, v: float, a: float = 3.15, c: float = 5.00) -> Atoms:
+    """4-atom slab with H placed at in-plane fractional coordinate (u, v).
+
+    Uses _make_test_slab as substrate.  H is placed h_height above the top
+    atom (z = c*0.875), which is sufficient to produce distinct local
+    environments for different (u, v) values within the GNN cutoff.
+    """
+    h_height = 1.5  # A above top surface atom
+    slab = _make_test_slab(a=a, c=c)
+    cell = slab.cell.array
+    top_z = float(np.max(slab.positions[:, 2]))
+    xy = float(u) * cell[0] + float(v) * cell[1]
+    h_pos = [xy[0], xy[1], top_z + h_height]
+    return Atoms(
+        symbols=list(slab.get_chemical_symbols()) + ["H"],
+        positions=np.vstack([slab.positions, h_pos]),
+        cell=slab.cell,
+        pbc=True,
+    )
+
+
+# -- Test 5: (u, v) design variable sensitivity -------------------------------
+
+class TestUVDesignVariable:
+    """The GNN embedding must change when H moves to a different (u, v) site.
+
+    This validates that (u, v) is an informative design variable: the encoder
+    can distinguish adsorption sites by their local geometry.  A surrogate
+    that ignores H position would fail this test and would be unable to learn
+    the DeltaG_H landscape for inverse design.
+    """
+
+    def test_different_uv_positions_different_embeddings(self):
+        """H at atop vs hollow site must produce different GNN embeddings."""
+        config  = _make_config()
+        encoder = SchNetEncoder(config)
+        encoder.eval()
+
+        # atop: H directly above Ca at (0, 0) -- short Ca-H distance
+        s_atop   = _make_slab_with_h(u=0.00, v=0.00)
+        # hollow: H above cell center -- equal distances to surrounding atoms
+        s_hollow = _make_slab_with_h(u=0.50, v=0.50)
+
+        emb_atop   = encoder.embed(s_atop)
+        emb_hollow = encoder.embed(s_hollow)
+
+        diff = float(np.linalg.norm(emb_atop - emb_hollow))
+        assert diff > 1e-3, (
+            f"UV design variable test FAILED: embeddings at (0,0) and (0.5,0.5) "
+            f"differ by only {diff:.2e}. The encoder cannot distinguish H adsorption "
+            "sites. Check that H-to-surface distances are encoded in message passing."
+        )
+
+    def test_same_uv_same_embedding(self):
+        """H at identical (u, v) must produce identical embeddings."""
+        config  = _make_config()
+        encoder = SchNetEncoder(config)
+        encoder.eval()
+
+        s1 = _make_slab_with_h(u=1.0/3.0, v=1.0/3.0)
+        s2 = _make_slab_with_h(u=1.0/3.0, v=1.0/3.0)
+
+        diff = float(np.linalg.norm(encoder.embed(s1) - encoder.embed(s2)))
+        assert diff < 1e-8, (
+            f"Same (u,v) gave different embeddings (diff={diff:.2e})."
+        )
+
+    def test_third_site_distinct_from_atop_and_hollow(self):
+        """Bridge site (u=0.5, v=0) must differ from both atop and hollow."""
+        config  = _make_config()
+        encoder = SchNetEncoder(config)
+        encoder.eval()
+
+        s_atop   = _make_slab_with_h(u=0.00, v=0.00)
+        s_hollow = _make_slab_with_h(u=0.50, v=0.50)
+        s_bridge = _make_slab_with_h(u=0.50, v=0.00)
+
+        emb_a = encoder.embed(s_atop)
+        emb_h = encoder.embed(s_hollow)
+        emb_b = encoder.embed(s_bridge)
+
+        diff_ab = float(np.linalg.norm(emb_a - emb_b))
+        diff_hb = float(np.linalg.norm(emb_h - emb_b))
+        assert diff_ab > 1e-3, (
+            f"Atop and bridge embeddings are identical (diff={diff_ab:.2e})."
+        )
+        assert diff_hb > 1e-3, (
+            f"Hollow and bridge embeddings are identical (diff={diff_hb:.2e})."
+        )
