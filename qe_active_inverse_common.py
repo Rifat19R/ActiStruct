@@ -247,6 +247,14 @@ class ActiveSystem:
     result_quantity:          str = "Computed target energy"
     result_units:             str = "eV"
 
+    # Recovery integration — opt-in, backwards-compatible.
+    # When True, _run_one_qe() delegates to run_dft_with_recovery() which
+    # classifies failures, applies cumulative escalation groups, and writes
+    # every attempt to the JSONL ledger. Existing scripts that do not set
+    # use_recovery are completely unaffected.
+    use_recovery:           bool        = False
+    recovery_ledger_path:   Path | None = None
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Internal helpers — file paths
@@ -401,6 +409,25 @@ def _build_calculator(system: ActiveSystem, directory: Path, prefix: str) -> Esp
     return Espresso(command=f"{QE_COMMAND} -in PREFIX.pwi > PREFIX.pwo", **kwargs)
 
 
+def _build_calculator_with_input(
+    system: ActiveSystem,
+    directory: Path,
+    input_data: dict,
+) -> Espresso:
+    """Like _build_calculator but accepts caller-supplied input_data (for recovery escalation)."""
+    directory.mkdir(parents=True, exist_ok=True)
+    kwargs: dict = dict(
+        pseudopotentials=system.pseudopotentials,
+        input_data=input_data,
+        kpts=system.kpts,
+        directory=str(directory),
+    )
+    if EspressoProfile is not None:
+        profile = EspressoProfile(command=QE_COMMAND, pseudo_dir=PSEUDO_DIR)
+        return Espresso(profile=profile, **kwargs)
+    return Espresso(command=f"{QE_COMMAND} -in PREFIX.pwi > PREFIX.pwo", **kwargs)
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # Internal helpers — geometry validation
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -430,6 +457,56 @@ def _validate_no_atomic_overlap(
 # Internal helpers — single QE run
 # ═══════════════════════════════════════════════════════════════════════════════
 
+def _run_one_qe_with_recovery(
+    system:   ActiveSystem,
+    atoms:    Atoms,
+    work_dir: Path,
+    prefix:   str,
+) -> float | None:
+    """Delegate to run_dft_with_recovery() for classified, escalating retries.
+
+    Called only when system.use_recovery is True. Builds a qe_runner closure
+    over (system, atoms, work_dir) so that recovery.py can swap input_data
+    between retries without touching the shared engine.
+    """
+    from actistruct.debug.recovery import run_dft_with_recovery
+
+    base_input = _qe_input_data(system, prefix)
+    _att = [0]
+
+    def qe_runner(input_data: dict) -> tuple:
+        _att[0] += 1
+        run_dir = work_dir.parent / f"{work_dir.name}_att{_att[0]}"
+        calc = _build_calculator_with_input(system, run_dir, input_data)
+        local = atoms.copy()
+        local.calc = calc
+        try:
+            if system.relax:
+                from ase.optimize import BFGS
+                opt = BFGS(local, logfile=str(run_dir / "bfgs.log"))
+                opt.run(fmax=system.relax_fmax, steps=system.relax_steps)
+            energy = float(local.get_potential_energy())
+            pwo = run_dir / "espresso.pwo"
+            out = pwo.read_text(errors="replace") if pwo.exists() else "JOB DONE."
+            return energy, out
+        except Exception:
+            pwo = run_dir / "espresso.pwo"
+            text = pwo.read_text(errors="replace") if pwo.exists() else traceback.format_exc()
+            return None, text
+
+    energy, _failure, _actions = run_dft_with_recovery(
+        qe_runner,
+        base_input,
+        system_name=system.key,
+        fidelity="high",
+        params={"prefix": prefix},
+        ledger_path=system.recovery_ledger_path,
+        max_attempts=system.retries + 1,
+        retry_wait_s=system.retry_wait_seconds,
+    )
+    return energy
+
+
 def _run_one_qe(
     system:   ActiveSystem,
     atoms:    Atoms,
@@ -438,6 +515,8 @@ def _run_one_qe(
     retries:  int,
 ) -> float | None:
     """Run QE (SCF or relaxation) and return total energy in eV. None = failure."""
+    if system.use_recovery:
+        return _run_one_qe_with_recovery(system, atoms, work_dir, prefix)
     last_err = None
     for attempt in range(1, retries + 2):
         run_dir = work_dir.parent / f"{work_dir.name}_att{attempt}"

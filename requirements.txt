@@ -1,6 +1,13 @@
-numpy
+numpy<2.5
 scipy
 matplotlib
 scikit-learn
 ase
 pillow
+# v2.0 additions
+torch
+streamlit
+plotly
+py3Dmol
+stmol
+ipython_genutils
