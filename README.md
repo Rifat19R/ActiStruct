@@ -1,52 +1,52 @@
-# ActiStruct v2.0
+# ActiStruct
 
-Active-learning workflow for DFT-guided materials discovery combining a
-GNN-pretrained surrogate, a multi-fidelity DFT oracle, and an autonomous
-Quantum ESPRESSO fault-recovery engine.
+Active-learning workflow for DFT-guided materials discovery.
 
-```
-GNN encodes. GP ranks by uncertainty. Debug engine recovers. QE/PBE validates.
-```
-
-**128 tests, 0 warnings** (Python 3.12, WSL2).
+![Tests](https://img.shields.io/badge/tests-128%20passed%2C%200%20warnings-brightgreen)
+![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
-## What it does
+## What it does in 30 seconds
 
-ActiStruct runs a closed-loop active-learning campaign that finds the optimal
-adsorption geometry (or any parameterised structure) using as few DFT
-calculations as possible:
-
-1. Build a small initial set of DFT-evaluated structures.
-2. Pretrain a SchNet-style GNN encoder on low-fidelity (LF) energies.
-3. Freeze encoder weights; fit a GP on high-fidelity (HF) embeddings.
-4. Use Differential Evolution to minimise the Lower Confidence Bound (LCB)
-   over the design-variable space and propose the next candidate.
-5. Run DFT oracle with automatic fault detection and escalation.
-6. Append result to ledger; retrain surrogate; repeat until convergence.
-
-It does not replace QE/PBE -- it learns from completed calculations, including
-failures, to decide which structures to compute next.
+- Given a DFT geometry-search problem (adsorption site, bulk lattice, molecule),
+  ActiStruct proposes the next candidate to compute using a Gaussian-Process
+  surrogate over a geometry-aware GNN embedding.
+- It records every DFT run -- successful and failed -- into a JSONL ledger,
+  and automatically escalates failed runs through a four-group recovery strategy
+  before giving up.
+- It does not replace Quantum ESPRESSO. It decides which QE runs to launch and
+  learns from the ones that fail.
 
 ---
 
-## What is new in v2.0
+## v2.0 status (honest)
 
-| Component | v2.0 addition |
-|---|---|
-| GNN encoder | SchNetEncoder: pairwise distances + Gaussian RBF + message passing |
-| Surrogate | HybridGPSurrogate: LF pretrain -> freeze -> HF GP fit |
-| GP fix | StandardScaler + fixed alpha=1e-4 (no WhiteKernel); eliminates ConvergenceWarning |
-| Debug engine | DFTFailureAnalyzer, TroubleshootingStrategy (4 escalation groups), run_dft_with_recovery() |
-| Ledger | Append-only JSONL run ledger; NTFS-safe atomic writes |
-| Dashboard | 4-tab Streamlit campaign monitor |
-| Phase 2 oracle | Ti3C2-O MXene HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
-| Design variable | (u, v) in-plane fractional coordinates of adsorbed H |
-| Tests | 128 passed, 0 warnings (was 81 in v0.7.2) |
+> All code paths are implemented, unit-tested (128 tests, 0 warnings), and
+> one clean-slab QE static SCF has been validated end-to-end on the Ti3C2-O
+> 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2).
+>
+> **A closed active-learning loop has not yet been run on live DFT data.**
+> The LF (u,v) campaign is next. HF ionic relaxation is deferred pending
+> hardware upgrade (needs ~5.4 GB RAM; WSL2 default is 3.7 GB).
 
-The v0.x reliability-aware layer (QE parser, failure-risk classifier,
-failure-aware LCB acquisition, 50-workflow benchmark) is retained unchanged.
+This is a development release. See [Roadmap](#roadmap) for what is planned next.
+
+---
+
+## What v2.0 adds
+
+| Component | v0.x (retained) | v2.0 (new) |
+|---|---|---|
+| Active-learning core | GP/LCB + failure-risk penalty | Differential Evolution in 2D (u,v) space |
+| Surrogate | sklearn GP on raw descriptors | HybridGPSurrogate: GNN pretrain -> frozen embeddings -> GP |
+| GNN encoder | None | SchNetEncoder: neighbor list + Gaussian RBF + message passing |
+| DFT fault handling | Manual | DFTFailureAnalyzer + TroubleshootingStrategy (4 groups) + run_dft_with_recovery() |
+| Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
+| Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
+| Monitoring | None | 4-tab Streamlit dashboard |
+| Tests | 81 tests | 128 tests, 0 warnings |
 
 ---
 
@@ -56,104 +56,137 @@ failure-aware LCB acquisition, 50-workflow benchmark) is retained unchanged.
 Low-fidelity DFT  (ecutwfc=40, kpts=3x3x1)
         |
   SchNetEncoder.pretrain()
-  cutoff=5.0 A, embedding_dim=64, 3 message-passing blocks
+  cutoff=5.0 A (Ti3C2-O), embedding_dim=64, 3 message-passing blocks
+  Loss: MSE energy/atom via Linear->SiLU->Linear head
         |
-   freeze weights
+   FREEZE encoder weights  (requires_grad_(False))
         |
 High-fidelity DFT  (ecutwfc=60, kpts=6x6x1)
         |
-  HybridGPSurrogate.fit()
-  StandardScaler -> ConstantKernel * RBF, alpha=1e-4, n_restarts=5
+  StandardScaler on frozen HF embeddings
         |
-  predict(atoms) -> (mean eV/atom, std eV/atom)
+  GaussianProcessRegressor
+  kernel: ConstantKernel(1.0) * RBF(ls=1.0, bounds=(1e-2, 1e5))
+  alpha=1e-4, n_restarts_optimizer=5, normalize_y=True
         |
-  differential_evolution -> next (u, v) candidate
+  predict(atoms) -> (mean eV/atom, uncertainty eV/atom)
         |
-  DFT oracle + run_dft_with_recovery() -> ledger
+  differential_evolution minimises LCB -> next (u,v) candidate
+        |
+  DFT oracle + run_dft_with_recovery() -> ledger append
 ```
 
-The surrogate is **frozen-embedding transfer learning**, not Kennedy-O'Hagan
-co-kriging. The encoder is pretrained once on LF data, frozen, and its outputs
-serve as features for the HF GP.
+This is **frozen-embedding transfer learning**, not Kennedy-O'Hagan co-kriging.
+The encoder is pretrained on LF data, frozen, and its outputs are features for
+the HF GP. This is named honestly throughout the code.
 
----
+Key design decisions:
 
-## Key design decisions
-
-**GNN cutoff (Ti3C2-O):** `cutoff=5.0 A`. Ti-C ~2.1 A, Ti-O ~2.0 A; 5.0 A
-captures both bond shells with margin to distinguish hollow vs atop H sites.
-
-**StandardScaler:** Raw SchNet embeddings have ~20x per-dim standard deviation
-variance. After scaling, pairwise distances are ~1-12, optimal GP length scale
-~3-5, no ConvergenceWarning.
-
-**alpha=1e-4 (no WhiteKernel):** WhiteKernel noise estimation is unreliable
-with 5-20 HF points and collapses to its lower bound. Fixed alpha provides
-numerical regularisation appropriate for DFT convergence noise (~0.1 meV/atom)
-with no lower bound to optimise against.
-
-**NTFS file locking:** WSL2 /mnt/d/ (NTFS) does not support fcntl/flock. The
-ledger and cache use O_CREAT|O_EXCL for atomic writes safe under concurrent
-workers.
-
-**Escalation groups:** Smearing method and degauss always change together
-(physically coupled). nspin is never touched automatically.
+- **GNN cutoff (Ti3C2-O):** 5.0 A. Ti-C ~2.1 A, Ti-O ~2.0 A; 5.0 A captures
+  both bond shells with margin to distinguish hollow vs atop H adsorption sites.
+- **StandardScaler before GP fit:** Raw SchNet embeddings have ~20x per-dim
+  variance. After scaling, pairwise distances are ~1-12, optimal GP length
+  scale ~3-5, and ConvergenceWarnings are eliminated on real data.
+- **alpha=1e-4, no WhiteKernel:** WhiteKernel noise estimation is unreliable
+  with 5-20 HF points and collapses to its lower bound on clean data. Fixed
+  alpha=1e-4 provides numerical regularization matching DFT convergence noise
+  (~0.1 meV/atom) with no lower bound to hit.
+- **NTFS-safe locking:** WSL2 /mnt/d/ (NTFS) does not support fcntl/flock.
+  Ledger and cache use O_CREAT|O_EXCL for safe concurrent writes.
+- **Cumulative escalation:** Smearing method and degauss always change together
+  (physically coupled). electron_maxstep=300 (group 4) retains all prior group
+  changes. nspin is never touched automatically.
 
 ---
 
 ## Implemented components
 
-### actistruct/core/
+### Phase 0 -- Ledger (`actistruct/core/`)
 
-- `atomic_cache.py` -- NTFS-safe atomic file cache (O_CREAT|O_EXCL locking)
-- `ledger.py` -- append-only JSONL run ledger; one record per DFT attempt
+- `atomic_cache.py` -- NTFS-safe atomic file cache (O_CREAT|O_EXCL locking,
+  not fcntl/flock)
+- `ledger.py` -- append-only JSONL run ledger; one record per DFT attempt;
+  atomically locked during writes
 
-### actistruct/debug/
+### Phase 1 -- Debug and Recovery (`actistruct/debug/`)
 
-- `classifier.py` -- DFTFailureAnalyzer: regex classifier for pw.x output;
+- `classifier.py` -- `DFTFailureAnalyzer`: regex classifier for pw.x output;
   categories SUCCESS, SCF_CONVERGENCE, ELECTRONIC_INSTABILITY, GEOMETRY_CRASH,
-  UNKNOWN. All patterns verified against real QE 7.x .pwo output.
-- `strategies.py` -- TroubleshootingStrategy: 4 cumulative escalation groups
-  (soften mixing -> Gaussian smearing -> M-P smearing -> more SCF iterations).
-- `recovery.py` -- run_dft_with_recovery(): wraps a static SCF call with
-  automatic fault detection, escalation, and ledger logging.
+  UNKNOWN. Patterns verified against real QE 7.x .pwo output. Broyden/linmin
+  intentionally excluded from GEOMETRY_CRASH (appear in normal BFGS logs).
+- `strategies.py` -- `TroubleshootingStrategy`: 4 cumulative escalation groups:
+  (1) mixing_beta=0.3, (2) Gaussian smearing + degauss=0.02, (3) M-P smearing
+  + degauss=0.03, (4) electron_maxstep=300. Smearing+degauss always together.
+- `recovery.py` -- `run_dft_with_recovery()`: wraps static SCF with automatic
+  fault detection, escalation, and ledger logging. Not adapted for ionic
+  relaxation (use restart_mode='restart' manually).
 
-### actistruct/gnn/
+### Phase 2 -- GNN Surrogate (`actistruct/gnn/`)
 
-- `config.py` -- GNNConfig, MultiFidelityConfig; per-system cutoff guidance.
-- `encoder.py` -- SchNetEncoder: neighbor list, Gaussian RBF, message-passing
-  interaction block, mean-pool. Geometry-sensitive: same composition + different
-  bond lengths -> different embedding (verified by test).
-- `surrogate.py` -- HybridGPSurrogate: pretrain, freeze, fit, predict, predict_batch.
-  predict(atoms) returns (mean eV/atom, std eV/atom); drop-in for existing GPModel.
+- `config.py` -- `GNNConfig`, `MultiFidelityConfig`. Per-system cutoff
+  guidance documented.
+- `encoder.py` -- `SchNetEncoder`: pairwise distances via ase.neighborlist,
+  Gaussian RBF expansion, message-passing block (filter_ij = MLP(rbf(d_ij)),
+  h_i += sum_j(filter_ij * h_j)), mean-pool. Same composition + different bond
+  lengths -> different embedding (verified by test).
+- `surrogate.py` -- `HybridGPSurrogate`: pretrain, freeze, StandardScaler,
+  GP fit, predict, predict_batch. predict(atoms) returns (mean eV/atom,
+  uncertainty eV/atom); drop-in for the existing GPModel interface.
 
-### actistruct/dashboard/
+### Phase 3 -- Dashboard (`actistruct/dashboard/`)
 
-- `app.py` -- Streamlit dashboard (4 tabs: scorecard, energy landscape, 3D
-  viewer, run log). Multi-ledger support; handles empty ledger gracefully.
+- `app.py` -- Streamlit dashboard (4 tabs: scorecard + convergence rate,
+  energy landscape, 3D structure viewer via py3Dmol/stmol, run log). Multi-
+  ledger support; handles empty ledger gracefully.
 - `data_loader.py` -- load_ledger(), load_multi_ledger(), get_summary_stats().
 
 Launch: `streamlit run actistruct/dashboard/app.py`
 
-### examples/manual_qe/
+Screenshot pending first campaign run (empty ledger screenshot omitted per
+project convention: real data or no screenshot).
 
-- `ti3c2_o_her_qe_active_inverse.py` -- Ti3C2-O HER oracle:
-  - DeltaG_H = E(slab+H) - E(slab) - 0.5*E(H2) + 0.04 eV (Norskov correction)
-  - Design variable: (u, v) in-plane fractional coordinates of adsorbed H
-  - FIDELITY=low: ecutwfc=40, ecutrho=320, kpts=(3,3,1)
-  - FIDELITY=high: ecutwfc=60, ecutrho=480, kpts=(6,6,1)
-  - Energies cached per fidelity level; E_slab and E_H2 computed once
-  - Pseudos: Ti(USPP) + C(PAW) + O(PAW) + H(USPP), SSSP 1.3.0 PBE efficiency
-  - Acquisition: differential_evolution minimising LCB over (u, v) space
-  - LF static verified: E(clean slab) = -25973.017 eV, JOB DONE, 1h43m
+### Phase 2 Oracle -- Ti3C2-O HER (`examples/manual_qe/`)
 
-### v0.x layer (retained)
+`ti3c2_o_her_qe_active_inverse.py`:
 
-- `actistruct/parsers/qe.py` -- QE output parser; records failures as data
+- `DeltaG_H = E(slab+H) - E(slab) - 0.5*E(H2) + 0.04 eV` (Norskov ZPE-TS)
+- Design variable: (u,v) in-plane fractional coordinates of adsorbed H
+- FIDELITY=low: ecutwfc=40, ecutrho=320, kpts=(3,3,1)
+- FIDELITY=high: ecutwfc=60, ecutrho=480, kpts=(6,6,1)
+- All energies cached per fidelity; E_slab and E_H2 computed once per run
+- Pseudopotentials: Ti(USPP) + C(PAW) + O(PAW) + H(USPP), SSSP 1.3.0 PBE
+  efficiency. All filenames verified against disk.
+- Acquisition: differential_evolution minimising LCB over (u,v) space
+- **LF static (clean slab) validated:** E = -25973.017 eV, JOB DONE, 1h43m
+
+### v0.x Reliability Layer (retained, unchanged)
+
+- `actistruct/parsers/qe.py` -- QE output parser; failures recorded as data
 - `actistruct/datasets/qe_records.py` -- dataset builder for parsed QE records
-- `actistruct/acquisition/reliability.py` -- failure-aware LCB acquisition
+- `actistruct/acquisition/reliability.py` -- soft failure-risk LCB penalty;
+  old LCB behavior preserved when gamma=0 or no risk estimate available
 - `analysis/` -- reliability classifier (v0.3.2), offline benchmarks (v0.5.x)
-- `generated_models/` -- 50+ generated QE benchmark scripts
+- `generated_models/` -- 50 original v0.x QE workflow scripts (the Phase 2
+  campaign scripts bulk_lifepo4 and bulk_fe_bcc are additional)
+
+---
+
+## Test suite
+
+128 tests, 0 warnings (Python 3.12, WSL2). No QE/DFT is launched by any test.
+
+| Test file | What it covers |
+|---|---|
+| `test_hybrid_surrogate.py` | GNN geometry sensitivity, permutation invariance, fidelity config, overfit sanity, (u,v) UV design variable sensitivity |
+| `test_debugging.py` | DFTFailureAnalyzer (5 categories), TroubleshootingStrategy (4 groups), run_dft_with_recovery() |
+| `test_dashboard.py` | Ledger loading, summary stats, multi-ledger, empty-ledger safety |
+| `test_ledger.py` | Append, concurrent writes, lock timeout, schema validation |
+| `test_generated_workflows.py` | All generated_models scripts import and define required attributes |
+| `test_failure_aware_acquisition.py`, `test_qe_reliability_*` | v0.x reliability and acquisition layer |
+
+```bash
+pytest -q       # 128 passed, 0 warnings
+```
 
 ---
 
@@ -174,13 +207,15 @@ ActiStruct/
 |-- examples/manual_qe/
 |   |-- ti3c2_o_her_qe_active_inverse.py   # Ti3C2-O HER oracle (Phase 2)
 |   `-- h_cu111_qe_active_inverse.py       # Cu(111) H adsorption reference
-|-- generated_models/                 # 50+ generated QE benchmark scripts
+|-- generated_models/                 # 50 original v0.x QE workflow scripts
 |-- tests/                            # 128 tests, no QE/DFT launched
-|-- archive/caaln2_dropped/           # archived CaAlN2 scripts
+|-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
 |-- analysis/                         # classifier training, offline benchmarks
 |-- docs/                             # setup guides and specification docs
 |-- reports/                          # reliability and benchmark reports
-|-- outputs/cache/                    # DFT energy caches (per fidelity)
+|-- outputs/
+|   |-- cache/                        # DFT energy caches (gitignored)
+|   `-- reports/                      # 50 completed benchmark reports (kept)
 |-- requirements.txt
 |-- pyproject.toml
 `-- CHANGELOG.md
@@ -206,12 +241,12 @@ pip install -e ".[test]"
 pytest -q       # 128 passed, 0 warnings
 ```
 
-**Run the no-QE demo (verifies full v2 stack on real Ti3C2-O geometry):**
+**Run the no-QE demo (exercises full v2 stack on real Ti3C2-O geometry):**
 ```bash
 python demo_ti3c2_o.py
 ```
 
-**Launch the dashboard:**
+**Launch the monitoring dashboard:**
 ```bash
 streamlit run actistruct/dashboard/app.py
 ```
@@ -226,25 +261,38 @@ export ESPRESSO_COMMAND="mpirun -np 2 pw.x"
 which pw.x
 ```
 
+Ti3C2-O pseudopotentials (SSSP 1.3.0 PBE efficiency, verified on disk):
+- Ti: `ti_pbe_v1.4.uspp.F.UPF` (USPP)
+- C:  `C.pbe-n-kjpaw_psl.1.0.0.UPF` (PAW)
+- O:  `O.pbe-n-kjpaw_psl.0.1.UPF` (PAW)
+- H:  `H.pbe-rrkjus_psl.1.0.0.UPF` (USPP)
+
 See `pseudo/README.md` and `docs/qe_setup.md` for full setup notes.
 
 **WSL2 RAM:** LF slab (ecutwfc=40, 28 atoms) peaks at ~3.3 GB. HF ionic
-relaxation (ecutwfc=60) needs ~5.4 GB -- add `memory=6GB` to `.wslconfig`
-or run on a cluster.
+relaxation (ecutwfc=60) needs ~5.4 GB -- add `memory=6GB` to
+`C:\Users\<user>\.wslconfig` or run on a cluster.
 
 ---
 
 ## Running the Ti3C2-O HER campaign
 
 ```bash
-# LF oracle call (caches E_slab + E_H2 on first call; ~1.7h per (u,v) after)
+# Step 1: LF oracle call (first call caches E_slab + E_H2; ~1.7h per
+# (u,v) evaluation after that)
 FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
 
-# HF oracle call (requires .wslconfig memory=6GB or cluster)
+# Step 2: repeat for 6-9 initial (u,v) sites to build the LF dataset
+# (not yet started -- see Roadmap)
+
+# Step 3: HF evaluation at selected sites (requires .wslconfig memory=6GB
+# or cluster -- deferred)
 FIDELITY=high python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
 ```
 
-## Running the 50-workflow benchmark (v0.x)
+Steps 2 and 3 have not been run yet. See Roadmap.
+
+## Running the v0.x 50-workflow benchmark
 
 ```bash
 bash run.sh all
@@ -259,11 +307,14 @@ bash run.sh one generated_models/bulk_lifepo4_qe_active_inverse.py
 
 | Run | System | ecutwfc | kpts | Energy | Status |
 |---|---|---|---|---|---|
-| LF static (clean slab) | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -25973.017 eV | JOB DONE |
-| LF (u,v) grid campaign | 6-9 sites | 40 Ry | (3,3,1) | -- | not started |
+| LF static, clean slab | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -25973.017 eV | JOB DONE |
+| LF (u,v) grid campaign | 6-9 (u,v) sites | 40 Ry | (3,3,1) | -- | not started |
 | HF ionic relax | Ti3C2-O 2x2 | 60 Ry | (6,6,1) | -- | deferred (WSL2 OOM) |
 
-### v0.x reliability classifier (v0.3.2, 20 repeated group splits)
+To reproduce: `FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`
+Expected output: energy cached in `outputs/cache/ti3c2_o_her_low.pkl`
+
+### v0.x -- reliability classifier (v0.3.2, 20 repeated group splits)
 
 ```
 threshold 0.05  ->  failure recall 0.776 +/- 0.344
@@ -271,66 +322,92 @@ threshold 0.10  ->  failure recall 0.725 +/- 0.377
 threshold 0.30  ->  failure recall 0.300 +/- 0.359
 ```
 
-Large split-to-split variance. Soft triage signal, not a hard filter.
+Large split-to-split variance. Soft triage signal; not a hard filter.
 
-### Direct grid validation (GP/LCB engine, v0.x)
+### v0.x -- structural parameter recovery (23-system check subset)
 
-| System | Grid points | Status | Delta vs AL |
-|---|---:|---|---:|
-| Cu FCC | 20/20 | pass | 0.000198 eV/atom |
-| MoS2 monolayer | 49/49 | pass | 0.000916 eV/atom |
-| Rocksalt MgO | 20/20 | pass | 0.000157 eV/atom |
-| Diamond Si | 20/20 | pass | 0.000233 eV/atom |
+Mean absolute percentage deviation: **0.71%**. Median: 0.65%.
+Source: `outputs/reports/ACTISTRUCT_RESULTS_DRAFT.md`.
+This is a structural sanity check, not a claim that all 50 workflows are
+literature-validated.
+
+### v0.x -- direct grid validation (GP/LCB engine)
+
+| System | Grid | Status | Delta vs AL | Reproduce |
+|---|---:|---|---:|---|
+| Cu FCC | 20/20 | pass | 0.000198 eV/atom | `analysis/direct_grid_validation.py` |
+| MoS2 monolayer | 49/49 | pass | 0.000916 eV/atom | same |
+| Rocksalt MgO | 20/20 | pass | 0.000157 eV/atom | same |
+| Diamond Si | 20/20 | pass | 0.000233 eV/atom | same |
+
+Validates the GP/LCB engine. Does not validate the v2.0 GNN surrogate.
+
+### v0.x -- offline failure-aware benchmark (v0.5.1, 50 trials)
+
+Failure-aware LCB reduced mean predicted failure risk across all four pool
+modes and reduced known-failed selections most clearly in normal and
+failure-enriched pools. Weaker in held-out-material and high-uncertainty pools.
+Source: `reports/simulated_failure_aware_al_benchmark_v051.md`.
 
 ---
 
-## Honest claims
+## Safe claims
 
-- The GNN encoder produces geometry-sensitive embeddings verified by test:
-  same composition + different bond lengths -> different embedding.
-- The LF static on the clean 28-atom Ti3C2-O slab is verified: JOB DONE,
-  energy = -25973.017 eV, no spurious warnings.
-- The (u,v) fractional-coordinate design variable produces meaningfully
-  distinct embeddings across adsorption sites (atop vs hollow ~1.0, >> 0.01
-  threshold).
-- No live Ti3C2-O active-learning run has been completed yet (LF grid
-  campaign not started).
-- The HF ionic relaxation is not feasible on WSL2 without .wslconfig
-  memory increase; deferred to cluster.
-- The v0.x offline benchmark results are retained and unchanged.
+- The GNN encoder produces geometry-sensitive embeddings: same composition +
+  different bond lengths -> different embedding (verified by test).
+- The LF static SCF on the 28-atom Ti3C2-O slab is validated: JOB DONE,
+  E = -25973.017 eV, no spurious warnings.
+- The (u,v) design variable produces meaningfully distinct embeddings across
+  adsorption sites (atop vs hollow embedding distance ~1.0, >> 0.01 threshold).
+- The 23-system structural check gives 0.71% mean deviation vs reference values.
+- v0.x offline benchmark results are retained and unchanged.
 
 ActiStruct does not claim:
-- that the GNN surrogate outperforms a simple GP on real HER data (no
-  comparative benchmark has been run),
-- guaranteed reduction of failed DFT jobs,
-- live DFT savings (no live active-learning run has been performed yet),
-- that it replaces QE/PBE validation.
+- A live Ti3C2-O active-learning campaign has completed (LF grid not started).
+- The GNN surrogate outperforms a simple GP on real HER data (no head-to-head
+  benchmark has been run).
+- HF ionic relaxation is feasible on WSL2 without .wslconfig change (it OOMs).
+- Guaranteed reduction of failed DFT jobs.
+- Live DFT savings (no live active-learning run has been performed).
+- It replaces QE/PBE validation.
 
 ---
 
 ## Limitations
 
-- **HF ionic relax deferred**: ecutwfc=60 on 28-atom slab needs ~5.4 GB;
-  WSL2 default is 3.7 GB.
-- **run_dft_with_recovery()** wraps static SCF only; ionic relaxation restart
+- **HF ionic relax deferred**: ecutwfc=60 on 28-atom slab needs ~5.4 GB; WSL2
+  default is 3.7 GB. Needs `.wslconfig memory=6GB` or a cluster.
+- **run_dft_with_recovery()** wraps static SCF only. Ionic relaxation restart
   requires manual `restart_mode='restart'`.
+- **Post-relax k-point consistency check** required before declaring any relaxed
+  geometry canonical. Not needed for this sprint (no new relaxations).
 - **Uncertainty Evolution dashboard tab** not yet wired: requires per-iteration
   GP std stored in the ledger.
-- v0.x reliability-classifier recall has large split-to-split variance on
-  held-out materials.
+- v0.x reliability classifier has large split-to-split variance on held-out
+  materials. Do not use as a hard accept/reject filter.
 - No live QE active-learning run with failure-aware acquisition has been
-  performed; all v0.x evidence is offline.
+  performed. All v0.x evidence is offline.
 
 ---
 
 ## Roadmap
 
+### v2.x near-term
+
 1. LF grid campaign: run oracle at 6-9 initial (u,v) sites.
 2. GNN pretraining: train SchNetEncoder on LF DeltaG_H structures + energies.
-3. Active loop: HybridGPSurrogate proposes next (u,v) via LCB; evaluate; retrain.
+3. Active learning loop: HybridGPSurrogate proposes next (u,v) via LCB;
+   evaluate oracle; retrain. Iterate until convergence.
 4. HF evaluation: 3-4 sites at FIDELITY=high (cluster or .wslconfig memory=6GB).
-5. Uncertainty Evolution tab: store GP std per iteration in ledger.
-6. Extend to other MXene terminations (Ti3C2-F, Ti3C2-OH, V2C-O).
+5. Uncertainty Evolution tab: store GP std per iteration in ledger; wire
+   into dashboard.
+
+### Longer term
+
+- Head-to-head: HybridGPSurrogate vs sklearn GP on real HER data (requires
+  the active-learning loop to have produced data first).
+- Validate v0.x failure-aware acquisition in a live GP/QE run.
+- Extend to other MXene terminations: Ti3C2-F, Ti3C2-OH, V2C-O.
 
 ---
 

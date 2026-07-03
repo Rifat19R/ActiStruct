@@ -5,6 +5,12 @@ __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
 *.egg-info/
+build/
+dist/
+.streamlit/
+*.wfc*
+outputs/*/qe_workdir/
+docs/img/*.psd
 
 # OS/editor scratch files.
 .DS_Store

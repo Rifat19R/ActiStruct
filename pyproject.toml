@@ -63,3 +63,10 @@ packages = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+filterwarnings = [
+    # ConvergenceWarning from sklearn GP is expected on small/synthetic test
+    # datasets where the optimizer occasionally reaches the length-scale lower
+    # bound (1e-2). StandardScaler eliminates this on real data. Suppressed
+    # here because the bound value is correct and must not be changed.
+    "ignore::sklearn.exceptions.ConvergenceWarning",
+]
