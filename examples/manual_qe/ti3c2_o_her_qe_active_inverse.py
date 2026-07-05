@@ -94,7 +94,10 @@ SLAB_LABEL = "relaxed" if _SLAB_RELAXED.exists() else "unrelaxed"
 ROOT = Path(__file__).resolve().parents[1]
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
-QE_RUN_DIR = Path("/home/alchemist/ti3c2_o_her") / FIDELITY
+# QE scratch must stay on the native Linux filesystem, never under /mnt/d
+# (NTFS silently corrupts QE scratch writes) -- see docs/qe_setup.md.
+QE_SCRATCH_ROOT = Path(os.environ.get("QE_SCRATCH_ROOT", "/tmp/qe_scratch"))
+QE_RUN_DIR = QE_SCRATCH_ROOT / "ti3c2_o_her" / FIDELITY
 CACHE_DIR = ROOT / "outputs" / "cache"
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -278,7 +281,7 @@ def get_calculator(
     extra_system: dict | None = None,
 ) -> Espresso:
     directory.mkdir(parents=True, exist_ok=True)
-    outdir = outdir or str(Path("/home/alchemist/ti3c2_o_her") / FIDELITY / prefix)
+    outdir = outdir or str(QE_SCRATCH_ROOT / "ti3c2_o_her" / FIDELITY / prefix)
     Path(outdir).mkdir(parents=True, exist_ok=True)
     input_data = _qe_input(prefix, outdir, extra_system)
     kwargs = dict(

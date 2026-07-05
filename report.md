@@ -186,3 +186,43 @@ README.md **was** updated (git-tracked file, doesn't need `gh`) — it turned ou
 Committed as: `fix: GEOMETRY_CRASH misclassifies real check_atoms overlap crash as UNKNOWN` (files: `actistruct/debug/classifier.py`, `tests/test_debugging.py`, `README.md`, `CHANGELOG.md`).
 
 **Gate status: PASS, with one open item for Rifat** — GitHub Release description still needs `gh`-based editing (§0.9/§4.6), not done this cycle. Everything else in Phase 1 is complete with real, measured, passing output. Proceeding to Phase 2.
+
+## Phase 2 — LF Grid Campaign
+
+### 5.1 Pre-flight dry run — BLOCKED (missing input structure, not fixable this cycle)
+
+Before attempting `--dry-run`, ran `ensure_environment()` from `examples/manual_qe/ti3c2_o_her_qe_active_inverse.py` directly to validate the environment. Found and fixed **one real, independent bug** first, then hit a **second, hard blocker** that stops all of Phase 2/3.
+
+**Bug found and fixed:** `QE_RUN_DIR` (module-level) and the `outdir` default inside `get_calculator()` were both hardcoded to `/home/alchemist/ti3c2_o_her/...` — a different user's home directory from a different machine. On this machine (user `duets`), this fails immediately at import time:
+```
+FileNotFoundError: [Errno 2] No such file or directory: '/home/alchemist/ti3c2_o_her'
+PermissionError: [Errno 13] Permission denied: '/home/alchemist'
+```
+This also violated the plan's own NTFS-scratch rule (§0.3: QE outdir must be under `/tmp/qe_{prefix}`, never `/mnt/d/...` — and while `/home/alchemist` isn't NTFS, it's still a hardcoded, non-portable, non-`/tmp` path). **Fixed:** both now resolve from `QE_SCRATCH_ROOT = Path(os.environ.get("QE_SCRATCH_ROOT", "/tmp/qe_scratch"))`, matching the plan's own environment map (§2) naming convention. Re-ran `pytest -q` after the fix: **129 passed**, no regressions (this script has no direct test coverage, but the fix touches no other module).
+
+**Hard blocker — cannot proceed:** after that fix, the *real* environment check surfaces:
+```
+FileNotFoundError: Slab traj not found: /mnt/d/Rifat/Research/actistruct_nebwalk/mxenes/structures/ti3c2_o_slab.traj. Build it with build_ti3c2_slabs.py or wait for relax to complete.
+```
+This is the actual 28-atom relaxed Ti3C2-O slab structure the whole Phase 2/3 campaign is built on — and it does not exist anywhere on this machine. Searched exhaustively before concluding this:
+- `find /mnt/d -iname "ti3c2_o_slab*"` → no matches anywhere on the D: drive.
+- `/mnt/d/Rifat/Research/actistruct_nebwalk/` (the hardcoded parent dir) → does not exist at all; this machine's equivalent research directory is `/mnt/d/Rifat_kh/...`, not `/mnt/d/Rifat/Research/...` — looks like this path is a holdover from a different machine/user where the original "verified JOB DONE 2026-07-03" run (cited in README) was actually performed, or from wherever the relax job mentioned in the code comment ("wait for relax to complete") is/was running.
+- `demo_ti3c2_o.py` (the repo's own no-QE demo) references the **identical** hardcoded path and has a graceful synthetic-slab fallback for exactly this situation — confirming this is a known, anticipated gap, not a new one I introduced.
+- Checked `/mnt/d/Rifat_kh/ActiStruct-main_OLD_BACKUP_20260704` (an old backup dir) for the traj file — not present.
+- Found a `build_ti3c2_slabs.py`-*shaped* capability elsewhere on the machine: `/mnt/d/Rifat_kh/nebwalk_universal/MXenes/mxene_builders.py` (plus `build_ti3c2o2_h_hcp.py` etc.) — **deliberately not used.** This code belongs to the **nebwalk** project's NEB pipeline (hcp-to-hcp hop endpoints for Ti3C2O2/F2/OH2, `qe_neb_common.py`, directories literally named `*_qe_neb_*`). Per §0.6 of this plan, NEB code paths are explicitly scope-locked-out this cycle ("do not run it, do not helpfully extend it") — and separately, it builds a different structure anyway (Ti3C2**O2** symmetric-termination NEB hop endpoints, not the single-side-terminated, bottom-3-layers-fixed, 28-atom 2×2 adsorption slab this oracle script expects), so substituting it would silently change the physical system under study.
+- Also found `/mnt/d/Rifat_kh/mxene_sac_co2rr/data/raw/mxene_db/contcars/.../CONTCAR_Ti3C2O2` — VASP CONTCAR files from an unrelated external MXene screening database (different DFT code, different termination/supercell convention, no established relationship to this project). Not used, for the same reason: no basis to assume compatibility, and using it would misrepresent what "Ti3C2-O, verified" means in this repo.
+
+**I did not attempt to build a substitute slab structure myself.** Constructing a "verified" 28-atom Ti3C2-O(0001) 2×2 slab from scratch (lattice parameters, O-termination site geometry, vacuum, relaxation) without the original — or a documented, equivalent, in-scope construction path — would silently redefine the physical system the README's existing "JOB DONE" claims refer to. This is exactly the kind of ambiguity the plan says to treat as **NEEDS HUMAN DECISION** rather than guess at.
+
+**STOP — per §1 of the plan.** This blocks all of Phase 2 (LF grid campaign), and therefore Phase 3 (AL loop, which consumes Phase 2's real energies) and Phase 4 (ablation, which consumes Phase 3's output). No DFT was run. No energies were fabricated.
+
+**What Rifat needs to resolve before this can continue:**
+1. Where is the original `ti3c2_o_slab.traj` (and `ti3c2_o_slab_relaxed.traj`)? Likely candidates: a different machine/WSL instance where the 2026-07-03 "JOB DONE" run actually happened, a cloud/cluster path, or a local backup not yet found.
+2. If it's genuinely gone, is there an agreed, in-scope way to regenerate it (e.g., a documented builder specific to ActiStruct's exact slab convention — 2×2, 28 atoms, bottom-3-layers-fixed, single-side O-termination — not the nebwalk NEB endpoint builder)?
+3. Once the file (or a path to it) is available, `_MXENE_ROOT` in the oracle script (and in `demo_ti3c2_o.py`) should be made overridable via an env var rather than hardcoded, so this doesn't recur on a third machine.
+
+### Work completed and committed despite the blocker
+- Fixed the `/home/alchemist/...` → `QE_SCRATCH_ROOT`-based path bug (independent, real fix, safe regardless of how the slab-file question resolves).
+- `pytest -q`: 129 passed, 0 warnings (unchanged from Phase 1, confirming no regression).
+
+**Gate status: BLOCKED at Phase 2 (§1 stop condition — required input data missing, no safe/in-scope way to resolve it autonomously).** Per §10 of the plan: halting entirely here. Phases 3, 4, 5 (including the branch push) are **not** attempted. All work above is committed locally to `main` (not pushed) pending Rifat's review of this section.
