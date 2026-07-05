@@ -42,9 +42,14 @@ class DFTFailureAnalyzer:
         # log and discard (needs human review of structure).
         # NOTE: "bfgs failed" = optimizer gave up; "Maximum number of
         # iterations reached" at the ionic level = geometry didn't relax.
+        # "check_atoms" = QE 7.x's actual routine name when two atoms
+        # overlap (real wording is "atoms # N and # M overlap!", not
+        # "atoms too close" — verified against 180 real .pwo logs from
+        # bulk_li2nav2po43, none of which co-occur with JOB DONE).
         # Do NOT add "Broyden" or "linmin" here — those appear in normal runs.
         "GEOMETRY_CRASH": (
             r"atoms\s+too\s+close"
+            r"|check_atoms"
             r"|bfgs\s+failed"
             r"|Maximum\s+number\s+of\s+iterations\s+reached[^\n]*stopping"
         ),

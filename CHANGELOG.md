@@ -2,6 +2,20 @@
 
 All notable changes to ActiStruct are documented here.
 
+## Unreleased
+
+### Fixed
+
+- **`DFTFailureAnalyzer` GEOMETRY_CRASH pattern** (`actistruct/debug/classifier.py`):
+  real QE 7.4.1 output for an atom-overlap crash reads `Error in routine
+  check_atoms (1): atoms # 1 and # 2 overlap!`, not `atoms too close` as the
+  existing pattern assumed. Found by running the classifier against 180 real
+  `.pwo` logs from a legacy `bulk_li2nav2po43` grid campaign, all of which
+  were being misclassified as `UNKNOWN` instead of `GEOMETRY_CRASH`. Added
+  `check_atoms` to the pattern; pinned with a regression test
+  (`tests/test_debugging.py::test_geometry_crash_atoms_overlap_check_atoms_routine`).
+  129 tests now pass (was 128).
+
 ## v2.0.0 - 2026-07-04
 
 ### Added

@@ -54,6 +54,14 @@ _GEOMETRY_CRASH_OUTPUT = """\
      stopping ...
 """
 
+_GEOMETRY_CRASH_ATOMS_OVERLAP_OUTPUT = """\
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine check_atoms (1):
+     atoms #   1 and #   2 overlap!
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     stopping ...
+"""
+
 _BFGS_EXHAUSTED_OUTPUT = """\
      Maximum number of iterations reached without convergence — stopping
 """
@@ -91,6 +99,13 @@ class TestDFTFailureAnalyzer:
 
     def test_geometry_crash_bfgs_exhausted(self):
         result = self.analyzer.classify(_BFGS_EXHAUSTED_OUTPUT)
+        assert result == "GEOMETRY_CRASH", f"Got: {result}"
+
+    def test_geometry_crash_atoms_overlap_check_atoms_routine(self):
+        """Regression: real QE 7.4.1 wording is "atoms # N and # M overlap!"
+        via routine check_atoms, not "atoms too close" — found via a real
+        .pwo log from bulk_li2nav2po43 (was previously classified UNKNOWN)."""
+        result = self.analyzer.classify(_GEOMETRY_CRASH_ATOMS_OVERLAP_OUTPUT)
         assert result == "GEOMETRY_CRASH", f"Got: {result}"
 
     def test_geometry_crash_not_retryable(self):

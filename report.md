@@ -90,4 +90,99 @@ Two untracked files already physically present in `ActiStruct-main` (not from le
 
 (commit hash logged below once created.)
 
+Commit `54bdce9` — "Phase 0: reconcile legacy data/tests/examples from inverse_active". Local `main` is now 1 commit ahead of `origin/main`; **not pushed** (push happens only in Phase 5, to a new branch, per §7/§8).
+
 **Gate status: PASS.** Proceeding to Phase 1.
+
+## Phase 1 — Cheap Validation
+
+### 4.1 Test suite
+
+```
+$ python3 -m venv .venv && source .venv/bin/activate
+$ pip install -r requirements.txt -q
+$ pip install -e ".[test]" -q
+$ python3 -c "import actistruct; print(actistruct.__file__)"
+/mnt/d/Rifat_kh/ActiStruct-main/actistruct/__init__.py
+
+$ pytest -q
+........................................................................ [ 56%]
+........................................................                 [100%]
+128 passed in 64.63s (0:01:04)
+```
+128 passed, 0 warnings — exact match to the number already claimed in README.md before this cycle.
+
+### 4.2 Parser validation against real logs
+
+Used the real function name found in `actistruct/parsers/qe.py` — `parse_qe_output_file(output_path, input_path=None, material_id=None)` (the plan's guessed name `parse_qe_output` doesn't exist; this is the actual API).
+
+Ran against 2 real `.pwo` files from `inverse_active/outputs/qe_runs/`:
+
+```
+>>> parse_qe_output_file(".../h2_r0p620000_pid237608_attempt1/espresso.pwo")
+QEReliabilityRecord(converged=True, job_done=True, scf_iterations=7,
+  final_energy_ry=-2.30394668, energy_ev=-31.34679149982086, max_force=0.38896,
+  pressure_kbar=2.31, wall_time='6.65s WALL', failure_reason=None,
+  pseudo_family='PSLibrary', pseudopotentials={'H': 'H.pbe-rrkjus_psl.1.0.0.UPF'}, ...)
+
+>>> parse_qe_output_file(".../h2_r0p774544_pid237717_attempt3/espresso.pwo")
+QEReliabilityRecord(converged=False, job_done=False, scf_iterations=None,
+  final_energy_ry=None, failure_reason='job_not_completed', ...)
+```
+Both parse correctly — no crash, no fix needed. (Note: the second log's underlying failure is an Open MPI "not enough slots" infrastructure error — `pw.x` never started — not a DFT failure; correctly reported as an incomplete job.)
+
+### 4.3 Failure classifier validation — BUG FOUND AND FIXED
+
+Searched for a genuine DFT-level failure (not infra) log: `grep -rl "Error in routine\|convergence NOT achieved" outputs/qe_runs*` found 180 real logs under `inverse_active/outputs/qe_runs_bulk_li2nav2po43/*` with:
+```
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine check_atoms (1):
+     atoms #   1 and #   2 overlap!
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     stopping ...
+```
+A human reading this log concludes GEOMETRY_CRASH (two atoms overlapping is a structure problem, not an electronic-parameter one). `DFTFailureAnalyzer().classify(text)` returned **`UNKNOWN`** instead — the existing `GEOMETRY_CRASH` pattern only matched the string `"atoms too close"`, but real QE 7.4.1 output for this failure mode is `"atoms # N and # M overlap!"` via the `check_atoms` routine, which never occurred in the codebase's test fixtures.
+
+Verified before fixing: `check_atoms` appears in 180 `.pwo`/`CRASH` files, none of which contain `JOB DONE` — safe to add without risking a false positive on successful runs (per the module's own calibration-note discipline).
+
+**Fix applied** (`actistruct/debug/classifier.py`): added `check_atoms` to the `GEOMETRY_CRASH` regex alternation. Re-classified the same log → now correctly returns `GEOMETRY_CRASH`.
+
+**Test added** (`tests/test_debugging.py`): `test_geometry_crash_atoms_overlap_check_atoms_routine`, using a fixture built from the real log text above, pinning the fix.
+
+Re-ran full suite after the fix:
+```
+$ pytest -q
+........................................................................ [ 55%]
+.........................................................                [100%]
+129 passed in 61.94s (0:01:01)
+```
+129 passed, 0 warnings (128 + 1 new test, no regressions).
+
+### 4.4 Escalation strategy code inspection (`actistruct/debug/strategies.py`)
+
+All four checks confirmed directly from source, no fix needed:
+1. **Group 4 sets `electron_maxstep=300`** (line 69) — confirmed, and the code comment explicitly documents this is deliberately 300, not the 40 mentioned in an early blueprint draft (40 would be below QE's own default of 100 and make convergence *harder*).
+2. **Groups are cumulative** — confirmed by code (`self._applied` dict accumulates across all `next_input()` calls; each call re-merges `base + all applied groups so far`), and by the passing `test_actions_are_cumulative_by_attempt_3` test.
+3. **`nspin` is never modified anywhere in this file** — confirmed; no reference to `nspin` exists in `_GROUPS`, and the module docstring explicitly states "Do NOT touch nspin automatically."
+4. **`Broyden`/`linmin` excluded from `GEOMETRY_CRASH`** — confirmed in `classifier.py`; the pattern has no such terms, and `test_success_bfgs_not_misclassified_as_geometry_crash` passes.
+
+### 4.5 Pseudopotential inventory check
+
+```
+$ ls $ESPRESSO_PSEUDO | grep -i "^ti_\|^c\.\|^o\.\|^h\."
+ti_pbe_v1.4.uspp.F.UPF
+C.pbe-n-kjpaw_psl.1.0.0.UPF
+O.pbe-n-kjpaw_psl.0.1.UPF
+H.pbe-rrkjus_psl.1.0.0.UPF
+```
+Exact filenames match what the Ti3C2-O oracle script expects. Mixed USPP(Ti)+PAW(C,O)+USPP(H) family confirmed present as-is; not "fixed" to a single family, per the plan's explicit instruction not to.
+
+### 4.6 Fix stale public metadata
+
+**BLOCKED (partial, narrow — not a full-pipeline stop):** `gh` CLI is **not installed** in this environment (checked WSL PATH, Git Bash PATH, and Windows PATH — not found anywhere), contrary to the plan's assumption that it was "already authenticated." Per the plan's own instruction ("Do not hand-edit via API calls that aren't `gh`"), I did **not** attempt a workaround via raw GitHub API calls. **The GitHub Release description was not touched.** This needs either `gh` installed + authenticated, or Rifat editing the release manually.
+
+README.md **was** updated (git-tracked file, doesn't need `gh`) — it turned out to already be accurate (a prior commit, `7ae889a "docs: clean README, pyproject, CITATION for v2.0.0"`, had already removed the stale 51-workflow/24-scalar/0.68% MAPD figures the plan warned about). The only stale number left was the test count, now corrected in 4 places (128 → 129) to match the measured count after the classifier fix. Added a matching `## Unreleased` entry to `CHANGELOG.md` documenting the fix.
+
+Committed as: `fix: GEOMETRY_CRASH misclassifies real check_atoms overlap crash as UNKNOWN` (files: `actistruct/debug/classifier.py`, `tests/test_debugging.py`, `README.md`, `CHANGELOG.md`).
+
+**Gate status: PASS, with one open item for Rifat** — GitHub Release description still needs `gh`-based editing (§0.9/§4.6), not done this cycle. Everything else in Phase 1 is complete with real, measured, passing output. Proceeding to Phase 2.
