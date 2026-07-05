@@ -186,3 +186,67 @@ def build_co2feal(a: float) -> Atoms:
     atoms = Atoms("Co2FeAl", cell=[a, a, a], pbc=True)
     atoms.set_scaled_positions([[0.0, 0.0, 0.0], [0.5, 0.5, 0.5], [0.25, 0.25, 0.25], [0.75, 0.75, 0.75]])
     return atoms
+
+
+def build_ti3c2o2_slab(
+    a: float = 3.061,
+    ti_c_bond: float = 2.164,
+    ti_o_bond: float = 2.000,
+    vacuum: float = 22.0,
+    supercell: tuple[int, int, int] = (2, 2, 1),
+) -> Atoms:
+    """Ti3C2O2 (double-side O-terminated Ti3C2Tx) MXene slab, hexagonal P-6m2.
+
+    Derived the way these MXenes are physically understood to form: a 5-layer
+    Ti-C-Ti-C-Ti core cut from rock-salt TiC along (111) (which naturally gives
+    the right edge-sharing-octahedral Ti-C connectivity), plus O termination
+    continuing the same ABC-type stacking one layer further out on each face
+    (the site vacated by the MAX-phase A-element during etching).
+
+    In-plane hollow-site convention matches build_mx2/build_graphene_like in
+    this module: A=(0,0), B=(1/3,2/3), C=(2/3,1/3). Middle Ti sits at A; both
+    C layers at B; both outer Ti layers at C (continuing the stacking); both
+    terminal O layers back at A (directly over the far Ti layer -- the
+    commonly reported low-energy hcp-hollow O site for Ti3C2O2).
+
+    Default a=3.061 A and ti_c_bond=2.164 A correspond to a TiC rock-salt
+    lattice constant of 4.328 A (close to bulk TiC's ~4.33 A); ti_o_bond
+    defaults to 2.000 A, matching the Ti-O bond length this repo's Ti3C2-O
+    oracle script documents. These are literature-typical starting values,
+    not final numbers -- the resulting slab is meant to be relaxed via QE/BFGS
+    before use as a static reference energy.
+    """
+    r_hollow = a / np.sqrt(3.0)  # distance from a lattice site to an adjacent 3-fold hollow centroid
+    dz_tic = np.sqrt(float(ti_c_bond) ** 2 - r_hollow ** 2)
+    dz_tio = np.sqrt(float(ti_o_bond) ** 2 - r_hollow ** 2)
+
+    z_c = dz_tic
+    z_ti_outer = z_c + dz_tic
+    z_o = z_ti_outer + dz_tio
+
+    symbols = ["O", "Ti", "C", "Ti", "C", "Ti", "O"]
+    z_offsets = [-z_o, -z_ti_outer, -z_c, 0.0, z_c, z_ti_outer, z_o]
+    xy_sites = [
+        (0.0, 0.0),        # O (bottom)  -- site A, over middle Ti
+        (2.0 / 3.0, 1.0 / 3.0),  # Ti (bottom, outer) -- site C
+        (1.0 / 3.0, 2.0 / 3.0),  # C (bottom) -- site B
+        (0.0, 0.0),        # Ti (middle) -- site A
+        (1.0 / 3.0, 2.0 / 3.0),  # C (top) -- site B
+        (2.0 / 3.0, 1.0 / 3.0),  # Ti (top, outer) -- site C
+        (0.0, 0.0),        # O (top) -- site A, over middle Ti
+    ]
+
+    atoms = Atoms(
+        "".join(symbols),
+        cell=[
+            [a, 0.0, 0.0],
+            [-0.5 * a, 0.5 * np.sqrt(3.0) * a, 0.0],
+            [0.0, 0.0, vacuum],
+        ],
+        pbc=(True, True, True),
+    )
+    scaled = [[u, v, 0.5 + dz / vacuum] for (u, v), dz in zip(xy_sites, z_offsets)]
+    atoms.set_scaled_positions(scaled)
+
+    nx, ny, nz = supercell
+    return make_supercell(atoms, [[nx, 0, 0], [0, ny, 0], [0, 0, nz]])

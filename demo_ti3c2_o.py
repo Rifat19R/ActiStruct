@@ -15,6 +15,7 @@ Run:
 """
 from __future__ import annotations
 
+import os
 import tempfile
 import warnings
 from pathlib import Path
@@ -38,7 +39,10 @@ print(SEP)
 
 # -- locate slab ---------------------------------------------------------------
 
-_SLAB_PATH = Path("/mnt/d/Rifat/Research/actistruct_nebwalk/mxenes/structures/ti3c2_o_slab.traj")
+_STRUCTURES_DIR = Path(os.environ.get(
+    "TI3C2_O_STRUCTURES_DIR", str(Path(__file__).resolve().parent / "data" / "structures" / "ti3c2_o")
+))
+_SLAB_PATH = _STRUCTURES_DIR / "ti3c2_o_slab.traj"
 if not _SLAB_PATH.exists():
     print(f"[WARN] Slab traj not found at {_SLAB_PATH}.")
     print("       Falling back to minimal synthetic slab (4-atom hexagonal cell).")

@@ -225,4 +225,40 @@ This is the actual 28-atom relaxed Ti3C2-O slab structure the whole Phase 2/3 ca
 - Fixed the `/home/alchemist/...` → `QE_SCRATCH_ROOT`-based path bug (independent, real fix, safe regardless of how the slab-file question resolves).
 - `pytest -q`: 129 passed, 0 warnings (unchanged from Phase 1, confirming no regression).
 
-**Gate status: BLOCKED at Phase 2 (§1 stop condition — required input data missing, no safe/in-scope way to resolve it autonomously).** Per §10 of the plan: halting entirely here. Phases 3, 4, 5 (including the branch push) are **not** attempted. All work above is committed locally to `main` (not pushed) pending Rifat's review of this section.
+**Gate status: BLOCKED at Phase 2 (§1 stop condition — required input data missing, no safe/in-scope way to resolve it autonomously).** Per §10 of the plan: halting entirely here pending Rifat's review. — *Update below: Rifat instructed regenerating the structure directly, since nothing was found anywhere on the machine. Resuming Phase 2.*
+
+### 5.1 (resumed) — Regenerating the missing Ti3C2-O slab structure
+
+Instruction from Rifat: "If you don't find any files, scripts, or data please regenerate them yourself." Built the structure independently rather than reusing anything from the scope-locked-out `nebwalk` NEB code (§0.6) or the unrelated `mxene_sac_co2rr` external database (no established compatibility).
+
+**Construction** (`generated_models/structure_builders.py:build_ti3c2o2_slab`, added alongside this repo's existing in-house builders — `build_mx2`, `build_graphene_like` — reusing their exact hexagonal-cell / 3-fold-hollow-site convention): a Ti3C2O2 (double-side O-terminated) slab derived the way these MXenes actually form physically — a 5-layer Ti-C-Ti-C-Ti core cut from rock-salt TiC along (111) (giving the correct edge-sharing-octahedral Ti-C connectivity for free), plus O termination continuing the same ABC-type stacking one layer further out on each face (the site vacated by the MAX-phase A-element during etching — also the commonly-reported low-energy hcp-hollow O site in the Ti3C2O2 DFT literature). Targeted this repo's *own already-documented* bond lengths (oracle script docstring: Ti-C ~2.1 Å, Ti-O ~2.0 Å) rather than picking arbitrary values.
+
+Verified before saving anything (`ase.geometry.get_distances`, no QE needed):
+```
+Formula: C8O8Ti12 (28 atoms)          # = 4x Ti3C2O2, matches 2x2 supercell
+Unique z layers: 7                     # O,Ti,C,Ti,C,Ti,O -- matches n_fixed_layers=3 convention
+Min Ti-C distance: 2.164 A             # target ~2.1 A
+Min Ti-O distance: 2.000 A             # target ~2.0 A (exact)
+Min Ti-Ti distance: 3.060 A            # = lattice constant a, correct in-plane NN
+Global min distance (any pair): 2.000 A  # no spurious overlaps
+```
+
+**Two more independent, real bugs found and fixed while wiring this in** (both pre-existing, not introduced by this cycle):
+1. `_MXENE_ROOT` (oracle script) and `_SLAB_PATH` (`demo_ti3c2_o.py`) were both hardcoded to the same broken `/mnt/d/Rifat/Research/actistruct_nebwalk/mxenes` path. **Fixed:** both now resolve from a new `TI3C2_O_STRUCTURES_DIR` env var, defaulting to `<repo>/data/structures/ti3c2_o` (the new structure lives there).
+2. `ROOT = Path(__file__).resolve().parents[1]` in the oracle script only climbs to `examples/`, not the repo root — `parents[2]` is needed from `examples/manual_qe/<file>.py`. This silently would have written `outputs/cache/`, `outputs/plots/`, `outputs/reports/` under `examples/outputs/...` instead of the top-level `outputs/` the README and `.gitignore` both target (confirmed via `git log --all -- examples/outputs` and `-- outputs/cache`: zero prior commits touch either, and `examples/manual_qe/README.md` explicitly documents `outputs/cache/` at the repo root) — never triggered before because no run had gotten this far. **Fixed:** `parents[2]`. Verified: `ROOT`, `CACHE_DIR`, `QE_RUN_DIR` now all resolve correctly relative to the actual repo root.
+
+New script: `examples/manual_qe/build_ti3c2_o_slab.py` — builds + saves the unrelaxed slab, then (unless `--no-relax`) runs a real QE ionic relaxation reusing the oracle's own `get_calculator`/`run_energy` machinery for consistency (same fixed-bottom-3-layers convention, same LF settings).
+
+Re-verified after all fixes:
+```
+$ python3 examples/manual_qe/build_ti3c2_o_slab.py --no-relax
+Built unrelaxed slab: C8O8Ti12 (28 atoms) -> /mnt/d/Rifat_kh/ActiStruct-main/data/structures/ti3c2_o/ti3c2_o_slab.traj
+
+$ python3 -c "import examples.manual_qe.ti3c2_o_her_qe_active_inverse as m; m.ensure_environment(); print('ENVIRONMENT OK')"
+ENVIRONMENT OK
+
+$ pytest -q
+129 passed in 60.63s   # no regressions (one isolated ConvergenceWarning flake seen once, gone on 2 immediate reruns -- pre-existing GP-fit flakiness unrelated to these changes, not chased further)
+```
+
+Proceeding to: real QE ionic relaxation of the clean slab (§5.1 continued), then the 6-site LF grid campaign proper.

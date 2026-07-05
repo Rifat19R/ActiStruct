@@ -83,15 +83,21 @@ if FIDELITY not in ("low", "high"):
 
 # -- paths ---------------------------------------------------------------------
 
-_MXENE_ROOT = Path("/mnt/d/Rifat/Research/actistruct_nebwalk/mxenes")
-_SLAB_RELAXED = _MXENE_ROOT / "structures" / "ti3c2_o_slab_relaxed.traj"
-_SLAB_UNRELAXED = _MXENE_ROOT / "structures" / "ti3c2_o_slab.traj"
+# parents[2]: script is at <repo>/examples/manual_qe/<file>.py, so parents[1]
+# would land on examples/, not the repo root outputs/.gitignore rules target.
+ROOT = Path(__file__).resolve().parents[2]
+
+# Overridable so this doesn't hardcode one machine's home/data layout (was
+# /mnt/d/Rifat/Research/actistruct_nebwalk/mxenes -- a different user/machine
+# path that doesn't exist here). Defaults to an in-repo location built by
+# generated_models/structure_builders.py:build_ti3c2o2_slab().
+_MXENE_ROOT = Path(os.environ.get("TI3C2_O_STRUCTURES_DIR", str(ROOT / "data" / "structures" / "ti3c2_o")))
+_SLAB_RELAXED = _MXENE_ROOT / "ti3c2_o_slab_relaxed.traj"
+_SLAB_UNRELAXED = _MXENE_ROOT / "ti3c2_o_slab.traj"
 
 # Use relaxed slab if available (relax job is running); fall back to ASE-built.
 SLAB_TRAJ = _SLAB_RELAXED if _SLAB_RELAXED.exists() else _SLAB_UNRELAXED
 SLAB_LABEL = "relaxed" if _SLAB_RELAXED.exists() else "unrelaxed"
-
-ROOT = Path(__file__).resolve().parents[1]
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
 # QE scratch must stay on the native Linux filesystem, never under /mnt/d
@@ -671,7 +677,8 @@ def ensure_environment() -> None:
     if not SLAB_TRAJ.exists():
         raise FileNotFoundError(
             f"Slab traj not found: {SLAB_TRAJ}. "
-            "Build it with build_ti3c2_slabs.py or wait for relax to complete."
+            "Build it with examples/manual_qe/build_ti3c2_o_slab.py, or set "
+            "TI3C2_O_STRUCTURES_DIR to point at an existing structures dir."
         )
 
 
