@@ -677,8 +677,8 @@ def ensure_environment() -> None:
     if not SLAB_TRAJ.exists():
         raise FileNotFoundError(
             f"Slab traj not found: {SLAB_TRAJ}. "
-            "Build it with examples/manual_qe/build_ti3c2_o_slab.py, or set "
-            "TI3C2_O_STRUCTURES_DIR to point at an existing structures dir."
+            "Build it with `python -m examples.manual_qe.build_ti3c2_o_slab`, "
+            "or set TI3C2_O_STRUCTURES_DIR to point at an existing structures dir."
         )
 
 

@@ -262,3 +262,27 @@ $ pytest -q
 ```
 
 Proceeding to: real QE ionic relaxation of the clean slab (§5.1 continued), then the 6-site LF grid campaign proper.
+
+### 5.1 (resumed) — Real QE ionic relaxation of the clean slab
+
+Launched `python -m examples.manual_qe.build_ti3c2_o_slab` (background, `-np 1`, per §0.2 of the plan) at 16:13. **Note on machine load:** an unrelated QE job (`mpirun -np 2 pw.x ... F_Sc_field.in`) was already running on this machine, started the previous day, unrelated to this cycle. Confirmed before proceeding (Rifat's explicit instruction) that there was sufficient headroom to run alongside it without crash risk: 6 CPU cores total (2 in use by the other job, 3 idle even with mine running), ~9 GB of 16 GB RAM free. Left that job untouched throughout.
+
+BFGS relaxation log (bottom 3 atomic layers fixed, top layers free, `fmax` convergence threshold 0.05 eV/Å, same convention as the oracle's per-(u,v)-point relaxation):
+```
+      Step     Time          Energy          fmax
+BFGS:    0 16:31:29   -26041.156122        0.946307
+BFGS:    1 16:50:38   -26041.201320        0.561196
+BFGS:    2 17:10:43   -26041.227373        0.193899
+BFGS:    3 17:29:37   -26041.233040        0.211157
+BFGS:    4 17:49:46   -26041.267157        0.350763
+BFGS:    5 18:09:10   -26041.281870        0.304046
+BFGS:    6 18:29:33   -26041.291315        0.164101
+BFGS:    7 18:49:25   -26041.294976        0.106458
+BFGS:    8 19:09:47   -26041.297186        0.068463
+BFGS:    9 19:28:28   -26041.297821        0.028170
+```
+QE-level `JOB DONE` confirmed on the final step (`grep "JOB DONE" espresso.pwo`), total energy `-1914.00025444 Ry` = `-26041.297821 eV` (matches BFGS log). Converged: fmax=0.028 eV/Å < 0.05 threshold, 10 BFGS steps, **real wall time ≈3h15m** (16:13→19:28).
+
+**Absolute energy does not match the README's previous figure (-25973.017 eV) — expected, not a red flag.** That number was measured on the original `ti3c2_o_slab_relaxed.traj`, which no longer exists anywhere on this machine (§Phase 2 investigation above). This is an independently-reconstructed structure (§5.1 resumed, above) — a different geometry realization of the same nominal material. Absolute DFT total energies are not physically meaningful to compare across two independently-built structure files (they depend on the exact atom count/positions/cell, not just the nominal composition); only energy *differences* computed self-consistently within one structure are meaningful (which is exactly what ΔG_H = E(slab+H) - E(slab) - 0.5·E(H2) + correction is — every term will now be computed against *this* structure, consistently). Updated README (3 locations) to cite the new, real, regenerated-structure number instead of the old unreproducible one.
+
+`ti3c2_o_slab_relaxed.traj` saved to `data/structures/ti3c2_o/`. Ready for the 6-site LF grid campaign.

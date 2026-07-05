@@ -15,9 +15,10 @@ machine/environment and are not present here. This script regenerates them:
 
 Output directory: $TI3C2_O_STRUCTURES_DIR, default <repo>/data/structures/ti3c2_o.
 
-Run:
-    python examples/manual_qe/build_ti3c2_o_slab.py            # build + relax
-    python examples/manual_qe/build_ti3c2_o_slab.py --no-relax # build only
+Run (as a module, from the repo root -- needed for the cross-import of the
+oracle script; examples/ has no __init__.py so a direct script path fails):
+    python -m examples.manual_qe.build_ti3c2_o_slab            # build + relax
+    python -m examples.manual_qe.build_ti3c2_o_slab --no-relax # build only
 """
 from __future__ import annotations
 
