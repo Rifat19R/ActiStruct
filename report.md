@@ -286,3 +286,31 @@ QE-level `JOB DONE` confirmed on the final step (`grep "JOB DONE" espresso.pwo`)
 **Absolute energy does not match the README's previous figure (-25973.017 eV) — expected, not a red flag.** That number was measured on the original `ti3c2_o_slab_relaxed.traj`, which no longer exists anywhere on this machine (§Phase 2 investigation above). This is an independently-reconstructed structure (§5.1 resumed, above) — a different geometry realization of the same nominal material. Absolute DFT total energies are not physically meaningful to compare across two independently-built structure files (they depend on the exact atom count/positions/cell, not just the nominal composition); only energy *differences* computed self-consistently within one structure are meaningful (which is exactly what ΔG_H = E(slab+H) - E(slab) - 0.5·E(H2) + correction is — every term will now be computed against *this* structure, consistently). Updated README (3 locations) to cite the new, real, regenerated-structure number instead of the old unreproducible one.
 
 `ti3c2_o_slab_relaxed.traj` saved to `data/structures/ti3c2_o/`. Ready for the 6-site LF grid campaign.
+
+### 5.2 Real grid — 5 seed sites
+
+**Deviation from the plan, logged per its own "do not invent coordinates" instruction:** the plan specified "6 fixed (u,v) sites: 3 atop, 2 hollow, 1 bridge." The oracle script's actual `CONFIG.initial_points` (its own existing candidate defaults, unchanged by this cycle) defines **5** points, not 6, labeled `atop Ti / bridge / hollow A / hollow B / (unlabeled)`. Used exactly these 5, via a new driver (`examples/manual_qe/run_ti3c2_o_grid_campaign.py`) that reuses the oracle's own labeling-loop code verbatim, deliberately stopping before the AL iteration loop so Phase 2 and Phase 3 stay separately gated.
+
+Ran `python -m examples.manual_qe.run_ti3c2_o_grid_campaign` (`-np 1`, background). All 5 completed with real `JOB DONE` output:
+
+| Site | (u,v) requested | (u,v) used | ΔG_H (eV) | Wall time | Status |
+|---|---|---|---:|---:|---|
+| 0 | (0.0000, 0.0000) "atop Ti" | (0.0000, 0.0000) | -0.758215 | 7h52m | JOB DONE |
+| 1 | (0.5000, 0.0000) "bridge" | (0.5000, 0.0000) | -0.758254 | 7h42m | JOB DONE |
+| 2 | (0.3333, 0.3333) "hollow A" | (0.3333, 0.3333) | -0.757209 | 20h13m | JOB DONE |
+| 3 | (0.6667, 0.6667) "hollow B" | (0.6667, 0.6667) | -0.756949 | 19h52m | JOB DONE |
+| 4 | (0.5000, 0.5000) | (0.5000, 0.5000) | -0.758235 | 7h39m | JOB DONE |
+
+Total wall time: ~63.3 hours (5/5 sites, no failures, no retries triggered).
+
+**Important finding — flag before proceeding to Phase 3, not a routine pass.** All 5 sites converge to essentially the *same* ΔG_H (spread of 1.3 meV across the full set) — chemically implausible for genuinely different adsorption sites (atop/bridge/hollow normally differ by tens–hundreds of meV). Investigated directly rather than accepting the "5/5 JOB DONE" summary at face value:
+
+1. **Checked final relaxed H positions** (`bfgs.traj`, last frame, for all 5 runs): sites 0/1/4 (started at (0,0), (0.5,0), (0.5,0.5)) did not move laterally during relaxation. Sites 2/3 (the two "hollow" starting points, (1/3,1/3) and (2/3,2/3)) **drifted during BFGS relaxation to (≈0.50, ≈0.50)** — i.e. all 5 runs converge to the *same* final adsorption geometry regardless of where H started.
+2. **Checked the O sublattice** in the relaxed clean slab: terminal O atoms sit at fractional (u,v) = (0,0), (0,0.5), (0.5,0), (0.5,0.5) — exactly the periodic images of the single O site in the 1×1 cell, replicated by the 2×2 supercell. **Three of the five "initial_points" — (0,0), (0.5,0), (0.5,0.5) — are not atop/bridge/hollow at all; they are three symmetry-equivalent images of the same atop-O site.** The code's own inline comments (`# atop Ti`, `# bridge`) describe positions relative to the underlying Ti lattice (standard MXene site nomenclature), but because this structure's O termination sits directly in the same (u,v) column as the middle Ti layer (§5.1's build recipe — the commonly-cited literature hcp-hollow O site), "atop Ti" and "atop O" coincide here.
+3. **Checked H-O bond distance at convergence:** 0.973-0.974 Å in all 5 runs — essentially a covalent O-H bond length (free OH radical/hydroxyl ~0.97 Å), not a physisorbed/weak contact. Chemically coherent explanation: H adsorption on this O-terminated surface converts terminal =O into a surface -OH group (well-documented for O-terminated MXenes), and that covalent bond formation is a strong enough downhill gradient that BFGS drags H to the nearest available O regardless of where it started within roughly half a lattice constant.
+
+**What this means for Phase 3:** the current `CONFIG.initial_points`, combined with this structure's O termination choice, do not sample distinct adsorption chemistry in this 2×2 supercell — they alias to "the same atop-O site" (3 of 5 points) or relax into it anyway (the other 2). ΔG_H ≈ -0.757 to -0.758 eV is a real, converged, chemically coherent number (strong H binding via O-H bond formation — notably *far* from thermoneutral, which itself is a legitimate HER-relevant finding: this uniform, strongly exothermic binding would predict H desorption/Volmer-Heyrovsky as the likely rate-limiting step, not H adsorption). But feeding this into Phase 3's GP/LCB active-learning loop as-is would not exercise genuine site-selective learning — the GP would correctly learn "flat, ~-0.758 eV everywhere," converge immediately, and any GNN-vs-plain-GP ablation (Phase 4) would be comparing how fast two methods fit a near-constant function, not a meaningful test of the surrogate framework.
+
+**Not proceeding to Phase 3 without Rifat's input on this.** This is a scientific/experimental-design decision (redesign site sampling to avoid supercell-periodicity aliasing? accept the uniform-binding finding as the real result and reframe Phase 3/4 accordingly? constrain H's lateral relaxation to preserve the (u,v) descriptor's meaning?), not something to silently pick a direction on and continue autonomously.
+
+**Gate status: Phase 2 DFT work complete and real (5/5 JOB DONE, no fabricated numbers). Halting before Phase 3 pending Rifat's direction on the finding above.**
