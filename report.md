@@ -313,4 +313,25 @@ Total wall time: ~63.3 hours (5/5 sites, no failures, no retries triggered).
 
 **Not proceeding to Phase 3 without Rifat's input on this.** This is a scientific/experimental-design decision (redesign site sampling to avoid supercell-periodicity aliasing? accept the uniform-binding finding as the real result and reframe Phase 3/4 accordingly? constrain H's lateral relaxation to preserve the (u,v) descriptor's meaning?), not something to silently pick a direction on and continue autonomously.
 
-**Gate status: Phase 2 DFT work complete and real (5/5 JOB DONE, no fabricated numbers). Halting before Phase 3 pending Rifat's direction on the finding above.**
+**Gate status: Phase 2 DFT work complete and real (5/5 JOB DONE, no fabricated numbers). Halting before Phase 3 pending Rifat's direction on the finding above.** — *Update below: Rifat chose to redesign site sampling (recommended option). Resuming.*
+
+### 5.2 (resumed) — Fixing the site-sampling aliasing
+
+Two changes, both in `examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`:
+
+1. **`add_h_to_slab` now fixes H's lateral (x, y) during relaxation** (`ase.constraints.FixedLine`, z-only), alongside the existing bottom-3-layers `FixAtoms`. Without this, BFGS is free to slide H to the nearest O atom regardless of starting (u,v) — which is exactly what happened to the two hollow-site runs in §5.2. Only H's height and the top slab layers now relax; this is standard practice for site-resolved adsorption PES mapping for precisely this reason.
+2. **`CONFIG.initial_points` replaced** with 5 sites characterized directly against the real relaxed slab (nearest-neighbor survey: distance from each candidate (u,v) to the nearest top-layer O, outer-Ti, and C column), not guessed:
+
+| Site | (u,v) | nearest O | nearest outer-Ti | nearest C | Character |
+|---|---|---:|---:|---:|---|
+| atop-Ti | (1/3, 1/6) | 1.767 Å | 0.000 Å | 1.767 Å | genuinely atop the outer Ti column (distinct from atop-O) |
+| atop-C | (1/6, 1/3) | 1.767 Å | 1.767 Å | 0.000 Å | atop the C column |
+| hollow | (1/12, 1/6) | 0.884 Å | 0.884 Å | 0.883 Å | balanced 3-fold hollow, near-equidistant from all three |
+| O-O bridge | (1/4, 0) | 1.530 Å | 0.884 Å | 2.338 Å | between two O atoms |
+| intermediate | (1/8, 1/8) | 0.765 Å | 0.765 Å | 1.169 Å | partial O proximity, distinct radius from the others |
+
+None of these coincide with the O sublattice's 0.5-periodicity, so they can't alias the way the previous set did. The old `-0.758 eV` atop-O measurement (§5.2 above) stands as the reference point for that motif; not re-measured here since it's already real, converged DFT data.
+
+Sanity-checked before launching: `add_h_to_slab` constraints confirmed correct (`FixAtoms` on the same 12 bottom atoms, `FixedLine` on the new H index only). `pytest -q`: 129 passed, no regressions (no test touches this oracle script directly).
+
+Re-running the 5-site grid campaign now with the fixed methodology.

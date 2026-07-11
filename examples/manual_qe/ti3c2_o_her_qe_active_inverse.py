@@ -60,7 +60,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from ase import Atoms
 from ase.calculators.espresso import Espresso
-from ase.constraints import FixAtoms
+from ase.constraints import FixAtoms, FixedLine
 from ase.io import read as ase_read, write as ase_write
 from ase.optimize import BFGS
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -163,12 +163,24 @@ class Config:
 
     n_u_candidates: int = 7
     n_v_candidates: int = 7
+    # Superseded 2026-07-11 (see report.md Phase 2 finding, 2026-07-08 run):
+    # (0.00,0.00), (0.50,0.00), (0.50,0.50) are symmetry-equivalent images of
+    # the *same* atop-O site in this 2x2 supercell (the O sublattice repeats
+    # with period 0.5 in fractional (u,v)); (1/3,1/3) and (2/3,2/3) are true
+    # hollow starting points but, before the FixedLine constraint on H
+    # (add_h_to_slab), relaxed laterally into that same atop-O site anyway.
+    # All 5 real DFT runs converged to ~-0.758 eV regardless of nominal site.
+    # Replaced with points characterized (via nearest-neighbor survey against
+    # the actual relaxed slab, not guessed) to be genuinely distinct: atop
+    # outer-Ti, atop-C-column, a real 3-fold-balanced hollow, an O-O bridge,
+    # and a partial-O-proximity intermediate site. Combined with the new
+    # FixedLine(H, z-only) constraint, these no longer alias to one another.
     initial_points: tuple = (
-        (0.00, 0.00),           # atop Ti (top layer center)
-        (0.50, 0.00),           # bridge
-        (1.0/3.0, 1.0/3.0),    # hollow A
-        (2.0/3.0, 2.0/3.0),    # hollow B
-        (0.50, 0.50),
+        (1.0/3.0, 1.0/6.0),     # atop outer Ti column
+        (1.0/6.0, 1.0/3.0),     # atop C column
+        (1.0/12.0, 1.0/6.0),    # 3-fold-balanced hollow (~equidistant O/Ti/C)
+        (0.25, 0.00),           # O-O bridge
+        (0.125, 0.125),         # intermediate, partial O proximity
     )
     max_iterations: int = 15
     uncertainty_threshold: float = 0.03     # eV
@@ -221,13 +233,28 @@ def fractional_to_cartesian_xy(atoms: Atoms, u: float, v: float) -> np.ndarray:
 
 
 def add_h_to_slab(slab: Atoms, u: float, v: float) -> Atoms:
-    """Place H at fractional (u, v), CONFIG.h_initial_height above top slab atom."""
+    """Place H at fractional (u, v), CONFIG.h_initial_height above top slab atom.
+
+    H's lateral (x, y) is kept fixed during relaxation (FixedLine, z-only) --
+    without this, BFGS is free to slide H laterally to the nearest O atom
+    (covalent O-H bond formation is a strong downhill gradient on this
+    surface), which erases the (u, v) site descriptor entirely: real runs
+    starting at genuine hollow sites were observed converging onto the
+    nearest atop-O position instead of relaxing in place (see report.md,
+    Phase 2 finding, 2026-07-08). Only H's height and the top slab layers
+    relax; this is standard practice for site-resolved adsorption PES
+    mapping for exactly this reason.
+    """
     atoms = slab.copy()
     xy = fractional_to_cartesian_xy(atoms, u % 1.0, v % 1.0)
     top_z = float(np.max(atoms.positions[:, 2]))
     z_h = top_z + CONFIG.h_initial_height
     atoms += Atoms("H", positions=[[xy[0], xy[1], z_h]])
-    _apply_bottom_constraint(atoms)
+    h_index = len(atoms) - 1
+    atoms.set_constraint([
+        FixAtoms(indices=_bottom_layer_indices(atoms)),
+        FixedLine(indices=[h_index], direction=[0.0, 0.0, 1.0]),
+    ])
     return atoms
 
 
