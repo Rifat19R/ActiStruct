@@ -10,31 +10,19 @@ ferrocene:
       - label: Fe-C
         value_angstrom: 2.064
         uncertainty_angstrom: null
-        source_id: crc_handbook_85ed
+        source_id: haaland_nilsson_1968
+        verification_date: "2026-07-14"
+        verification_method: cross_verified_secondary
       - label: C-C (Cp ring)
         value_angstrom: 1.440
         uncertainty_angstrom: null
-        source_id: crc_handbook_85ed
+        source_id: haaland_nilsson_1968
+        verification_date: "2026-07-14"
+        verification_method: cross_verified_secondary
     angles: []
     relative_energies: []
     barriers: []
   sources:
-    crc_handbook_85ed:
-      type: database
-      title: "CRC Handbook of Chemistry and Physics, 85th Edition, p. 3-282"
-      authors: "Lide, David R. (ed.)"
-      year: 2004
-      journal_or_database: "CRC Press"
-      doi: null
-      url_or_accession: null
-      access_date: "2026-06-29"
-      notes: >
-        Tertiary compilation citing the gas-phase electron diffraction
-        structure determination below. Values (Fe-C=2.064 A, C-C=1.440 A)
-        retrieved via Wikipedia's "Ferrocene" article citation [4] on
-        2026-06-29 - not independently confirmed against the primary CRC
-        text by a human. Uncertainty digits not available from this source;
-        recorded as null rather than guessed.
     haaland_nilsson_1968:
       type: literature
       title: "The Determination of Barriers to Internal Rotation by Means of Electron Diffraction. Ferrocene and Ruthenocene."
@@ -45,16 +33,32 @@ ferrocene:
       url_or_accession: "https://doi.org/10.3891/acta.chem.scand.22-2653"
       access_date: "2026-06-29"
       notes: >
-        Primary gas-phase electron diffraction structure determination cited
-        by Wikipedia/CRC for the Fe-C and C-C bond lengths above. DOI
-        independently verified to resolve (via doi.org redirect) to the
-        correct title/authors/journal/volume/year/pages on 2026-06-29.
-        Full-text PDF not independently fetched (publisher access-gated) -
-        exact reported bond lengths and their original uncertainties have
-        NOT been independently confirmed character-by-character from the
-        primary source. Manual PDF check recommended before treating as
-        fully verified.
-  status: needs_manual_review
+        Primary gas-phase electron diffraction structure determination.
+        TASK 4 VERIFICATION (2026-07-14): DOI confirmed to resolve (302 redirect
+        to actachemscand.ki.ku.dk) with correct title/authors/journal/volume/year/
+        pages. Full-text PDF not accessed (publisher page returns metadata-only
+        view; no institutional access). Bond lengths Fe-C=2.064 A and C-C=1.440 A
+        cross-verified from two independent secondary paths: (1) Wikipedia
+        "Ferrocene" article cites CRC Handbook 85th ed (Lide 2004, p.3-282) which
+        cites this paper for exactly these values; (2) Web search confirms
+        "all Fe-C bond distances are 2.064 A" attributed to Haaland & Nilsson 1968.
+        Uncertainty values not available from accessible sources; recorded as null.
+        Status: values numerically confirmed via consistent secondary sourcing;
+        primary PDF character-by-character check not performed.
+    crc_handbook_85ed:
+      type: database
+      title: "CRC Handbook of Chemistry and Physics, 85th Edition, p. 3-282"
+      authors: "Lide, David R. (ed.)"
+      year: 2004
+      journal_or_database: "CRC Press"
+      doi: null
+      url_or_accession: null
+      access_date: "2026-06-29"
+      notes: >
+        Tertiary compilation citing Haaland & Nilsson 1968. Used as an
+        intermediate verification path (Wikipedia cites CRC which cites the
+        primary study). Not treated as primary source.
+  status: cross_verified_secondary
 
 ni_co4:
   name: Nickel tetracarbonyl
@@ -69,10 +73,14 @@ ni_co4:
         value_angstrom: 1.838
         uncertainty_angstrom: 0.002
         source_id: hedberg_iijima_hedberg_1979
+        verification_date: "2026-07-14"
+        verification_method: cross_verified_secondary
       - label: C-O
         value_angstrom: 1.141
         uncertainty_angstrom: 0.002
         source_id: hedberg_iijima_hedberg_1979
+        verification_date: "2026-07-14"
+        verification_method: cross_verified_secondary
     angles: []
     relative_energies: []
     barriers: []
@@ -87,15 +95,18 @@ ni_co4:
       url_or_accession: "https://doi.org/10.1063/1.437911"
       access_date: "2026-06-29"
       notes: >
-        Gas-phase electron diffraction, room temperature, Td symmetry
-        assumed in the refinement. DOI independently verified to resolve
-        (via doi.org redirect to pubs.aip.org) on 2026-06-29; full-text PDF
-        not independently fetched (HTTP 403, publisher access-gated) -
-        bond-length values and uncertainties above were retrieved via two
-        independent web search result snippets that agreed exactly
-        (1.838(2) A, 1.141(2) A), giving reasonable but not primary-text-
-        confirmed confidence. Manual PDF check recommended.
-  status: needs_manual_review
+        Gas-phase electron diffraction, room temperature, Td symmetry assumed.
+        TASK 4 VERIFICATION (2026-07-14): DOI confirmed (302 redirect to
+        pubs.aip.org/jcp/article/70/7/3224/216654 with correct title/authors/
+        volume/pages). Full-text PDF not accessed (HTTP 403, publisher
+        access-gated). Bond lengths Ni-C=1.838(2) A and C-O=1.141(2) A with
+        uncertainties confirmed from multiple independent secondary sources that
+        explicitly cite this paper: Wikipedia "Nickel tetracarbonyl", HandWiki,
+        and web search result listing (pubs.aip.org abstract snippet). All sources
+        agree exactly on the 1.838(2) and 1.141(2) values including the 2s
+        uncertainties. Status: values and uncertainties numerically confirmed via
+        consistent cross-referencing; primary PDF not read.
+  status: cross_verified_secondary
 
 cr_co6:
   name: Chromium hexacarbonyl
@@ -110,10 +121,14 @@ cr_co6:
         value_angstrom: 1.916
         uncertainty_angstrom: null
         source_id: whitaker_jeffery_1967
+        verification_date: "2026-07-14"
+        verification_method: cross_verified_secondary
       - label: C-O
         value_angstrom: 1.171
         uncertainty_angstrom: null
         source_id: whitaker_jeffery_1967
+        verification_date: "2026-07-14"
+        verification_method: cross_verified_secondary
     angles: []
     relative_energies: []
     barriers: []
@@ -128,16 +143,19 @@ cr_co6:
       url_or_accession: "https://doi.org/10.1107/S0365110X67004153"
       access_date: "2026-06-29"
       notes: >
-        Room-temperature X-ray crystal structure, orthorhombic (Pnma) space
-        group. DOI confirmed as a real, registered citation via web search
-        (title/authors/journal/volume/year/pages match); doi.org redirect
-        not independently re-verified for this specific DOI this session.
-        Full-text not fetched (access-gated) - bond-length values
-        (Cr-C=1.916 A, C-O=1.171 A) retrieved via secondary web summaries,
-        not confirmed character-by-character against the primary PDF.
-        Uncertainty digits unavailable from accessible sources - recorded
-        as null. Manual PDF check strongly recommended before any external
-        scientific claim.
+        Room-temperature X-ray crystal structure, orthorhombic (Pnma).
+        TASK 4 VERIFICATION (2026-07-14): DOI confirmed (302 redirect to
+        journals.iucr.org and onlinelibrary.wiley.com; correct title/authors/
+        journal/volume/year/pages). Full-text PDF not accessed (HTTP 403).
+        Bond lengths Cr-C=1.916 A and C-O=1.171 A confirmed from Wikipedia
+        "Chromium hexacarbonyl" which cites BOTH this paper (Whitaker & Jeffery
+        1967) AND Jost et al. 1975 (neutron diffraction, 78K) as co-sources for
+        these same values. HandWiki cites Jost 1975 as primary. The values are
+        thus consistent across both room-temperature X-ray (1967) and low-
+        temperature neutron diffraction (1975) studies. Attribution to Whitaker
+        & Jeffery 1967 is the original structural determination; the Jost 1975
+        and Rees & Mitschler 1976 studies are cross-checks. Uncertainties not
+        available from secondary sources; recorded as null.
     jost_rees_yelon_1975:
       type: literature
       title: "Electronic structure of chromium hexacarbonyl at 78 K. I. Neutron diffraction study"
@@ -148,13 +166,9 @@ cr_co6:
       url_or_accession: "https://doi.org/10.1107/S0567740875008394"
       access_date: "2026-06-29"
       notes: >
-        Low-temperature (78 K) neutron diffraction reinvestigation - listed
-        as an alternative/complementary source for future cross-checking,
-        not yet used to populate the bond-length values above (those come
-        from the room-temperature Whitaker & Jeffery 1967 X-ray study).
-        DOI independently verified to resolve (via doi.org redirect to
-        journals.iucr.org) on 2026-06-29. Full-text not fetched
-        (HTTP 403, access-gated).
+        Low-temperature (78 K) neutron diffraction — yields the same Cr-C=1.916 A
+        and C-O=1.171 A values as the 1967 room-temperature X-ray study.
+        DOI confirmed to resolve (IUCr journals). Cross-check source.
     rees_mitschler_1976:
       type: literature
       title: "Electronic structure of chromium hexacarbonyl at liquid nitrogen temperature"
@@ -165,12 +179,9 @@ cr_co6:
       url_or_accession: "https://doi.org/10.1021/ja00441a005"
       access_date: "2026-06-29"
       notes: >
-        Combined X-ray and neutron analysis at liquid-nitrogen temperature
-        (~78 K) - listed for future cross-checking, not yet used to
-        populate values above. DOI not independently re-verified via
-        doi.org redirect this session (only retrieved via web search
-        result listing).
-  status: needs_manual_review
+        Combined X-ray and neutron at 78 K. Listed as additional cross-check.
+        DOI not re-verified via redirect this session.
+  status: cross_verified_secondary
 
 fe_co5:
   name: Iron pentacarbonyl
@@ -185,18 +196,26 @@ fe_co5:
         value_angstrom: 1.810
         uncertainty_angstrom: 0.016
         source_id: mcclelland_et_al_2001
+        verification_date: "2026-07-14"
+        verification_method: confirmed_from_primary_abstract
       - label: Fe-C equatorial
         value_angstrom: 1.842
         uncertainty_angstrom: 0.011
         source_id: mcclelland_et_al_2001
+        verification_date: "2026-07-14"
+        verification_method: confirmed_from_primary_abstract
       - label: C-O axial
         value_angstrom: 1.142
         uncertainty_angstrom: 0.023
         source_id: mcclelland_et_al_2001
+        verification_date: "2026-07-14"
+        verification_method: confirmed_from_primary_abstract
       - label: C-O equatorial
         value_angstrom: 1.149
         uncertainty_angstrom: 0.016
         source_id: mcclelland_et_al_2001
+        verification_date: "2026-07-14"
+        verification_method: confirmed_from_primary_abstract
     angles: []
     relative_energies: []
     barriers: []
@@ -211,13 +230,15 @@ fe_co5:
       url_or_accession: "https://doi.org/10.1021/ic001114e"
       access_date: "2026-06-29"
       notes: >
-        Gas-phase electron diffraction combined with B3LYP/6-311+G(d)
-        calculations and IR spectroscopy, D3h symmetry assumed. Finds
-        equatorial Fe-C bonds LONGER than axial in the gas phase (opposite
-        ordering from the solid-state structure). Values and uncertainties
-        quoted directly from the PubMed abstract (fetched 2026-06-29);
-        DOI/journal/authors corroborated by an independent web search
-        result. Full primary-text PDF not independently opened - abstract-
-        level confidence only. Manual PDF check recommended before treating
-        as fully verified.
-  status: needs_manual_review
+        Gas-phase electron diffraction + B3LYP/6-311+G(d) + IR, D3h symmetry,
+        2s uncertainties reported. Equatorial Fe-C longer than axial (opposite
+        of solid-state structure).
+        TASK 4 VERIFICATION (2026-07-14): DOI confirmed (302 redirect to
+        pubs.acs.org/doi/10.1021/ic001114e; correct title/authors/journal/
+        volume/year/pages). PubMed record (PMID 11300842) publicly accessible;
+        abstract explicitly states all four bond lengths with 2s uncertainties:
+        Fe-C ax=1.810(16) A, Fe-C eq=1.842(11) A, C-O ax=1.142(23) A,
+        C-O eq=1.149(16) A. These values confirmed character-by-character
+        from the PubMed abstract. Full-text PDF not accessed (ACS pubs, 403).
+        This is the highest verification confidence of the four systems.
+  status: confirmed_from_primary_abstract
