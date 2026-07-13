@@ -1,0 +1,54 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'ferrocene__fe_cp_dist__-0.05'
+  pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
+  outdir = '/home/duets/qe_workdirs/ferrocene__fe_cp_dist__-0.05'
+  forc_conv_thr = 0.0001
+  etot_conv_thr = 1e-05
+  disk_io = 'low'
+/
+&SYSTEM
+  ibrav = 1
+  celldm(1) = 30.87538627
+  nat = 21
+  ntyp = 3
+  ecutwfc = 60
+  ecutrho = 480
+  occupations = 'fixed'
+  assume_isolated = 'mt'
+  nspin = 1
+/
+&ELECTRONS
+  conv_thr = 1e-08
+  mixing_beta = 0.3
+/
+&IONS
+  trust_radius_min = 1e-06
+/
+ATOMIC_SPECIES
+  C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
+  Fe  55.8450  Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+  H  1.0080  H.pbe-rrkjus_psl.1.0.0.UPF
+ATOMIC_POSITIONS (angstrom)
+  Fe  8.16927539  8.16927539  8.16927539
+  C  9.36018653  8.16927539  9.77927539
+  C  8.53728717  9.30189919  9.77927539
+  C  7.20580805  8.86927539  9.77927539
+  C  7.20580805  7.46927539  9.77927539
+  C  8.53728717  7.03665160  9.77927539
+  H  10.45018653  8.16927539  9.77927539
+  H  8.87411570  10.33855079  9.77927539
+  H  6.32397953  9.50996132  9.77927539
+  H  6.32397953  6.82858947  9.77927539
+  H  8.87411570  6.00000000  9.77927539
+  C  9.36018653  8.16927539  6.55927539
+  C  8.53728717  9.30189919  6.55927539
+  C  7.20580805  8.86927539  6.55927539
+  C  7.20580805  7.46927539  6.55927539
+  C  8.53728717  7.03665160  6.55927539
+  H  10.45018653  8.16927539  6.55927539
+  H  8.87411570  10.33855079  6.55927539
+  H  6.32397953  9.50996132  6.55927539
+  H  6.32397953  6.82858947  6.55927539
+  H  8.87411570  6.00000000  6.55927539
+K_POINTS gamma

@@ -1,0 +1,11 @@
+system_id,label,qe_angstrom,literature_angstrom,delta_angstrom,percent_error,within_tolerance,source_id
+cr_co6,Cr-C,1.9001461899999992,1.916,-0.01585,-0.8274,True,whitaker_jeffery_1967
+cr_co6,C-O,1.1539765600000003,1.171,-0.01702,-1.4538,True,whitaker_jeffery_1967
+fe_co5,Fe-C axial,1.8025307048846018,1.81,-0.00747,-0.4127,True,mcclelland_et_al_2001
+fe_co5,Fe-C equatorial,1.8004282028494554,1.842,-0.04157,-2.2569,True,mcclelland_et_al_2001
+fe_co5,C-O axial,1.152741272073466,1.142,0.01074,0.9406,True,mcclelland_et_al_2001
+fe_co5,C-O equatorial,1.1556126043299066,1.149,0.00661,0.5755,True,mcclelland_et_al_2001
+ferrocene,Fe-C,2.043713500742643,2.064,-0.02029,-0.9829,True,crc_handbook_85ed
+ferrocene,C-C (Cp ring),1.4339817841436335,1.44,-0.00602,-0.4179,True,crc_handbook_85ed
+ni_co4,Ni-C,1.8118685931649279,1.838,-0.02613,-1.4217,True,hedberg_iijima_hedberg_1979
+ni_co4,C-O,1.150351425196726,1.141,0.00935,0.8196,True,hedberg_iijima_hedberg_1979

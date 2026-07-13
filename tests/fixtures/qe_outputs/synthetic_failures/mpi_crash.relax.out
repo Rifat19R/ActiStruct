@@ -1,0 +1,30 @@
+
+     Program PWSCF v.7.4.1 starts on 29Jun2026 at  8:19:00
+
+     Parallel version (MPI), running on     4 processors
+
+     Reading input from qe/inputs/relax/synthetic_mpi_crash.in
+
+     bravais-lattice index     =            1
+
+     Estimated max dynamical RAM per process >      10.50 GB
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    60.00 Ry     beta= 0.30
+
+     negative rho (up, down):  8.650E-03 0.000E+00
+
+     End of self-consistent calculation
+
+!    total energy              =    -525.34303376 Ry
+     estimated scf accuracy    <          7.4E-10 Ry
+
+     convergence has been achieved in  38 iterations
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine create_directory (1):
+     unable to create directory /mnt/d/Research/Dr.Kulik_MIT/qe/workdirs/synthetic_initial/synthetic_initial.save/
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+     stopping ...

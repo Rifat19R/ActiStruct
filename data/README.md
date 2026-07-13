@@ -1,0 +1,1 @@
+Dataset pipeline stages for the TMC benchmark, in order: `raw/` (candidate manifests) -> `parsed/` (QE parser output) -> `processed/` (validated/labeled datasets) -> `features/` (ML feature tables) -> `selected_batches/` (active-learning acquisition output).

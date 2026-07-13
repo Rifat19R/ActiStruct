@@ -1,0 +1,204 @@
+pseudo_family: actistruct_tmc_reliability_benchmark_SSSP_1.3.0_PBE_efficiency
+pseudo_dir: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency
+
+# Official SSSP 1.3.0 PBE efficiency reference
+# Checksums cross-referenced against the SSSP efficiency JSON distributed by
+# the qeAPI project (https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json)
+# and consistent with the Materials Cloud SSSP archive.
+# Official landing page: https://www.materialscloud.org/discover/sssp/table/efficiency
+# Verification date: 2026-07-01
+# Note: Materials Cloud SSSP page is JavaScript-rendered and could not be directly
+# scraped by automated tools. MD5 checksums were taken from a third-party JSON mirror
+# whose values agree with the local files. Rifat should cross-check against a manual
+# download from https://www.materialscloud.org/discover/sssp (v1.3.0 efficiency, PBE).
+
+elements:
+  Fe:
+    filename: Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+    exists: true
+    suggested_ecutwfc_ry: 90
+    suggested_ecutrho_ry: 1080
+    verification:
+      official_filename: Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+      official_source_url: https://www.materialscloud.org/discover/sssp/table/efficiency
+      official_checksum_md5: e86618425769142926afa95317d90200
+      official_checksum_source: >
+        third-party SSSP efficiency JSON at
+        https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json
+        (official Materials Cloud page not directly machine-readable; Rifat must
+        confirm by downloading the official v1.3.0 efficiency tarball manually)
+      local_filename: Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+      local_checksum_md5: e86618425769142926afa95317d90200
+      local_checksum_sha256: 2317a0d3b136c09b6263e1ba328b505fb1ebf33bb4b28dc3df9e39af3184ef19
+      match_status: match
+      verification_date: "2026-07-01"
+      source_library: PSLibrary 031PAW (Projector-Augmented Wave)
+      sssp_recommended_ecutwfc_ry: 90.0
+      sssp_recommended_ecutrho_ry: 1080.0
+      cutoff_used_in_benchmark_ry: 60.0
+      cutoff_above_sssp_recommendation: false
+      cutoff_flag: >
+        WARNING — SSSP efficiency recommends ecutwfc=90 Ry and ecutrho=1080 Ry
+        for this Fe PAW pseudopotential. Our benchmark used 60/480 Ry. For
+        isolated molecules in large supercells the wavefunction is more localized
+        and convergence can be faster than in solids; however, a cutoff convergence
+        test (60 vs 90 Ry) has NOT been performed and must be completed before
+        externally citing Fe-containing results (ferrocene, Fe(CO)5). This is NOT
+        a pseudopotential file error — the file is the correct SSSP efficiency file.
+        Action required: Rifat to run ecutwfc convergence test at 60, 75, 90 Ry.
+
+  C:
+    filename: C.pbe-n-kjpaw_psl.1.0.0.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\C.pbe-n-kjpaw_psl.1.0.0.UPF
+    exists: true
+    suggested_ecutwfc_ry: 45
+    suggested_ecutrho_ry: 360
+    verification:
+      official_filename: C.pbe-n-kjpaw_psl.1.0.0.UPF
+      official_source_url: https://www.materialscloud.org/discover/sssp/table/efficiency
+      official_checksum_md5: 5d2aebdfa2cae82b50a7e79e9516da0f
+      official_checksum_source: >
+        third-party SSSP efficiency JSON at
+        https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json
+      local_filename: C.pbe-n-kjpaw_psl.1.0.0.UPF
+      local_checksum_md5: 5d2aebdfa2cae82b50a7e79e9516da0f
+      local_checksum_sha256: 9900d1efd50b9848e31849f39094b33348486b400ee51e0f3922f716137cf3d7
+      match_status: match
+      verification_date: "2026-07-01"
+      source_library: PSLibrary 100PAW (Projector-Augmented Wave)
+      sssp_recommended_ecutwfc_ry: 45.0
+      sssp_recommended_ecutrho_ry: 360.0
+      cutoff_used_in_benchmark_ry: 60.0
+      cutoff_above_sssp_recommendation: true
+
+  H:
+    filename: H.pbe-rrkjus_psl.1.0.0.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\H.pbe-rrkjus_psl.1.0.0.UPF
+    exists: true
+    suggested_ecutwfc_ry: 60
+    suggested_ecutrho_ry: 480
+    verification:
+      official_filename: H.pbe-rrkjus_psl.1.0.0.UPF
+      official_source_url: https://www.materialscloud.org/discover/sssp/table/efficiency
+      official_checksum_md5: f52b6d4d1c606e5624b1dc7b2218f220
+      official_checksum_source: >
+        third-party SSSP efficiency JSON at
+        https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json
+      local_filename: H.pbe-rrkjus_psl.1.0.0.UPF
+      local_checksum_md5: f52b6d4d1c606e5624b1dc7b2218f220
+      local_checksum_sha256: 27f8a7e87851d59a2698237d6ab4578d62950640f4f175781b015a0ce731f962
+      match_status: match
+      verification_date: "2026-07-01"
+      source_library: PSLibrary 100US (Ultrasoft)
+      sssp_recommended_ecutwfc_ry: 60.0
+      sssp_recommended_ecutrho_ry: 480.0
+      cutoff_used_in_benchmark_ry: 60.0
+      cutoff_above_sssp_recommendation: true
+
+  Ni:
+    filename: ni_pbe_v1.4.uspp.F.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\ni_pbe_v1.4.uspp.F.UPF
+    exists: true
+    suggested_ecutwfc_ry: 45
+    suggested_ecutrho_ry: 360
+    verification:
+      official_filename: ni_pbe_v1.4.uspp.F.UPF
+      official_source_url: https://www.materialscloud.org/discover/sssp/table/efficiency
+      official_checksum_md5: 1ee80287db30b12d2bc1f57a5b5d6409
+      official_checksum_source: >
+        third-party SSSP efficiency JSON at
+        https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json
+      local_filename: ni_pbe_v1.4.uspp.F.UPF
+      local_checksum_md5: 1ee80287db30b12d2bc1f57a5b5d6409
+      local_checksum_sha256: f76b86ce60cde3d83dfcc8df79ba05478db573d158289f1b226919442d977d25
+      match_status: match
+      verification_date: "2026-07-01"
+      source_library: >
+        GBRV-1.4 (Garrity, Bennett, Rabe, Vanderbilt Ultrasoft Pseudopotential library).
+        This is the CORRECT SSSP efficiency pseudopotential for Ni. The naming convention
+        ni_pbe_v1.4.uspp.F.UPF differs from the PSLibrary _psl. convention used for
+        Fe/C/H/O because SSSP selects the best pseudopotential per element from multiple
+        source libraries. The GBRV library is a different source; both are included in
+        the official SSSP efficiency set. Naming concern is RESOLVED.
+      sssp_recommended_ecutwfc_ry: 45.0
+      sssp_recommended_ecutrho_ry: 360.0
+      cutoff_used_in_benchmark_ry: 60.0
+      cutoff_above_sssp_recommendation: true
+
+  O:
+    filename: O.pbe-n-kjpaw_psl.0.1.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\O.pbe-n-kjpaw_psl.0.1.UPF
+    exists: true
+    suggested_ecutwfc_ry: 50
+    suggested_ecutrho_ry: 400
+    verification:
+      official_filename: O.pbe-n-kjpaw_psl.0.1.UPF
+      official_source_url: https://www.materialscloud.org/discover/sssp/table/efficiency
+      official_checksum_md5: 0234752ac141de4415c5fc33072bef88
+      official_checksum_source: >
+        third-party SSSP efficiency JSON at
+        https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json
+      local_filename: O.pbe-n-kjpaw_psl.0.1.UPF
+      local_checksum_md5: 0234752ac141de4415c5fc33072bef88
+      local_checksum_sha256: 7c4b6ed541f83d0afdf5c1d3a8c611340f073f3e2b11e95b7963bb2ee26929aa
+      match_status: match
+      verification_date: "2026-07-01"
+      source_library: PSLibrary 031PAW (Projector-Augmented Wave)
+      sssp_recommended_ecutwfc_ry: 50.0
+      sssp_recommended_ecutrho_ry: 400.0
+      cutoff_used_in_benchmark_ry: 60.0
+      cutoff_above_sssp_recommendation: true
+
+  Cr:
+    filename: cr_pbe_v1.5.uspp.F.UPF
+    path: D:\Rifat_kh\SSSP_1.3.0_PBE_efficiency\cr_pbe_v1.5.uspp.F.UPF
+    exists: true
+    suggested_ecutwfc_ry: 40
+    suggested_ecutrho_ry: 320
+    verification:
+      official_filename: cr_pbe_v1.5.uspp.F.UPF
+      official_source_url: https://www.materialscloud.org/discover/sssp/table/efficiency
+      official_checksum_md5: 0d52af634a40206e4dee301ad30da4bf
+      official_checksum_source: >
+        third-party SSSP efficiency JSON at
+        https://raw.githubusercontent.com/Lonitch/qeAPI/master/sssp_efficiency.json
+      local_filename: cr_pbe_v1.5.uspp.F.UPF
+      local_checksum_md5: 0d52af634a40206e4dee301ad30da4bf
+      local_checksum_sha256: c7449bbfea358d76832cf2f7b43dc89101ead6891806773121bfaa93a140f6de
+      match_status: match
+      verification_date: "2026-07-01"
+      source_library: >
+        GBRV-1.5 (Garrity, Bennett, Rabe, Vanderbilt Ultrasoft Pseudopotential library).
+        This is the CORRECT SSSP efficiency pseudopotential for Cr. Same situation as Ni:
+        SSSP selects from multiple libraries; Cr uses GBRV-1.5. Naming concern is RESOLVED.
+      sssp_recommended_ecutwfc_ry: 40.0
+      sssp_recommended_ecutrho_ry: 320.0
+      cutoff_used_in_benchmark_ry: 60.0
+      cutoff_above_sssp_recommendation: true
+
+status: ready
+missing_elements: []
+
+# RESOLVED: Both Ni and Cr pseudopotential files verified as correct SSSP
+# efficiency pseudopotentials. The naming difference (uspp.F.UPF vs _psl.) is
+# expected — Ni uses GBRV-1.4 and Cr uses GBRV-1.5, while Fe/C/H/O use PSLibrary.
+# SSSP intentionally mixes source libraries to select the best pseudo per element.
+naming_convention_warnings_resolved:
+- >
+  Ni: 'ni_pbe_v1.4.uspp.F.UPF' confirmed as GBRV-1.4 SSSP efficiency pseudo.
+  MD5 verified 2026-07-01. Naming difference from _psl. convention is expected.
+- >
+  Cr: 'cr_pbe_v1.5.uspp.F.UPF' confirmed as GBRV-1.5 SSSP efficiency pseudo.
+  MD5 verified 2026-07-01. Naming difference from _psl. convention is expected.
+
+# OPEN ISSUE — requires action from Rifat before external citation
+cutoff_action_required:
+  Fe:
+    issue: >
+      SSSP efficiency recommends ecutwfc=90 Ry for Fe (PAW-031).
+      Benchmark used 60 Ry. A cutoff convergence test at 60, 75, 90 Ry on
+      ferrocene or Fe(CO)5 is required before citing Fe-system results
+      in a paper or presentation. The pseudopotential file itself is correct.
+    status: pending
+    responsible: Rifat

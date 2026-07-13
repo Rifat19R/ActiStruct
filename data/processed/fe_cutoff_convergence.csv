@@ -1,0 +1,4 @@
+ecutwfc_ry,ecutrho_ry,total_energy_ev,energy_per_atom_ev,fe_c_axial_ang,fe_c_equatorial_ang,max_force_ev_ang,n_scf_steps,n_bfgs_steps,walltime_sec,converged,delta_energy_per_atom_mev,delta_fe_c_axial_mang,delta_fe_c_equatorial_mang,passes_energy_threshold,passes_bond_threshold,passes_both
+60,480,-8567.19601317078,-778.8360011973436,1.8025259985587634,1.8004289612124833,0.0025710999999999998,236,12,3215.55,True,18.5454,1.38,1.46,False,True,False
+75,600,-8567.351496582765,-778.8501360529787,1.801495041054074,1.7993767215308025,0.001156995,227,13,4320.0,True,4.4106,0.34,0.41,False,True,False
+90,720,-8567.400012987815,-778.8545466352559,1.801150049502371,1.7989699351205761,0.002545389,213,12,6840.0,True,0.0,0.0,0.0,True,True,True

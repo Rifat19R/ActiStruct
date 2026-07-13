@@ -1,0 +1,46 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'cr_co6__mc_dist__+0.06'
+  pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
+  outdir = '/home/duets/qe_workdirs/cr_co6__mc_dist__+0.06'
+  forc_conv_thr = 0.0001
+  etot_conv_thr = 1e-05
+  disk_io = 'low'
+/
+&SYSTEM
+  ibrav = 1
+  celldm(1) = 34.57820863
+  nat = 13
+  ntyp = 3
+  ecutwfc = 60
+  ecutrho = 480
+  occupations = 'fixed'
+  assume_isolated = 'mt'
+  nspin = 1
+/
+&ELECTRONS
+  conv_thr = 1e-08
+  mixing_beta = 0.3
+/
+&IONS
+  trust_radius_min = 1e-06
+/
+ATOMIC_SPECIES
+  C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
+  Cr  51.9961  cr_pbe_v1.5.uspp.F.UPF
+  O  15.9990  O.pbe-n-kjpaw_psl.0.1.UPF
+ATOMIC_POSITIONS (angstrom)
+  Cr  9.14900000  9.14900000  9.14900000
+  C  11.12700000  9.14900000  9.14900000
+  O  12.29800000  9.14900000  9.14900000
+  C  7.17100000  9.14900000  9.14900000
+  O  6.00000000  9.14900000  9.14900000
+  C  9.14900000  11.12700000  9.14900000
+  O  9.14900000  12.29800000  9.14900000
+  C  9.14900000  7.17100000  9.14900000
+  O  9.14900000  6.00000000  9.14900000
+  C  9.14900000  9.14900000  11.12700000
+  O  9.14900000  9.14900000  12.29800000
+  C  9.14900000  9.14900000  7.17100000
+  O  9.14900000  9.14900000  6.00000000
+K_POINTS gamma

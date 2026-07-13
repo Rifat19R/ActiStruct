@@ -1,0 +1,45 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'fe_co5_cutoff_60'
+  pseudo_dir = '/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency'
+  outdir = '/home/duets/qe_workdirs/fe_co5_cutoff_60'
+  forc_conv_thr = 0.0001
+  etot_conv_thr = 1e-05
+  disk_io = 'medium'
+  restart_mode = 'from_scratch'
+/
+&SYSTEM
+  ibrav = 1
+  celldm(1) = 33.82609763
+  nat = 11
+  ntyp = 3
+  ecutwfc = 60
+  ecutrho = 480
+  occupations = 'fixed'
+  assume_isolated = 'mt'
+  nspin = 1
+/
+&ELECTRONS
+  conv_thr = 1e-08
+  mixing_beta = 0.3
+/
+&IONS
+  trust_radius_min = 1e-06
+/
+ATOMIC_SPECIES
+  C  12.0110  C.pbe-n-kjpaw_psl.1.0.0.UPF
+  Fe  55.8450  Fe.pbe-spn-kjpaw_psl.0.2.1.UPF
+  O  15.9990  O.pbe-n-kjpaw_psl.0.1.UPF
+ATOMIC_POSITIONS (angstrom)
+  Fe  8.95000000  8.95000000  8.95000000
+  C  8.95000000  8.95000000  10.75700000
+  O  8.95000000  8.95000000  11.90000000
+  C  8.95000000  8.95000000  7.14300000
+  O  8.95000000  8.95000000  6.00000000
+  C  10.77700000  8.95000000  8.95000000
+  O  11.93000000  8.95000000  8.95000000
+  C  8.03650000  10.53222841  8.95000000
+  O  7.46000000  11.53075570  8.95000000
+  C  8.03650000  7.36777159  8.95000000
+  O  7.46000000  6.36924430  8.95000000
+K_POINTS gamma

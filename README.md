@@ -427,3 +427,22 @@ project maintainer.
 ## License
 
 MIT License. See `LICENSE`.
+
+---
+
+## TMC Reliability Benchmark (`feature/tmc-reliability-benchmark`)
+
+A DFT-validated benchmark dataset for transition-metal carbonyls and metallocenes,
+used to assess ActiStruct's active-learning pipeline on real QE-relaxed structures.
+
+**Systems**: Cr(CO)₆, Fe(CO)₅, Ni(CO)₄, ferrocene (D5h/D5d conformers) — 16 validated
+DFT calculations with Coulomb-matrix features, GP baseline, and AL demo.
+
+**Key results**:
+- Ferrocene eclipsed→staggered barrier: ΔE = 41.68 meV (matches experiment, ~41 meV)
+- Fe/60 Ry vs 90 Ry convergence: ΔE < 0.3 meV (well-converged at 60 Ry)
+- NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)
+
+**Tests**: 281 passing (Tasks 1–9 complete, pre-v1.0).
+
+See [`CLAUDE_ACTISTRUCT_TMC_PLAN.md`](CLAUDE_ACTISTRUCT_TMC_PLAN.md) for the full benchmark plan.

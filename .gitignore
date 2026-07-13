@@ -1,7 +1,7 @@
 .venv/
 __pycache__/
 *.py[cod]
-*$py.class
+*.class
 .pytest_cache/
 .ipynb_checkpoints/
 *.egg-info/
@@ -26,7 +26,7 @@ local_artifacts/
 run_logs/
 CRASH
 input_tmp.in
-~$*
+~
 
 # Local office/spreadsheet scratch; keep curated manuscript docs explicitly.
 *.xlsx
@@ -75,3 +75,12 @@ analysis/outputs/raw/direct_grid/bulk_fe_spin_grid.csv
 analysis/outputs/raw/direct_grid/bulk_licoo2_matched_grid.csv
 analysis/outputs/raw/direct_grid/o_on_ni111_height_grid.csv
 analysis/outputs/raw/direct_grid/co_on_pt111_height_grid.csv
+
+# TMC benchmark QE workspace extras.
+qe/workdirs/
+qe/outputs/**/*.save/
+.env
+.env.*
+*.joblib
+# Incomplete / abandoned QE output runs (not part of the validated dataset).
+qe/outputs/cutoff_test/fe_co5_cutoff_105.*

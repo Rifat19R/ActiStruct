@@ -1,0 +1,43 @@
+{
+  "python_version": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\duets\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cwd": "D:\\Research\\Dr.Kulik_MIT",
+  "project_root": "D:\\Research\\Dr.Kulik_MIT",
+  "actistruct": {
+    "package": "actistruct",
+    "version": "unknown",
+    "location": "D:\\Rifat_kh\\inverse_active\\actistruct\\__init__.py",
+    "importable": true
+  },
+  "pwx": {
+    "on_windows_path": false,
+    "wsl_path": "/home/duets/q-e-qe-7.4.1/bin/pw.x",
+    "wsl_path_exists": true,
+    "wsl_runs": true
+  },
+  "pseudopotentials": {
+    "pseudo_dir": "D:/Rifat_kh/SSSP_1.3.0_PBE_efficiency",
+    "exists": true,
+    "elements_found": {
+      "Fe": [
+        "Fe.pbe-spn-kjpaw_psl.0.2.1.UPF"
+      ],
+      "C": [
+        "C.pbe-n-kjpaw_psl.1.0.0.UPF"
+      ],
+      "H": [
+        "H.pbe-rrkjus_psl.1.0.0.UPF"
+      ],
+      "Ni": [
+        "ni_pbe_v1.4.uspp.F.UPF"
+      ],
+      "O": [
+        "O.pbe-n-kjpaw_psl.0.1.UPF"
+      ],
+      "Cr": [
+        "cr_pbe_v1.5.uspp.F.UPF"
+      ]
+    }
+  }
+}

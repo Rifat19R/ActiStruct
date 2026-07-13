@@ -1,0 +1,14 @@
+source_priority:
+  1: peer_reviewed_literature
+  2: trusted_reference_databases_for_structure_thermochemistry
+  3: cod_for_cif_crystal_structures
+  4: materials_project_crystalline_only
+  5: oqmd_crystalline_inorganic_only
+  6: official_traceable_websites_supporting_only
+
+rules:
+  no_value_without_source: true
+  unverified_values_must_be_null: true
+  unverified_status: needs_manual_review
+  materials_project_and_oqmd_are_not_primary_for_isolated_molecules: true
+  never_fabricate_dois_or_numeric_values: true

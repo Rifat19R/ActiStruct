@@ -1,0 +1,1 @@
+Trained models for the TMC benchmark. `baseline/` holds surrogate energy regressors; `uncertainty/` holds ensemble/bootstrap models for uncertainty estimation. Only created once enough labeled QE rows exist (phase 2+).

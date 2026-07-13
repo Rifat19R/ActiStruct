@@ -1,0 +1,44 @@
+=== [1/12] starting ferrocene__fe_cp_dist__-0.05 ===
+=== [1/12] finished ferrocene__fe_cp_dist__-0.05 (exit 0, 5108s) ===
+=== [2/12] starting ferrocene__ring2_rotation_deg__+36 ===
+=== [2/12] finished ferrocene__ring2_rotation_deg__+36 (exit 0, 4884s) ===
+=== [3/12] starting ferrocene__cc_bond__-0.03 ===
+=== [3/12] finished ferrocene__cc_bond__-0.03 (exit 0, 5137s) ===
+=== [4/12] starting ni_co4__mc_dist__+0.06 ===
+=== [4/12] finished ni_co4__mc_dist__+0.06 (exit 0, 3962s) ===
+=== [5/12] starting ni_co4__co_dist__-0.04 ===
+=== [5/12] finished ni_co4__co_dist__-0.04 (exit 0, 3348s) ===
+=== [6/12] starting ni_co4__tetra_angle_perturb_deg__-6 ===
+=== [6/12] finished ni_co4__tetra_angle_perturb_deg__-6 (exit 0, 10394s) ===
+=== [7/12] starting cr_co6__mc_dist__+0.06 ===
+=== [7/12] finished cr_co6__mc_dist__+0.06 (exit 0, 5759s) ===
+=== [8/12] starting cr_co6__co_dist__-0.04 ===
+=== [1/12] skipping ferrocene__fe_cp_dist__-0.05 (already has bfgs converged / JOB DONE) ===
+=== [2/12] skipping ferrocene__ring2_rotation_deg__+36 (already has bfgs converged / JOB DONE) ===
+=== [3/12] skipping ferrocene__cc_bond__-0.03 (already has bfgs converged / JOB DONE) ===
+=== [4/12] skipping ni_co4__mc_dist__+0.06 (already has bfgs converged / JOB DONE) ===
+=== [5/12] skipping ni_co4__co_dist__-0.04 (already has bfgs converged / JOB DONE) ===
+=== [6/12] skipping ni_co4__tetra_angle_perturb_deg__-6 (already has bfgs converged / JOB DONE) ===
+=== [7/12] skipping cr_co6__mc_dist__+0.06 (already has bfgs converged / JOB DONE) ===
+=== [8/12] starting cr_co6__co_dist__-0.04 ===
+=== [8/12] finished cr_co6__co_dist__-0.04 (exit 0, 4635s) ===
+=== [9/12] starting cr_co6__axial_stretch__-0.05 ===
+=== [9/12] finished cr_co6__axial_stretch__-0.05 (exit 0, 5839s) ===
+=== [10/12] starting fe_co5__axial_fe_c__-0.06 ===
+=== [10/12] finished fe_co5__axial_fe_c__-0.06 (exit 0, 5196s) ===
+=== [11/12] starting fe_co5__eq_fe_c__+0.06 ===
+=== [1/12] skipping ferrocene__fe_cp_dist__-0.05 (already has bfgs converged / JOB DONE) ===
+=== [2/12] skipping ferrocene__ring2_rotation_deg__+36 (already has bfgs converged / JOB DONE) ===
+=== [3/12] skipping ferrocene__cc_bond__-0.03 (already has bfgs converged / JOB DONE) ===
+=== [4/12] skipping ni_co4__mc_dist__+0.06 (already has bfgs converged / JOB DONE) ===
+=== [5/12] skipping ni_co4__co_dist__-0.04 (already has bfgs converged / JOB DONE) ===
+=== [6/12] skipping ni_co4__tetra_angle_perturb_deg__-6 (already has bfgs converged / JOB DONE) ===
+=== [7/12] skipping cr_co6__mc_dist__+0.06 (already has bfgs converged / JOB DONE) ===
+=== [8/12] skipping cr_co6__co_dist__-0.04 (already has bfgs converged / JOB DONE) ===
+=== [9/12] skipping cr_co6__axial_stretch__-0.05 (already has bfgs converged / JOB DONE) ===
+=== [10/12] skipping fe_co5__axial_fe_c__-0.06 (already has bfgs converged / JOB DONE) ===
+=== [11/12] starting fe_co5__eq_fe_c__+0.06 ===
+=== [11/12] finished fe_co5__eq_fe_c__+0.06 (exit 0, 5042s) ===
+=== [12/12] starting fe_co5__eq_angle_perturb_deg__-6 ===
+=== [12/12] finished fe_co5__eq_angle_perturb_deg__-6 (exit 0, 14666s) ===
+ALL DONE - check each runs/perturbation_relax/<candidate_id>/*.relax.out for 'bfgs converged' before trusting any result (exit 0 does not mean converged).

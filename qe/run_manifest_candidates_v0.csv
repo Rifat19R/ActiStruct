@@ -1,0 +1,13 @@
+candidate_id,system_id,calculation,input_path,source_structure,status
+ferrocene__fe_cp_dist__-0.05,ferrocene,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ferrocene__fe_cp_dist__-0.05.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\ferrocene__fe_cp_dist__-0.05.xyz,generated
+ferrocene__ring2_rotation_deg__+36,ferrocene,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ferrocene__ring2_rotation_deg__+36.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\ferrocene__ring2_rotation_deg__+36.xyz,generated
+ferrocene__cc_bond__-0.03,ferrocene,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ferrocene__cc_bond__-0.03.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\ferrocene__cc_bond__-0.03.xyz,generated
+ni_co4__mc_dist__+0.06,ni_co4,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ni_co4__mc_dist__+0.06.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\ni_co4__mc_dist__+0.06.xyz,generated
+ni_co4__co_dist__-0.04,ni_co4,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ni_co4__co_dist__-0.04.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\ni_co4__co_dist__-0.04.xyz,generated
+ni_co4__tetra_angle_perturb_deg__-6,ni_co4,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\ni_co4__tetra_angle_perturb_deg__-6.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\ni_co4__tetra_angle_perturb_deg__-6.xyz,generated
+cr_co6__mc_dist__+0.06,cr_co6,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\cr_co6__mc_dist__+0.06.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\cr_co6__mc_dist__+0.06.xyz,generated
+cr_co6__co_dist__-0.04,cr_co6,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\cr_co6__co_dist__-0.04.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\cr_co6__co_dist__-0.04.xyz,generated
+cr_co6__axial_stretch__-0.05,cr_co6,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\cr_co6__axial_stretch__-0.05.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\cr_co6__axial_stretch__-0.05.xyz,generated
+fe_co5__axial_fe_c__-0.06,fe_co5,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\fe_co5__axial_fe_c__-0.06.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\fe_co5__axial_fe_c__-0.06.xyz,generated
+fe_co5__eq_fe_c__+0.06,fe_co5,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\fe_co5__eq_fe_c__+0.06.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\fe_co5__eq_fe_c__+0.06.xyz,generated
+fe_co5__eq_angle_perturb_deg__-6,fe_co5,relax,D:\Research\Dr.Kulik_MIT\qe\inputs\relax\fe_co5__eq_angle_perturb_deg__-6.in,D:\Research\Dr.Kulik_MIT\structures\generated_candidates\fe_co5__eq_angle_perturb_deg__-6.xyz,generated

@@ -1,0 +1,1 @@
+Generated reports for the TMC benchmark: daily logs, figures, tables, and the benchmark report. Nothing in here should claim discovery or final accuracy — see CLAUDE_ACTISTRUCT_TMC_PLAN.md section 13 for approved wording.

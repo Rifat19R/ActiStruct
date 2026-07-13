@@ -24,3 +24,6 @@ pyproject.toml text eol=lf
 *.xlsx binary
 *.pkl binary
 *.zip binary
+*.UPF binary
+*.upf binary
+*.joblib binary

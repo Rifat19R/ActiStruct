@@ -1,0 +1,41 @@
+
+     Program PWSCF v.7.4.1 starts on 29Jun2026 at  3:57:53
+
+     Parallel version (MPI), running on     4 processors
+
+     Reading input from qe/inputs/relax/synthetic_bfgs_failed.in
+
+     bravais-lattice index     =            1
+
+   Cartesian axes
+
+     site n.     atom                  positions (alat units)
+         1        Cr     tau(   1) = (   0.5000000   0.5000000   0.5000000  )
+         2        C      tau(   2) = (   0.6055122   0.5000000   0.5000000  )
+
+     iteration #  1     ecut=    60.00 Ry     beta= 0.30
+
+     negative rho (up, down):  1.835E-02 0.000E+00
+
+!    total energy              =    -536.00720962 Ry
+     estimated scf accuracy    <          1.3E-09 Ry
+
+     convergence has been achieved in  25 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  2   force =     0.00000000    0.00000000    0.00000000
+     atom    2 type  1   force =     0.05553397    0.00000000    0.00000000
+
+     Total force =     0.001401     Total SCF correction =     0.000004
+
+     BFGS Geometry Optimization
+
+     number of scf cycles    =  10
+     number of bfgs steps    =   7
+
+     Message from routine bfgs:
+     bfgs failed after  10 scf cycles and   7 bfgs steps, convergence not achieved
+
+     File /tmp/synthetic_bfgs_failed.bfgs deleted, as requested
+   JOB DONE.

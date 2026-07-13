@@ -1,0 +1,29 @@
+qe:
+  executable: pw.x
+  calculation: relax
+  functional: PBE
+  pseudo_family: SSSP_1.3.0_PBE_efficiency
+  ecutwfc_ry: 90
+  ecutrho_ry: 720
+  occupations: fixed
+  smearing: null
+  kpoints: [1, 1, 1]
+  gamma_only: true
+  cell_type: cubic_supercell
+  vacuum_padding_angstrom: 6.0  # 12.0 OOM'd ferrocene relax (~55GB needed vs 16GB WSL+20GB swap); mt correction doesn't need more
+  assume_isolated: mt
+  conv_thr: 1.0e-8
+  forc_conv_thr: 1.0e-4
+  etot_conv_thr: 1.0e-5
+  mixing_beta: 0.3
+  max_seconds: null
+  disk_io: 'medium'
+  ion_trust_radius_min_bohr: 1.0e-6  # default 1e-4 made cr_co6 bfgs abort while still oscillating near forc_conv_thr
+  cutoff_history:
+    - date: 2026-07-02
+      old_ecutwfc_ry: 60
+      new_ecutwfc_ry: 90
+      reason: >
+        fe_cutoff_convergence_v0.1 (Task 1.5): 60 Ry gives |ΔE/atom|=18.55 meV vs
+        90 Ry reference (SSSP recommended); bond lengths already < 2 mA even at 60 Ry.
+        Adopted 90 Ry as minimum; 105 Ry not run (user decision 2026-07-02).
