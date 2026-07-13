@@ -260,3 +260,133 @@ def test_coulomb_eigenvalues_in_csv_are_rotation_invariant_for_same_parent():
         f"Dominant Coulomb eigenvalue differs by >1% for same-basin candidate: "
         f"parent={e0_parent:.4f}, candidate={e0_cand:.4f}"
     )
+
+
+# ---------------------------------------------------------------------------
+# Task 5 validation: reproducibility, DFT-vs-reference, descriptor labeling
+# ---------------------------------------------------------------------------
+
+def test_feature_matrix_is_reproducible_from_raw_positions():
+    """Re-running compute_all_features() must reproduce stored features_v0.1.csv.
+
+    Validates that stored values are stable across runs and that the positions
+    in full_dataset_v0.2.csv faithfully encode the QE-relaxed geometries.
+    Tolerance 1e-4 (in Å or eigenvalue units) accommodates CSV float formatting.
+    """
+    import csv as _csv
+    merged_path = PROJECT_ROOT / "data" / "processed" / "full_dataset_v0.2.csv"
+    feat_path = PROJECT_ROOT / "data" / "features" / "features_v0.1.csv"
+    if not merged_path.exists() or not feat_path.exists():
+        pytest.skip("dataset or feature CSV missing — run build_features first")
+
+    all_rows = list(_csv.DictReader(merged_path.open(encoding="utf-8")))
+    primary_lookup = {r["system_id"]: r for r in all_rows if "__" not in r["system_id"]}
+    recomputed = feat_mod.compute_all_features(all_rows, primary_lookup)
+    recomputed_map = {r["system_id"]: r for r in recomputed}
+
+    stored = list(_csv.DictReader(feat_path.open(encoding="utf-8")))
+    bookkeeping = {"system_id", "parent_system_id", "source", "label",
+                   "feature_version", "ionic_steps", "scf_iterations_total",
+                   "max_force_ry_per_bohr"}
+
+    failures = []
+    for row in stored:
+        sid = row["system_id"]
+        if sid not in recomputed_map:
+            failures.append(f"{sid}: missing from recomputed output")
+            continue
+        rec = recomputed_map[sid]
+        for col, stored_val in row.items():
+            if col in bookkeeping:
+                continue
+            rec_val = rec.get(col, "")
+            if stored_val == "" and rec_val == "":
+                continue
+            if stored_val == "" or rec_val == "":
+                failures.append(
+                    f"{sid}[{col}]: NaN/empty mismatch "
+                    f"(stored={stored_val!r}, recomputed={rec_val!r})"
+                )
+                continue
+            try:
+                s_f, r_f = float(stored_val), float(rec_val)
+            except ValueError:
+                if stored_val != rec_val:
+                    failures.append(f"{sid}[{col}]: string mismatch")
+                continue
+            if abs(s_f - r_f) > 1e-4:
+                failures.append(
+                    f"{sid}[{col}]: stored={s_f:.6f} recomputed={r_f:.6f} "
+                    f"diff={abs(s_f - r_f):.2e}"
+                )
+
+    assert not failures, "Feature matrix not reproducible:\n" + "\n".join(failures)
+
+
+@pytest.mark.parametrize("system_id,ref_ml_mean_angstrom,tol,note", [
+    # Whitaker & Jeffery 1967 (Cr-C = 1.916 Å, crystal X-ray)
+    ("cr_co6", 1.916, 0.05, "Whitaker 1967 Cr-C"),
+    # Hedberg et al. 1979 (Ni-C = 1.838 Å, gas-phase ED)
+    ("ni_co4", 1.838, 0.05, "Hedberg 1979 Ni-C"),
+    # McClelland et al. 2001: 2 ax (1.810) + 3 eq (1.842) → weighted mean 1.829 Å
+    ("fe_co5", 1.829, 0.05, "McClelland 2001 weighted mean"),
+    # Haaland & Nilsson 1968 (Fe-C = 2.064 Å, all 10 bonds equal in D5h)
+    ("ferrocene", 2.064, 0.05, "Haaland 1968 Fe-C"),
+])
+def test_primary_dft_ml_mean_within_dft_error_of_reference(
+        system_id, ref_ml_mean_angstrom, tol, note):
+    """DFT (PBE/90 Ry) M-L mean bond lengths must be within ±0.05 Å of experiment.
+
+    PBE systematically underestimates TM-C bonds by 0.01–0.04 Å; a ±0.05 Å
+    window passes expected DFT error while catching calculation errors.
+    """
+    import csv as _csv
+    feat_path = PROJECT_ROOT / "data" / "features" / "features_v0.1.csv"
+    if not feat_path.exists():
+        pytest.skip("features_v0.1.csv missing")
+    rows = {r["system_id"]: r
+            for r in _csv.DictReader(feat_path.open(encoding="utf-8"))}
+    row = rows.get(system_id)
+    assert row is not None, f"{system_id} not found in features CSV"
+    dft_ml = float(row["ml_mean_angstrom"])
+    diff = abs(dft_ml - ref_ml_mean_angstrom)
+    assert diff <= tol, (
+        f"{system_id}: DFT ml_mean={dft_ml:.4f} Å, ref={ref_ml_mean_angstrom:.3f} Å "
+        f"({note}), diff={diff:.4f} Å > tolerance {tol} Å"
+    )
+
+
+def test_feature_report_documents_coulomb_not_rac():
+    """feature_report_v0.1.md must identify descriptors as Coulomb matrix eigenvalues.
+
+    These are NOT RAC (Revised Autocorrelation) descriptors — a common TMC
+    descriptor family. The report must be unambiguous to avoid misrepresentation.
+    """
+    report_path = PROJECT_ROOT / "reports" / "feature_report_v0.1.md"
+    if not report_path.exists():
+        pytest.skip("feature_report_v0.1.md missing")
+    text = report_path.read_text(encoding="utf-8")
+    assert "Coulomb matrix" in text, "Feature report must mention 'Coulomb matrix'"
+    assert "RAC" not in text, (
+        "Feature report must not claim RAC descriptors — "
+        "these are Coulomb matrix eigenvalues (Rupp 2012), not RACs"
+    )
+
+
+def test_ferrocene_n_ligands_counts_metal_carbon_bonds():
+    """ferrocene n_ligands=10 counts all 10 Fe-C bonds (5 per Cp ring).
+
+    This is the correct M-C atom count for the Coulomb/geometric feature set,
+    though chemically ferrocene has 2 ligands (two Cp rings).
+    """
+    import csv as _csv
+    feat_path = PROJECT_ROOT / "data" / "features" / "features_v0.1.csv"
+    if not feat_path.exists():
+        pytest.skip("features_v0.1.csv missing")
+    rows = {r["system_id"]: r
+            for r in _csv.DictReader(feat_path.open(encoding="utf-8"))}
+    row = rows.get("ferrocene")
+    assert row is not None
+    assert int(float(row["n_ligands"])) == 10, (
+        "ferrocene must have n_ligands=10 (counts M-C bonds, not Cp rings)"
+    )
