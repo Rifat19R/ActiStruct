@@ -352,6 +352,68 @@ def test_dataset_fe_cutoff_flag_present_after_task15():
 # Slow: re-run analysis from scratch
 # ──────────────────────────────────────────────
 
+# ──────────────────────────────────────────────
+# Task 7: disambiguation of ferrocene run labels
+# ──────────────────────────────────────────────
+
+def test_ferrocene_pbed3_vs_pbe_csv_has_distinct_system_labels():
+    """ferrocene_pbed3_vs_pbe.csv must use distinct system labels for each row.
+
+    Both rows represent the same molecule (ferrocene) but different DFT setups.
+    Labeling both 'ferrocene' is ambiguous — labels must encode functional/cutoff.
+    Expected: 'ferrocene_pbe_60ry' (baseline) and 'ferrocene_pbed3_90ry' (Task 2).
+    """
+    pbed3_path = PROJECT_ROOT / "data" / "processed" / "ferrocene_pbed3_vs_pbe.csv"
+    if not pbed3_path.exists():
+        pytest.skip("ferrocene_pbed3_vs_pbe.csv not found — run scripts/16_ferrocene_pbed3_analysis.py")
+    rows = list(csv.DictReader(pbed3_path.open(encoding="utf-8")))
+    assert len(rows) == 2, f"Expected 2 rows, got {len(rows)}"
+    systems = {r["system"] for r in rows}
+    assert len(systems) == 2, (
+        f"Both rows have the same 'system' value — ambiguous: {systems}"
+    )
+    assert "ferrocene_pbe_60ry" in systems, (
+        f"PBE/60 Ry baseline row must be labeled 'ferrocene_pbe_60ry'; got: {systems}"
+    )
+    assert "ferrocene_pbed3_90ry" in systems, (
+        f"PBE-D3/90 Ry Task 2 row must be labeled 'ferrocene_pbed3_90ry'; got: {systems}"
+    )
+
+
+def test_ferrocene_pbed3_row_has_higher_ecutwfc():
+    """The PBE-D3 row must show ecutwfc=90, the PBE row ecutwfc=60."""
+    pbed3_path = PROJECT_ROOT / "data" / "processed" / "ferrocene_pbed3_vs_pbe.csv"
+    if not pbed3_path.exists():
+        pytest.skip("ferrocene_pbed3_vs_pbe.csv not found")
+    rows = {r["system"]: r for r in csv.DictReader(pbed3_path.open(encoding="utf-8"))}
+    pbe_row = rows.get("ferrocene_pbe_60ry")
+    pbed3_row = rows.get("ferrocene_pbed3_90ry")
+    assert pbe_row is not None and pbed3_row is not None
+    assert int(float(pbe_row["ecutwfc_ry"])) == 60
+    assert int(float(pbed3_row["ecutwfc_ry"])) == 90
+
+
+def test_fe_co5_and_ferrocene_are_distinct_fe_systems_in_dataset():
+    """fe_co5 and ferrocene are both iron-containing but chemically distinct.
+
+    Both have z_metal=26 (Fe). Task 7 confirms that the system_id labels
+    are unambiguous: different names, different n_atoms, different geometry class.
+    """
+    if not DATASET_CSV.exists():
+        pytest.skip("Dataset CSV not found")
+    rows = {r["system_id"]: r for r in csv.DictReader(DATASET_CSV.open(encoding="utf-8"))
+            if r["system_id"] in ("ferrocene", "fe_co5")}
+    assert "ferrocene" in rows and "fe_co5" in rows
+    import json
+    n_ferrocene = len(json.loads(rows["ferrocene"]["final_positions_angstrom"]))
+    n_fe_co5 = len(json.loads(rows["fe_co5"]["final_positions_angstrom"]))
+    assert n_ferrocene != n_fe_co5, (
+        f"ferrocene ({n_ferrocene} atoms) and fe_co5 ({n_fe_co5} atoms) "
+        "must have different atom counts — same count would indicate a parsing error"
+    )
+    assert n_ferrocene == 21 and n_fe_co5 == 11
+
+
 @pytest.mark.slow
 def test_analysis_script_runs_dry_run():
     """Smoke test: the analysis script runs without errors in --dry-run mode."""

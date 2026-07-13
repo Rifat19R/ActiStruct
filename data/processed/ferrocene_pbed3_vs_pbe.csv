@@ -1,3 +1,3 @@
 system,functional,ecutwfc_ry,vdw_corr,total_energy_ev,energy_per_atom_ev,fe_cp_centroid_ang,fe_c_mean_ang,cp_dihedral_deg,conformer,n_bfgs_steps,n_scf_steps,walltime_sec,delta_e_vs_pbe_ev,delta_e_vs_pbe_mev_atom
-ferrocene,PBE,60,none,-7147.912031,-340.376763,,,,eclipsed (D5h),15,319,4980,0.0,0.0
-ferrocene,PBE-D3,90,grimme-d3,-7148.395916,-340.399806,1.6344,2.0396,0.0,eclipsed (D5h),12,208,4800.0,-0.483885,-23.04
+ferrocene_pbe_60ry,PBE,60,none,-7147.912031,-340.376763,,,,eclipsed (D5h),15,319,4980,0.0,0.0
+ferrocene_pbed3_90ry,PBE-D3,90,grimme-d3,-7148.395916,-340.399806,1.6344,2.0396,0.0,eclipsed (D5h),12,208,4800.0,-0.483885,-23.04

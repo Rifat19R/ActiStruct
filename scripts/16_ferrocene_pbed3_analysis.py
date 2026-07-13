@@ -230,7 +230,8 @@ def main() -> None:
         ])
         writer.writeheader()
         writer.writerow({
-            "system": "ferrocene", "functional": "PBE",
+            # Distinct system label: functional + cutoff disambiguate from PBE-D3 row
+            "system": "ferrocene_pbe_60ry", "functional": "PBE",
             "ecutwfc_ry": 60, "vdw_corr": "none",
             "total_energy_ev": round(PBE_ENERGY_EV, 6),
             "energy_per_atom_ev": round(PBE_ENERGY_EV / N_ATOMS, 6),
@@ -240,7 +241,8 @@ def main() -> None:
             "delta_e_vs_pbe_ev": 0.0, "delta_e_vs_pbe_mev_atom": 0.0,
         })
         writer.writerow({
-            "system": "ferrocene", "functional": "PBE-D3",
+            # Distinct system label: PBE-D3/90 Ry conformer check (Task 2)
+            "system": "ferrocene_pbed3_90ry", "functional": "PBE-D3",
             "ecutwfc_ry": 90, "vdw_corr": "grimme-d3",
             "total_energy_ev": round(r["total_energy_ev"], 6),
             "energy_per_atom_ev": round(r["energy_per_atom_ev"], 6),
