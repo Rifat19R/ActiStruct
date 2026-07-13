@@ -335,3 +335,25 @@ None of these coincide with the O sublattice's 0.5-periodicity, so they can't al
 Sanity-checked before launching: `add_h_to_slab` constraints confirmed correct (`FixAtoms` on the same 12 bottom atoms, `FixedLine` on the new H index only). `pytest -q`: 129 passed, no regressions (no test touches this oracle script directly).
 
 Re-running the 5-site grid campaign now with the fixed methodology.
+
+**Interrupted by an unplanned machine restart** (Rifat's machine shut down mid-run). Checked on resume: `/tmp/qe_scratch` does not survive a WSL restart (wiped), but the persistent cache (`outputs/cache/ti3c2_o_her_low.pkl`, on the NTFS-backed `/mnt/d` disk) does. Verified before restarting the campaign: the clean-slab and H2 reference energies were still cached (real, from the earlier successful runs), and **none of the 5 new (redesigned) sites had been cached yet** — the interrupted run had died before completing even the first new site, so nothing was lost, nothing needed resuming mid-flight, just a clean restart. No stale lock file, git state was already fully clean (everything up to that point had been committed). Also noted for Rifat: his own unrelated `F_Sc_field.in` (AGNR) job was killed by the same restart — flagged to him directly, not touched by this cycle.
+
+### 5.2 (final) — Redesigned grid campaign results
+
+Re-ran `python -m examples.manual_qe.run_ti3c2_o_grid_campaign` (`-np 1`, background) to completion. All 5 sites real, `JOB DONE`:
+
+| Site | (u,v) | Type | nearest O | ΔG_H (eV) | Wall time | Status |
+|---|---|---|---:|---:|---:|---|
+| 0 | (1/3, 1/6) | atop-Ti | 1.767 Å | **+2.475156** | 237.8 min | JOB DONE (1 retry — attempt 1 failed, QE exit 1, recovered attempt 2) |
+| 1 | (1/6, 1/3) | atop-C | 1.767 Å | **+1.643339** | 433.1 min | JOB DONE |
+| 2 | (1/12, 1/6) | hollow | 0.884 Å | **-0.477300** | 667.0 min | JOB DONE |
+| 3 | (1/4, 0) | O-O bridge | 1.530 Å | **+0.791182** | 386.7 min | JOB DONE |
+| 4 | (1/8, 1/8) | intermediate | 0.765 Å | **-0.512178** | 463.0 min | JOB DONE |
+
+(Reference, previous campaign: atop-O ≈ **-0.758 eV**, §5.2 above.)
+
+**This is now genuine, non-degenerate site-dependent data** — the fix worked. A clear trend is visible: ΔG_H correlates with proximity to the nearest terminal O (atop-O -0.758, intermediate at 0.765 Å → -0.512, hollow at 0.884 Å → -0.477, O-O bridge at 1.530 Å → +0.791, atop-Ti/atop-C at 1.767 Å → +1.6 to +2.5). Sites close enough to retain partial O-H electronic interaction are favorable; sites held (by the new `FixedLine` constraint) far from any O are strongly unfavorable. This is a real, physically coherent landscape — exactly the kind of signal an active-learning/GP loop needs to be a meaningful exercise, unlike the flat result from the first attempt.
+
+**Caveat on verification:** wanted to directly re-confirm H stayed at its fixed lateral (u,v) for these specific runs (as done for the first campaign), but a second unplanned restart wiped `/tmp/qe_scratch` again before this could be checked directly. Treating the non-degenerate, physically-trending result pattern itself as strong indirect evidence the constraint held (if H were still sliding to the same atop-O attractor, all 5 would again read ≈-0.758 eV, which they don't) — but flagging this as inference, not a direct positional check, in case it matters for later scrutiny.
+
+**Gate status: Phase 2 complete, real, non-degenerate data for 5 genuinely distinct sites.** Ready for Phase 3 (AL loop closure) — checking with Rifat before committing more multi-day DFT compute to it.
