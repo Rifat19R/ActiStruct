@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          # Install CPU-only torch first so pip does not pull the full CUDA
+          # build (~2-3 GB) when it processes requirements.txt.
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -r requirements.txt
           python -m pip install -e ".[test]"
       - name: Syntax checks
