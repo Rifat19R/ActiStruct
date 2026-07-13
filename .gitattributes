@@ -1,1 +1,16 @@
+# Enforce LF line endings for all text files.
+# Prevents CRLF noise on Windows drives (/mnt/d/).
+* text=auto eol=lf
+
+# Shell scripts must be LF (bash will break on CRLF)
 *.sh text eol=lf
+
+# Explicitly mark binary formats
+*.UPF binary
+*.upf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.pkl binary
+*.joblib binary

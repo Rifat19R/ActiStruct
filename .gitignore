@@ -13,3 +13,7 @@ __pycache__/
 .env.*
 *.pkl
 *.joblib
+# Temporary QE input files
+input_tmp.in
+# Incomplete / abandoned QE output runs (not part of the validated dataset)
+qe/outputs/cutoff_test/fe_co5_cutoff_105.*
