@@ -4,6 +4,18 @@ All notable changes to ActiStruct are documented here.
 
 ## Unreleased
 
+### Added
+
+- **TMC Reliability Benchmark** (`feature/tmc-reliability-benchmark`):
+  full DFT-validated dataset for Cr(CO)6, Fe(CO)5, Ni(CO)4, and ferrocene
+  (16 QE-relaxed structures, PBE/plane-wave, pw.x v7.4.1). Includes Coulomb
+  matrix + geometry features, GP baseline, AL demo, and NEB endpoints for the
+  ferrocene eclipsed->staggered conformer rotation (dE = 41.68 meV, matches
+  experiment). 281 tests pass across both ActiStruct and TMC suites.
+  New directories: `scripts/`, `qe/`, `structures/neb_endpoints/`, `configs/`,
+  `data/processed/`, `data/features/`, `data/references/`.
+  See `description.md` for the full PR summary.
+
 ### Fixed
 
 - **`DFTFailureAnalyzer` GEOMETRY_CRASH pattern** (`actistruct/debug/classifier.py`):

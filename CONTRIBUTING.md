@@ -15,7 +15,7 @@ pip install -r requirements.txt
 pip install -e ".[test]"
 
 # Verify
-pytest -q   # 128 passed, 0 warnings
+pytest -q   # 281 passed, 0 warnings
 ```
 
 ## Running tests

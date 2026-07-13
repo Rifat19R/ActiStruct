@@ -1,7 +1,7 @@
 .venv/
 __pycache__/
 *.py[cod]
-*.class
+*$py.class
 .pytest_cache/
 .ipynb_checkpoints/
 *.egg-info/
@@ -26,7 +26,7 @@ local_artifacts/
 run_logs/
 CRASH
 input_tmp.in
-~
+~$*
 
 # Local office/spreadsheet scratch; keep curated manuscript docs explicitly.
 *.xlsx

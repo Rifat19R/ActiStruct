@@ -6,7 +6,7 @@ ActiStruct is a research codebase. Security fixes are applied to the current mai
 
 | Version | Supported |
 | --- | --- |
-| 0.1.x | Yes |
+| 2.0.0 | Yes |
 
 ## Reporting a Vulnerability
 
