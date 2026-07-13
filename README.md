@@ -2,7 +2,7 @@
 
 Active-learning workflow for DFT-guided materials discovery.
 
-![Tests](https://img.shields.io/badge/tests-128%20passed%2C%200%20warnings-brightgreen)
+![Tests](https://img.shields.io/badge/tests-281%20passed%2C%200%20warnings-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -23,7 +23,7 @@ Active-learning workflow for DFT-guided materials discovery.
 
 ## v2.0 status (honest)
 
-> All code paths are implemented, unit-tested (128 tests, 0 warnings), and
+> All code paths are implemented, unit-tested (281 tests, 0 warnings), and
 > one clean-slab QE static SCF has been validated end-to-end on the Ti3C2-O
 > 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2).
 >
@@ -46,7 +46,7 @@ This is a development release. See [Roadmap](#roadmap) for what is planned next.
 | Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
 | Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
 | Monitoring | None | 4-tab Streamlit dashboard |
-| Tests | 81 tests | 128 tests, 0 warnings |
+| Tests | 81 tests | 281 tests, 0 warnings (3.11 + 3.12 CI) |
 
 ---
 
@@ -173,7 +173,9 @@ project convention: real data or no screenshot).
 
 ## Test suite
 
-128 tests, 0 warnings (Python 3.12, WSL2). No QE/DFT is launched by any test.
+281 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
+
+**ActiStruct core tests:**
 
 | Test file | What it covers |
 |---|---|
@@ -184,8 +186,22 @@ project convention: real data or no screenshot).
 | `test_generated_workflows.py` | All generated_models scripts import and define required attributes |
 | `test_failure_aware_acquisition.py`, `test_qe_reliability_*` | v0.x reliability and acquisition layer |
 
+**TMC Reliability Benchmark tests (Tasks 1-9):**
+
+| Test file | Tests | What it covers |
+|---|---|---|
+| `test_pseudo_verification.py` | 8 | SSSP checksums for Cr, Fe, Ni pseudopotentials |
+| `test_qe_parser.py` | 18 | QE output parsing, force/energy extraction |
+| `test_feature_builder.py` | 22 | Coulomb matrix + geometry reproducibility, DFT vs reference |
+| `test_reference_data_integrity.py` | 11 | YAML reference schema and verification status |
+| `test_convergence_and_consistency.py` | 12 | BFGS convergence, atom counts, energy ordering, dE sanity |
+| `test_fe_cutoff_convergence.py` | 14 | Fe cutoff convergence data, ferrocene label disambiguation |
+| `test_neb_endpoints.py` | 9 | XYZ files, stoichiometry, dE encoding, energy bounds |
+| `test_ml_al_framing.py` | 31 | Report disclaimer presence, prohibited over-claim phrases |
+| `test_baseline_model.py`, `test_al_demo.py`, others | 118 | Dataset loading, GP baseline, AL demo, candidates, structures |
+
 ```bash
-pytest -q       # 128 passed, 0 warnings
+pytest -q       # 281 passed, 0 warnings
 ```
 
 ---
@@ -208,11 +224,29 @@ ActiStruct/
 |   |-- ti3c2_o_her_qe_active_inverse.py   # Ti3C2-O HER oracle (Phase 2)
 |   `-- h_cu111_qe_active_inverse.py       # Cu(111) H adsorption reference
 |-- generated_models/                 # 50 original v0.x QE workflow scripts
-|-- tests/                            # 128 tests, no QE/DFT launched
+|
+|-- [TMC Reliability Benchmark - Tasks 1-9]
+|-- scripts/                          # 17 numbered pipeline scripts (01-17)
+|-- configs/                          # QE settings, pseudo manifest, project config
+|-- data/
+|   |-- processed/                    # full_dataset_v0.2.csv, cutoff convergence, candidates
+|   |-- features/                     # Coulomb matrix + geometry features v0.1
+|   |-- models/                       # GP baseline and AL demo model records
+|   `-- references/                   # YAML reference values and sources
+|-- qe/
+|   |-- inputs/relax/                 # validated QE input files for all systems
+|   `-- outputs/                      # cutoff convergence outputs, PBE-D3 rerun
+|-- structures/
+|   |-- initial_xyz/                  # starting geometries for 4 primary systems
+|   |-- generated_candidates/         # 52 perturbation candidates
+|   `-- neb_endpoints/                # ferrocene D5h/D5d endpoints for nebwalk
+|-- references/                       # literature reference YAML and CSV
+|-- reports/                          # benchmark reports, daily logs, figures
+|
+|-- tests/                            # 281 tests, no QE/DFT launched
 |-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
 |-- analysis/                         # classifier training, offline benchmarks
 |-- docs/                             # setup guides and specification docs
-|-- reports/                          # reliability and benchmark reports
 |-- outputs/
 |   |-- cache/                        # DFT energy caches (gitignored)
 |   `-- reports/                      # 50 completed benchmark reports (kept)
@@ -238,7 +272,7 @@ pip install -e ".[test]"
 
 **Run tests (no QE launched):**
 ```bash
-pytest -q       # 128 passed, 0 warnings
+pytest -q       # 281 passed, 0 warnings
 ```
 
 **Run the no-QE demo (exercises full v2 stack on real Ti3C2-O geometry):**
@@ -435,14 +469,14 @@ MIT License. See `LICENSE`.
 A DFT-validated benchmark dataset for transition-metal carbonyls and metallocenes,
 used to assess ActiStruct's active-learning pipeline on real QE-relaxed structures.
 
-**Systems**: Cr(CO)₆, Fe(CO)₅, Ni(CO)₄, ferrocene (D5h/D5d conformers) — 16 validated
+**Systems**: Cr(CO)6, Fe(CO)5, Ni(CO)4, ferrocene (D5h/D5d conformers) -- 16 validated
 DFT calculations with Coulomb-matrix features, GP baseline, and AL demo.
 
 **Key results**:
-- Ferrocene eclipsed→staggered barrier: ΔE = 41.68 meV (matches experiment, ~41 meV)
-- Fe/60 Ry vs 90 Ry convergence: ΔE < 0.3 meV (well-converged at 60 Ry)
+- Ferrocene eclipsed->staggered barrier: dE = 41.68 meV (matches experiment, ~41 meV)
+- Fe/60 Ry vs 90 Ry convergence: dE < 0.3 meV (well-converged at 60 Ry)
 - NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)
 
-**Tests**: 281 passing (Tasks 1–9 complete, pre-v1.0).
+**Tests**: 281 passing (Tasks 1-9 complete, pre-v1.0).
 
 See [`CLAUDE_ACTISTRUCT_TMC_PLAN.md`](CLAUDE_ACTISTRUCT_TMC_PLAN.md) for the full benchmark plan.
