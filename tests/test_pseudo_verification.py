@@ -128,10 +128,11 @@ def test_local_file_md5_matches_official(element):
     v = m["elements"][element]["verification"]
     local_path = _resolve_pseudo_path(m["elements"][element]["path"])
 
-    assert local_path.exists(), (
-        f"Pseudopotential file for {element} not found at {local_path}. "
-        "Check that the SSSP directory is mounted and accessible."
-    )
+    if not local_path.exists():
+        pytest.skip(
+            f"UPF file for {element} not found at {local_path} "
+            "(local SSSP install required — skipped in CI)"
+        )
 
     local_md5 = _compute_md5(local_path)
     official_md5 = v["local_checksum_md5"]

@@ -25,6 +25,10 @@ def test_check_pseudo_dir_finds_known_elements():
     from _common import load_yaml
     project_cfg = load_yaml("configs/project_config.yaml")
     result = env_mod.check_pseudo_dir(project_cfg["paths"]["pseudo_dir"], ["Fe", "C", "H", "Ni", "O", "Cr"])
-    assert result["exists"] is True
+    if not result["exists"]:
+        pytest.skip(
+            f"SSSP pseudo dir not found at {project_cfg['paths']['pseudo_dir']} "
+            "(local SSSP install required — skipped in CI)"
+        )
     for element in ("Fe", "C", "H", "Ni", "O", "Cr"):
         assert result["elements_found"][element], f"no pseudopotential found for {element}"
