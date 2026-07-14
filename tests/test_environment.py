@@ -1,3 +1,5 @@
+import pytest
+
 from _load import load_script
 
 env_mod = load_script("00_inspect_environment.py")
