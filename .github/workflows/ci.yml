@@ -32,4 +32,11 @@ jobs:
           python -m py_compile generated_models/*.py
           python -m py_compile tests/*.py
       - name: Run tests
-        run: pytest -q
+        run: |
+          pytest --tb=line -q 2>&1 | tee /tmp/pytest_out.txt
+          exit ${PIPESTATUS[0]}
+      - name: Upload failure summary
+        if: failure()
+        run: |
+          echo "## pytest output (Python ${{ matrix.python-version }})" >> $GITHUB_STEP_SUMMARY
+          cat /tmp/pytest_out.txt >> $GITHUB_STEP_SUMMARY
