@@ -35,8 +35,9 @@ jobs:
         run: |
           pytest --tb=line -q 2>&1 | tee /tmp/pytest_out.txt
           exit ${PIPESTATUS[0]}
-      - name: Upload failure summary
+      - name: Upload test output artifact
         if: failure()
-        run: |
-          echo "## pytest output (Python ${{ matrix.python-version }})" >> $GITHUB_STEP_SUMMARY
-          cat /tmp/pytest_out.txt >> $GITHUB_STEP_SUMMARY
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-output-py${{ matrix.python-version }}
+          path: /tmp/pytest_out.txt
