@@ -35,9 +35,12 @@ jobs:
         run: |
           pytest --tb=line -q 2>&1 | tee /tmp/pytest_out.txt
           exit ${PIPESTATUS[0]}
-      - name: Upload test output artifact
+      - name: Post pytest output to Gist
         if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pytest-output-py${{ matrix.python-version }}
-          path: /tmp/pytest_out.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          OUTPUT=$(cat /tmp/pytest_out.txt)
+          GIST_URL=$(gh gist create --public --filename "pytest-py${{ matrix.python-version }}.txt" - <<< "$OUTPUT")
+          echo "Pytest output Gist: $GIST_URL"
+          echo "GIST: $GIST_URL" >> $GITHUB_STEP_SUMMARY
