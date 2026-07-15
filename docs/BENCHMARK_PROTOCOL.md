@@ -1,0 +1,230 @@
+# Frozen LF Benchmark Protocol
+
+Status: frozen before live low-fidelity campaign.
+
+Date frozen: 2026-07-16.
+
+This protocol defines the next live ActiStruct campaign: low-fidelity Quantum
+ESPRESSO active learning for H adsorption on Ti3C2-O. It is separate from the
+TMC Reliability Benchmark v1.0, which is a molecular QE-record benchmark.
+
+After live results exist, protocol changes require a dated amendment in this
+file. Do not change acquisition settings, baselines, metrics, or stopping rules
+after seeing results without recording the reason.
+
+## Objective
+
+Minimize the HER descriptor
+
+```text
+DeltaG_H = E_H_on_slab - E_slab - 0.5 * E_H2 + 0.04 eV
+```
+
+where the `+0.04 eV` term is the approximate HER ZPE/entropy correction already
+used in `examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`. This is a
+screening descriptor, not a full free-energy calculation.
+
+The target is a site with `DeltaG_H` close to 0 eV. The campaign minimizes
+`DeltaG_H` as implemented by the current oracle and reports `|DeltaG_H|` as a
+thermoneutrality diagnostic.
+
+## System
+
+- Surface: Ti3C2-O 2x2 slab.
+- Structure source: `data/structures/ti3c2_o/ti3c2_o_slab_relaxed.traj` when
+  present; otherwise `data/structures/ti3c2_o/ti3c2_o_slab.traj`.
+- Adsorbate: one H atom at fractional in-plane coordinates `(u, v)`.
+- H lateral position: fixed with `FixedLine` so only z relaxes.
+- Slab relaxation: bottom three detected layers fixed; top slab layers and H
+  relax during BFGS.
+- BFGS settings: `fmax=0.05 eV/A`, `steps=50`.
+
+## Low-Fidelity DFT Settings
+
+These settings are frozen for the live LF campaign.
+
+| Setting | Value |
+|---|---|
+| `FIDELITY` | `low` |
+| `ecutwfc` | `40 Ry` |
+| `ecutrho` | `320 Ry` |
+| slab k-points | `(3, 3, 1)` |
+| H2 k-points | `(1, 1, 1)` |
+| smearing | Marzari-Vanderbilt |
+| `degauss` | `0.02` |
+| `conv_thr` | `1e-8` |
+| `electron_maxstep` | `300` |
+| `mixing_beta` | `0.2` |
+| QE scratch | `/tmp/qe_scratch` unless `QE_SCRATCH_ROOT` is set |
+| default MPI ranks | `QE_NPROCS=2` |
+| retries | `2` retries after the first failed attempt |
+
+Pseudopotentials are SSSP 1.3.0 PBE efficiency:
+
+- Ti: `ti_pbe_v1.4.uspp.F.UPF`
+- C: `C.pbe-n-kjpaw_psl.1.0.0.UPF`
+- O: `O.pbe-n-kjpaw_psl.0.1.UPF`
+- H: `H.pbe-rrkjus_psl.1.0.0.UPF`
+
+Required environment variables:
+
+```bash
+export FIDELITY=low
+export ESPRESSO_PW=/path/to/pw.x
+export ESPRESSO_PSEUDO=/path/to/SSSP_1.3.0_PBE_efficiency
+export QE_SCRATCH_ROOT=/tmp/qe_scratch
+export QE_NPROCS=2
+```
+
+## Seed Dataset
+
+The frozen seed set for the two-track AL driver is six real-DFT points:
+
+| Label | `(u, v)` | Role |
+|---|---:|---|
+| atop-O | `(0.000000, 0.000000)` | first campaign cached reference |
+| atop-Ti | `(0.333333, 0.166667)` | outer Ti column |
+| atop-C | `(0.166667, 0.333333)` | C column |
+| hollow | `(0.083333, 0.166667)` | balanced hollow |
+| O-O bridge | `(0.250000, 0.000000)` | bridge site |
+| intermediate | `(0.125000, 0.125000)` | partial O-proximity site |
+
+If any seed value is missing from cache, run the grid/seed campaign before the
+AL loop. Do not replace seed points after inspecting results unless this file
+gets a dated protocol amendment.
+
+## Acquisition
+
+Use the existing two-track driver:
+
+```bash
+python -m examples.manual_qe.run_ti3c2_o_al_loop
+```
+
+Frozen acquisition settings:
+
+- Tracks: frozen SchNet embedding + GP (`GNNTrack`) and direct `(u, v)` GP
+  (`PlainGPTrack`).
+- Acquisition: Lower Confidence Bound, `LCB = mean - kappa * std`.
+- `kappa = 1.0`.
+- Optimizer: `scipy.optimize.differential_evolution`.
+- Bounds: `(u, v) in [0, 1] x [0, 1]`, wrapped modulo 1.
+- `RANDOM_STATE = 42`.
+- DE settings in the two-track driver: `maxiter=200`, `tol=1e-6`, `polish=True`.
+- Budget: `5` AL iterations per track after the six seed points.
+
+Cache hits are allowed and must be reported as cache hits. A cache hit is not a
+new DFT call. Duplicate or near-duplicate proposals must be counted in the
+duplicate metric rather than silently hidden.
+
+## Baselines
+
+Report all baselines under the same data budget and seed set.
+
+| Baseline | Status | Claim allowed before run |
+|---|---|---|
+| Random selection over `(u, v)` | required | none |
+| Direct GP on raw `(u, v)` | implemented as `PlainGPTrack` | workflow only |
+| Frozen SchNet embedding + GP | implemented as `GNNTrack` | workflow only |
+| Descriptor GP | allowed comparison if implemented before campaign | none until run |
+| Failure-aware acquisition | allowed comparison if live failure risk is wired in | none until run |
+
+The report must not claim that the GNN track is superior unless it beats the
+baselines under the frozen metrics and budget.
+
+## Metrics
+
+Report these metrics for every track:
+
+- best observed `DeltaG_H` by DFT-call count
+- `|DeltaG_H|` of the best observed site
+- simple regret relative to the best LF value observed within the same frozen
+  campaign budget
+- number of new DFT calls
+- number of cache hits
+- number of failed QE attempts and skipped candidates
+- duplicate or near-duplicate proposals
+- wall-clock time per accepted candidate and total wall-clock time
+- retrospective uncertainty calibration where enough held-out data exist
+
+The primary plot is best observed `DeltaG_H` and `|DeltaG_H|` vs new DFT-call
+count, not vs wall-clock alone.
+
+## Stopping Rule
+
+For the two-track AL driver, run all five AL iterations per track unless one of
+these hard stops occurs:
+
+- two consecutive QE infrastructure failures prevent all tracks from acquiring
+  a value
+- no non-duplicate candidate can be proposed under the frozen duplicate
+  tolerance
+- the user explicitly stops the job for hardware, power, or storage reasons
+
+Do not stop early because the result looks good.
+
+The older single-track oracle has an internal convergence rule based on
+uncertainty and predicted improvement. That rule is not the success criterion
+for this frozen two-track benchmark unless the single-track script is used in a
+separately dated amendment.
+
+## Failure Handling
+
+- Keep all failed attempts in the raw output or ledger location; do not delete
+  failures to make the campaign look cleaner.
+- `compute_delta_g_h()` retries each point with `CONFIG.retries=2`.
+- A point returning `None` is a skipped candidate and must be counted.
+- QE scratch must remain on the Linux filesystem, not `/mnt/d`, to avoid NTFS
+  scratch corruption.
+- If the process is interrupted, resume with the same command and cache. Record
+  that the campaign was resumed.
+
+## Reproduction Commands
+
+Seed/grid campaign if a seed value is missing:
+
+```bash
+cd /mnt/d/Research/Dr.Kulik_MIT
+source .venv/bin/activate
+FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_grid_campaign
+```
+
+Frozen two-track AL campaign:
+
+```bash
+cd /mnt/d/Research/Dr.Kulik_MIT
+source .venv/bin/activate
+FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_al_loop
+```
+
+Monitor cache/report outputs:
+
+```bash
+tail -f outputs/reports/ti3c2_o_her_low_report.txt
+ls -lh outputs/cache/ti3c2_o_her_low.pkl
+```
+
+## Reporting Rule
+
+Every public statement from this campaign must name the evidence file and the
+command used to produce it. Allowed language before the run is limited to:
+
+> The LF campaign protocol is frozen and ready to run.
+
+After the run, claims must be restricted to what the frozen metrics support.
+
+## Known Limitations
+
+- The `+0.04 eV` term is an approximate HER correction; vibrational free-energy
+  calculations are not part of this LF campaign.
+- Low fidelity does not replace the deferred high-fidelity validation.
+- The current two-track GNN driver pretrains and fits on LF data only; it is not
+  a true LF/HF transfer result.
+- The structures fed to the GNN use nominal H placement on the clean slab, not
+  archived final relaxed adsorbate geometries for every site.
+- A live LF win does not prove general predictive performance outside this
+  system or acquisition budget.
+
+## Amendments
+
+No amendments yet.
