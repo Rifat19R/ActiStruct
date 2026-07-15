@@ -9,16 +9,18 @@ ferrocene:
     bond_lengths:
       - label: Fe-C
         value_angstrom: 2.064
-        uncertainty_angstrom: null
+        uncertainty_angstrom: 0.003
         source_id: haaland_nilsson_1968
-        verification_date: "2026-07-14"
-        verification_method: cross_verified_secondary
+        verification_date: "2026-07-15"
+        verification_method: primary_pdf_table
+        verified_by: "Rifat Khandaker; Codex primary PDF inspection"
       - label: C-C (Cp ring)
         value_angstrom: 1.440
-        uncertainty_angstrom: null
+        uncertainty_angstrom: 0.002
         source_id: haaland_nilsson_1968
-        verification_date: "2026-07-14"
-        verification_method: cross_verified_secondary
+        verification_date: "2026-07-15"
+        verification_method: primary_pdf_table
+        verified_by: "Rifat Khandaker; Codex primary PDF inspection"
     angles: []
     relative_energies: []
     barriers: []
@@ -36,15 +38,14 @@ ferrocene:
         Primary gas-phase electron diffraction structure determination.
         TASK 4 VERIFICATION (2026-07-14): DOI confirmed to resolve (302 redirect
         to actachemscand.ki.ku.dk) with correct title/authors/journal/volume/year/
-        pages. Full-text PDF not accessed (publisher page returns metadata-only
-        view; no institutional access). Bond lengths Fe-C=2.064 A and C-C=1.440 A
-        cross-verified from two independent secondary paths: (1) Wikipedia
-        "Ferrocene" article cites CRC Handbook 85th ed (Lide 2004, p.3-282) which
-        cites this paper for exactly these values; (2) Web search confirms
-        "all Fe-C bond distances are 2.064 A" attributed to Haaland & Nilsson 1968.
-        Uncertainty values not available from accessible sources; recorded as null.
-        Status: values numerically confirmed via consistent secondary sourcing;
-        primary PDF character-by-character check not performed.
+        pages. Values were initially cross-verified via secondary sources.
+        PRIMARY PDF VERIFICATION (2026-07-15): User-provided/open Acta Chemica
+        Scandinavica PDF `acta_vol_22_p2653-2670.pdf` checked against Table 1
+        ("Bond distances and root mean square vibrational amplitudes of ferrocene
+        and ruthenocene"). Table 1 reports Fe-C = 2.064 +/- 0.003 A and
+        C-C(Cp) = 1.440 +/- 0.002 A for Fe(C5H5)2; these match the recorded
+        reference values. Ferrocene is primary-PDF verified. The other TMC
+        systems still require primary PDF review before external citation.
     crc_handbook_85ed:
       type: database
       title: "CRC Handbook of Chemistry and Physics, 85th Edition, p. 3-282"
@@ -58,7 +59,7 @@ ferrocene:
         Tertiary compilation citing Haaland & Nilsson 1968. Used as an
         intermediate verification path (Wikipedia cites CRC which cites the
         primary study). Not treated as primary source.
-  status: cross_verified_secondary
+  status: verified
 
 ni_co4:
   name: Nickel tetracarbonyl

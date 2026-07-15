@@ -50,30 +50,42 @@ def test_every_doi_present_is_syntactically_valid_and_not_a_placeholder():
     assert len(seen_dois) >= 4, "expected at least one distinct real DOI per system"
 
 
-def test_no_system_claims_full_pdf_verification_without_access():
-    """No system may use a status that implies primary-PDF verification.
+def test_verified_status_requires_primary_pdf_method():
+    """Verified status must be backed by an explicit primary-PDF check.
 
     Task 4 (2026-07-14) legitimately elevated statuses to:
       - 'cross_verified_secondary': values confirmed via secondary sources
         (Wikipedia, HandWiki) that explicitly cite the primary paper.
       - 'confirmed_from_primary_abstract': values confirmed character-by-character
         from a publicly accessible primary abstract (PubMed).
-    All four publisher PDFs remain access-gated (HTTP 403). Any status implying
-    full primary-PDF verification is prohibited until Rifat reviews the PDFs
-    with institutional access.
+    Ferrocene is now backed by the user-provided/open Acta Chemica Scandinavica
+    PDF table. The remaining systems may stay at lower confidence levels until
+    their publisher PDFs are reviewed with institutional access.
     """
     ALLOWED = {
         "needs_manual_review",
         "cross_verified_secondary",
         "confirmed_from_primary_abstract",
+        "verified",
     }
     data = load_reference_data()
     for system_id, entry in data.items():
         status = entry["status"]
         assert status in ALLOWED, (
             f"{system_id}: status='{status}' is not an allowed verification level. "
-            f"Allowed post-Task-4 values: {sorted(ALLOWED)}"
+            f"Allowed verification levels: {sorted(ALLOWED)}"
         )
+        if status == "verified":
+            methods = {
+                bond.get("verification_method")
+                for bond in entry["reference_values"]["bond_lengths"]
+            }
+            assert methods == {"primary_pdf_table"}, (
+                f"{system_id}: verified status requires all bond lengths to use "
+                "verification_method=primary_pdf_table"
+            )
+            for bond in entry["reference_values"]["bond_lengths"]:
+                assert bond.get("verified_by"), f"{system_id}: {bond['label']} missing verified_by"
 
 
 def test_uncertainty_values_are_plausible_diffraction_precision():

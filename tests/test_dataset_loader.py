@@ -84,6 +84,19 @@ def test_train_test_split_no_leakage():
         )
 
 
+def test_leave_one_out_splits_cover_all_rows_once():
+    ds = loader.load_dataset(feature_set="coulomb", target="final_energy_ev")
+    splits = loader.leave_one_out_splits(ds)
+    assert len(splits) == ds.n_samples == 16
+    held_out = []
+    for train, test in splits:
+        assert train.n_samples == 15
+        assert test.n_samples == 1
+        assert set(train.system_ids).isdisjoint(test.system_ids)
+        held_out.extend(test.system_ids)
+    assert sorted(held_out) == sorted(ds.system_ids)
+
+
 def test_invalid_target_raises():
     with pytest.raises(ValueError, match="target must be one of"):
         loader.load_dataset(target="not_a_real_target")
