@@ -263,7 +263,7 @@ ActiStruct/
 ├── configs/
 │   ├── qe_molecule_settings.yaml
 │   └── project_config.yaml
-├── tests/                               — 413 passing tests
+├── tests/                               — 417 passing tests
 └── reports/
     ├── dataset_diagnostics_v0.1.md      — programmatic diagnostics
     └── tmc_benchmark_v1.0.md            — this document

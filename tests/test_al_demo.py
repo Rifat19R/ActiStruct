@@ -13,6 +13,46 @@ FIXED_HOLDOUT_IDS = al_mod.FIXED_HOLDOUT_IDS
 
 
 # ──────────────────────────────────────────────
+# One-step 16-row AL iteration
+# ──────────────────────────────────────────────
+
+def test_one_step_al_iteration_contract():
+    result = al_mod.simulate_one_step_al_iteration(feature_set="coulomb")
+    required = {
+        "seed_n", "pool_n_before", "train_n_after", "pool_n_after",
+        "selected_id", "selected_source", "oracle_value",
+        "predicted_before", "uncertainty_before", "uncertainty_after",
+        "top_candidates_before",
+    }
+    assert required.issubset(result.keys())
+    assert result["seed_n"] == 4
+    assert result["pool_n_before"] == 12
+    assert result["train_n_after"] == 5
+    assert result["pool_n_after"] == 11
+    assert result["selected_source"] == "candidate"
+    assert result["uncertainty_before"] >= 0
+    assert result["uncertainty_after"] >= 0
+
+
+def test_one_step_al_iteration_oracle_value_matches_dataset():
+    from _load import load_script
+    loader = load_script("11_dataset_loader.py")
+    ds = loader.load_dataset(feature_set="coulomb", target="final_energy_ev")
+    y_by_id = dict(zip(ds.system_ids, ds.y))
+
+    result = al_mod.simulate_one_step_al_iteration(feature_set="coulomb")
+    assert abs(result["oracle_value"] - y_by_id[result["selected_id"]]) < 1e-9
+
+
+def test_one_step_al_iteration_has_ranked_candidates():
+    result = al_mod.simulate_one_step_al_iteration(feature_set="coulomb")
+    ranked = result["top_candidates_before"]
+    assert len(ranked) == 5
+    scores = [c.get("acquisition_score", c.get("lcb_score")) for c in ranked]
+    assert scores == sorted(scores)
+
+
+# ──────────────────────────────────────────────
 # Simulated AL loop
 # ──────────────────────────────────────────────
 
@@ -171,7 +211,8 @@ def test_json_has_disclaimer():
     import json
     data = json.loads(json_path.read_text(encoding="utf-8"))
     assert "disclaimer" in data
-    assert "12" in data["disclaimer"]
+    assert "16" in data["disclaimer"]
+    assert "one_step_iteration" in data
 
 
 def test_report_contains_disclaimer():
@@ -180,7 +221,16 @@ def test_report_contains_disclaimer():
         pytest.skip("run scripts/14_active_learning_demo.py first")
     text = report_path.read_text(encoding="utf-8")
     assert "DISCLAIMER" in text or "disclaimer" in text.lower()
-    assert "12" in text
+    assert "16" in text
+
+
+def test_report_contains_one_step_iteration_section():
+    report_path = PROJECT_ROOT / "reports" / "active_learning_demo_v0.1.md"
+    if not report_path.exists():
+        pytest.skip("run scripts/14_active_learning_demo.py first")
+    text = report_path.read_text(encoding="utf-8")
+    assert "One-Step AL Iteration" in text
+    assert "model -> acquisition -> DFT-oracle reveal -> model update" in text
 
 
 def test_report_contains_al_loop_table():
