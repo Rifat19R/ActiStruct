@@ -2,7 +2,7 @@
 
 Active-learning workflow for DFT-guided materials discovery.
 
-![Tests](https://img.shields.io/badge/tests-410%20passed%2C%200%20warnings-brightgreen)
+![Tests](https://img.shields.io/badge/tests-417%20passed%2C%200%20warnings-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
 ![CI](https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
