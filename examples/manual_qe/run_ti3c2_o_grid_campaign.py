@@ -1,4 +1,4 @@
-"""Phase 2 driver: real DFT grid campaign at the oracle's 5 seed (u,v) sites.
+"""Phase 2 driver: real DFT seed campaign at the oracle's 6 seed (u,v) sites.
 
 Reuses ti3c2_o_her_qe_active_inverse.py's own initial-labeling loop (same
 logic as main(), lines computing the initial training set) but stops there --
@@ -6,9 +6,10 @@ deliberately not entering the active-learning iteration loop, so Phase 2
 (grid campaign) and Phase 3 (AL loop closure) stay reportable as separate,
 gated steps.
 
-CONFIG.initial_points defines 5 sites (not 6): atop, bridge, 2x hollow, and
-one unlabeled symmetry-distinct site -- these are the oracle's own existing
-candidate defaults; no new coordinates are invented here.
+CONFIG.initial_points defines the frozen six-site seed set used by the AL
+driver: atop-O, atop-Ti, atop-C, hollow, O-O bridge, and an intermediate site.
+This script must be run before the AL loop if any seed value is missing from
+cache.
 
 Run:
     python -m examples.manual_qe.run_ti3c2_o_grid_campaign
