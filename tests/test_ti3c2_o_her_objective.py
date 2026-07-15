@@ -57,6 +57,14 @@ def test_random_track_is_deterministic_from_same_seed():
     assert first.propose() == second.propose()
 
 
+def test_al_driver_uses_oracle_frozen_seed_points():
+    driver = importlib.import_module("examples.manual_qe.run_ti3c2_o_al_loop")
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+
+    assert driver.SEED_POINTS == list(oracle.CONFIG.initial_points)
+    assert len(driver.SEED_POINTS) == 6
+
+
 def test_campaign_record_schema_and_jsonl_persistence(tmp_path):
     driver = importlib.import_module("examples.manual_qe.run_ti3c2_o_al_loop")
     log_path = tmp_path / "campaign.jsonl"

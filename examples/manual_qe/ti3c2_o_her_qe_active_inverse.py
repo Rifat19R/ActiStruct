@@ -2,12 +2,13 @@
 2D active learning + inverse design for H on Ti3C2-O MXene (HER catalyst).
 
 Objective:
-    Minimize the Norskov DeltaG_H descriptor:
+    Minimize the HER thermoneutrality score:
 
         DeltaG_H = E_H_on_slab - E_slab - 0.5 * E_H2 + 0.04 eV
+        J = |DeltaG_H|
 
     by varying the in-plane fractional coordinates (u, v) of adsorbed H on the
-    Ti3C2-O(0001) surface.  BFGS handles z relaxation (H height + top slab layers).
+    Ti3C2-O(0001) surface. BFGS handles z relaxation (H height + top slab layers).
 
 System:
     Ti3C2-O 2x2 supercell (28 atoms) loaded from traj file.
@@ -176,6 +177,7 @@ class Config:
     # and a partial-O-proximity intermediate site. Combined with the new
     # FixedLine(H, z-only) constraint, these no longer alias to one another.
     initial_points: tuple = (
+        (0.0, 0.0),              # atop O reference from preliminary campaign
         (1.0/3.0, 1.0/6.0),     # atop outer Ti column
         (1.0/6.0, 1.0/3.0),     # atop C column
         (1.0/12.0, 1.0/6.0),    # 3-fold-balanced hollow (~equidistant O/Ti/C)
@@ -730,7 +732,7 @@ def main() -> None:
 
     header = [
         "=" * 92,
-        f"Ti3C2-O MXene HER -- 2D active learning + inverse DeltaG_H minimization",
+        f"Ti3C2-O MXene HER -- 2D active learning + thermoneutral |DeltaG_H| search",
         f"Fidelity: {FIDELITY}  |  Slab: {SLAB_LABEL}  |  Slab file: {SLAB_TRAJ}",
         f"Slab atoms: {len(test_slab)}  |  Adsorbed system: {len(test_ads)} atoms",
         f"ecutwfc: {ECUTWFC:.0f} Ry  |  ecutrho: {ECUTRHO:.0f} Ry  |  kpts: {KPTS_SLAB}",

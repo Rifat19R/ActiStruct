@@ -48,14 +48,7 @@ import examples.manual_qe.ti3c2_o_her_qe_active_inverse as oracle
 from actistruct.gnn.config import GNNConfig
 from actistruct.gnn.surrogate import HybridGPSurrogate
 
-SEED_POINTS = [
-    (0.0, 0.0),          # atop-O (first campaign)
-    (1.0 / 3.0, 1.0 / 6.0),   # atop-Ti
-    (1.0 / 6.0, 1.0 / 3.0),   # atop-C
-    (1.0 / 12.0, 1.0 / 6.0),  # hollow
-    (0.25, 0.0),          # O-O bridge
-    (0.125, 0.125),        # intermediate
-]
+SEED_POINTS = list(oracle.CONFIG.initial_points)
 
 MAX_ITERATIONS = 5
 KAPPA = 1.0
