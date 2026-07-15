@@ -192,13 +192,15 @@ naming_convention_warnings_resolved:
   Cr: 'cr_pbe_v1.5.uspp.F.UPF' confirmed as GBRV-1.5 SSSP efficiency pseudo.
   MD5 verified 2026-07-01. Naming difference from _psl. convention is expected.
 
-# OPEN ISSUE — requires action from Rifat before external citation
-cutoff_action_required:
+# COMPLETED CHECK — remaining action is scientific policy, not missing data
+cutoff_convergence:
   Fe:
     issue: >
       SSSP efficiency recommends ecutwfc=90 Ry for Fe (PAW-031).
-      Benchmark used 60 Ry. A cutoff convergence test at 60, 75, 90 Ry on
-      ferrocene or Fe(CO)5 is required before citing Fe-system results
-      in a paper or presentation. The pseudopotential file itself is correct.
-    status: pending
+      The benchmark originally used 60 Ry. A 60/75/90 Ry Fe(CO)5 convergence
+      test has been completed in reports/fe_cutoff_convergence_v0.1.md.
+      Result: 60 Ry and 75 Ry pass the Fe-C bond-length criterion but fail the
+      |Delta E/atom| < 1 meV criterion vs 90 Ry; 90 Ry is adopted for Fe energy
+      claims. The pseudopotential file itself is correct.
+    status: complete_90_ry_required_for_fe_energy_claims
     responsible: Rifat

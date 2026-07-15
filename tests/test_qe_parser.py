@@ -124,6 +124,12 @@ def test_to_csv_row_json_encodes_nested_fields():
     assert json.loads(row["warnings"]) == record["warnings"]
 
 
+def test_parser_records_repo_relative_trace_paths():
+    record = parser_mod.parse_qe_output(real_fixture_path("ni_co4"))
+    assert record["output_filename"] == "tests/fixtures/qe_outputs/ni_co4/ni_co4.relax.out"
+    assert "\\" not in record["output_filename"]
+
+
 def test_build_summary_report_counts_match_records():
     records = [parser_mod.parse_qe_output(real_fixture_path(s)) for s in REAL_SYSTEMS]
     report = parser_mod.build_summary_report(records, FIXTURES_DIR)

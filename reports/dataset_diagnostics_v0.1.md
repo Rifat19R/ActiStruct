@@ -146,7 +146,7 @@ All 8/8 bond-stretch perturbations relaxed back to the parent basin (|ΔE| < 10 
 ## 10. Known Limitations
 
 - **No `reliable` rows in this dataset.** Primary systems are `validated` (passed reference comparison, script 13), but perturbation candidates have no literature counterparts — correct by design.
-- **`negative_rho` warnings present in all calculations.** Small negative charge density arises from incomplete Fourier series truncation in plane-wave DFT — not a correctness issue at these magnitudes (<0.021 e/bohr³).
-- **Ni/Cr pseudopotential naming convention uncertainty.** `ni_pbe_v1.4.uspp.F.UPF` and `cr_pbe_v1.5.uspp.F.UPF` do not match the `_psl.` SSSP-efficiency naming pattern used for Fe/C/H/O. Needs manual verification against the SSSP efficiency tier before external publication.
+- **`negative_rho` warnings present in all calculations.** Small negative charge density arises from incomplete Fourier series truncation in plane-wave DFT. The warnings are retained in the parsed dataset and should be reviewed case-by-case before external publication.
+- **Ni/Cr pseudopotential naming convention resolved.** `ni_pbe_v1.4.uspp.F.UPF` and `cr_pbe_v1.5.uspp.F.UPF` are official SSSP efficiency GBRV entries; the naming difference from `_psl.` files is expected because SSSP mixes source libraries by element.
 - **Dataset size.** 16 DFT calculations across 4 systems are sufficient for workflow demonstration and PES sampling characterization, but not for statistically robust ML training. ML/AL infrastructure should carry an explicit 'not yet predictive' disclaimer until ≥30–50 validated calculations per system are available.
 
