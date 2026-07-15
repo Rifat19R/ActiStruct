@@ -209,6 +209,12 @@ a separately dated amendment.
 - Each QE working directory writes `run_metadata.json` with convergence status,
   BFGS step count, final max force, trajectory path, final energy if valid, and
   raw QE output hash when available.
+- H2 reference calculations use the same metadata-writing path as clean-slab
+  and slab+H calculations. H2 metadata must include the campaign fingerprint,
+  active pseudopotential hash, input settings, total energy, and QE output hash.
+- A fallback energy parsed from raw QE output is valid only when the output
+  contains `JOB DONE` and does not contain `convergence NOT achieved`.
+  Interrupted outputs with intermediate total-energy lines are failures.
 - QE scratch must remain on the Linux filesystem, not `/mnt/d`, to avoid NTFS
   scratch corruption.
 - If the process is interrupted, resume with the same command and cache. Record
@@ -307,3 +313,13 @@ threshold and step limit, electronic settings, cutoffs, and k-points. Exact
 frozen seed coordinates are required; nearby fallback seed substitutions are
 not allowed. BFGS non-convergence is treated as failure and is not cached as a
 successful `DeltaG_H`.
+
+### Amendment 3 -- Pre-run QE Completion and H2 Metadata Check
+
+Date: 2026-07-16.
+
+Before any frozen-campaign result was generated, H2 reference calculations were
+moved through the same `run_energy()` metadata path used for slab calculations.
+QE fallback energy parsing now requires a complete `JOB DONE` output and
+rejects `convergence NOT achieved`; intermediate total-energy lines from
+incomplete outputs are not accepted as evidence.

@@ -164,6 +164,9 @@ def test_run_energy_rejects_unconverged_bfgs(tmp_path, monkeypatch):
     class FakeAtoms:
         calc = None
 
+        def get_chemical_symbols(self):
+            return ["Ti", "C", "O", "H"]
+
         def get_forces(self):
             return np.array([[0.0, 0.0, 0.2]])
 
@@ -189,6 +192,85 @@ def test_run_energy_rejects_unconverged_bfgs(tmp_path, monkeypatch):
     assert metadata["converged"] is False
     assert metadata["bfgs_steps"] == 50
     assert metadata["final_max_force_ev_per_a"] == 0.2
+
+
+def test_parse_qe_total_energy_rejects_incomplete_output(tmp_path):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+    pwo = tmp_path / "espresso.pwo"
+    pwo.write_text("!    total energy              =    -10.0 Ry\n", encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="QE output incomplete"):
+        oracle.parse_qe_total_energy(pwo)
+
+
+def test_parse_qe_total_energy_rejects_scf_nonconvergence(tmp_path):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+    pwo = tmp_path / "espresso.pwo"
+    pwo.write_text(
+        "convergence NOT achieved\n"
+        "!    total energy              =    -10.0 Ry\n"
+        "JOB DONE.\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(RuntimeError, match="QE SCF did not converge"):
+        oracle.parse_qe_total_energy(pwo)
+
+
+def test_run_energy_rejects_incomplete_qe_output_even_after_ase_energy(tmp_path, monkeypatch):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+    (tmp_path / "espresso.pwo").write_text(
+        "!    total energy              =    -10.0 Ry\n",
+        encoding="utf-8",
+    )
+
+    class FakeAtoms:
+        calc = None
+
+        def get_chemical_symbols(self):
+            return ["H"]
+
+        def get_potential_energy(self):
+            return -5.0
+
+    monkeypatch.setattr(oracle, "get_calculator", lambda *args, **kwargs: object())
+
+    with pytest.raises(RuntimeError, match="QE output incomplete"):
+        oracle.run_energy(FakeAtoms(), tmp_path, "incomplete", (1, 1, 1), relax=False)
+
+    metadata = json.loads((tmp_path / "run_metadata.json").read_text(encoding="utf-8"))
+    assert metadata["converged"] is False
+    assert metadata["qe_output_sha256"] is not None
+
+
+def test_h2_reference_uses_run_energy_metadata_path(tmp_path, monkeypatch):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+    calls = {}
+
+    def fake_run_energy(atoms, work_dir, prefix, kpts, relax=False, extra_system=None):
+        calls["symbols"] = atoms.get_chemical_symbols()
+        calls["work_dir"] = work_dir
+        calls["prefix"] = prefix
+        calls["kpts"] = kpts
+        calls["relax"] = relax
+        calls["extra_system"] = extra_system
+        work_dir.mkdir(parents=True, exist_ok=True)
+        (work_dir / "run_metadata.json").write_text('{"prefix": "h2_ref"}\n', encoding="utf-8")
+        return -6.0
+
+    cached = {}
+    monkeypatch.setattr(oracle, "QE_RUN_DIR", tmp_path)
+    monkeypatch.setattr(oracle, "cache_get", lambda key: None)
+    monkeypatch.setattr(oracle, "cache_set", lambda key, value: cached.setdefault(key, value))
+    monkeypatch.setattr(oracle, "run_energy", fake_run_energy)
+
+    assert oracle.get_h2_energy(retries=0) == -6.0
+    assert calls["symbols"] == ["H", "H"]
+    assert calls["prefix"] == "h2_ref"
+    assert calls["kpts"] == oracle.KPTS_H2
+    assert calls["relax"] is False
+    assert calls["extra_system"] == {"ecutwfc": oracle.ECUTWFC, "ecutrho": oracle.ECUTRHO}
+    assert list(cached.values()) == [-6.0]
 
 
 def test_grid_campaign_uses_exact_seed_coordinates_only():
