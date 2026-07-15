@@ -1,6 +1,6 @@
 # Frozen LF Benchmark Protocol
 
-Status: frozen before live low-fidelity campaign.
+Status: amended before live low-fidelity campaign.
 
 Date frozen: 2026-07-16.
 
@@ -14,19 +14,20 @@ after seeing results without recording the reason.
 
 ## Objective
 
-Minimize the HER descriptor
+Minimize the HER thermoneutrality score
 
 ```text
 DeltaG_H = E_H_on_slab - E_slab - 0.5 * E_H2 + 0.04 eV
+J(u, v) = |DeltaG_H(u, v)|
 ```
 
 where the `+0.04 eV` term is the approximate HER ZPE/entropy correction already
 used in `examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`. This is a
 screening descriptor, not a full free-energy calculation.
 
-The target is a site with `DeltaG_H` close to 0 eV. The campaign minimizes
-`DeltaG_H` as implemented by the current oracle and reports `|DeltaG_H|` as a
-thermoneutrality diagnostic.
+The target is a site with `DeltaG_H` close to 0 eV. The campaign therefore
+minimizes `J = |DeltaG_H|`, not raw `DeltaG_H`. Strongly negative adsorption is
+not treated as better than near-thermoneutral adsorption.
 
 ## System
 
@@ -78,24 +79,29 @@ export QE_NPROCS=2
 
 ## Seed Dataset
 
-The frozen seed set for the two-track AL driver is six real-DFT points:
+The frozen seed set for the AL driver is six distinct-site points:
 
 | Label | `(u, v)` | Role |
 |---|---:|---|
-| atop-O | `(0.000000, 0.000000)` | first campaign cached reference |
+| atop-O | `(0.000000, 0.000000)` | atop O reference |
 | atop-Ti | `(0.333333, 0.166667)` | outer Ti column |
 | atop-C | `(0.166667, 0.333333)` | C column |
 | hollow | `(0.083333, 0.166667)` | balanced hollow |
 | O-O bridge | `(0.250000, 0.000000)` | bridge site |
 | intermediate | `(0.125000, 0.125000)` | partial O-proximity site |
 
-If any seed value is missing from cache, run the grid/seed campaign before the
-AL loop. Do not replace seed points after inspecting results unless this file
-gets a dated protocol amendment.
+Five preliminary development-site calculations were completed before this
+protocol, but they were superseded after symmetry aliasing and lateral
+adsorbate migration were identified. The frozen six-point distinct-site seed
+campaign has not yet been completed unless the cache contains all six values
+under the current low-fidelity settings. If any seed value is missing from
+cache, run the grid/seed campaign before the AL loop. Do not replace seed
+points after inspecting results unless this file gets a dated protocol
+amendment.
 
 ## Acquisition
 
-Use the existing two-track driver:
+Use the existing three-track driver:
 
 ```bash
 python -m examples.manual_qe.run_ti3c2_o_al_loop
@@ -103,9 +109,12 @@ python -m examples.manual_qe.run_ti3c2_o_al_loop
 
 Frozen acquisition settings:
 
-- Tracks: frozen SchNet embedding + GP (`GNNTrack`) and direct `(u, v)` GP
-  (`PlainGPTrack`).
-- Acquisition: Lower Confidence Bound, `LCB = mean - kappa * std`.
+- Tracks: frozen SchNet embedding + GP (`GNNTrack`), direct `(u, v)` GP
+  (`PlainGPTrack`), and deterministic random baseline (`RandomTrack`).
+- Acquisition for GP tracks: thermoneutral Lower Confidence Bound,
+  `score = |mean DeltaG_H| - kappa * std`.
+- Acquisition for random baseline: deterministic random proposal from
+  `random_state=42`, using the same duplicate tolerance and oracle path.
 - `kappa = 1.0`.
 - Optimizer: `scipy.optimize.differential_evolution`.
 - Bounds: `(u, v) in [0, 1] x [0, 1]`, wrapped modulo 1.
@@ -136,7 +145,7 @@ baselines under the frozen metrics and budget.
 
 Report these metrics for every track:
 
-- best observed `DeltaG_H` by DFT-call count
+- best observed `|DeltaG_H|` by DFT-call count
 - `|DeltaG_H|` of the best observed site
 - simple regret relative to the best LF value observed within the same frozen
   campaign budget
@@ -147,8 +156,8 @@ Report these metrics for every track:
 - wall-clock time per accepted candidate and total wall-clock time
 - retrospective uncertainty calibration where enough held-out data exist
 
-The primary plot is best observed `DeltaG_H` and `|DeltaG_H|` vs new DFT-call
-count, not vs wall-clock alone.
+The primary plot is best observed `|DeltaG_H|` vs new DFT-call count, not vs
+wall-clock alone.
 
 ## Stopping Rule
 
@@ -200,7 +209,7 @@ FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_al_loop
 Monitor cache/report outputs:
 
 ```bash
-tail -f outputs/reports/ti3c2_o_her_low_report.txt
+tail -f outputs/campaigns/ti3c2_o_lf_campaign.jsonl
 ls -lh outputs/cache/ti3c2_o_her_low.pkl
 ```
 
@@ -225,6 +234,31 @@ After the run, claims must be restricted to what the frozen metrics support.
 - A live LF win does not prove general predictive performance outside this
   system or acquisition budget.
 
+## Evidence File
+
+The live campaign driver appends every successful, failed, duplicate, and
+cached proposal to:
+
+```text
+outputs/campaigns/ti3c2_o_lf_campaign.jsonl
+```
+
+Each row records track, iteration, proposal coordinates, prediction fields
+where available, thermoneutral acquisition score, status, cache hit, duplicate
+flag, `DeltaG_H`, `|DeltaG_H|`, current best `|DeltaG_H|`, point count, and wall
+time.
+
 ## Amendments
 
-No amendments yet.
+### Amendment 1 -- Pre-run Scientific Correction
+
+Date: 2026-07-16.
+
+Before any frozen-campaign result was generated, the objective was corrected
+from minimization of raw `DeltaG_H` to minimization of `|DeltaG_H|`, consistent
+with HER thermoneutrality. The GP acquisition is now a thermoneutral-LCB
+heuristic: `|mean DeltaG_H| - kappa * std`. No live frozen-campaign result was
+inspected before this amendment.
+
+This amendment also records the deterministic random baseline and JSONL
+proposal persistence required by the original protocol metrics.
