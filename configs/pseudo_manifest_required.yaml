@@ -39,16 +39,12 @@ elements:
       cutoff_used_in_benchmark_ry: 60.0
       cutoff_above_sssp_recommendation: false
       cutoff_flag: >
-        WARNING — SSSP efficiency recommends ecutwfc=90 Ry and ecutrho=1080 Ry
-        for this Fe PAW pseudopotential. Our benchmark used 60/480 Ry. For
-        isolated molecules in large supercells the wavefunction is more localized
-        and convergence can be faster than in solids; however, the completed
-        60/75/90 Ry Fe(CO)5 cutoff convergence test shows that 60 Ry and 75 Ry
-        fail the |Delta E/atom| < 1 meV criterion vs 90 Ry, while Fe-C bond
-        lengths are already stable. Use 90 Ry for Fe-containing energy claims
-        unless a separate system-specific cutoff test justifies otherwise. This
-        is NOT a pseudopotential file error — the file is the correct SSSP
-        efficiency file.
+        SSSP efficiency recommends ecutwfc=90 Ry for this Fe PAW pseudopotential.
+        Benchmark originally used 60/480 Ry. Cutoff convergence test (60/75/90 Ry)
+        on Fe(CO)5 is COMPLETE — see reports/fe_cutoff_convergence_v0.1.md.
+        60 Ry and 75 Ry fail the |Delta E/atom| < 1 meV criterion vs 90 Ry. Policy:
+        90 Ry adopted for all Fe energy claims; 60 Ry runs are workflow-validation
+        data only. Pseudopotential file is correct SSSP efficiency.
 
   C:
     filename: C.pbe-n-kjpaw_psl.1.0.0.UPF
