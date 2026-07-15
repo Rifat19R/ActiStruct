@@ -388,6 +388,12 @@ Source: `reports/simulated_failure_aware_al_benchmark_v051.md`.
 
 ## Safe claims
 
+Claim governance:
+
+- `docs/FEATURE_FREEZE.md` records the current scientific-evidence freeze.
+- `docs/CLAIMS_AND_EVIDENCE.md` maps major claims to evidence, commands, and
+  limitations.
+
 - The GNN encoder produces geometry-sensitive embeddings: same composition +
   different bond lengths -> different embedding (verified by test).
 - The LF static SCF on the 28-atom Ti3C2-O slab is validated: JOB DONE,
