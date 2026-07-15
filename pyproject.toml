@@ -63,6 +63,9 @@ packages = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+markers = [
+    "slow: tests that may re-run analysis scripts or take longer than the default suite",
+]
 filterwarnings = [
     # ConvergenceWarning from sklearn GP is expected on small/synthetic test
     # datasets where the optimizer occasionally reaches the length-scale lower
