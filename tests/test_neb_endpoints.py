@@ -128,10 +128,11 @@ def test_staggered_has_higher_energy_than_eclipsed():
     assert delta_mev > 0, (
         f"Staggered must be higher energy than eclipsed; got ΔE={delta_mev:.2f} meV"
     )
-    # Should match experimental eclipsed–staggered barrier ≈ 41 meV within 10 meV
+    # Endpoint energy difference should be on the same scale as the experimental
+    # eclipsed-staggered rotational barrier, without claiming a computed barrier.
     assert 25.0 <= delta_mev <= 60.0, (
         f"ΔE={delta_mev:.2f} meV outside expected range 25–60 meV "
-        f"(eclipsed–staggered barrier for ferrocene)"
+        f"(expected ferrocene conformer energy scale)"
     )
 
 
