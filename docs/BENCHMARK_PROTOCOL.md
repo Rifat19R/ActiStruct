@@ -39,6 +39,9 @@ not treated as better than near-thermoneutral adsorption.
 - Slab relaxation: bottom three detected layers fixed; top slab layers and H
   relax during BFGS.
 - BFGS settings: `fmax=0.05 eV/A`, `steps=50`.
+- BFGS must report convergence. A relaxation that reaches the step limit
+  without the frozen force threshold is a failed candidate and must not be
+  cached as a successful `DeltaG_H`.
 
 ## Low-Fidelity DFT Settings
 
@@ -59,6 +62,7 @@ These settings are frozen for the live LF campaign.
 | QE scratch | `/tmp/qe_scratch` unless `QE_SCRATCH_ROOT` is set |
 | default MPI ranks | `QE_NPROCS=2` |
 | retries | `2` retries after the first failed attempt |
+| cache namespace | `outputs/cache/ti3c2_o_her_low_protocol_v1_amend1.pkl` |
 
 Pseudopotentials are SSSP 1.3.0 PBE efficiency:
 
@@ -99,6 +103,10 @@ cache, run the grid/seed campaign before the AL loop. Do not replace seed
 points after inspecting results unless this file gets a dated protocol
 amendment.
 
+Seed coordinates are exact. The seed/grid campaign must not perturb failed
+seeds to nearby `(u, v)` points. If an exact frozen seed fails, retain the
+failure evidence and stop rather than silently substituting a nearby coordinate.
+
 ## Acquisition
 
 Use the existing three-track driver:
@@ -119,12 +127,23 @@ Frozen acquisition settings:
 - Optimizer: `scipy.optimize.differential_evolution`.
 - Bounds: `(u, v) in [0, 1] x [0, 1]`, wrapped modulo 1.
 - `RANDOM_STATE = 42`.
-- DE settings in the two-track driver: `maxiter=200`, `tol=1e-6`, `polish=True`.
+- DE settings in the three-track campaign driver: `maxiter=200`, `tol=1e-6`,
+  `polish=True`.
 - Budget: `5` AL iterations per track after the six seed points.
 
 Cache hits are allowed and must be reported as cache hits. A cache hit is not a
-new DFT call. Duplicate or near-duplicate proposals must be counted in the
-duplicate metric rather than silently hidden.
+new physical DFT call. Duplicate or near-duplicate proposals must be counted in
+the duplicate metric rather than silently hidden. Duplicate proposals consume
+the track's iteration, but must not be added to that track's training data and
+must not trigger retraining.
+
+Every proposal has two separate accounting dimensions:
+
+- `track_oracle_query`: the algorithm asked the oracle for one label.
+- `physical_new_dft_call`: the label required a new physical QE calculation.
+
+Algorithm comparisons use cumulative `track_oracle_query`. Computational-cost
+comparisons use cumulative `physical_new_dft_call`.
 
 ## Baselines
 
@@ -149,20 +168,22 @@ Report these metrics for every track:
 - `|DeltaG_H|` of the best observed site
 - simple regret relative to the best LF value observed within the same frozen
   campaign budget
-- number of new DFT calls
+- number of track oracle queries
+- number of physical new DFT calls
 - number of cache hits
 - number of failed QE attempts and skipped candidates
 - duplicate or near-duplicate proposals
 - wall-clock time per accepted candidate and total wall-clock time
 - retrospective uncertainty calibration where enough held-out data exist
 
-The primary plot is best observed `|DeltaG_H|` vs new DFT-call count, not vs
-wall-clock alone.
+The primary algorithm plot is best observed `|DeltaG_H|` vs cumulative track
+oracle queries. A second cost plot must show best observed `|DeltaG_H|` vs
+cumulative physical new DFT calls.
 
 ## Stopping Rule
 
-For the two-track AL driver, run all five AL iterations per track unless one of
-these hard stops occurs:
+For the three-track campaign driver, run all five AL iterations per track unless
+one of these hard stops occurs:
 
 - two consecutive QE infrastructure failures prevent all tracks from acquiring
   a value
@@ -174,8 +195,8 @@ Do not stop early because the result looks good.
 
 The older single-track oracle has an internal convergence rule based on
 uncertainty and predicted improvement. That rule is not the success criterion
-for this frozen two-track benchmark unless the single-track script is used in a
-separately dated amendment.
+for this frozen three-track benchmark unless the single-track script is used in
+a separately dated amendment.
 
 ## Failure Handling
 
@@ -183,6 +204,11 @@ separately dated amendment.
   failures to make the campaign look cleaner.
 - `compute_delta_g_h()` retries each point with `CONFIG.retries=2`.
 - A point returning `None` is a skipped candidate and must be counted.
+- A BFGS relaxation with `converged=false` is a failed candidate. It must not
+  be cached as a successful adsorption energy.
+- Each QE working directory writes `run_metadata.json` with convergence status,
+  BFGS step count, final max force, trajectory path, final energy if valid, and
+  raw QE output hash when available.
 - QE scratch must remain on the Linux filesystem, not `/mnt/d`, to avoid NTFS
   scratch corruption.
 - If the process is interrupted, resume with the same command and cache. Record
@@ -198,7 +224,7 @@ source .venv/bin/activate
 FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_grid_campaign
 ```
 
-Frozen two-track AL campaign:
+Frozen three-track AL campaign:
 
 ```bash
 cd /mnt/d/Research/Dr.Kulik_MIT
@@ -210,7 +236,7 @@ Monitor cache/report outputs:
 
 ```bash
 tail -f outputs/campaigns/ti3c2_o_lf_campaign.jsonl
-ls -lh outputs/cache/ti3c2_o_her_low.pkl
+ls -lh outputs/cache/ti3c2_o_her_low_protocol_v1_amend1.pkl
 ```
 
 ## Reporting Rule
@@ -227,8 +253,8 @@ After the run, claims must be restricted to what the frozen metrics support.
 - The `+0.04 eV` term is an approximate HER correction; vibrational free-energy
   calculations are not part of this LF campaign.
 - Low fidelity does not replace the deferred high-fidelity validation.
-- The current two-track GNN driver pretrains and fits on LF data only; it is not
-  a true LF/HF transfer result.
+- The current three-track GNN path pretrains and fits on LF data only; it is
+  not a true LF/HF transfer result.
 - The structures fed to the GNN use nominal H placement on the clean slab, not
   archived final relaxed adsorbate geometries for every site.
 - A live LF win does not prove general predictive performance outside this
@@ -244,9 +270,10 @@ outputs/campaigns/ti3c2_o_lf_campaign.jsonl
 ```
 
 Each row records track, iteration, proposal coordinates, prediction fields
-where available, thermoneutral acquisition score, status, cache hit, duplicate
+where available, thermoneutral acquisition score, status, track oracle query,
+physical new DFT call flag, cumulative query/cost counts, cache hit, duplicate
 flag, `DeltaG_H`, `|DeltaG_H|`, current best `|DeltaG_H|`, point count, and wall
-time.
+time. Failed rows retain the current best value from before the failure.
 
 ## Amendments
 
@@ -262,3 +289,21 @@ inspected before this amendment.
 
 This amendment also records the deterministic random baseline and JSONL
 proposal persistence required by the original protocol metrics.
+
+### Amendment 2 -- Pre-run Provenance and Convergence Correction
+
+Date: 2026-07-16.
+
+Before any frozen-campaign result was generated, the campaign was moved into a
+protocol-specific cache namespace:
+
+```text
+outputs/cache/ti3c2_o_her_low_protocol_v1_amend1.pkl
+```
+
+Cache keys now include the protocol ID, code commit, slab SHA-256,
+pseudopotential SHA-256 values, fixed-line constraint, H initial height, BFGS
+threshold and step limit, electronic settings, cutoffs, and k-points. Exact
+frozen seed coordinates are required; nearby fallback seed substitutions are
+not allowed. BFGS non-convergence is treated as failure and is not cached as a
+successful `DeltaG_H`.
