@@ -31,29 +31,23 @@ def main() -> None:
 
     for site_idx, (base_u, base_v) in enumerate(oracle.CONFIG.initial_points):
         t0 = time.time()
-        status = "FAILED"
-        dg = None
-        used_point = None
-        for du, dv in [(0.0, 0.0), (0.02, 0.0), (-0.02, 0.0), (0.0, 0.02)]:
-            trial = ((base_u + du) % 1.0, (base_v + dv) % 1.0)
-            if not oracle.is_new(trial, labeled_points):
-                continue
-            dg = oracle.compute_delta_g_h(trial, retries=oracle.CONFIG.retries)
-            if dg is None:
-                continue
-            labeled_points.append(trial)
-            labeled_values.append(dg)
-            used_point = trial
-            status = "JOB DONE"
-            break
+        point = (float(base_u) % 1.0, float(base_v) % 1.0)
+        if not oracle.is_new(point, labeled_points):
+            raise RuntimeError(f"Frozen seed duplicate detected: {point}")
+        dg = oracle.compute_delta_g_h(point, retries=oracle.CONFIG.retries)
+        if dg is None:
+            raise RuntimeError(f"Frozen seed failed at exact coordinate {point}; not replacing it.")
+        labeled_points.append(point)
+        labeled_values.append(dg)
+        status = "JOB DONE"
         wall = time.time() - t0
         site_log.append({
-            "site_idx": site_idx, "base": (base_u, base_v), "used_point": used_point,
+            "site_idx": site_idx, "point": point,
             "delta_g_h": dg, "status": status, "wall_s": wall,
         })
         print(
-            f"[site {site_idx}] base=({base_u:.4f},{base_v:.4f}) "
-            f"used={used_point} status={status} "
+            f"[site {site_idx}] point=({point[0]:.4f},{point[1]:.4f}) "
+            f"status={status} "
             f"DeltaG_H={dg if dg is not None else 'N/A'} "
             f"wall={wall/60:.1f} min",
             flush=True,
@@ -64,8 +58,8 @@ def main() -> None:
         print(row, flush=True)
     n_ok = sum(1 for r in site_log if r["status"] == "JOB DONE")
     print(f"\n{n_ok}/{len(site_log)} sites completed.", flush=True)
-    if n_ok < len(site_log):
-        raise RuntimeError(f"Only {n_ok}/{len(site_log)} sites succeeded -- see per-site log above.")
+    if n_ok < len(oracle.CONFIG.initial_points):
+        raise RuntimeError(f"Only {n_ok}/{len(oracle.CONFIG.initial_points)} sites succeeded.")
 
 
 if __name__ == "__main__":
