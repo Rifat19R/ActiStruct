@@ -19,6 +19,7 @@ import csv
 import json
 import math
 import sys
+from collections import OrderedDict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -30,6 +31,12 @@ RY_TO_EV = 13.605693122994
 PRIMARY_SYSTEMS = {"ferrocene", "ni_co4", "cr_co6", "fe_co5"}
 SAME_BASIN_EV_THRESHOLD = 0.010  # |ΔE| < 10 meV → same basin
 DUPLICATE_RMSD_ANGSTROM = 0.05   # RMSD < 0.05 Å vs parent → effectively identical geometry
+PSEUDO_VERIFICATION_DATE = "2026-07-01"
+FE_CUTOFF_FLAG = (
+    "needs_rerun_at_90_ry: 60 Ry gives |Delta E/atom|=18.55 meV vs "
+    "90 Ry reference (fe_cutoff_convergence_v0.1 2026-07-02); "
+    "bond lengths OK at 60 Ry"
+)
 
 
 def _read_csv(path: Path) -> list[dict]:
@@ -70,11 +77,56 @@ def parent_system_id(candidate_id: str) -> str:
     return candidate_id.split("__")[0]
 
 
+def _ordered_field_union(*row_groups: list[dict]) -> list[str]:
+    fields: OrderedDict[str, None] = OrderedDict()
+    for rows in row_groups:
+        for row in rows:
+            for key in row.keys():
+                fields.setdefault(key, None)
+    for key in ("pseudo_verified", "pseudo_verification_date", "fe_cutoff_flag"):
+        fields.setdefault(key, None)
+    return list(fields.keys())
+
+
+def _normalise_validation_issues(row: dict) -> None:
+    issues_raw = row.get("validation_issues")
+    if not issues_raw:
+        return
+    try:
+        issues = json.loads(issues_raw)
+    except (json.JSONDecodeError, TypeError):
+        return
+    if not isinstance(issues, list):
+        return
+    issues = [
+        issue for issue in issues
+        if not str(issue).startswith("pseudopotential_naming_caution")
+    ]
+    row["validation_issues"] = json.dumps(issues)
+
+
+def add_release_metadata(rows: list[dict], fieldnames: list[str]) -> list[dict]:
+    out = []
+    fe_systems = {"ferrocene", "fe_co5"}
+    for row in rows:
+        normalised = {field: row.get(field, "") for field in fieldnames}
+        normalised["pseudo_verified"] = "True"
+        normalised["pseudo_verification_date"] = PSEUDO_VERIFICATION_DATE
+        sid = normalised.get("system_id", "")
+        if any(sid == sys_id or sid.startswith(sys_id + "__") for sys_id in fe_systems):
+            normalised["fe_cutoff_flag"] = FE_CUTOFF_FLAG
+        else:
+            normalised["fe_cutoff_flag"] = ""
+        _normalise_validation_issues(normalised)
+        out.append(normalised)
+    return out
+
+
 def merge_datasets(primary_path: Path, candidates_path: Path) -> tuple[list[dict], list[str]]:
     primary = _read_csv(primary_path)
     candidates = _read_csv(candidates_path)
-    all_rows = primary + candidates
-    fieldnames = list(primary[0].keys()) if primary else list(candidates[0].keys())
+    fieldnames = _ordered_field_union(primary, candidates)
+    all_rows = add_release_metadata(primary + candidates, fieldnames)
     return all_rows, fieldnames
 
 
@@ -437,11 +489,12 @@ def write_diagnostics_report(
       "no literature counterparts — correct by design.")
     a("- **`negative_rho` warnings present in all calculations.** Small negative "
       "charge density arises from incomplete Fourier series truncation in plane-wave "
-      "DFT — not a correctness issue at these magnitudes (<0.021 e/bohr³).")
-    a("- **Ni/Cr pseudopotential naming convention uncertainty.** "
-      "`ni_pbe_v1.4.uspp.F.UPF` and `cr_pbe_v1.5.uspp.F.UPF` do not match the "
-      "`_psl.` SSSP-efficiency naming pattern used for Fe/C/H/O. Needs manual "
-      "verification against the SSSP efficiency tier before external publication.")
+      "DFT. The warnings are retained in the parsed dataset and should be reviewed "
+      "case-by-case before external publication.")
+    a("- **Ni/Cr pseudopotential naming convention resolved.** "
+      "`ni_pbe_v1.4.uspp.F.UPF` and `cr_pbe_v1.5.uspp.F.UPF` are official SSSP "
+      "efficiency GBRV entries; the naming difference from `_psl.` files is "
+      "expected because SSSP mixes source libraries by element.")
     a("- **Dataset size.** 16 DFT calculations across 4 systems are sufficient for "
       "workflow demonstration and PES sampling characterization, but not for "
       "statistically robust ML training. ML/AL infrastructure should carry an "
@@ -474,16 +527,17 @@ def main() -> None:
     logger.info(f"Primary rows: {len(primary_rows)}, candidate rows: {len(candidate_rows)}")
 
     audit_lookup = {r["candidate_id"]: r for r in audit_rows}
-    primary_lookup = build_primary_lookup(primary_rows)
-
-    # Merge
-    all_rows = primary_rows + candidate_rows
-    fieldnames = list(primary_rows[0].keys())
+    # Merge with release metadata preserved on every rerun.
+    fieldnames = _ordered_field_union(primary_rows, candidate_rows)
+    all_rows = add_release_metadata(primary_rows + candidate_rows, fieldnames)
+    primary_rows_merged = all_rows[:len(primary_rows)]
+    candidate_rows_merged = all_rows[len(primary_rows):]
+    primary_lookup = build_primary_lookup(primary_rows_merged)
     _write_csv(merged_out, all_rows, fieldnames)
     logger.info(f"Wrote merged dataset: {merged_out} ({len(all_rows)} rows)")
 
     # Compute candidate metrics
-    metrics = compute_candidate_metrics(candidate_rows, primary_lookup, audit_lookup)
+    metrics = compute_candidate_metrics(candidate_rows_merged, primary_lookup, audit_lookup)
     for m in metrics:
         logger.info(
             f"  {m['candidate_id']}: ΔE={m['delta_e_meV']} meV, "
@@ -491,7 +545,7 @@ def main() -> None:
             f"rms={m['rms_displacement_angstrom']} Å"
         )
 
-    write_diagnostics_report(metrics, primary_rows, all_rows, report_out)
+    write_diagnostics_report(metrics, primary_rows_merged, all_rows, report_out)
 
 
 if __name__ == "__main__":
