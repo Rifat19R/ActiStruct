@@ -396,10 +396,19 @@ def get_calculator(
     return Espresso(command=old_cmd, **kwargs)
 
 
+def validate_qe_output_complete(text: str, source: Path | str = "QE output") -> None:
+    """Require a complete, converged QE output before parsing fallback energy."""
+    if "JOB DONE." not in text and "JOB DONE" not in text:
+        raise RuntimeError(f"QE output incomplete: {source}")
+    if "convergence NOT achieved" in text:
+        raise RuntimeError(f"QE SCF did not converge: {source}")
+
+
 def parse_qe_total_energy(pwo: Path) -> float | None:
     if not pwo.exists():
         return None
     text = pwo.read_text(errors="ignore")
+    validate_qe_output_complete(text, pwo)
     matches = re.findall(r"!\s+total energy\s+=\s+([-+0-9.Ee]+)\s+Ry", text)
     return float(matches[-1]) * RY_TO_EV if matches else None
 
@@ -413,9 +422,30 @@ def run_energy(
     extra_system: dict | None = None,
 ) -> float:
     """Run static SCF or BFGS relaxation, return total energy in eV."""
+    default_outdir = QE_SCRATCH_ROOT / "ti3c2_o_her" / FIDELITY / prefix
+    symbols = sorted(set(atoms.get_chemical_symbols()))
+    active_pseudos = {el: PSEUDOPOTENTIALS[el] for el in symbols if el in PSEUDOPOTENTIALS}
     atoms.calc = get_calculator(work_dir, prefix, kpts, extra_system=extra_system)
     metadata: dict = {
         "prefix": prefix,
+        "campaign_protocol_id": CAMPAIGN_PROTOCOL_ID,
+        "campaign_fingerprint": campaign_fingerprint(),
+        "commit": _git_commit_short(),
+        "slab_file": str(SLAB_TRAJ),
+        "slab_sha256": _sha256_file(SLAB_TRAJ),
+        "symbols": symbols,
+        "pseudopotentials": PSEUDOPOTENTIALS,
+        "active_pseudopotentials": active_pseudos,
+        "pseudopotential_sha256": {
+            el: _sha256_file(PSEUDO_DIR / fn) for el, fn in sorted(PSEUDOPOTENTIALS.items())
+        },
+        "active_pseudopotential_sha256": {
+            el: _sha256_file(PSEUDO_DIR / fn) for el, fn in sorted(active_pseudos.items())
+        },
+        "ecutwfc": ECUTWFC,
+        "ecutrho": ECUTRHO,
+        "kpts": list(kpts),
+        "input_settings": _qe_input(prefix, str(default_outdir), extra_system),
         "relax": bool(relax),
         "converged": None,
         "bfgs_steps": 0,
@@ -455,11 +485,32 @@ def run_energy(
     try:
         energy = float(atoms.get_potential_energy())
     except Exception:
-        parsed = parse_qe_total_energy(work_dir / "espresso.pwo")
-        if parsed is None:
+        try:
+            parsed = parse_qe_total_energy(work_dir / "espresso.pwo")
+            if parsed is None:
+                raise
+            energy = parsed
+        except Exception:
+            pwo = work_dir / "espresso.pwo"
+            metadata["qe_output_sha256"] = _sha256_file(pwo) if pwo.exists() else None
+            metadata["converged"] = False
+            (work_dir / "run_metadata.json").write_text(
+                json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
             raise
-        energy = parsed
     pwo = work_dir / "espresso.pwo"
+    if pwo.exists():
+        try:
+            validate_qe_output_complete(pwo.read_text(errors="ignore"), pwo)
+        except Exception:
+            metadata["qe_output_sha256"] = _sha256_file(pwo)
+            metadata["converged"] = False
+            (work_dir / "run_metadata.json").write_text(
+                json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            raise
     metadata["qe_output_sha256"] = _sha256_file(pwo) if pwo.exists() else None
     if metadata["converged"] is None:
         metadata["converged"] = True
@@ -549,14 +600,14 @@ def get_h2_energy(retries: int = 2) -> float:
         wdir = QE_RUN_DIR / f"h2_pid{os.getpid()}_attempt{attempt}"
         try:
             mol = build_h2_molecule()
-            # H2 uses H pseudopotential only; suppress Ti/C/O entries
-            h2_pseudos = {"H": PSEUDOPOTENTIALS["H"]}
-            mol.calc = get_calculator(
-                wdir, "h2_ref", KPTS_H2,
+            energy = run_energy(
+                mol,
+                wdir,
+                "h2_ref",
+                KPTS_H2,
+                relax=False,
                 extra_system={"ecutwfc": ECUTWFC, "ecutrho": ECUTRHO},
             )
-            mol.calc.parameters["pseudopotentials"] = h2_pseudos
-            energy = float(mol.get_potential_energy())
             cache_set(key, energy)
             print(f"H2 energy ({FIDELITY}): {energy:.8f} eV", flush=True)
             return energy
