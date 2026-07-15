@@ -46,11 +46,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
+import hashlib
+import json
 import math
 import os
 import pickle
 import re
 import shutil
+import subprocess
 import time
 import traceback
 import warnings
@@ -99,6 +102,8 @@ _SLAB_UNRELAXED = _MXENE_ROOT / "ti3c2_o_slab.traj"
 # Use relaxed slab if available (relax job is running); fall back to ASE-built.
 SLAB_TRAJ = _SLAB_RELAXED if _SLAB_RELAXED.exists() else _SLAB_UNRELAXED
 SLAB_LABEL = "relaxed" if _SLAB_RELAXED.exists() else "unrelaxed"
+FIDELITY_LABEL = "lf" if FIDELITY == "low" else "hf"
+CAMPAIGN_PROTOCOL_ID = f"ti3c2o-{FIDELITY_LABEL}-v1-amend1"
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
 # QE scratch must stay on the native Linux filesystem, never under /mnt/d
@@ -111,8 +116,8 @@ REPORT_DIR.mkdir(parents=True, exist_ok=True)
 QE_RUN_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-CACHE_FILE = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}.pkl"
-CACHE_LOCK = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}.lock"
+CACHE_FILE = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend1.pkl"
+CACHE_LOCK = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend1.lock"
 REPORT_FILE = REPORT_DIR / f"ti3c2_o_her_{FIDELITY}_report.txt"
 
 # -- QE parameters -------------------------------------------------------------
@@ -150,6 +155,65 @@ N_PROCS = int(os.environ.get("QE_NPROCS", "2"))
 QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
 
 RY_TO_EV = 13.605693122994
+
+
+def _sha256_file(path: Path) -> str:
+    if not path.exists():
+        return f"missing:{path.name}"
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _git_commit_short() -> str:
+    env_commit = os.environ.get("ACTISTRUCT_COMMIT")
+    if env_commit:
+        return env_commit[:12]
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short=12", "HEAD"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        return result.stdout.strip()
+    except Exception:
+        return "unknown"
+
+
+def _pseudo_checksums() -> str:
+    parts = []
+    for el, fn in sorted(PSEUDOPOTENTIALS.items()):
+        parts.append(f"{el}:{fn}:{_sha256_file(PSEUDO_DIR / fn)}")
+    return ",".join(parts)
+
+
+def campaign_fingerprint() -> str:
+    """Return the protocol/science fingerprint used to namespace cached values."""
+    fields = {
+        "campaign": CAMPAIGN_PROTOCOL_ID,
+        "commit": _git_commit_short(),
+        "slab_sha256": _sha256_file(SLAB_TRAJ),
+        "pseudo_sha256": _pseudo_checksums(),
+        "constraint": "fixedline-z",
+        "h_initial_height": f"{CONFIG.h_initial_height:.6f}",
+        "relax_fmax": f"{CONFIG.relax_fmax:.6f}",
+        "relax_steps": str(CONFIG.relax_steps),
+        "ecut": f"{ECUTWFC:.1f}-{ECUTRHO:.1f}",
+        "kpts_slab": str(KPTS_SLAB),
+        "kpts_h2": str(KPTS_H2),
+        "smearing": "mv",
+        "degauss": "0.02",
+        "conv_thr": "1e-8",
+        "electron_maxstep": "300",
+        "mixing_beta": "0.2",
+        "mixing_mode": "local-TF",
+    }
+    return "|".join(f"{k}={fields[k]}" for k in sorted(fields))
 
 
 # -- active learning config ----------------------------------------------------
@@ -350,20 +414,61 @@ def run_energy(
 ) -> float:
     """Run static SCF or BFGS relaxation, return total energy in eV."""
     atoms.calc = get_calculator(work_dir, prefix, kpts, extra_system=extra_system)
+    metadata: dict = {
+        "prefix": prefix,
+        "relax": bool(relax),
+        "converged": None,
+        "bfgs_steps": 0,
+        "final_max_force_ev_per_a": None,
+        "trajectory": None,
+        "qe_output": str(work_dir / "espresso.pwo"),
+        "qe_output_sha256": None,
+    }
     if relax:
+        traj_path = work_dir / "bfgs.traj"
         opt = BFGS(
             atoms,
             logfile=str(work_dir / "bfgs.log"),
-            trajectory=str(work_dir / "bfgs.traj"),
+            trajectory=str(traj_path),
         )
-        opt.run(fmax=CONFIG.relax_fmax, steps=CONFIG.relax_steps)
+        converged = bool(opt.run(fmax=CONFIG.relax_fmax, steps=CONFIG.relax_steps))
+        forces = atoms.get_forces()
+        max_force = float(np.sqrt((forces ** 2).sum(axis=1)).max())
+        metadata.update({
+            "converged": converged,
+            "bfgs_steps": int(getattr(opt, "nsteps", 0)),
+            "final_max_force_ev_per_a": max_force,
+            "trajectory": str(traj_path),
+        })
+        if not converged:
+            pwo = work_dir / "espresso.pwo"
+            metadata["qe_output_sha256"] = _sha256_file(pwo) if pwo.exists() else None
+            (work_dir / "run_metadata.json").write_text(
+                json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            raise RuntimeError(
+                "BFGS did not reach the frozen force threshold "
+                f"fmax={CONFIG.relax_fmax} eV/A in {CONFIG.relax_steps} steps; "
+                f"final max force={max_force:.6f} eV/A"
+            )
     try:
-        return float(atoms.get_potential_energy())
+        energy = float(atoms.get_potential_energy())
     except Exception:
         parsed = parse_qe_total_energy(work_dir / "espresso.pwo")
         if parsed is None:
             raise
-        return parsed
+        energy = parsed
+    pwo = work_dir / "espresso.pwo"
+    metadata["qe_output_sha256"] = _sha256_file(pwo) if pwo.exists() else None
+    if metadata["converged"] is None:
+        metadata["converged"] = True
+    metadata["total_energy_ev"] = energy
+    (work_dir / "run_metadata.json").write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return energy
 
 
 # -- cache helpers -------------------------------------------------------------
@@ -432,7 +537,7 @@ def _pseudo_str() -> str:
 def get_h2_energy(retries: int = 2) -> float:
     """Compute isolated H2 energy at current fidelity level, cache it."""
     key = (
-        f"ti3c2o:h2:pseudo={PSEUDOPOTENTIALS['H']}:"
+        f"{campaign_fingerprint()}:ti3c2o:h2:pseudo={PSEUDOPOTENTIALS['H']}:"
         f"ecut={ECUTWFC}-{ECUTRHO}:kpts={KPTS_H2}"
     )
     cached = cache_get(key)
@@ -467,7 +572,7 @@ def get_h2_energy(retries: int = 2) -> float:
 def get_clean_slab_energy(retries: int = 2) -> float:
     """Compute clean Ti3C2-O slab energy (static SCF), cache it."""
     key = (
-        f"ti3c2o:clean_slab:slab={SLAB_LABEL}:"
+        f"{campaign_fingerprint()}:ti3c2o:clean_slab:slab={SLAB_LABEL}:"
         f"pseudo={_pseudo_str()}:ecut={ECUTWFC}-{ECUTRHO}:kpts={KPTS_SLAB}"
     )
     cached = cache_get(key)
@@ -500,7 +605,7 @@ def delta_g_cache_key(point: tuple[float, float] | np.ndarray) -> str:
     """Return the cache key for DeltaG_H at current fidelity/settings."""
     u, v = float(np.asarray(point)[0]) % 1.0, float(np.asarray(point)[1]) % 1.0
     return (
-        f"ti3c2o:delta_g_h:{_point_key(u, v)}:slab={SLAB_LABEL}:"
+        f"{campaign_fingerprint()}:ti3c2o:delta_g_h:{_point_key(u, v)}:slab={SLAB_LABEL}:"
         f"pseudo={_pseudo_str()}:ecut={ECUTWFC}-{ECUTRHO}:kpts={KPTS_SLAB}:"
         f"relax={CONFIG.relax_slab}"
     )
@@ -752,27 +857,23 @@ def main() -> None:
     labeled_points: list[tuple[float, float]] = []
     labeled_values: list[float] = []
 
-    # Build initial training set from CONFIG.initial_points
+    # Build initial training set from exact frozen CONFIG.initial_points.
     for base_u, base_v in CONFIG.initial_points:
-        for du, dv in [(0.0, 0.0), (0.02, 0.0), (-0.02, 0.0), (0.0, 0.02)]:
-            trial = ((base_u + du) % 1.0, (base_v + dv) % 1.0)
-            if not is_new(trial, labeled_points):
-                continue
-            dg = compute_delta_g_h(trial, retries=CONFIG.retries)
-            if dg is None:
-                continue
-            labeled_points.append(trial)
-            labeled_values.append(dg)
-            print(
-                f"Initial: u={trial[0]:.6f}, v={trial[1]:.6f} -> DeltaG_H={dg:.6f} eV",
-                flush=True,
-            )
-            break
-        else:
-            raise RuntimeError(f"Could not compute initial label near u={base_u:.4f}, v={base_v:.4f}")
+        trial = (float(base_u) % 1.0, float(base_v) % 1.0)
+        if not is_new(trial, labeled_points):
+            raise RuntimeError(f"Frozen seed duplicate detected: {trial}")
+        dg = compute_delta_g_h(trial, retries=CONFIG.retries)
+        if dg is None:
+            raise RuntimeError(f"Frozen seed failed at exact coordinate {trial}; not replacing it.")
+        labeled_points.append(trial)
+        labeled_values.append(dg)
+        print(
+            f"Initial: u={trial[0]:.6f}, v={trial[1]:.6f} -> DeltaG_H={dg:.6f} eV",
+            flush=True,
+        )
 
-    if len(labeled_points) < 5:
-        raise RuntimeError("Need at least 5 initial labels for GP fitting.")
+    if len(labeled_points) != len(CONFIG.initial_points):
+        raise RuntimeError("Need all frozen seed labels for GP fitting.")
 
     model = GPModel()
     model.train(labeled_points, labeled_values)

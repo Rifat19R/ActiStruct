@@ -9,6 +9,9 @@ from __future__ import annotations
 import importlib
 import json
 
+import numpy as np
+import pytest
+
 
 def test_thermoneutral_lcb_prefers_near_zero_over_strong_binding():
     driver = importlib.import_module("examples.manual_qe.run_ti3c2_o_al_loop")
@@ -78,13 +81,16 @@ def test_campaign_record_schema_and_jsonl_persistence(tmp_path):
         pred_std=0.04,
         acquisition_score=0.04,
         status="success",
-        new_dft_call=True,
+        track_oracle_query=1,
+        physical_new_dft_call=True,
         cache_hit=False,
         duplicate=False,
         delta_g_h=-0.03,
         best_delta_g_h=-0.03,
         n_points=7,
         wall_s=5300.0,
+        cumulative_track_oracle_queries=1,
+        cumulative_physical_new_dft_calls=1,
     )
     driver.append_campaign_record(log_path, row)
 
@@ -94,5 +100,100 @@ def test_campaign_record_schema_and_jsonl_persistence(tmp_path):
     assert loaded["abs_delta_g_h"] == 0.03
     assert loaded["best_abs_delta_g_h"] == 0.03
     assert loaded["new_dft_call"] is True
+    assert loaded["track_oracle_query"] == 1
+    assert loaded["physical_new_dft_call"] is True
+    assert loaded["cumulative_track_oracle_queries"] == 1
+    assert loaded["cumulative_physical_new_dft_calls"] == 1
     assert loaded["cache_hit"] is False
     assert loaded["duplicate"] is False
+
+
+def test_failed_campaign_record_preserves_current_best():
+    driver = importlib.import_module("examples.manual_qe.run_ti3c2_o_al_loop")
+
+    row = driver.build_campaign_record(
+        iteration=2,
+        track_name="GNN",
+        u=0.5,
+        v=0.5,
+        pred_mean=0.2,
+        pred_std=0.1,
+        acquisition_score=0.1,
+        status="failed",
+        track_oracle_query=1,
+        physical_new_dft_call=True,
+        cache_hit=False,
+        duplicate=False,
+        delta_g_h=None,
+        best_delta_g_h=-0.04,
+        n_points=6,
+        wall_s=120.0,
+        cumulative_track_oracle_queries=2,
+        cumulative_physical_new_dft_calls=2,
+    )
+
+    assert row["status"] == "failed"
+    assert row["best_delta_g_h"] == -0.04
+    assert row["best_abs_delta_g_h"] == 0.04
+
+
+def test_duplicate_observation_is_not_trainable():
+    driver = importlib.import_module("examples.manual_qe.run_ti3c2_o_al_loop")
+
+    assert driver.should_add_observation(is_duplicate=True, delta_g_h=-0.02) is False
+    assert driver.should_add_observation(is_duplicate=False, delta_g_h=None) is False
+    assert driver.should_add_observation(is_duplicate=False, delta_g_h=-0.02) is True
+
+
+def test_protocol_cache_file_and_key_are_fingerprinted():
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+
+    assert oracle.CACHE_FILE.name == "ti3c2_o_her_low_protocol_v1_amend1.pkl"
+    key = oracle.delta_g_cache_key((0.0, 0.0))
+    assert "campaign=ti3c2o-lf-v1-amend1" in key
+    assert "constraint=fixedline-z" in key
+    assert "relax_fmax=0.050000" in key
+    assert "relax_steps=50" in key
+    assert "degauss=0.02" in key
+    assert "conv_thr=1e-8" in key
+
+
+def test_run_energy_rejects_unconverged_bfgs(tmp_path, monkeypatch):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+
+    class FakeAtoms:
+        calc = None
+
+        def get_forces(self):
+            return np.array([[0.0, 0.0, 0.2]])
+
+        def get_potential_energy(self):
+            raise AssertionError("Unconverged relaxation must not read/cache energy")
+
+    class FakeBFGS:
+        nsteps = 50
+
+        def __init__(self, atoms, logfile, trajectory):
+            self.atoms = atoms
+
+        def run(self, fmax, steps):
+            return False
+
+    monkeypatch.setattr(oracle, "get_calculator", lambda *args, **kwargs: object())
+    monkeypatch.setattr(oracle, "BFGS", FakeBFGS)
+
+    with pytest.raises(RuntimeError, match="BFGS did not reach"):
+        oracle.run_energy(FakeAtoms(), tmp_path, "unconverged", (1, 1, 1), relax=True)
+
+    metadata = json.loads((tmp_path / "run_metadata.json").read_text(encoding="utf-8"))
+    assert metadata["converged"] is False
+    assert metadata["bfgs_steps"] == 50
+    assert metadata["final_max_force_ev_per_a"] == 0.2
+
+
+def test_grid_campaign_uses_exact_seed_coordinates_only():
+    from pathlib import Path
+
+    source = Path("examples/manual_qe/run_ti3c2_o_grid_campaign.py").read_text(encoding="utf-8")
+    assert "(0.02, 0.0)" not in source
+    assert "not replacing it" in source

@@ -186,13 +186,16 @@ def build_campaign_record(
     pred_std: float | None,
     acquisition_score: float | None,
     status: str,
-    new_dft_call: bool,
+    track_oracle_query: int,
+    physical_new_dft_call: bool,
     cache_hit: bool,
     duplicate: bool,
     delta_g_h: float | None,
     best_delta_g_h: float | None,
     n_points: int,
     wall_s: float,
+    cumulative_track_oracle_queries: int,
+    cumulative_physical_new_dft_calls: int,
 ) -> dict:
     return {
         "track": track_name,
@@ -203,7 +206,9 @@ def build_campaign_record(
         "pred_std": None if pred_std is None else float(pred_std),
         "acquisition_score": None if acquisition_score is None else float(acquisition_score),
         "status": status,
-        "new_dft_call": bool(new_dft_call),
+        "track_oracle_query": int(track_oracle_query),
+        "physical_new_dft_call": bool(physical_new_dft_call),
+        "new_dft_call": bool(physical_new_dft_call),
         "cache_hit": bool(cache_hit),
         "duplicate": bool(duplicate),
         "delta_g_h": None if delta_g_h is None else float(delta_g_h),
@@ -212,7 +217,13 @@ def build_campaign_record(
         "best_abs_delta_g_h": None if best_delta_g_h is None else abs(float(best_delta_g_h)),
         "n_points": int(n_points),
         "wall_s": float(wall_s),
+        "cumulative_track_oracle_queries": int(cumulative_track_oracle_queries),
+        "cumulative_physical_new_dft_calls": int(cumulative_physical_new_dft_calls),
     }
+
+
+def should_add_observation(is_duplicate: bool, delta_g_h: float | None) -> bool:
+    return (not is_duplicate) and delta_g_h is not None
 
 
 def propose_next(track, seed: int) -> tuple[tuple[float, float], float | None, float | None, float | None]:
@@ -242,38 +253,71 @@ def run() -> list[dict]:
         RandomTrack(points, deltas),
     ]
     log: list[dict] = []
+    track_query_counts = {track.name: 0 for track in tracks}
+    physical_call_counts = {track.name: 0 for track in tracks}
 
     for iteration in range(1, MAX_ITERATIONS + 1):
         for track in tracks:
             t0 = time.time()
             (u, v), pred_mean, pred_std, score = propose_next(track, seed=RANDOM_STATE + iteration)
+            track_query_counts[track.name] += 1
             is_new_point = oracle.is_new((u, v), track.points)
+            current_best = best_thermoneutral_delta(track.deltas)
+            if not is_new_point:
+                wall = time.time() - t0
+                row = build_campaign_record(
+                    iteration=iteration, track_name=track.name, u=u, v=v,
+                    pred_mean=pred_mean, pred_std=pred_std, acquisition_score=score,
+                    status="duplicate", track_oracle_query=1, physical_new_dft_call=False,
+                    cache_hit=False, duplicate=True,
+                    delta_g_h=None, best_delta_g_h=current_best,
+                    n_points=len(track.points), wall_s=wall,
+                    cumulative_track_oracle_queries=track_query_counts[track.name],
+                    cumulative_physical_new_dft_calls=physical_call_counts[track.name],
+                )
+                log.append(row)
+                append_campaign_record(CAMPAIGN_LOG, row)
+                print(
+                    f"[{track.name} it{iteration}] duplicate proposal at "
+                    f"({u:.4f},{v:.4f}); not adding or retraining.",
+                    flush=True,
+                )
+                continue
             cache_hit = _cache_hit_before_compute(u, v)
-            new_dft_call = is_new_point and not cache_hit
+            physical_new_dft_call = not cache_hit
+            if physical_new_dft_call:
+                physical_call_counts[track.name] += 1
             dg = oracle.compute_delta_g_h((u, v), retries=oracle.CONFIG.retries)
             wall = time.time() - t0
             if dg is None:
                 row = build_campaign_record(
                     iteration=iteration, track_name=track.name, u=u, v=v,
                     pred_mean=pred_mean, pred_std=pred_std, acquisition_score=score,
-                    status="failed", new_dft_call=new_dft_call,
-                    cache_hit=cache_hit, duplicate=not is_new_point,
-                    delta_g_h=None, best_delta_g_h=None,
+                    status="failed", track_oracle_query=1,
+                    physical_new_dft_call=physical_new_dft_call,
+                    cache_hit=cache_hit, duplicate=False,
+                    delta_g_h=None, best_delta_g_h=current_best,
                     n_points=len(track.points), wall_s=wall,
+                    cumulative_track_oracle_queries=track_query_counts[track.name],
+                    cumulative_physical_new_dft_calls=physical_call_counts[track.name],
                 )
                 log.append(row)
                 append_campaign_record(CAMPAIGN_LOG, row)
                 print(f"[{track.name} it{iteration}] DFT failed at ({u:.4f},{v:.4f}), skipping.", flush=True)
                 continue
-            track.add_point(u, v, dg)
+            if should_add_observation(is_duplicate=False, delta_g_h=dg):
+                track.add_point(u, v, dg)
             best = best_thermoneutral_delta(track.deltas)
             row = build_campaign_record(
                 iteration=iteration, track_name=track.name, u=u, v=v,
                 pred_mean=pred_mean, pred_std=pred_std, acquisition_score=score,
-                status="success", new_dft_call=new_dft_call,
-                cache_hit=cache_hit, duplicate=not is_new_point,
+                status="success", track_oracle_query=1,
+                physical_new_dft_call=physical_new_dft_call,
+                cache_hit=cache_hit, duplicate=False,
                 delta_g_h=dg, best_delta_g_h=best,
                 n_points=len(track.points), wall_s=wall,
+                cumulative_track_oracle_queries=track_query_counts[track.name],
+                cumulative_physical_new_dft_calls=physical_call_counts[track.name],
             )
             log.append(row)
             append_campaign_record(CAMPAIGN_LOG, row)
@@ -286,7 +330,7 @@ def run() -> list[dict]:
                 f"[{track.name} it{iteration}] u={u:.4f} v={v:.4f} "
                 f"DeltaG_H={dg:.4f} (pred={pred_text}) "
                 f"best_abs={abs(best):.4f} n={len(track.points)} wall={wall/60:.1f}min "
-                f"{'(new DFT call)' if new_dft_call else '(cache hit or duplicate)'}",
+                f"{'(physical DFT call)' if physical_new_dft_call else '(cache hit)'}",
                 flush=True,
             )
 
