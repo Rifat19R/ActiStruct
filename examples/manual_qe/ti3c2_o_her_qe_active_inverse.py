@@ -494,14 +494,20 @@ def _point_key(u: float, v: float) -> str:
     return f"u={u:.{CONFIG.cache_round_digits}f}:v={v:.{CONFIG.cache_round_digits}f}"
 
 
-def compute_delta_g_h(point: tuple[float, float] | np.ndarray, retries: int = 2) -> float | None:
-    """Compute DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV at (u, v)."""
+def delta_g_cache_key(point: tuple[float, float] | np.ndarray) -> str:
+    """Return the cache key for DeltaG_H at current fidelity/settings."""
     u, v = float(np.asarray(point)[0]) % 1.0, float(np.asarray(point)[1]) % 1.0
-    key = (
+    return (
         f"ti3c2o:delta_g_h:{_point_key(u, v)}:slab={SLAB_LABEL}:"
         f"pseudo={_pseudo_str()}:ecut={ECUTWFC}-{ECUTRHO}:kpts={KPTS_SLAB}:"
         f"relax={CONFIG.relax_slab}"
     )
+
+
+def compute_delta_g_h(point: tuple[float, float] | np.ndarray, retries: int = 2) -> float | None:
+    """Compute DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV at (u, v)."""
+    u, v = float(np.asarray(point)[0]) % 1.0, float(np.asarray(point)[1]) % 1.0
+    key = delta_g_cache_key((u, v))
     cached = cache_get(key)
     if cached is not None:
         return float(cached)

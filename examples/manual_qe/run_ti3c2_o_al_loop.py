@@ -37,7 +37,9 @@ Run:
 """
 from __future__ import annotations
 
+import json
 import time
+from pathlib import Path
 
 import numpy as np
 from scipy.optimize import differential_evolution
@@ -58,6 +60,8 @@ SEED_POINTS = [
 MAX_ITERATIONS = 5
 KAPPA = 1.0
 RANDOM_STATE = 42
+FIDELITY_LABEL = "lf" if oracle.FIDELITY == "low" else "hf"
+CAMPAIGN_LOG = oracle.ROOT / "outputs" / "campaigns" / f"ti3c2_o_{FIDELITY_LABEL}_campaign.jsonl"
 
 
 def thermoneutral_lcb(mean_delta_g_h: float, std: float, kappa: float = KAPPA) -> float:
@@ -149,7 +153,79 @@ class PlainGPTrack:
         self._retrain()
 
 
-def propose_next(track, seed: int) -> tuple[tuple[float, float], float, float]:
+class RandomTrack:
+    name = "random"
+
+    def __init__(self, points, deltas, random_state: int = RANDOM_STATE):
+        self.points = list(points)
+        self.deltas = list(deltas)
+        self.rng = np.random.default_rng(random_state)
+
+    def propose(self) -> tuple[tuple[float, float], None, None, None]:
+        for _ in range(10_000):
+            u, v = map(float, self.rng.random(2))
+            if oracle.is_new((u, v), self.points):
+                return (u, v), None, None, None
+        raise RuntimeError("RandomTrack could not find a non-duplicate candidate.")
+
+    def add_point(self, u: float, v: float, dg: float) -> None:
+        self.points.append((u, v))
+        self.deltas.append(dg)
+
+
+def _cache_hit_before_compute(u: float, v: float) -> bool:
+    return oracle.cache_get(oracle.delta_g_cache_key((u, v))) is not None
+
+
+def append_campaign_record(path: Path, row: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(row, sort_keys=True) + "\n")
+
+
+def build_campaign_record(
+    *,
+    iteration: int,
+    track_name: str,
+    u: float,
+    v: float,
+    pred_mean: float | None,
+    pred_std: float | None,
+    acquisition_score: float | None,
+    status: str,
+    new_dft_call: bool,
+    cache_hit: bool,
+    duplicate: bool,
+    delta_g_h: float | None,
+    best_delta_g_h: float | None,
+    n_points: int,
+    wall_s: float,
+) -> dict:
+    return {
+        "track": track_name,
+        "iteration": int(iteration),
+        "u": float(u),
+        "v": float(v),
+        "pred_mean_delta_g_h": None if pred_mean is None else float(pred_mean),
+        "pred_std": None if pred_std is None else float(pred_std),
+        "acquisition_score": None if acquisition_score is None else float(acquisition_score),
+        "status": status,
+        "new_dft_call": bool(new_dft_call),
+        "cache_hit": bool(cache_hit),
+        "duplicate": bool(duplicate),
+        "delta_g_h": None if delta_g_h is None else float(delta_g_h),
+        "abs_delta_g_h": None if delta_g_h is None else abs(float(delta_g_h)),
+        "best_delta_g_h": None if best_delta_g_h is None else float(best_delta_g_h),
+        "best_abs_delta_g_h": None if best_delta_g_h is None else abs(float(best_delta_g_h)),
+        "n_points": int(n_points),
+        "wall_s": float(wall_s),
+    }
+
+
+def propose_next(track, seed: int) -> tuple[tuple[float, float], float | None, float | None, float | None]:
+    if hasattr(track, "propose"):
+        return track.propose()
+
     def lcb(x: np.ndarray) -> float:
         mean, std = track.predict(float(x[0]) % 1.0, float(x[1]) % 1.0)
         return thermoneutral_lcb(mean, std)
@@ -159,7 +235,7 @@ def propose_next(track, seed: int) -> tuple[tuple[float, float], float, float]:
     )
     u, v = float(result.x[0]) % 1.0, float(result.x[1]) % 1.0
     mean, std = track.predict(u, v)
-    return (u, v), mean, std
+    return (u, v), mean, std, thermoneutral_lcb(mean, std)
 
 
 def run() -> list[dict]:
@@ -167,36 +243,57 @@ def run() -> list[dict]:
     print(f"Seed dataset: {len(points)} points, DeltaG_H range "
           f"[{min(deltas):.4f}, {max(deltas):.4f}] eV", flush=True)
 
-    tracks = [GNNTrack(points, deltas, e_slab, e_h2), PlainGPTrack(points, deltas)]
+    tracks = [
+        GNNTrack(points, deltas, e_slab, e_h2),
+        PlainGPTrack(points, deltas),
+        RandomTrack(points, deltas),
+    ]
     log: list[dict] = []
 
     for iteration in range(1, MAX_ITERATIONS + 1):
         for track in tracks:
             t0 = time.time()
-            (u, v), pred_mean, pred_std = propose_next(track, seed=RANDOM_STATE + iteration)
+            (u, v), pred_mean, pred_std, score = propose_next(track, seed=RANDOM_STATE + iteration)
             is_new_point = oracle.is_new((u, v), track.points)
+            cache_hit = _cache_hit_before_compute(u, v)
+            new_dft_call = is_new_point and not cache_hit
             dg = oracle.compute_delta_g_h((u, v), retries=oracle.CONFIG.retries)
+            wall = time.time() - t0
             if dg is None:
+                row = build_campaign_record(
+                    iteration=iteration, track_name=track.name, u=u, v=v,
+                    pred_mean=pred_mean, pred_std=pred_std, acquisition_score=score,
+                    status="failed", new_dft_call=new_dft_call,
+                    cache_hit=cache_hit, duplicate=not is_new_point,
+                    delta_g_h=None, best_delta_g_h=None,
+                    n_points=len(track.points), wall_s=wall,
+                )
+                log.append(row)
+                append_campaign_record(CAMPAIGN_LOG, row)
                 print(f"[{track.name} it{iteration}] DFT failed at ({u:.4f},{v:.4f}), skipping.", flush=True)
                 continue
-            wall = time.time() - t0
             track.add_point(u, v, dg)
             best = best_thermoneutral_delta(track.deltas)
-            row = {
-                "iteration": iteration, "track": track.name, "u": u, "v": v,
-                "new_dft_call": is_new_point, "delta_g_h": dg,
-                "pred_mean": pred_mean, "pred_std": pred_std,
-                "abs_delta_g_h": abs(dg),
-                "acquisition_score": thermoneutral_lcb(pred_mean, pred_std),
-                "best_delta_g_h": best, "best_abs_delta_g_h": abs(best),
-                "n_points": len(track.points), "wall_s": wall,
-            }
+            row = build_campaign_record(
+                iteration=iteration, track_name=track.name, u=u, v=v,
+                pred_mean=pred_mean, pred_std=pred_std, acquisition_score=score,
+                status="success", new_dft_call=new_dft_call,
+                cache_hit=cache_hit, duplicate=not is_new_point,
+                delta_g_h=dg, best_delta_g_h=best,
+                n_points=len(track.points), wall_s=wall,
+            )
             log.append(row)
+            append_campaign_record(CAMPAIGN_LOG, row)
+            pred_text = (
+                "random"
+                if pred_mean is None or pred_std is None
+                else f"{pred_mean:.4f}+/-{pred_std:.4f}"
+            )
             print(
                 f"[{track.name} it{iteration}] u={u:.4f} v={v:.4f} "
-                f"DeltaG_H={dg:.4f} (pred={pred_mean:.4f}+/-{pred_std:.4f}) "
+                f"DeltaG_H={dg:.4f} (pred={pred_text}) "
                 f"best_abs={abs(best):.4f} n={len(track.points)} wall={wall/60:.1f}min "
-                f"{'(new DFT call)' if is_new_point else '(cache hit)'}",
+                f"{'(new DFT call)' if new_dft_call else '(cache hit or duplicate)'}",
                 flush=True,
             )
 
