@@ -1,31 +1,36 @@
 """Active-learning demonstration on the TMC benchmark dataset.
 
-This script demonstrates three AL capabilities using the 12-candidate
-perturbation dataset as a retrospective oracle:
+This script demonstrates four AL capabilities using the 16-row TMC benchmark
+dataset and the 12-candidate perturbation subset as retrospective oracles:
 
-1. SIMULATED AL LOOP — Starting from zero labelled candidates, an
+1. ONE-STEP 16-ROW AL ITERATION — Starting from the 4 primary structures,
+   hide the 12 perturbation candidates, rank them by LCB, reveal the selected
+   candidate's known DFT value as the oracle, then refit the GP. This closes
+   the "GP → acquisition → oracle → update" loop without running new QE jobs.
+
+2. SIMULATED AL LOOP — Starting from zero labelled candidates, an
    uncertainty-driven loop (LCB acquisition via actistruct) decides which
    of the 12 perturbation candidates to "query" (simulate a DFT run) next.
    A fixed 4-candidate holdout (1 per system) is used to measure the
    learning curve.  Compared against random selection (n=50 random trials).
 
-2. UNCERTAINTY vs CONVERGENCE COST — After training the GP on all 12
+3. UNCERTAINTY vs CONVERGENCE COST — After training the GP on all 12
    candidates, model uncertainty is compared to the number of SCF
    iterations each candidate required.  High SCF-iteration jobs are
    potential "expensive" or hard-to-converge calculations.  If uncertainty
    correlates with SCF cost, the model can flag them before running DFT.
 
-3. RETROSPECTIVE EFFICIENCY — Given the AL selection order, how many of
+4. RETROSPECTIVE EFFICIENCY — Given the AL selection order, how many of
    the "trivial" stretch perturbations (which all return to the same basin)
    would have been selected last?  This quantifies how many DFT runs AL
    can save by de-prioritising uninformative regions.
 
-DISCLAIMER: All results use retrospective knowledge — true ΔE values are
-already known for all 12 candidates.  This is a workflow demonstration,
-not a predictive result.  With only 12 labelled structures the GP prior
-dominates; AL is expected to give only marginal benefit over random
-selection.  Genuine AL benefit requires ≥ 30–50 validated calculations
-per system before the surrogate gains meaningful predictive power.
+DISCLAIMER: All results use retrospective knowledge — true DFT values are
+already known for all 16 rows. This is a workflow demonstration, not a
+predictive result. With only 16 labelled structures the GP prior dominates;
+AL is expected to give only marginal benefit over random selection. Genuine
+AL benefit requires >= 30-50 validated calculations per system before the
+surrogate gains meaningful predictive power.
 
 Reads:
   data/features/features_v0.1.csv       (via scripts/11_dataset_loader.py)
@@ -45,9 +50,11 @@ import csv
 import json
 import math
 import sys
+import warnings
 from pathlib import Path
 
 import numpy as np
+from sklearn.exceptions import ConvergenceWarning
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel, WhiteKernel
 from sklearn.preprocessing import StandardScaler
@@ -63,6 +70,7 @@ _spec.loader.exec_module(_loader_mod)
 load_dataset = _loader_mod.load_dataset
 
 logger = setup_logger("al_demo", "al_demo.log")
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 AL_DEMO_VERSION = "0.1.0"
 
@@ -115,6 +123,119 @@ def _gp_predict_pool(
 def _lcb_score(pred: np.ndarray, std: np.ndarray, beta: float = 2.0) -> np.ndarray:
     """Lower-confidence-bound acquisition (minimisation).  Lower = higher priority."""
     return pred - beta * std
+
+
+def simulate_one_step_al_iteration(
+    feature_set: str = "coulomb",
+    target: str = "final_energy_ev",
+    beta: float = 2.0,
+    random_state: int = 42,
+) -> dict:
+    """Run one complete retrospective AL iteration on the 16-row dataset.
+
+    Workflow:
+      1. Seed the GP with the 4 primary relaxed structures.
+      2. Hide all 12 perturbation candidates as an unlabelled pool.
+      3. Rank the pool by lower-confidence-bound acquisition.
+      4. "Evaluate" the selected candidate by revealing its already-known DFT
+         target from the dataset.
+      5. Refit the GP with the selected point included.
+
+    This is the smallest honest demonstration of the AL control loop. It is not
+    a predictive benchmark: the oracle is retrospective and all labels are
+    already present in the v1.0 dataset.
+    """
+    from actistruct.acquisition.reliability import rank_candidates
+
+    ds = load_dataset(
+        feature_set=feature_set,
+        target=target,
+        candidates_only=False,
+    )
+    seed_indices = [i for i, source in enumerate(ds.source) if source == "primary"]
+    pool_indices = [i for i, source in enumerate(ds.source) if source == "candidate"]
+
+    if len(seed_indices) != 4 or len(pool_indices) != 12:
+        raise ValueError(
+            f"Expected 4 primary seeds and 12 candidate pool rows; got "
+            f"{len(seed_indices)} seeds and {len(pool_indices)} pool rows"
+        )
+
+    X_seed = ds.X[seed_indices]
+    y_seed = ds.y[seed_indices]
+    X_pool = ds.X[pool_indices]
+
+    y_pred, y_std = _gp_predict_pool(X_seed, y_seed, X_pool, random_state=random_state)
+    acquisition_rows = []
+    for local_i, global_i in enumerate(pool_indices):
+        pred = float(y_pred[local_i])
+        std = float(y_std[local_i])
+        acquisition_rows.append({
+            "system_id": ds.system_ids[global_i],
+            "predicted_value": pred,
+            "uncertainty": std,
+            "lcb_score": pred - beta * std,
+        })
+
+    ranked = rank_candidates(acquisition_rows, objective="minimize", beta=beta)
+    selected_id = ranked[0]["system_id"]
+    selected_global_idx = ds.system_ids.index(selected_id)
+    selected_local_idx = pool_indices.index(selected_global_idx)
+
+    train_after_indices = seed_indices + [selected_global_idx]
+    remaining_pool_indices = [
+        idx for idx in pool_indices if idx != selected_global_idx
+    ]
+
+    # Refit with the oracle-revealed point and measure the updated pool state.
+    y_after_pool, std_after_pool = _gp_predict_pool(
+        ds.X[train_after_indices],
+        ds.y[train_after_indices],
+        ds.X[remaining_pool_indices],
+        random_state=random_state,
+    )
+    selected_after_pred, selected_after_std = _gp_predict_pool(
+        ds.X[train_after_indices],
+        ds.y[train_after_indices],
+        ds.X[[selected_global_idx]],
+        random_state=random_state,
+    )
+
+    result = {
+        "feature_set": feature_set,
+        "target": target,
+        "beta": beta,
+        "seed_n": len(seed_indices),
+        "pool_n_before": len(pool_indices),
+        "train_n_after": len(train_after_indices),
+        "pool_n_after": len(remaining_pool_indices),
+        "seed_ids": [ds.system_ids[i] for i in seed_indices],
+        "selected_id": selected_id,
+        "selected_source": ds.source[selected_global_idx],
+        "predicted_before": float(ranked[0]["predicted_value"]),
+        "uncertainty_before": float(ranked[0]["uncertainty"]),
+        "lcb_score_before": float(ranked[0].get("acquisition_score", ranked[0]["lcb_score"])),
+        "oracle_value": float(ds.y[selected_global_idx]),
+        "prediction_error_before": float(ranked[0]["predicted_value"] - ds.y[selected_global_idx]),
+        "predicted_after": float(selected_after_pred[0]),
+        "uncertainty_after": float(selected_after_std[0]),
+        "pool_mean_uncertainty_before": float(np.mean(y_std)),
+        "pool_mean_uncertainty_after": float(np.mean(std_after_pool)) if len(std_after_pool) else float("nan"),
+        "top_candidates_before": ranked[:5],
+    }
+
+    logger.info(
+        "One-step AL: seed_n=%d, selected=%s, oracle=%.6f %s, "
+        "train_n_after=%d, pool_sigma %.6f -> %.6f",
+        result["seed_n"],
+        selected_id,
+        result["oracle_value"],
+        target,
+        result["train_n_after"],
+        result["pool_mean_uncertainty_before"],
+        result["pool_mean_uncertainty_after"],
+    )
+    return result
 
 
 def simulate_al_loop(
@@ -378,6 +499,7 @@ def analyze_stretch_efficiency(al_steps: list[dict]) -> dict:
 
 
 def build_report(
+    one_step: dict,
     comparison: dict,
     convergence: dict,
     efficiency: dict,
@@ -394,16 +516,54 @@ def build_report(
         "*Generated by `scripts/14_active_learning_demo.py`. Do not edit by hand.*",
         "",
         "> **CRITICAL DISCLAIMER:** All results in this report use retrospective",
-        "> knowledge — the true ΔE values for all 12 candidates are already known.",
+        "> knowledge — the true DFT values for all 16 rows are already known.",
         "> This is a workflow demonstration, not a predictive result.",
-        "> With only 12 labelled structures the GP prior dominates any learned",
+        "> With only 16 labelled structures the GP prior dominates any learned",
         "> function; AL is expected to give only marginal benefit over random",
-        "> selection.  Genuine AL benefit requires ≥ 30–50 validated calculations",
+        "> selection. Genuine AL benefit requires >= 30-50 validated calculations",
         "> per system.",
         "",
         "---",
         "",
-        "## 1. Simulated AL Loop",
+        "## 1. One-Step AL Iteration",
+        "",
+        "This is the minimal end-to-end AL control loop: seed the model with the",
+        "4 primary structures, hide the 12 perturbation candidates, rank the hidden",
+        "pool by lower-confidence-bound acquisition, reveal the selected point's",
+        "known DFT value as the retrospective oracle, then refit the GP.",
+        "",
+        "| Seed n | Hidden pool n | Selected candidate | Target | Predicted before | Oracle value | σ before | σ after | Train n after |",
+        "|---|---|---|---|---|---|---|---|---|",
+        f"| {one_step['seed_n']} | {one_step['pool_n_before']} | "
+        f"`{one_step['selected_id']}` | `{one_step['target']}` | "
+        f"{one_step['predicted_before']:.6f} | {one_step['oracle_value']:.6f} | "
+        f"{one_step['uncertainty_before']:.6f} | {one_step['uncertainty_after']:.6f} | "
+        f"{one_step['train_n_after']} |",
+        "",
+        f"Mean pool uncertainty changed from "
+        f"**{one_step['pool_mean_uncertainty_before']:.6f}** to "
+        f"**{one_step['pool_mean_uncertainty_after']:.6f}** after the oracle update.",
+        "",
+        "Top LCB candidates before oracle reveal:",
+        "",
+        "| Rank | Candidate | Predicted value | σ | Acquisition score |",
+        "|---|---|---|---|---|",
+    ]
+    for i, cand in enumerate(one_step["top_candidates_before"], start=1):
+        score = cand.get("acquisition_score", cand.get("lcb_score", float("nan")))
+        lines.append(
+            f"| {i} | `{cand['system_id']}` | {cand['predicted_value']:.6f} | "
+            f"{cand['uncertainty']:.6f} | {score:.6f} |"
+        )
+
+    lines += [
+        "",
+        "> This closes the software loop that matters for the Kulik pitch:",
+        "> model -> acquisition -> DFT-oracle reveal -> model update.",
+        "",
+        "---",
+        "",
+        "## 2. Simulated AL Loop",
         "",
         f"**Holdout set** (fixed, 4 candidates, 1 per system, for evaluation):**",
         "",
@@ -451,7 +611,7 @@ def build_report(
         "",
         "---",
         "",
-        "## 2. Uncertainty vs Convergence Cost",
+        "## 3. Uncertainty vs Convergence Cost",
         "",
         "GP trained on all 12 candidates (target = ΔE in meV).  Per-candidate",
         "uncertainty compared to actual SCF iteration count.",
@@ -481,7 +641,7 @@ def build_report(
         "",
         "---",
         "",
-        "## 3. Retrospective Efficiency: Stretch vs Angle/Rotation Selection Order",
+        "## 4. Retrospective Efficiency: Stretch vs Angle/Rotation Selection Order",
         "",
         "**Scientific hypothesis:** AL (exploration) should de-prioritise stretch",
         "perturbations (which always return to the same basin) in favour of",
@@ -529,7 +689,7 @@ def build_report(
         "",
         "---",
         "",
-        "## 4. What comes next",
+        "## 5. What comes next",
         "",
         "1. **Expand the dataset** to ≥ 30–50 validated DFT calculations per system.",
         "   Only then will the GP have enough data to show genuine AL benefit.",
@@ -569,17 +729,20 @@ def main() -> None:
 
     logger.info("=== Phase 5: Active Learning Demonstration ===")
 
-    logger.info("--- Analysis 1: Simulated AL loop vs random ---")
+    logger.info("--- Analysis 1: One-step 16-row AL iteration ---")
+    one_step = simulate_one_step_al_iteration(beta=args.beta)
+
+    logger.info("--- Analysis 2: Simulated AL loop vs random ---")
     comparison = compare_al_vs_random(
         feature_set=args.feature_set,
         n_random_trials=args.n_random_trials,
         beta=args.beta,
     )
 
-    logger.info("--- Analysis 2: Uncertainty vs convergence cost ---")
+    logger.info("--- Analysis 3: Uncertainty vs convergence cost ---")
     convergence = analyze_convergence_correlation(feature_set=args.feature_set)
 
-    logger.info("--- Analysis 3: Stretch vs angle/rotation efficiency ---")
+    logger.info("--- Analysis 4: Stretch vs angle/rotation efficiency ---")
     efficiency = analyze_stretch_efficiency(comparison["al_steps"])
 
     # Save JSON
@@ -589,10 +752,12 @@ def main() -> None:
         "al_demo_version": AL_DEMO_VERSION,
         "feature_set": args.feature_set,
         "disclaimer": (
-            "Retrospective demonstration with 12 training points. "
+            "Retrospective demonstration with 16 known DFT rows and a 12-candidate "
+            "hidden pool. "
             "No predictive or statistical conclusions should be drawn. "
             "AL benefit requires >= 30-50 validated calculations per system."
         ),
+        "one_step_iteration": one_step,
         "comparison": comparison,
         "convergence_correlation": convergence,
         "efficiency": efficiency,
@@ -602,7 +767,7 @@ def main() -> None:
     logger.info("Wrote %s", json_path)
 
     report_path = PROJECT_ROOT / "reports" / "active_learning_demo_v0.1.md"
-    build_report(comparison, convergence, efficiency, report_path)
+    build_report(one_step, comparison, convergence, efficiency, report_path)
 
     logger.info("=== Phase 5 complete ===")
 

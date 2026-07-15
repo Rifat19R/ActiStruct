@@ -24,7 +24,7 @@ Active-learning workflow for DFT-guided materials discovery.
 
 ## v2.0 status (honest)
 
-> All code paths are implemented, unit-tested (411 tests, 0 warnings), and
+> All code paths are implemented, unit-tested (417 tests, 0 warnings), and
 > one clean-slab QE static SCF has been validated end-to-end on the Ti3C2-O
 > 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2).
 >
@@ -47,7 +47,7 @@ This is a development release. See [Roadmap](#roadmap) for what is planned next.
 | Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
 | Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
 | Monitoring | None | 4-tab Streamlit dashboard |
-| Tests | 81 tests | 411 tests, 0 warnings (3.11 + 3.12 CI) |
+| Tests | 81 tests | 417 tests, 0 warnings (3.11 + 3.12 CI) |
 
 ---
 
@@ -174,7 +174,7 @@ project convention: real data or no screenshot).
 
 ## Test suite
 
-411 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
+417 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
 
 **ActiStruct core tests:**
 
@@ -199,10 +199,10 @@ project convention: real data or no screenshot).
 | `test_fe_cutoff_convergence.py` | 14 | Fe cutoff convergence data, ferrocene label disambiguation |
 | `test_neb_endpoints.py` | 9 | XYZ files, stoichiometry, dE encoding, energy bounds |
 | `test_ml_al_framing.py` | 31 | Report disclaimer presence, prohibited over-claim phrases |
-| `test_baseline_model.py`, `test_al_demo.py`, others | 118 | Dataset loading, GP baseline, AL demo, candidates, structures |
+| `test_baseline_model.py`, `test_al_demo.py`, others | 122 | Dataset loading, GP baseline, AL demo, candidates, structures |
 
 ```bash
-pytest -q       # 411 passed, 0 warnings
+pytest -q       # 417 passed, 0 warnings
 ```
 
 ---
@@ -244,7 +244,7 @@ ActiStruct/
 |-- references/                       # literature reference YAML and CSV
 |-- reports/                          # benchmark reports, daily logs, figures
 |
-|-- tests/                            # 411 tests, no QE/DFT launched
+|-- tests/                            # 417 tests, no QE/DFT launched
 |-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
 |-- analysis/                         # classifier training, offline benchmarks
 |-- docs/                             # setup guides and specification docs
@@ -273,7 +273,7 @@ pip install -e ".[test]"
 
 **Run tests (no QE launched):**
 ```bash
-pytest -q       # 411 passed, 0 warnings
+pytest -q       # 417 passed, 0 warnings
 ```
 
 **Run the no-QE demo (exercises full v2 stack on real Ti3C2-O geometry):**
