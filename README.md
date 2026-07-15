@@ -474,9 +474,10 @@ used to assess ActiStruct's active-learning pipeline on real QE-relaxed structur
 DFT calculations with Coulomb-matrix features, GP baseline, and AL demo.
 
 **Key results**:
-- Ferrocene eclipsed->staggered barrier: dE = 41.68 meV (matches experiment, ~41 meV)
+- Ferrocene eclipsed->staggered barrier: dE = 41.68 meV (matches experiment, ~41 meV);
+  ferrocene reference geometry is primary-PDF verified
 - Fe cutoff convergence: 90 Ry adopted; 60 Ry fails the Fe(CO)5 energy criterion
   (+18.55 meV/atom vs 90 Ry), while Fe-C bond lengths are already stable
 - NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)
 
-**Tests**: 410 passing across all ActiStruct and TMC benchmark test files (Python 3.11 + 3.12, CI green).
+**Tests**: 417 passing across all ActiStruct and TMC benchmark test files (Python 3.11 + 3.12, CI green).
