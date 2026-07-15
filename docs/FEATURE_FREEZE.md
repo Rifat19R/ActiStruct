@@ -41,7 +41,7 @@ Not allowed during the freeze:
 
 The freeze can be relaxed only after the repository contains:
 
-- a frozen benchmark protocol
+- a frozen benchmark protocol (`docs/BENCHMARK_PROTOCOL.md`)
 - a completed live LF campaign ledger
 - baseline comparisons under the same data budget
 - LF/HF ranking validation on representative sites

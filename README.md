@@ -393,6 +393,8 @@ Claim governance:
 - `docs/FEATURE_FREEZE.md` records the current scientific-evidence freeze.
 - `docs/CLAIMS_AND_EVIDENCE.md` maps major claims to evidence, commands, and
   limitations.
+- `docs/BENCHMARK_PROTOCOL.md` freezes the next LF Ti3C2-O benchmark protocol
+  before live campaign results are generated.
 
 - The GNN encoder produces geometry-sensitive embeddings: same composition +
   different bond lengths -> different embedding (verified by test).
