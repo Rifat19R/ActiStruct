@@ -1,10 +1,9 @@
 """Phase 3 driver: active-learning loop closure, two parallel surrogate tracks.
 
-Fits both surrogates on the same seed dataset (the 6 real-DFT points: 5 sites
-from run_ti3c2_o_grid_campaign.py + the atop-O reference from the first,
-superseded campaign -- all already cached), then runs 5 AL iterations for
+Fits both surrogates on the same seed dataset, then runs 5 AL iterations for
 each track independently, proposing the next (u,v) via differential_evolution
-minimizing the LCB, evaluating the real DFT oracle, and retraining.
+minimizing a thermoneutral-LCB score, evaluating the real DFT oracle, and
+retraining.
 
 Track A -- HybridGPSurrogate (actistruct.gnn.surrogate): SchNetEncoder
 pretrained + frozen, GP fit on embeddings of the actual Atoms structure.
@@ -59,6 +58,18 @@ SEED_POINTS = [
 MAX_ITERATIONS = 5
 KAPPA = 1.0
 RANDOM_STATE = 42
+
+
+def thermoneutral_lcb(mean_delta_g_h: float, std: float, kappa: float = KAPPA) -> float:
+    """HER acquisition score: target DeltaG_H near zero, not most negative."""
+    return abs(float(mean_delta_g_h)) - kappa * float(std)
+
+
+def best_thermoneutral_delta(deltas: list[float]) -> float:
+    """Return the observed DeltaG_H closest to thermoneutrality."""
+    if not deltas:
+        raise ValueError("Cannot choose best observed DeltaG_H from an empty list.")
+    return min(deltas, key=lambda dg: abs(float(dg)))
 
 
 def _seed_data():
@@ -141,7 +152,7 @@ class PlainGPTrack:
 def propose_next(track, seed: int) -> tuple[tuple[float, float], float, float]:
     def lcb(x: np.ndarray) -> float:
         mean, std = track.predict(float(x[0]) % 1.0, float(x[1]) % 1.0)
-        return mean - KAPPA * std
+        return thermoneutral_lcb(mean, std)
 
     result = differential_evolution(
         lcb, [(0.0, 1.0), (0.0, 1.0)], seed=seed, maxiter=200, tol=1e-6, polish=True,
@@ -170,18 +181,21 @@ def run() -> list[dict]:
                 continue
             wall = time.time() - t0
             track.add_point(u, v, dg)
-            best = min(track.deltas)
+            best = best_thermoneutral_delta(track.deltas)
             row = {
                 "iteration": iteration, "track": track.name, "u": u, "v": v,
                 "new_dft_call": is_new_point, "delta_g_h": dg,
                 "pred_mean": pred_mean, "pred_std": pred_std,
-                "best_delta_g_h": best, "n_points": len(track.points), "wall_s": wall,
+                "abs_delta_g_h": abs(dg),
+                "acquisition_score": thermoneutral_lcb(pred_mean, pred_std),
+                "best_delta_g_h": best, "best_abs_delta_g_h": abs(best),
+                "n_points": len(track.points), "wall_s": wall,
             }
             log.append(row)
             print(
                 f"[{track.name} it{iteration}] u={u:.4f} v={v:.4f} "
                 f"DeltaG_H={dg:.4f} (pred={pred_mean:.4f}+/-{pred_std:.4f}) "
-                f"best={best:.4f} n={len(track.points)} wall={wall/60:.1f}min "
+                f"best_abs={abs(best):.4f} n={len(track.points)} wall={wall/60:.1f}min "
                 f"{'(new DFT call)' if is_new_point else '(cache hit)'}",
                 flush=True,
             )

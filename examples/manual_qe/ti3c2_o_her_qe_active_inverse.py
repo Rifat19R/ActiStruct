@@ -611,11 +611,15 @@ def active_learning_query(
 
 
 def propose_inverse(model: GPModel) -> tuple[tuple[float, float], float, float, float]:
-    """LCB minimization via Differential Evolution in (u, v) in [0, 1)^2."""
+    """Thermoneutral-LCB minimization in (u, v) in [0, 1)^2.
+
+    HER screening targets DeltaG_H close to zero. The acquisition score is
+    therefore abs(mean DeltaG_H) - kappa * std, not raw DeltaG_H - kappa * std.
+    """
 
     def _lcb(x: np.ndarray) -> float:
         mean, std = model.predict(x.reshape(1, -1))
-        return float(mean[0] - CONFIG.kappa * std[0])
+        return float(abs(mean[0]) - CONFIG.kappa * std[0])
 
     result = differential_evolution(
         _lcb, [(0.0, 1.0), (0.0, 1.0)],
@@ -624,19 +628,19 @@ def propose_inverse(model: GPModel) -> tuple[tuple[float, float], float, float, 
     )
     best = (float(result.x[0]) % 1.0, float(result.x[1]) % 1.0)
     mean_at, std_at = model.predict([best])
-    # Report predicted improvement vs coarse grid minimum
+    # Report predicted improvement vs coarse grid thermoneutral target.
     u_c = np.linspace(0.0, 1.0, CONFIG.n_u_candidates, endpoint=False)
     v_c = np.linspace(0.0, 1.0, CONFIG.n_v_candidates, endpoint=False)
     coarse = np.array([(ui, vi) for ui in u_c for vi in v_c])
     coarse_mean, _ = model.predict(coarse)
-    pred_imp = max(0.0, float(np.min(coarse_mean)) - float(mean_at[0]))
+    pred_imp = max(0.0, float(np.min(np.abs(coarse_mean))) - abs(float(mean_at[0])))
     return best, float(mean_at[0]), float(std_at[0]), pred_imp
 
 
 def best_observed(
     points: list[tuple[float, float]], values: list[float]
 ) -> tuple[tuple[float, float], float]:
-    idx = int(np.argmin(np.array(values, dtype=float)))
+    idx = int(np.argmin(np.abs(np.array(values, dtype=float))))
     return points[idx], float(values[idx])
 
 
@@ -675,8 +679,8 @@ def plot_convergence(history: dict) -> Path:
     fig, (ax_e, ax_n) = plt.subplots(1, 2, figsize=(12, 4.5))
     ax_e.plot(history["iteration"], history["best_delta_g"], marker="o", color="tab:orange")
     ax_e.set_xlabel("Iteration")
-    ax_e.set_ylabel("Best DeltaG_H (eV)")
-    ax_e.set_title("DeltaG_H minimization (target: |DeltaG_H| near 0)")
+    ax_e.set_ylabel("Best observed |DeltaG_H| target (eV)")
+    ax_e.set_title("HER thermoneutrality search")
     ax_e.grid(alpha=0.25)
     ax_n.plot(history["iteration"], history["n_qe"], marker="s", color="tab:purple")
     ax_n.set_xlabel("Iteration")
@@ -812,7 +816,7 @@ def main() -> None:
         history["iteration"].append(iteration)
         history["best_u"].append(best_pt[0])
         history["best_v"].append(best_pt[1])
-        history["best_delta_g"].append(best_dg)
+        history["best_delta_g"].append(abs(best_dg))
         history["best_uncertainty"].append(best_std_val)
         history["n_qe"].append(len(labeled_points))
 
