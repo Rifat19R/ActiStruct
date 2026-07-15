@@ -1,0 +1,9 @@
+{
+  "status": "not_primary_verified",
+  "reason": "Raw clean-slab QE output was unavailable during the 2026-07-16 audit.",
+  "reported_total_energy_ev": -25973.017,
+  "reported_status": "JOB DONE",
+  "parsed_from_raw_qe_output": false,
+  "citation_grade": false,
+  "next_action": "Regenerate the low-fidelity clean-slab run and parse from the retained QE output."
+}

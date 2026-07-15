@@ -2,7 +2,7 @@
 
 Active-learning workflow for DFT-guided materials discovery.
 
-![Tests](https://img.shields.io/badge/tests-417%20passed%2C%200%20warnings-brightgreen)
+![Tests](https://img.shields.io/badge/tests-424%20passed%2C%200%20warnings-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
 ![CI](https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -24,9 +24,11 @@ Active-learning workflow for DFT-guided materials discovery.
 
 ## v2.0 status (honest)
 
-> All code paths are implemented, unit-tested (417 tests, 0 warnings), and
-> one clean-slab QE static SCF has been validated end-to-end on the Ti3C2-O
-> 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2).
+> All code paths are implemented and unit-tested (424 tests, 0 warnings).
+> One clean-slab QE static SCF was historically reported for the Ti3C2-O
+> 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2), but
+> raw QE output is not retained in the repo and must be regenerated before
+> citation-grade use.
 >
 > **A closed active-learning loop has not yet been run on live DFT data.**
 > The LF (u,v) campaign is next. HF ionic relaxation is deferred pending
@@ -47,7 +49,7 @@ This is a development release. See [Roadmap](#roadmap) for what is planned next.
 | Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
 | Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
 | Monitoring | None | 4-tab Streamlit dashboard |
-| Tests | 81 tests | 417 tests, 0 warnings (3.11 + 3.12 CI) |
+| Tests | 81 tests | 424 tests, 0 warnings (3.11 + 3.12 CI) |
 
 ---
 
@@ -157,8 +159,10 @@ project convention: real data or no screenshot).
 - All energies cached per fidelity; E_slab and E_H2 computed once per run
 - Pseudopotentials: Ti(USPP) + C(PAW) + O(PAW) + H(USPP), SSSP 1.3.0 PBE
   efficiency. All filenames verified against disk.
-- Acquisition: differential_evolution minimising LCB over (u,v) space
-- **LF static (clean slab) validated:** E = -25973.017 eV, JOB DONE, 1h43m
+- Acquisition: differential_evolution minimising thermoneutral LCB over (u,v)
+  space, targeting `|DeltaG_H|` near zero
+- **LF static (clean slab) historically reported:** E = -25973.017 eV, JOB
+  DONE, 1h43m; raw QE output must be regenerated before citation-grade use
 
 ### v0.x Reliability Layer (retained, unchanged)
 
@@ -174,7 +178,7 @@ project convention: real data or no screenshot).
 
 ## Test suite
 
-417 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
+424 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
 
 **ActiStruct core tests:**
 
@@ -202,7 +206,7 @@ project convention: real data or no screenshot).
 | `test_baseline_model.py`, `test_al_demo.py`, others | 122 | Dataset loading, GP baseline, AL demo, candidates, structures |
 
 ```bash
-pytest -q       # 417 passed, 0 warnings
+pytest -q       # 424 passed, 0 warnings
 ```
 
 ---
@@ -244,7 +248,7 @@ ActiStruct/
 |-- references/                       # literature reference YAML and CSV
 |-- reports/                          # benchmark reports, daily logs, figures
 |
-|-- tests/                            # 417 tests, no QE/DFT launched
+|-- tests/                            # 424 tests, no QE/DFT launched
 |-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
 |-- analysis/                         # classifier training, offline benchmarks
 |-- docs/                             # setup guides and specification docs
@@ -273,7 +277,7 @@ pip install -e ".[test]"
 
 **Run tests (no QE launched):**
 ```bash
-pytest -q       # 417 passed, 0 warnings
+pytest -q       # 424 passed, 0 warnings
 ```
 
 **Run the no-QE demo (exercises full v2 stack on real Ti3C2-O geometry):**
@@ -317,15 +321,17 @@ relaxation (ecutwfc=60) needs ~5.4 GB -- add `memory=6GB` to
 # (u,v) evaluation after that)
 FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
 
-# Step 2: repeat for 6-9 initial (u,v) sites to build the LF dataset
-# (not yet started -- see Roadmap)
+# Step 2: run the frozen six-site (u,v) seed campaign
+# (not yet completed -- see Roadmap)
 
 # Step 3: HF evaluation at selected sites (requires .wslconfig memory=6GB
 # or cluster -- deferred)
 FIDELITY=high python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
 ```
 
-Steps 2 and 3 have not been run yet. See Roadmap.
+Steps 2 and 3 have not been completed yet. Five preliminary development-site
+calculations were completed earlier, but they were superseded after symmetry
+aliasing and lateral adsorbate migration were identified. See Roadmap.
 
 ## Running the v0.x 50-workflow benchmark
 
@@ -343,7 +349,7 @@ bash run.sh one generated_models/bulk_lifepo4_qe_active_inverse.py
 | Run | System | ecutwfc | kpts | Energy | Status |
 |---|---|---|---|---|---|
 | LF static, clean slab | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -25973.017 eV | JOB DONE |
-| LF (u,v) grid campaign | 6-9 (u,v) sites | 40 Ry | (3,3,1) | -- | not started |
+| Frozen LF (u,v) seed campaign | 6 distinct (u,v) sites | 40 Ry | (3,3,1) | -- | not completed |
 | HF ionic relax | Ti3C2-O 2x2 | 60 Ry | (6,6,1) | -- | deferred (WSL2 OOM) |
 
 To reproduce: `FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`
@@ -398,15 +404,17 @@ Claim governance:
 
 - The GNN encoder produces geometry-sensitive embeddings: same composition +
   different bond lengths -> different embedding (verified by test).
-- The LF static SCF on the 28-atom Ti3C2-O slab is validated: JOB DONE,
-  E = -25973.017 eV, no spurious warnings.
+- The LF static SCF on the 28-atom Ti3C2-O slab was historically reported as
+  JOB DONE with E = -25973.017 eV. Raw QE output is not retained in the repo,
+  so this claim must be regenerated before citation-grade use.
 - The (u,v) design variable produces meaningfully distinct embeddings across
   adsorption sites (atop vs hollow embedding distance ~1.0, >> 0.01 threshold).
 - The 23-system structural check gives 0.71% mean deviation vs reference values.
 - v0.x offline benchmark results are retained and unchanged.
 
 ActiStruct does not claim:
-- A live Ti3C2-O active-learning campaign has completed (LF grid not started).
+- A live Ti3C2-O active-learning campaign has completed (frozen LF seed
+  campaign not completed).
 - The GNN surrogate outperforms a simple GP on real HER data (no head-to-head
   benchmark has been run).
 - HF ionic relaxation is feasible on WSL2 without .wslconfig change (it OOMs).
@@ -437,7 +445,7 @@ ActiStruct does not claim:
 
 ### v2.x near-term
 
-1. LF grid campaign: run oracle at 6-9 initial (u,v) sites.
+1. Frozen LF seed campaign: run oracle at 6 distinct initial (u,v) sites.
 2. GNN pretraining: train SchNetEncoder on LF DeltaG_H structures + energies.
 3. Active learning loop: HybridGPSurrogate proposes next (u,v) via LCB;
    evaluate oracle; retrain. Iterate until convergence.
@@ -493,4 +501,4 @@ baseline, and AL demo.
   (+18.55 meV/atom vs 90 Ry), while Fe-C bond lengths are already stable
 - NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)
 
-**Tests**: 417 passing across all ActiStruct and TMC benchmark test files (Python 3.11 + 3.12, CI green).
+**Tests**: 424 passing across all ActiStruct and TMC benchmark test files (Python 3.11 + 3.12, CI green).
