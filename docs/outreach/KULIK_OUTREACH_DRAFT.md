@@ -4,15 +4,17 @@ Status: draft for Rifat review before sending.
 
 ## Positioning
 
-The strongest external-facing result is the ferrocene conformer barrier:
+The strongest external-facing result is the ferrocene conformer energy
+difference:
 
 - Real QE/PBE relaxation data, not a toy example.
 - Ferrocene reference geometry is primary-PDF verified against Haaland and
   Nilsson 1968, Table 1.
 - The +36 degree Cp-ring perturbation relaxes to the staggered-like D5d basin.
-- Computed barrier: dE = 41.68 meV.
-- This matches the known experimental ferrocene rotational barrier of about
-  4 kJ/mol, approximately 41 meV.
+- Computed D5h -> D5d conformer energy difference: dE = 41.68 meV.
+- This is on the same scale as the known experimental ferrocene rotational
+  barrier of about 4 kJ/mol, approximately 41 meV. It should not be described as
+  a computed barrier unless a constrained rotational scan or NEB is run.
 
 This result is independent of the three remaining primary-PDF checks for
 Ni(CO)4, Cr(CO)6, and Fe(CO)5 bond lengths. Those PDFs affect only whether the
@@ -34,8 +36,8 @@ cited as primary-verified.
   QE-relaxed transition-metal complex structures.
 - The benchmark includes four primary systems and twelve perturbation
   relaxations: ferrocene, Ni(CO)4, Cr(CO)6, and Fe(CO)5.
-- The ferrocene D5h to D5d conformer barrier is dE = 41.68 meV, matching the
-  known experimental scale.
+- The ferrocene D5h -> D5d conformer energy difference is dE = 41.68 meV,
+  matching the known experimental scale.
 - Fe cutoff convergence is explicitly checked; 90 Ry is adopted for Fe energy
   claims.
 - The software pipeline now covers feature extraction, a GP uncertainty
@@ -51,14 +53,14 @@ Three geometry-reference PDFs are still pending primary-table verification:
 - Cr(CO)6: Whitaker and Jeffery 1967, DOI `10.1107/S0365110X67004153`.
 - Fe(CO)5: McClelland et al. 2001, DOI `10.1021/ic001114e`.
 
-This caveat does not weaken the ferrocene barrier result, the Fe cutoff study,
-the AL demo, or the software-quality claims. It only limits how strongly the
-three specific geometry-comparison numbers should be cited until their primary
-PDF tables are checked.
+This caveat does not weaken the ferrocene conformer-energy result, the Fe cutoff
+study, the AL demo, or the software-quality claims. It only limits how strongly
+the three specific geometry-comparison numbers should be cited until their
+primary PDF tables are checked.
 
 ## Email Draft
 
-Subject: ActiStruct TMC reliability benchmark with DFT-validated ferrocene barrier
+Subject: ActiStruct TMC reliability benchmark with ferrocene D5h-D5d energy difference
 
 Dear Prof. Kulik,
 
@@ -72,10 +74,10 @@ chemically meaningful molecular DFT data, not only synthetic examples.
 
 The strongest result is ferrocene: a QE/PBE relaxation starting from a +36 degree
 Cp-ring perturbation reaches the staggered-like D5d conformer, with a computed
-D5h to D5d energy difference of 41.68 meV. This matches the known experimental
-rotational-barrier scale of about 4 kJ/mol, or roughly 41 meV. The ferrocene
-reference geometry has been checked against the primary Haaland and Nilsson
-electron-diffraction PDF.
+D5h to D5d energy difference of 41.68 meV. This is on the same scale as the
+known experimental rotational barrier of about 4 kJ/mol, or roughly 41 meV. The
+ferrocene reference geometry has been checked against the primary Haaland and
+Nilsson electron-diffraction PDF.
 
 The public release is here:
 https://github.com/Rifat19R/ActiStruct/releases/tag/v1.0
@@ -91,9 +93,9 @@ are working end to end with honest limitations.
 
 One caveat: I still need to primary-PDF verify three supporting bond-length
 reference tables for Ni(CO)4, Cr(CO)6, and Fe(CO)5. This does not affect the
-ferrocene barrier result or the software demonstration, but I am keeping that
-citation caveat explicit before using those three geometry comparisons as
-primary-verified values.
+ferrocene conformer-energy result or the software demonstration, but I am
+keeping that citation caveat explicit before using those three geometry
+comparisons as primary-verified values.
 
 If useful, I would be grateful for any feedback on whether this benchmark is
 framed in a scientifically appropriate way and what next transition-metal

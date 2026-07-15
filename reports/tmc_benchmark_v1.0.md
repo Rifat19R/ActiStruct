@@ -204,10 +204,11 @@ geometries, not a general property of all non-stretch perturbations.
 
 The +36° Cp ring rotation (ferrocene) is the only perturbation that found a
 genuinely different PES minimum: ΔE = +41.68 meV, RMS displacement = 0.81 Å.
-This is consistent with ferrocene's known low rotational barrier (~4 kJ/mol, ~41
-meV) between its D₅h eclipsed and D₅d staggered conformers. The BFGS optimizer
-relaxed into the staggered-like geometry rather than crossing back over the
-rotational barrier.
+This optimized D5h -> D5d conformer energy difference is on the same scale as
+ferrocene's known low rotational barrier (~4 kJ/mol, ~41 meV) between its D5h
+eclipsed and D5d staggered conformers. The BFGS optimizer relaxed into the
+staggered-like geometry. A true barrier claim would require a constrained
+rotational scan or NEB.
 
 This finding validates that the perturbation generator *can* produce starting
 geometries that sample genuinely distinct PES minima — a prerequisite for the
@@ -255,7 +256,7 @@ ActiStruct/
 │   ├── 12_baseline_model.py             — GP uncertainty demo
 │   └── 13_compare_to_references.py      — geometry vs literature comparison
 ├── data/processed/
-│   ├── full_dataset_v0.2.csv            — merged 16-row validated dataset
+│   ├── full_dataset_v0.2.csv            — merged 16-row checked QE-record dataset
 │   ├── candidate_audit_v0.csv           — 52-candidate audit with metadata
 │   └── ...
 ├── references/

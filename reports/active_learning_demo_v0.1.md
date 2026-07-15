@@ -134,7 +134,8 @@ more SCF iterations).
 
 ## 5. What comes next
 
-1. **Expand the dataset** to ≥ 30–50 validated DFT calculations per system.
+1. **Expand the dataset** to >= 30-50 converged QE records per system, with
+   external reference checks where scientific claims require them.
    Only then will the GP have enough data to show genuine AL benefit.
 2. **Prospective AL loop** — generate new candidate structures, rank by
    acquisition score, run DFT on top-ranked, update model, repeat.
@@ -143,4 +144,3 @@ more SCF iterations).
    structures before launching expensive DFT jobs.
 4. **Dispersion correction (PBE-D3)** — add for ferrocene before any
    publication-quality results; weak Cp–Fe bonding is poorly described by PBE.
-

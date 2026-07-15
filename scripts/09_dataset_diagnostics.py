@@ -1,4 +1,4 @@
-"""Merge validated datasets, compute per-candidate metrics, and write dataset
+"""Merge internally checked QE-record datasets, compute per-candidate metrics, and write dataset
 diagnostics report.
 
 Reads:
@@ -452,10 +452,11 @@ def write_diagnostics_report(
         a(f"`{fc_rot['candidate_id']}`: ΔE = {fc_rot['delta_e_meV']} meV, "
           f"RMS disp = {fc_rot['rms_displacement_angstrom']} Å. "
           "This is the only candidate to reach a genuinely different PES minimum. "
-          "Consistent with ferrocene's known low rotational barrier (~4 kJ/mol) between "
-          "eclipsed (D5h) and staggered (D5d) conformers — the +36° rotation places the "
-          "ring in a staggered-like geometry that the BFGS cannot relax back to eclipsed "
-          "without crossing the barrier.")
+          "The optimized D5h -> D5d conformer energy difference is 41.68 meV. "
+          "That number is on the same scale as ferrocene's known low rotational "
+          "barrier (~4 kJ/mol) between eclipsed and staggered conformers. "
+          "A transition-state value would require a constrained rotational scan "
+          "or NEB.")
     a("")
     a("### 8.4 Cr(CO)6 axial distortion — symmetric Oh restored")
     a("")

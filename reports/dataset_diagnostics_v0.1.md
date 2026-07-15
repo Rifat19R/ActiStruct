@@ -126,7 +126,12 @@ All 8/8 bond-stretch perturbations relaxed back to the parent basin (|ΔE| < 10 
 
 ### 8.3 Ferrocene Cp ring rotation — different conformer found
 
-`ferrocene__ring2_rotation_deg__+36`: ΔE = 41.68 meV, RMS disp = 0.8100 Å. This is the only candidate to reach a genuinely different PES minimum. Consistent with ferrocene's known low rotational barrier (~4 kJ/mol) between eclipsed (D5h) and staggered (D5d) conformers — the +36° rotation places the ring in a staggered-like geometry that the BFGS cannot relax back to eclipsed without crossing the barrier.
+`ferrocene__ring2_rotation_deg__+36`: ΔE = 41.68 meV, RMS disp = 0.8100 Å.
+This is the only candidate to reach a genuinely different PES minimum.
+The optimized D5h -> D5d conformer energy difference is 41.68 meV.
+That number is on the same scale as ferrocene's known low rotational barrier
+(~4 kJ/mol) between eclipsed and staggered conformers. A transition-state value
+would require a constrained rotational scan or NEB.
 
 ### 8.4 Cr(CO)6 axial distortion — symmetric Oh restored
 
@@ -149,4 +154,3 @@ All 8/8 bond-stretch perturbations relaxed back to the parent basin (|ΔE| < 10 
 - **`negative_rho` warnings present in all calculations.** Small negative charge density arises from incomplete Fourier series truncation in plane-wave DFT. The warnings are retained in the parsed dataset and should be reviewed case-by-case before external publication.
 - **Ni/Cr pseudopotential naming convention resolved.** `ni_pbe_v1.4.uspp.F.UPF` and `cr_pbe_v1.5.uspp.F.UPF` are official SSSP efficiency GBRV entries; the naming difference from `_psl.` files is expected because SSSP mixes source libraries by element.
 - **Dataset size.** 16 DFT calculations across 4 systems are sufficient for workflow demonstration and PES sampling characterization, but not for statistically robust ML training. ML/AL infrastructure should carry an explicit 'not yet predictive' disclaimer until ≥30–50 validated calculations per system are available.
-

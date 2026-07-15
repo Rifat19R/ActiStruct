@@ -14,7 +14,7 @@ computable from atomic positions + numbers alone (no additional calculations):
      C-O bond lengths (carbonyl systems), energy-per-atom, convergence cost
 
 Reads:
-  data/processed/full_dataset_v0.2.csv       (16-row merged validated dataset)
+  data/processed/full_dataset_v0.2.csv       (16-row merged checked QE-record dataset)
   data/processed/candidate_audit_v0.csv      (perturbation family metadata)
 
 Writes:

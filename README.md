@@ -90,8 +90,8 @@ Key design decisions:
   scale ~3-5, and ConvergenceWarnings are eliminated on real data.
 - **alpha=1e-4, no WhiteKernel:** WhiteKernel noise estimation is unreliable
   with 5-20 HF points and collapses to its lower bound on clean data. Fixed
-  alpha=1e-4 provides numerical regularization matching DFT convergence noise
-  (~0.1 meV/atom) with no lower bound to hit.
+  alpha=1e-4 is numerical regularization for stable GP fitting; it is not a
+  measured physical DFT noise level.
 - **NTFS-safe locking:** WSL2 /mnt/d/ (NTFS) does not support fcntl/flock.
   Ledger and cache use O_CREAT|O_EXCL for safe concurrent writes.
 - **Cumulative escalation:** Smearing method and degauss always change together
@@ -467,15 +467,20 @@ MIT License. See `LICENSE`.
 
 ## TMC Reliability Benchmark (v1.0)
 
-A DFT-validated benchmark dataset for transition-metal carbonyls and metallocenes,
-used to assess ActiStruct's active-learning pipeline on real QE-relaxed structures.
+The TMC Benchmark v1.0 is a separate benchmark artifact inside the ActiStruct
+repository, distinct from the ActiStruct v2.0 software status above. It contains
+converged QE records for transition-metal carbonyls and metallocenes, used to
+assess ActiStruct's active-learning pipeline on real QE-relaxed structures.
 
-**Systems**: Cr(CO)6, Fe(CO)5, Ni(CO)4, ferrocene (D5h/D5d conformers) -- 16 validated
-DFT calculations with Coulomb-matrix features, GP baseline, and AL demo.
+**Systems**: Cr(CO)6, Fe(CO)5, Ni(CO)4, ferrocene (D5h/D5d conformers) -- 16
+converged QE records passing internal checks, with Coulomb-matrix features, GP
+baseline, and AL demo.
 
 **Key results**:
-- Ferrocene eclipsed->staggered barrier: dE = 41.68 meV (matches experiment, ~41 meV);
-  ferrocene reference geometry is primary-PDF verified
+- Ferrocene D5h -> D5d conformer energy difference: dE = 41.68 meV (same scale
+  as the known experimental rotational barrier, ~41 meV); ferrocene reference
+  geometry is primary-PDF verified. A true barrier claim would require a
+  constrained rotational scan or NEB.
 - Fe cutoff convergence: 90 Ry adopted; 60 Ry fails the Fe(CO)5 energy criterion
   (+18.55 meV/atom vs 90 Ry), while Fe-C bond lengths are already stable
 - NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)

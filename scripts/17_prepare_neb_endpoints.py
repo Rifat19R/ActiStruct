@@ -90,8 +90,11 @@ The two Cp rings rotate by 36° relative to each other (half of 72°, the
 | `ferrocene_eclipsed_d5h.xyz`  | {ENDPOINT_A_ID} | eclipsed D5h  | 0.0 |
 | `ferrocene_staggered_d5d.xyz` | {ENDPOINT_B_ID} | staggered D5d | {delta_e_mev:.2f} |
 
-The ΔE={delta_e_mev:.2f} meV agrees with the experimental eclipsed–staggered
-barrier (~4 kJ/mol ≈ 41 meV, Haaland & Nilsson 1968).
+The optimized D5h -> D5d conformer energy difference, ΔE={delta_e_mev:.2f} meV,
+is on the same scale as the experimental eclipsed-staggered rotational barrier
+(~4 kJ/mol ≈ 41 meV, Haaland & Nilsson 1968). A true computed barrier requires
+the NEB or constrained rotational scan that these endpoint files are meant to
+enable.
 
 ## Known limitations
 

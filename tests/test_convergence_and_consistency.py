@@ -145,8 +145,9 @@ def test_all_final_energies_are_negative_ry():
 
 def test_ring_rotation_is_largest_delta_e_in_ferrocene_family():
     """ferrocene ring rotation by +36° (toward staggered D5d) must cost the most energy
-    among the 3 ferrocene candidates. The staggered-to-eclipsed barrier in ferrocene
-    is experimentally ~4 kJ/mol (~41 meV). Our DFT result should be in that range.
+    among the 3 ferrocene candidates. The optimized D5h-D5d conformer energy
+    difference should be on the same scale as ferrocene's experimental rotational
+    barrier (~4 kJ/mol, ~41 meV), but is not itself a computed barrier.
     """
     feats = _load_features()
     ring_rot = feats.get("ferrocene__ring2_rotation_deg__+36")
@@ -165,10 +166,11 @@ def test_ring_rotation_is_largest_delta_e_in_ferrocene_family():
             f"ring rotation ΔE={ring_de:.2f} meV not > {sid} ΔE={other_de:.2f} meV"
         )
 
-    # Sanity range: eclipsed-staggered barrier for ferrocene ≈ 4–9 kJ/mol → 41–93 meV
+    # Sanity range: same scale as experimental eclipsed-staggered rotation
+    # (~4-9 kJ/mol -> 41-93 meV), without claiming a computed barrier.
     assert 20.0 <= ring_de <= 150.0, (
         f"ring rotation ΔE={ring_de:.2f} meV outside expected range 20–150 meV "
-        f"(eclipsed-staggered barrier for ferrocene)"
+        f"(expected ferrocene conformer energy scale)"
     )
 
 
