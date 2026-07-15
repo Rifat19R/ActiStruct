@@ -9,7 +9,7 @@ limitation.
 | Claim | Evidence | Reproduce command | Limitation |
 |---|---|---|---|
 | Geometry-sensitive embedding is implemented. | `tests/test_hybrid_surrogate.py`; `actistruct/gnn/encoder.py`; `actistruct/gnn/surrogate.py` | `pytest -q tests/test_hybrid_surrogate.py` | Proves representation sensitivity and API behavior, not predictive superiority. |
-| Clean Ti3C2-O slab static SCF completed once. | `README.md` Ti3C2-O status section; `data/structures/ti3c2_o/ti3c2_o_slab_relaxed.traj` | Reproduce via `examples/manual_qe/ti3c2_o_her_qe_active_inverse.py` only when QE and pseudopotentials are configured. | One static clean-slab SCF; not a live active-learning campaign. |
+| Clean Ti3C2-O slab static SCF was historically reported once. | `data/evidence/ti3c2_o_clean_slab_lf/`; `data/structures/ti3c2_o/ti3c2_o_slab_relaxed.traj` | Regenerate with `FIDELITY=low python -m examples.manual_qe.ti3c2_o_her_qe_active_inverse` after QE and pseudopotentials are configured. | Raw clean-slab QE output is not retained in the repo/current scratch; treat as a historical report until regenerated with raw-output hash and parsed result. |
 | GP/LCB direct-grid and failure-aware ranking have offline evidence. | `reports/simulated_failure_aware_al_benchmark_v051.md`; `data/simulated_failure_aware_al_benchmark_v051.csv`; `tests/test_simulated_failure_aware_al_benchmark_v051.py` | `pytest -q tests/test_simulated_failure_aware_al_benchmark_v051.py` | Offline replay/stress benchmark only; not live QE evidence. |
 | Failure-aware acquisition is a soft ranking penalty and falls back to LCB when risk is unavailable or gamma is zero. | `actistruct/acquisition/reliability.py`; `tests/test_failure_aware_acquisition.py` | `pytest -q tests/test_failure_aware_acquisition.py` | Confirms scoring behavior, not live DFT savings. |
 | TMC Benchmark v1.0 has 16 converged QE records passing internal checks. | `data/processed/full_dataset_v0.2.csv`; `reports/tmc_benchmark_v1.0.md`; parser/validation tests | `pytest -q tests/test_qe_parser.py tests/test_dataset_validation.py tests/test_convergence_and_consistency.py` | Internal QE/parser checks; three non-ferrocene primary PDF tables still need verification before citation-grade geometry claims. |
@@ -28,6 +28,7 @@ Use:
 - "optimized D5h -> D5d conformer energy difference"
 - "same scale as the experimental rotational barrier"
 - "offline failure-aware acquisition benchmark"
+- "historically reported clean-slab SCF"
 
 Avoid unless future evidence exists:
 
@@ -36,3 +37,4 @@ Avoid unless future evidence exists:
 - "predictive model"
 - "production-ready DFT automation"
 - "validated DFT dataset" without specifying the validation standard
+- "validated clean-slab SCF" until raw QE output and checksums are regenerated

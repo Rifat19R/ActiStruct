@@ -1,0 +1,40 @@
+{
+  "audit_date": "2026-07-16",
+  "claim_status": "historical_report_requires_regeneration_for_citation",
+  "system": "Ti3C2-O 2x2 clean slab",
+  "fidelity": "low",
+  "reported_total_energy_ev": -25973.017,
+  "reported_status": "JOB DONE",
+  "reported_source": "README historical benchmark status; not independent raw-output evidence",
+  "raw_clean_slab_qe_output": {
+    "repository_status": "not present",
+    "scratch_status": "not found under /tmp/qe_scratch/ti3c2_o_her/low during 2026-07-16 audit",
+    "qe_output_sha256": null,
+    "input_sha256": null
+  },
+  "structure_files": {
+    "relaxed_traj": {
+      "path": "data/structures/ti3c2_o/ti3c2_o_slab_relaxed.traj",
+      "sha256": "55a23221a3e07ca161e73b7830b3532403125323f6c350c7a62cd25100518ac1"
+    },
+    "unrelaxed_traj": {
+      "path": "data/structures/ti3c2_o/ti3c2_o_slab.traj",
+      "sha256": "b89f645969bdce25ce4cb91c80ecf16b360d201dd8b21308cd60956715068085"
+    }
+  },
+  "software_environment_observed": {
+    "python": "3.12.3",
+    "ase": "3.28.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit_learn": "1.9.0"
+  },
+  "required_regeneration_artifacts": [
+    "qe_output.sha256",
+    "input.sha256",
+    "parsed_result.json",
+    "environment.txt",
+    "final_output_excerpt.txt",
+    "pseudopotential_checksums.txt"
+  ]
+}
