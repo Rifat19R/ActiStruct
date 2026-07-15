@@ -131,15 +131,15 @@ def test_no_prohibited_phrase_in_report(phrase, report_label, report_path):
 # ---------------------------------------------------------------------------
 
 def test_baseline_report_does_not_claim_30_or_more_training_structures():
-    """The baseline model is trained on 12 structures. Any claim of ≥30
+    """The baseline model is trained on 16 structures. Any claim of >=30
     training samples would indicate a fabricated or inflated result.
     """
     if not BASELINE_REPORT.exists():
         pytest.skip("baseline_model_report_v0.1.md not found")
     text = BASELINE_REPORT.read_text(encoding="utf-8")
     # Check the training size stated in the disclaimer matches reality
-    assert "12 DFT" in text or "12 candidates" in text or "12 labelled" in text or "12 labeled" in text, (
-        "Baseline report must state it was trained on 12 candidates — "
+    assert "16 data points" in text or "16 structures" in text, (
+        "Baseline report must state it was trained on 16 structures — "
         "check that re-generation hasn't silently changed the training size"
     )
 

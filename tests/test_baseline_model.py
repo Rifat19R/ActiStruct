@@ -69,6 +69,16 @@ def test_evaluate_loso_per_sample_fields():
             assert abs(s["abs_error"] - abs(s["error"])) < 1e-9
 
 
+def test_evaluate_loo_total_energy_returns_16_folds():
+    folds = model_mod.evaluate_loo_total_energy(feature_set="coulomb", target="final_energy_ev")
+    assert len(folds) == 16
+    for fold in folds:
+        assert fold["train_n"] == 15
+        assert fold["test_n"] == 1
+        assert fold["y_std"] >= 0
+        assert fold["abs_error"] >= 0
+
+
 def test_acquisition_ranking_uses_actistruct():
     """rank_candidates_by_acquisition must call actistruct and return 12 rows."""
     from _load import load_script
@@ -97,7 +107,8 @@ def test_json_results_have_disclaimer():
     import json
     data = json.loads(json_path.read_text(encoding="utf-8"))
     assert "disclaimer" in data
-    assert "12" in data["disclaimer"]
+    assert "16 data points" in data["disclaimer"]
+    assert data["mode"] == "loo-total"
 
 
 def test_report_contains_disclaimer():
@@ -106,4 +117,5 @@ def test_report_contains_disclaimer():
         pytest.skip("run scripts/12_baseline_model.py first")
     text = report_path.read_text(encoding="utf-8")
     assert "CRITICAL DISCLAIMER" in text or "DISCLAIMER" in text
-    assert "12" in text
+    assert "16 data points" in text
+    assert "Leave-one-out" in text

@@ -121,10 +121,10 @@ underestimates bond lengths slightly relative to gas-phase electron diffraction
 data. All four systems labelled `validated` by `scripts/13_compare_to_references.py`
 (tolerance: 0.03 Å absolute or 3% relative, whichever is looser).
 
-> **Important:** reference status in `reference_values_tmc_v0.yaml` remains
-> `needs_manual_review` — web-fetched literature summaries were used to populate
-> initial values; PDF-level verification by the researcher is required before
-> these values are cited externally.
+> **Important:** ferrocene is now primary-PDF verified against Haaland &
+> Nilsson 1968, Table 1. Ni(CO)4, Cr(CO)6, and Fe(CO)5 remain below full
+> primary-PDF verification; PDF-level review is still required before those
+> reference bond lengths are cited externally.
 
 ---
 
@@ -240,7 +240,7 @@ provides an independent verification of the relaxation quality for this system.
 ## 9. Repository Structure
 
 ```
-D:/Research/Dr.Kulik_MIT/
+ActiStruct/
 ├── scripts/
 │   ├── 04_build_initial_structures.py   — structure generation
 │   ├── 05_generate_perturbation_candidates.py
@@ -250,6 +250,9 @@ D:/Research/Dr.Kulik_MIT/
 │   ├── 07_parse_qe_outputs.py           — production QE parser (17 fields)
 │   ├── 08_validate_dataset.py           — label rows, never delete
 │   ├── 09_dataset_diagnostics.py        — merge, metrics, this report's data
+│   ├── 10_build_features.py             — 16-row descriptor table
+│   ├── 11_dataset_loader.py             — ML-ready loader + LOO splits
+│   ├── 12_baseline_model.py             — GP uncertainty demo
 │   └── 13_compare_to_references.py      — geometry vs literature comparison
 ├── data/processed/
 │   ├── full_dataset_v0.2.csv            — merged 16-row validated dataset
@@ -260,7 +263,7 @@ D:/Research/Dr.Kulik_MIT/
 ├── configs/
 │   ├── qe_molecule_settings.yaml
 │   └── project_config.yaml
-├── tests/                               — 411 passing tests
+├── tests/                               — 413 passing tests
 └── reports/
     ├── dataset_diagnostics_v0.1.md      — programmatic diagnostics
     └── tmc_benchmark_v1.0.md            — this document

@@ -2,7 +2,7 @@
 
 Provides a clean, typed interface for loading the feature CSV into numpy
 arrays ready for ML experiments. Handles:
-- Train/test splitting (per-system or random, with stratification options)
+- Leave-one-out and leave-one-system-out splitting
 - NaN imputation for the two features that don't apply to ferrocene (C-O
   bond lengths), using column mean over the non-NaN rows
 - Feature subsetting: Coulomb-only, geometric-only, or combined
@@ -236,6 +236,43 @@ def train_test_split_by_system(
     return _subset(dataset, train_mask), _subset(dataset, test_mask)
 
 
+def subset_dataset(dataset: TMCDataset, indices: np.ndarray | list[int]) -> TMCDataset:
+    """Return a row subset while preserving feature metadata.
+
+    This helper keeps split implementations small and avoids ad hoc tuple
+    rebuilding in model scripts.
+    """
+    idx = np.asarray(indices, dtype=int)
+    return TMCDataset(
+        X=dataset.X[idx],
+        y=dataset.y[idx],
+        system_ids=[dataset.system_ids[i] for i in idx],
+        feature_names=dataset.feature_names,
+        target_name=dataset.target_name,
+        imputed_cols=dataset.imputed_cols,
+        source=[dataset.source[i] for i in idx],
+        label=[dataset.label[i] for i in idx],
+        n_samples=int(len(idx)),
+        n_features=dataset.n_features,
+    )
+
+
+def leave_one_out_splits(dataset: TMCDataset) -> list[tuple[TMCDataset, TMCDataset]]:
+    """Build deterministic leave-one-out train/test splits.
+
+    With 16 total structures, random train/test partitions are too small and
+    unstable. LOO gives every row exactly one out-of-sample prediction while
+    keeping 15 rows for fitting in each fold.
+    """
+    splits = []
+    all_idx = np.arange(dataset.n_samples)
+    for test_i in range(dataset.n_samples):
+        train_idx = all_idx[all_idx != test_i]
+        test_idx = np.array([test_i])
+        splits.append((subset_dataset(dataset, train_idx), subset_dataset(dataset, test_idx)))
+    return splits
+
+
 def print_summary(ds: TMCDataset) -> None:
     logger.info("Dataset summary:")
     logger.info("  n_samples=%d, n_features=%d, target=%s",
@@ -273,6 +310,7 @@ def main() -> None:
             train, test = train_test_split_by_system(ds, [held_out])
             logger.info("Hold-out=%s: train n=%d, test n=%d",
                         held_out, train.n_samples, test.n_samples)
+        logger.info("LOO folds: %d", len(leave_one_out_splits(ds)))
 
     logger.info("")
     logger.info("DATASET SIZE DISCLAIMER: %d samples across 4 systems is insufficient",
