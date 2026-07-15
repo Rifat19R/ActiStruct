@@ -69,6 +69,12 @@ generated_models.zip
 md to code.txt
 Target mateirals for testing.png
 
+# Internal planning and AI-assistant spec docs — not for public repo.
+CLAUDE_*.md
+ACTISTRUCT_FIX_PLAN_*.md
+*_codex_spec*.md
+*.pdf
+
 # Local-only direct-grid bookkeeping.
 analysis/outputs/raw/direct_grid_validations_internal.csv
 analysis/outputs/raw/direct_grid/bulk_fe_spin_grid.csv

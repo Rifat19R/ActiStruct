@@ -2,8 +2,9 @@
 
 Active-learning workflow for DFT-guided materials discovery.
 
-![Tests](https://img.shields.io/badge/tests-281%20passed%2C%200%20warnings-brightgreen)
-![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
+![Tests](https://img.shields.io/badge/tests-410%20passed%2C%200%20warnings-brightgreen)
+![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
+![CI](https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
@@ -23,7 +24,7 @@ Active-learning workflow for DFT-guided materials discovery.
 
 ## v2.0 status (honest)
 
-> All code paths are implemented, unit-tested (281 tests, 0 warnings), and
+> All code paths are implemented, unit-tested (410 tests, 0 warnings), and
 > one clean-slab QE static SCF has been validated end-to-end on the Ti3C2-O
 > 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2).
 >
@@ -46,7 +47,7 @@ This is a development release. See [Roadmap](#roadmap) for what is planned next.
 | Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
 | Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
 | Monitoring | None | 4-tab Streamlit dashboard |
-| Tests | 81 tests | 281 tests, 0 warnings (3.11 + 3.12 CI) |
+| Tests | 81 tests | 410 tests, 0 warnings (3.11 + 3.12 CI) |
 
 ---
 
@@ -173,7 +174,7 @@ project convention: real data or no screenshot).
 
 ## Test suite
 
-281 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
+410 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
 
 **ActiStruct core tests:**
 
@@ -201,7 +202,7 @@ project convention: real data or no screenshot).
 | `test_baseline_model.py`, `test_al_demo.py`, others | 118 | Dataset loading, GP baseline, AL demo, candidates, structures |
 
 ```bash
-pytest -q       # 281 passed, 0 warnings
+pytest -q       # 410 passed, 0 warnings
 ```
 
 ---
@@ -243,7 +244,7 @@ ActiStruct/
 |-- references/                       # literature reference YAML and CSV
 |-- reports/                          # benchmark reports, daily logs, figures
 |
-|-- tests/                            # 281 tests, no QE/DFT launched
+|-- tests/                            # 410 tests, no QE/DFT launched
 |-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
 |-- analysis/                         # classifier training, offline benchmarks
 |-- docs/                             # setup guides and specification docs
@@ -272,7 +273,7 @@ pip install -e ".[test]"
 
 **Run tests (no QE launched):**
 ```bash
-pytest -q       # 281 passed, 0 warnings
+pytest -q       # 410 passed, 0 warnings
 ```
 
 **Run the no-QE demo (exercises full v2 stack on real Ti3C2-O geometry):**
@@ -464,7 +465,7 @@ MIT License. See `LICENSE`.
 
 ---
 
-## TMC Reliability Benchmark (`feature/tmc-reliability-benchmark`)
+## TMC Reliability Benchmark (v1.0)
 
 A DFT-validated benchmark dataset for transition-metal carbonyls and metallocenes,
 used to assess ActiStruct's active-learning pipeline on real QE-relaxed structures.
@@ -477,6 +478,4 @@ DFT calculations with Coulomb-matrix features, GP baseline, and AL demo.
 - Fe/60 Ry vs 90 Ry convergence: dE < 0.3 meV (well-converged at 60 Ry)
 - NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)
 
-**Tests**: 281 passing (Tasks 1-9 complete, pre-v1.0).
-
-See [`CLAUDE_ACTISTRUCT_TMC_PLAN.md`](CLAUDE_ACTISTRUCT_TMC_PLAN.md) for the full benchmark plan.
+**Tests**: 410 passing across all ActiStruct and TMC benchmark test files (Python 3.11 + 3.12, CI green).
