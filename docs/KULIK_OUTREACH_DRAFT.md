@@ -62,10 +62,13 @@ Subject: ActiStruct TMC reliability benchmark with DFT-validated ferrocene barri
 
 Dear Prof. Kulik,
 
-I am Md. Rifat Khandaker, an undergraduate researcher working on ActiStruct, an
-active-learning workflow for DFT-guided structure exploration. I have prepared a
-small transition-metal complex reliability benchmark to test whether the workflow
-can handle chemically meaningful molecular DFT data, not only synthetic examples.
+I am Md. Rifat Khandaker, a research assistant in the Department of Chemical
+Engineering at DUET (Dhaka University of Engineering and Technology),
+Bangladesh, with six peer-reviewed publications in DFT and computational
+materials science. I work on ActiStruct, an active-learning workflow for
+DFT-guided structure exploration, and have prepared a small transition-metal
+complex reliability benchmark to test whether the workflow can handle
+chemically meaningful molecular DFT data, not only synthetic examples.
 
 The strongest result is ferrocene: a QE/PBE relaxation starting from a +36 degree
 Cp-ring perturbation reaches the staggered-like D5d conformer, with a computed
