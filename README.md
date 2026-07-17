@@ -2,7 +2,7 @@
 
 Active-learning workflow for DFT-guided materials discovery.
 
-![Tests](https://img.shields.io/badge/tests-433%20passed%2C%200%20warnings-brightgreen)
+![Tests](https://img.shields.io/badge/tests-434%20passed%2C%200%20warnings-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
 ![CI](https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -24,7 +24,7 @@ Active-learning workflow for DFT-guided materials discovery.
 
 ## v2.0 status (honest)
 
-> All code paths are implemented and unit-tested (433 tests, 0 warnings).
+> All code paths are implemented and unit-tested (434 tests, 0 warnings).
 > One clean-slab QE static SCF was historically reported for the Ti3C2-O
 > 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2), but
 > raw QE output is not retained in the repo and must be regenerated before

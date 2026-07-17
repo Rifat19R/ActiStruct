@@ -103,7 +103,7 @@ _SLAB_UNRELAXED = _MXENE_ROOT / "ti3c2_o_slab.traj"
 SLAB_TRAJ = _SLAB_RELAXED if _SLAB_RELAXED.exists() else _SLAB_UNRELAXED
 SLAB_LABEL = "relaxed" if _SLAB_RELAXED.exists() else "unrelaxed"
 FIDELITY_LABEL = "lf" if FIDELITY == "low" else "hf"
-CAMPAIGN_PROTOCOL_ID = f"ti3c2o-{FIDELITY_LABEL}-v1-amend1"
+CAMPAIGN_PROTOCOL_ID = f"ti3c2o-{FIDELITY_LABEL}-v1-amend2"
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
 # QE scratch must stay on the native Linux filesystem, never under /mnt/d
@@ -116,8 +116,8 @@ REPORT_DIR.mkdir(parents=True, exist_ok=True)
 QE_RUN_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-CACHE_FILE = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend1.pkl"
-CACHE_LOCK = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend1.lock"
+CACHE_FILE = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend2.pkl"
+CACHE_LOCK = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend2.lock"
 REPORT_FILE = REPORT_DIR / f"ti3c2_o_her_{FIDELITY}_report.txt"
 
 # -- QE parameters -------------------------------------------------------------
@@ -155,6 +155,10 @@ N_PROCS = int(os.environ.get("QE_NPROCS", "2"))
 QE_COMMAND = f"mpirun -np {N_PROCS} {PW_X}"
 
 RY_TO_EV = 13.605693122994
+
+
+class BFGSNonConvergenceError(RuntimeError):
+    """Raised when an exact constrained relaxation exhausts its step budget."""
 
 
 def _sha256_file(path: Path) -> str:
@@ -261,7 +265,7 @@ class Config:
     retry_wait_seconds: int = 5
     relax_slab: bool = True                 # BFGS H + top slab layers per point
     relax_fmax: float = 0.05               # eV/A BFGS convergence
-    relax_steps: int = 50
+    relax_steps: int = 100
 
 
 CONFIG = Config()
@@ -477,8 +481,8 @@ def run_energy(
                 json.dumps(metadata, indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
             )
-            raise RuntimeError(
-                "BFGS did not reach the frozen force threshold "
+            raise BFGSNonConvergenceError(
+                "BFGS did not converge: did not reach the frozen force threshold "
                 f"fmax={CONFIG.relax_fmax} eV/A in {CONFIG.relax_steps} steps; "
                 f"final max force={max_force:.6f} eV/A"
             )
@@ -687,6 +691,14 @@ def compute_delta_g_h(point: tuple[float, float] | np.ndarray, retries: int = 2)
             delta_g = e_ads - e_slab - 0.5 * e_h2 + DELTA_ZPE_TS_EV
             cache_set(key, delta_g)
             return delta_g
+        except BFGSNonConvergenceError as exc:
+            print(
+                f"WARNING: QE failed u={u:.6f}, v={v:.6f} "
+                f"attempt {attempt}/{retries + 1}: {exc}",
+                flush=True,
+            )
+            last_err = exc
+            break
         except Exception as exc:
             last_err = exc
             print(

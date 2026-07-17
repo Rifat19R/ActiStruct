@@ -148,12 +148,12 @@ def test_duplicate_observation_is_not_trainable():
 def test_protocol_cache_file_and_key_are_fingerprinted():
     oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
 
-    assert oracle.CACHE_FILE.name == "ti3c2_o_her_low_protocol_v1_amend1.pkl"
+    assert oracle.CACHE_FILE.name == "ti3c2_o_her_low_protocol_v1_amend2.pkl"
     key = oracle.delta_g_cache_key((0.0, 0.0))
-    assert "campaign=ti3c2o-lf-v1-amend1" in key
+    assert "campaign=ti3c2o-lf-v1-amend2" in key
     assert "constraint=fixedline-z" in key
     assert "relax_fmax=0.050000" in key
-    assert "relax_steps=50" in key
+    assert "relax_steps=100" in key
     assert "degauss=0.02" in key
     assert "conv_thr=1e-8" in key
 
@@ -185,13 +185,34 @@ def test_run_energy_rejects_unconverged_bfgs(tmp_path, monkeypatch):
     monkeypatch.setattr(oracle, "get_calculator", lambda *args, **kwargs: object())
     monkeypatch.setattr(oracle, "BFGS", FakeBFGS)
 
-    with pytest.raises(RuntimeError, match="BFGS did not reach"):
+    with pytest.raises(oracle.BFGSNonConvergenceError, match="BFGS did not converge"):
         oracle.run_energy(FakeAtoms(), tmp_path, "unconverged", (1, 1, 1), relax=True)
 
     metadata = json.loads((tmp_path / "run_metadata.json").read_text(encoding="utf-8"))
     assert metadata["converged"] is False
     assert metadata["bfgs_steps"] == 50
     assert metadata["final_max_force_ev_per_a"] == 0.2
+
+
+def test_bfgs_nonconvergence_is_not_retried(monkeypatch):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+    calls = []
+
+    monkeypatch.setattr(oracle, "cache_get", lambda key: None)
+    monkeypatch.setattr(oracle, "cache_set", lambda key, value: None)
+    monkeypatch.setattr(oracle, "get_clean_slab_energy", lambda retries=2: 0.0)
+    monkeypatch.setattr(oracle, "get_h2_energy", lambda retries=2: 0.0)
+    monkeypatch.setattr(oracle, "load_clean_slab", lambda: object())
+    monkeypatch.setattr(oracle, "add_h_to_slab", lambda slab, u, v: object())
+
+    def fail_bfgs(*args, **kwargs):
+        calls.append((args, kwargs))
+        raise oracle.BFGSNonConvergenceError("BFGS did not converge")
+
+    monkeypatch.setattr(oracle, "run_energy", fail_bfgs)
+
+    assert oracle.compute_delta_g_h((1.0 / 12.0, 1.0 / 6.0), retries=2) is None
+    assert len(calls) == 1
 
 
 def test_parse_qe_total_energy_rejects_incomplete_output(tmp_path):
