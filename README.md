@@ -2,7 +2,7 @@
 
 Active-learning workflow for DFT-guided materials discovery.
 
-![Tests](https://img.shields.io/badge/tests-434%20passed%2C%200%20warnings-brightgreen)
+![Tests](https://img.shields.io/badge/tests-435%20passed%2C%200%20warnings-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
 ![CI](https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -24,7 +24,7 @@ Active-learning workflow for DFT-guided materials discovery.
 
 ## v2.0 status (honest)
 
-> All code paths are implemented and unit-tested (434 tests, 0 warnings).
+> All code paths are implemented and unit-tested (435 tests, 0 warnings).
 > One clean-slab QE static SCF was historically reported for the Ti3C2-O
 > 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2), but
 > raw QE output is not retained in the repo and must be regenerated before
@@ -49,7 +49,7 @@ This is a development release. See [Roadmap](#roadmap) for what is planned next.
 | Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
 | Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
 | Monitoring | None | 4-tab Streamlit dashboard |
-| Tests | 81 tests | 433 tests, 0 warnings (3.11 + 3.12 CI) |
+| Tests | 81 tests | 435 tests, 0 warnings (3.11 + 3.12 CI) |
 
 ---
 
@@ -178,7 +178,7 @@ project convention: real data or no screenshot).
 
 ## Test suite
 
-433 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
+435 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
 
 **ActiStruct core tests:**
 
@@ -248,7 +248,7 @@ ActiStruct/
 |-- references/                       # literature reference YAML and CSV
 |-- reports/                          # benchmark reports, daily logs, figures
 |
-|-- tests/                            # 433 tests, no QE/DFT launched
+|-- tests/                            # 435 tests, no QE/DFT launched
 |-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
 |-- analysis/                         # classifier training, offline benchmarks
 |-- docs/                             # setup guides and specification docs

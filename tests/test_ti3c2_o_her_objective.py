@@ -148,11 +148,12 @@ def test_duplicate_observation_is_not_trainable():
 def test_protocol_cache_file_and_key_are_fingerprinted():
     oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
 
-    assert oracle.CACHE_FILE.name == "ti3c2_o_her_low_protocol_v1_amend2.pkl"
+    assert oracle.CACHE_FILE.name == "ti3c2_o_her_low_protocol_v1_amend3.pkl"
     key = oracle.delta_g_cache_key((0.0, 0.0))
-    assert "campaign=ti3c2o-lf-v1-amend2" in key
+    assert "campaign=ti3c2o-lf-v1-amend3" in key
     assert "constraint=fixedline-z" in key
     assert "relax_fmax=0.050000" in key
+    assert "relax_segment_steps=50" in key
     assert "relax_steps=100" in key
     assert "degauss=0.02" in key
     assert "conv_thr=1e-8" in key
@@ -190,8 +191,56 @@ def test_run_energy_rejects_unconverged_bfgs(tmp_path, monkeypatch):
 
     metadata = json.loads((tmp_path / "run_metadata.json").read_text(encoding="utf-8"))
     assert metadata["converged"] is False
-    assert metadata["bfgs_steps"] == 50
+    assert metadata["bfgs_steps"] == 100
+    assert len(metadata["bfgs_segments"]) == 2
     assert metadata["final_max_force_ev_per_a"] == 0.2
+
+
+def test_run_energy_resets_bfgs_between_segments(tmp_path, monkeypatch):
+    oracle = importlib.import_module("examples.manual_qe.ti3c2_o_her_qe_active_inverse")
+    runs = []
+
+    class FakeAtoms:
+        calc = None
+
+        def get_chemical_symbols(self):
+            return ["Ti", "C", "O", "H"]
+
+        def get_forces(self):
+            if len(runs) < 2:
+                return np.array([[0.0, 0.0, 0.12]])
+            return np.array([[0.0, 0.0, 0.03]])
+
+        def get_potential_energy(self):
+            return -123.0
+
+    class FakeBFGS:
+        def __init__(self, atoms, logfile, trajectory):
+            self.atoms = atoms
+            self.logfile = logfile
+            self.trajectory = trajectory
+            self.nsteps = 0
+
+        def run(self, fmax, steps):
+            runs.append((self.logfile, self.trajectory, steps))
+            if len(runs) == 1:
+                self.nsteps = 50
+                return False
+            self.nsteps = 4
+            return True
+
+    monkeypatch.setattr(oracle, "get_calculator", lambda *args, **kwargs: object())
+    monkeypatch.setattr(oracle, "BFGS", FakeBFGS)
+
+    energy = oracle.run_energy(FakeAtoms(), tmp_path, "segmented", (1, 1, 1), relax=True)
+
+    metadata = json.loads((tmp_path / "run_metadata.json").read_text(encoding="utf-8"))
+    assert energy == -123.0
+    assert metadata["converged"] is True
+    assert metadata["bfgs_steps"] == 54
+    assert [segment["converged"] for segment in metadata["bfgs_segments"]] == [False, True]
+    assert runs[0][1].endswith("bfgs.traj")
+    assert runs[1][1].endswith("bfgs_segment2.traj")
 
 
 def test_bfgs_nonconvergence_is_not_retried(monkeypatch):

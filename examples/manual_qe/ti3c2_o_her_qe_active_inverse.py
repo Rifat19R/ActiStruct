@@ -103,7 +103,7 @@ _SLAB_UNRELAXED = _MXENE_ROOT / "ti3c2_o_slab.traj"
 SLAB_TRAJ = _SLAB_RELAXED if _SLAB_RELAXED.exists() else _SLAB_UNRELAXED
 SLAB_LABEL = "relaxed" if _SLAB_RELAXED.exists() else "unrelaxed"
 FIDELITY_LABEL = "lf" if FIDELITY == "low" else "hf"
-CAMPAIGN_PROTOCOL_ID = f"ti3c2o-{FIDELITY_LABEL}-v1-amend2"
+CAMPAIGN_PROTOCOL_ID = f"ti3c2o-{FIDELITY_LABEL}-v1-amend3"
 PLOT_DIR = ROOT / "outputs" / "plots"
 REPORT_DIR = ROOT / "outputs" / "reports"
 # QE scratch must stay on the native Linux filesystem, never under /mnt/d
@@ -116,8 +116,8 @@ REPORT_DIR.mkdir(parents=True, exist_ok=True)
 QE_RUN_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-CACHE_FILE = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend2.pkl"
-CACHE_LOCK = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend2.lock"
+CACHE_FILE = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend3.pkl"
+CACHE_LOCK = CACHE_DIR / f"ti3c2_o_her_{FIDELITY}_protocol_v1_amend3.lock"
 REPORT_FILE = REPORT_DIR / f"ti3c2_o_her_{FIDELITY}_report.txt"
 
 # -- QE parameters -------------------------------------------------------------
@@ -206,6 +206,7 @@ def campaign_fingerprint() -> str:
         "constraint": "fixedline-z",
         "h_initial_height": f"{CONFIG.h_initial_height:.6f}",
         "relax_fmax": f"{CONFIG.relax_fmax:.6f}",
+        "relax_segment_steps": str(CONFIG.relax_segment_steps),
         "relax_steps": str(CONFIG.relax_steps),
         "ecut": f"{ECUTWFC:.1f}-{ECUTRHO:.1f}",
         "kpts_slab": str(KPTS_SLAB),
@@ -266,6 +267,7 @@ class Config:
     relax_slab: bool = True                 # BFGS H + top slab layers per point
     relax_fmax: float = 0.05               # eV/A BFGS convergence
     relax_steps: int = 100
+    relax_segment_steps: int = 50           # reset BFGS history between segments
 
 
 CONFIG = Config()
@@ -453,26 +455,61 @@ def run_energy(
         "relax": bool(relax),
         "converged": None,
         "bfgs_steps": 0,
+        "relax_segment_steps": CONFIG.relax_segment_steps if relax else None,
+        "bfgs_segments": [],
         "final_max_force_ev_per_a": None,
         "trajectory": None,
+        "trajectories": [],
         "qe_output": str(work_dir / "espresso.pwo"),
         "qe_output_sha256": None,
     }
     if relax:
-        traj_path = work_dir / "bfgs.traj"
-        opt = BFGS(
-            atoms,
-            logfile=str(work_dir / "bfgs.log"),
-            trajectory=str(traj_path),
-        )
-        converged = bool(opt.run(fmax=CONFIG.relax_fmax, steps=CONFIG.relax_steps))
-        forces = atoms.get_forces()
-        max_force = float(np.sqrt((forces ** 2).sum(axis=1)).max())
+        converged = False
+        total_steps = 0
+        max_force = None
+        segment_size = max(1, int(CONFIG.relax_segment_steps))
+        segment_index = 0
+        while total_steps < CONFIG.relax_steps and not converged:
+            segment_index += 1
+            remaining = CONFIG.relax_steps - total_steps
+            steps_this_segment = min(segment_size, remaining)
+            if segment_index == 1:
+                log_path = work_dir / "bfgs.log"
+                traj_path = work_dir / "bfgs.traj"
+            else:
+                log_path = work_dir / f"bfgs_segment{segment_index}.log"
+                traj_path = work_dir / f"bfgs_segment{segment_index}.traj"
+            opt = BFGS(
+                atoms,
+                logfile=str(log_path),
+                trajectory=str(traj_path),
+            )
+            segment_converged = bool(opt.run(fmax=CONFIG.relax_fmax, steps=steps_this_segment))
+            segment_steps = int(getattr(opt, "nsteps", 0))
+            total_steps += segment_steps
+            forces = atoms.get_forces()
+            max_force = float(np.sqrt((forces ** 2).sum(axis=1)).max())
+            metadata["bfgs_segments"].append({
+                "segment": segment_index,
+                "steps_requested": steps_this_segment,
+                "steps": segment_steps,
+                "converged": segment_converged,
+                "final_max_force_ev_per_a": max_force,
+                "logfile": str(log_path),
+                "trajectory": str(traj_path),
+            })
+            metadata["trajectories"].append(str(traj_path))
+            converged = segment_converged
+            if segment_steps == 0 and not converged:
+                break
+        if max_force is None:
+            forces = atoms.get_forces()
+            max_force = float(np.sqrt((forces ** 2).sum(axis=1)).max())
         metadata.update({
             "converged": converged,
-            "bfgs_steps": int(getattr(opt, "nsteps", 0)),
+            "bfgs_steps": total_steps,
             "final_max_force_ev_per_a": max_force,
-            "trajectory": str(traj_path),
+            "trajectory": metadata["trajectories"][-1] if metadata["trajectories"] else None,
         })
         if not converged:
             pwo = work_dir / "espresso.pwo"
