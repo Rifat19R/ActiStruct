@@ -55,6 +55,15 @@ class HybridGPSurrogate:
 
     def __init__(self, config: GNNConfig | None = None) -> None:
         self.config = config or GNNConfig()
+        # Seed torch's global RNG before constructing the encoder so weight
+        # initialization is reproducible. Without this, two HybridGPSurrogate
+        # instances built with the same config (e.g. across separate process
+        # runs, or repeated construction in an AL loop) get different random
+        # encoder weights -- silently breaking reproducibility of anything
+        # downstream (embeddings, GP fit, LCB proposals). Callers that
+        # reconstruct this class repeatedly (e.g. retraining after each new
+        # AL-loop label) get the same initial weights each time by design.
+        torch.manual_seed(self.config.random_state)
         self.encoder = SchNetEncoder(self.config)
         D = self.config.embedding_dim
         self._energy_head = nn.Sequential(

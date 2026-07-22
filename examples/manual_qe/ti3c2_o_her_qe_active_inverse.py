@@ -254,7 +254,14 @@ class Config:
     kappa: float = 1.0
     convergence_uncertainty: float = 0.03   # eV
     convergence_predicted_improvement: float = 0.003  # eV
-    duplicate_tol: float = 1e-6
+    # 0.01 fractional ~ 0.03 A on this cell (a=3.06 A) -- tight enough that
+    # no two physically distinct adsorption sites fall within it (nearest
+    # real site-to-site spacing measured >=0.76 A, see report.md Phase 2),
+    # loose enough to catch optimizer-convergence jitter and near-boundary
+    # periodic duplicates. The old 1e-6 was so tight that a real AL
+    # proposal at (0.9985, 0.9995) -- 0.0015 from (0,0) after periodic
+    # wrapping, same physical atop-O site -- was treated as new.
+    duplicate_tol: float = 0.01
     cache_round_digits: int = 6
     random_state: int = 42
     retries: int = 2
@@ -749,11 +756,24 @@ def make_candidate_grid() -> np.ndarray:
 
 
 def is_new(point, labeled: list[tuple[float, float]]) -> bool:
+    """True if `point` is not a duplicate of any already-labeled (u, v).
+
+    Uses periodic (toroidal) minimum-image distance, not raw Euclidean
+    distance on wrapped coordinates: (0.9995, 0.9995) and (0.0, 0.0) are
+    only 0.0005 apart on the periodic surface (wrapping across the cell
+    boundary), but naive np.isclose on `% 1.0`-wrapped values does not
+    catch this -- 0.9995 is not close to 0.0 by itself. Found via a real
+    case: an AL proposal at (0.9985, 0.9995) was treated as a new site
+    and given a fresh DFT call, even though it's effectively the same
+    atop-O site as (0.0, 0.0) (matching ΔG_H confirmed this post hoc).
+    """
     if not labeled:
         return True
     p = np.array(point, dtype=float) % 1.0
     lab = np.array(labeled, dtype=float) % 1.0
-    return not np.any(np.all(np.isclose(lab, p, atol=CONFIG.duplicate_tol, rtol=0.0), axis=1))
+    delta = np.abs(lab - p)
+    delta = np.minimum(delta, 1.0 - delta)  # minimum-image convention
+    return not np.any(np.all(delta <= CONFIG.duplicate_tol, axis=1))
 
 
 def active_learning_query(
