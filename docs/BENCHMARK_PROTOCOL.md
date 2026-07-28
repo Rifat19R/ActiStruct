@@ -355,3 +355,55 @@ Both fixes are in the code paths this protocol already specifies
 (`HybridGPSurrogate`, `is_new()`); no acquisition setting, baseline, metric,
 or stopping rule changed. `pytest -q`: 433 passed after both fixes, no
 regressions.
+
+### Amendment 5 -- Post-run Periodic-Kernel Fix for `PlainGPTrack` (Not Retroactive)
+
+Date: 2026-07-28.
+
+Made **after** live results existed (`docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`),
+recorded here per this file's own rule that post-result protocol changes
+require a dated amendment with reason. Does not retroactively change any
+already-reported result.
+
+**Root cause of the observed plain-GP failure** (every one of its 5 live
+iterations proposed a near-duplicate of the atop-O seed and made zero new
+discoveries): `GPModel`'s kernel was a plain `RBF` on raw, unwrapped `(u, v)`.
+It has no notion that the surface is periodic, so a point near `u=0.999` is
+computed as ~0.999 from a training point at `u=0.0` in Euclidean terms, even
+though physically it is ~0.001 away, wrapping across the cell boundary. That
+made the boundary region look artificially unexplored (hence high predicted
+uncertainty), pulling the thermoneutral-LCB acquisition there repeatedly --
+and because duplicate rejection correctly never adds that point to training
+data, the phantom uncertainty never resolved.
+
+**Fix:** `GPModel` now fits on periodic features
+`(sin(2*pi*u), cos(2*pi*u), sin(2*pi*v), cos(2*pi*v))` instead of raw `(u, v)`,
+so Euclidean distance in the embedded space is a monotonic function of true
+minimum-image angular distance. Verified on the existing seed dataset (no new
+DFT cost): the fitted kernel no longer collapses toward its length-scale lower
+bound (was `RBF(length_scale=0.01)` against the `1e-3` bound; now
+`RBF(length_scale=[2, 0.863, 2, 1.1])`), and the next proposal on the same
+6-point seed set that previously produced 5 consecutive near-`(1,1)`
+duplicates is `(0.048, 0.789)` -- a genuinely new, non-duplicate point.
+`pytest -q`: 433 passed, no regressions.
+
+**Operational note (unrelated to the kernel bug, found while verifying it):**
+`campaign_fingerprint()` includes the live git commit hash
+(`_git_commit_short()`), so committing *any* change -- including a docs-only
+commit -- between a campaign run and a follow-up cache lookup shifts every
+cache key and makes the entire cache look like a miss. This cost ~6 hours of
+an unwanted, unnecessary recomputation of the already-known atop-Ti seed
+value before being caught (process was blocked in `do_wait` on a real `pw.x`
+child, not hung -- confirmed via `/proc/<pid>/status` and open file
+descriptors). Set `ACTISTRUCT_COMMIT` to a fixed, pinned value for any
+cache-touching command run after the code that produced the cached data was
+committed, e.g.:
+```bash
+export ACTISTRUCT_COMMIT=59ed496b6efd  # commit HEAD was at during the completed 3-track run
+```
+
+**Scope of what this fix invalidates:** GNN and random tracks are unaffected
+(neither uses `GPModel`). Only `PlainGPTrack`'s 5 live iterations from
+`docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` were affected by this bug and are
+candidates for a re-run under the fixed kernel; that re-run has not been
+performed as of this amendment and requires up to 5 new physical DFT calls.

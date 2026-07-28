@@ -721,13 +721,42 @@ def evaluate_point(point: tuple[float, float] | np.ndarray) -> tuple[float, floa
 
 # -- GP surrogate --------------------------------------------------------------
 
+def _periodic_features(points: np.ndarray) -> np.ndarray:
+    """Map (u, v) in [0,1)^2 -> (sin2piu, cos2piu, sin2piv, cos2piv).
+
+    The raw-(u,v) RBF kernel has no notion that this surface is periodic:
+    a point at u=0.999 is ~0.999 from a training point at u=0.0 in plain
+    Euclidean terms, even though physically they are ~0.001 apart wrapping
+    across the cell boundary. Observed consequence in the live 3-track
+    campaign (docs/TI3C2O_LF_CAMPAIGN_RESULTS.md): PlainGPTrack proposed a
+    near-boundary duplicate of the atop-O seed in all 5 iterations -- the
+    kernel sees that region as artificially far from every training point
+    (hence "uncertain"), the LCB acquisition is drawn there, and because
+    duplicates are correctly never added to training data, that phantom
+    uncertainty never resolves. Encoding each periodic coordinate as a
+    point on the unit circle makes Euclidean distance in the embedded
+    space a monotonic function of true minimum-image angular distance,
+    which is what RBF needs to see the boundary as already-explored.
+    """
+    p = np.asarray(points, dtype=float)
+    u, v = p[:, 0], p[:, 1]
+    return np.stack([
+        np.sin(2 * np.pi * u), np.cos(2 * np.pi * u),
+        np.sin(2 * np.pi * v), np.cos(2 * np.pi * v),
+    ], axis=1)
+
+
 class GPModel:
-    """Gaussian-process surrogate: (u, v) -> DeltaG_H."""
+    """Gaussian-process surrogate: (u, v) -> DeltaG_H.
+
+    Fits on periodic features (see _periodic_features), not raw (u, v), so
+    the kernel's notion of distance respects the periodic (u, v) domain.
+    """
 
     def __init__(self) -> None:
         kernel = (
             ConstantKernel(1.0, (1e-3, 1e3))
-            * RBF(length_scale=[0.20, 0.20], length_scale_bounds=[(1e-3, 2.0)] * 2)
+            * RBF(length_scale=[0.20] * 4, length_scale_bounds=[(1e-3, 2.0)] * 4)
             + WhiteKernel(noise_level=1e-5, noise_level_bounds=(1e-9, 1e-2))
         )
         self.gp = GaussianProcessRegressor(
@@ -738,13 +767,14 @@ class GPModel:
         )
 
     def train(self, points: list[tuple[float, float]], values: list[float]) -> None:
-        self.gp.fit(np.array(points, dtype=float), np.array(values, dtype=float))
+        x = _periodic_features(np.array(points, dtype=float))
+        self.gp.fit(x, np.array(values, dtype=float))
 
     def predict(self, points) -> tuple[np.ndarray, np.ndarray]:
         x = np.asarray(points, dtype=float)
         if x.ndim == 1:
             x = x.reshape(1, -1)
-        return self.gp.predict(x, return_std=True)
+        return self.gp.predict(_periodic_features(x), return_std=True)
 
 
 # -- active learning helpers ---------------------------------------------------
