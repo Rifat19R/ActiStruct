@@ -323,3 +323,35 @@ moved through the same `run_energy()` metadata path used for slab calculations.
 QE fallback energy parsing now requires a complete `JOB DONE` output and
 rejects `convergence NOT achieved`; intermediate total-energy lines from
 incomplete outputs are not accepted as evidence.
+
+### Amendment 4 -- Pre-run Duplicate-Detection and GNN-Seed Fixes
+
+Date: 2026-07-22.
+
+Made while reconciling this protocol with a separate, parallel session's work
+on the same campaign (`ActiStruct-main` checkout). Two fixes, both applied and
+verified before any of this run's live results were inspected:
+
+1. **`torch.manual_seed(config.random_state)`** added to
+   `HybridGPSurrogate.__init__` (`actistruct/gnn/surrogate.py`). Without it,
+   the SchNet encoder's weight initialization was not reproducible across
+   process restarts -- every unplanned restart silently discarded the GNN
+   track's accumulated progress (a new random encoder produces different
+   embeddings, a different GP fit, and a different LCB proposal, so a restart
+   could not resume via cache replay). Verified: two independently constructed
+   `HybridGPSurrogate` instances with the same config now produce bit-identical
+   predictions.
+2. **Periodic (toroidal) minimum-image distance in `is_new()`**, plus
+   `duplicate_tol` raised from `1e-6` to `0.01` fractional (~0.03 A on this
+   cell, `a=3.06` A). The prior version wrapped coordinates with `% 1.0` but
+   then compared with plain `np.isclose`, so a proposal like `(0.9985, 0.9995)`
+   -- 0.0015 from `(0.0, 0.0)` after wrapping across the cell boundary, the
+   same physical atop-O site -- was not recognized as a duplicate. `1e-6` was
+   also far too tight to catch this class of case regardless. Fix verified:
+   near-boundary duplicates are now correctly rejected; a genuinely distinct
+   nearby site is still correctly accepted as new.
+
+Both fixes are in the code paths this protocol already specifies
+(`HybridGPSurrogate`, `is_new()`); no acquisition setting, baseline, metric,
+or stopping rule changed. `pytest -q`: 433 passed after both fixes, no
+regressions.
