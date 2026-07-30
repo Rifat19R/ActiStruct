@@ -32,8 +32,9 @@ candidate ranking. It launches no DFT calculation.
 python -m pytest -q
 ```
 
-Verified after reorganization: `467 passed` with no warnings. Exact counts may
-increase as tests are added; any reduction requires review.
+Verified after reorganization: `467 passed` under the repository's configured
+warning policy. Exact counts may increase as tests are added; any reduction
+requires review.
 
 ## Next steps
 

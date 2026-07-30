@@ -7,7 +7,7 @@ Audit date: 2026-07-31
 - Cleanup base: `origin/main` at `60a570ef5999244d5ebed34e9c1d1c864a012019`.
 - PR #25 was merged, so the cleanup branch starts from the completed LF
   campaign and deferred HF record rather than the older local checkout.
-- Baseline: `433 passed` in 45.60 s with no warnings.
+- Baseline: `433 passed` in 45.60 s under the configured warning policy.
 - MALOQ inspected read-only at
   `408c57291fece330307e236b90718af7c9c4127b`.
 
@@ -38,7 +38,7 @@ metadata, and explicit limitations.
 
 ## Current ActiStruct organization problems
 
-- The 420-line README mixes identity, API notes, benchmark reports, setup,
+- The 532-line README mixes identity, API notes, benchmark reports, setup,
   roadmap, and historical release detail; it also contains a stale
   `424 passing` statement.
 - Root-level demo, manual integration check, manuscript, bibliography, and
@@ -89,7 +89,7 @@ ActiStruct/
 | `docs/model_and_tests.md` | `docs/development/history/model_and_tests_v0.md` | Superseded by current architecture and reproducibility docs. |
 | `docs/repository_guide.md` | `docs/development/history/repository_guide_v0.md` | Contains obsolete first-commit and pre-arXiv instructions. |
 | `docs/CLAIMS_AND_EVIDENCE.md` | `docs/claim_governance.md` | Canonical, consistently named claim index. |
-| `docs/HF_VALIDATION_STATUS.md` | `docs/hf_validation_status.md` | Canonical, consistently named deferred-HF record. |
+| `docs/HF_VALIDATION_STATUS.md` | retain | Stable deferred-HF record referenced by preserved evidence. |
 | `docs/BENCHMARK_PROTOCOL.md` | retain | Frozen, amended protocol; path churn offers no scientific benefit. |
 | `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` | retain | Cited scientific record; benchmark index will point to it. |
 | `qe_active_inverse_common.py` | retain at root | Installed module used by generated workflows and tests. |

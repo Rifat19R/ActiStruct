@@ -55,6 +55,7 @@ installation smoke test.
 ## Limitations
 
 This is one low-fidelity system, seed set, and budget. It does not show that
-GP generally beats GNN or random search. HF validation was attempted and
-deferred; no HF scientific result exists. No experimental validation is
-included.
+GP generally beats GNN or random search, or that active learning universally
+reduces DFT cost. HF validation was attempted and deferred; no HF scientific
+result exists, and partial HF output is not used for scientific claims. No
+experimental validation is included.

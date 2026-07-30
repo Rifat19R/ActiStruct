@@ -11,7 +11,7 @@ Start with:
 - [Reproducibility](reproducibility.md) for fast, cached, and live-QE tiers.
 - [Limitations](limitations.md) before interpreting results.
 - [Claim governance](claim_governance.md) for claim-to-evidence mapping.
-- [HF validation status](hf_validation_status.md) for the attempted and
+- [HF validation status](HF_VALIDATION_STATUS.md) for the attempted and
   deferred high-fidelity work.
 
 Protocol records and historical material:

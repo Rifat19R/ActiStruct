@@ -28,7 +28,7 @@ PUBLIC_MARKDOWN = [
     ROOT / "docs" / "reproducibility.md",
     ROOT / "docs" / "limitations.md",
     ROOT / "docs" / "claim_governance.md",
-    ROOT / "docs" / "hf_validation_status.md",
+    ROOT / "docs" / "HF_VALIDATION_STATUS.md",
     ROOT / "benchmarks" / "README.md",
     ROOT / "benchmarks" / "tmc" / "README.md",
     ROOT / "benchmarks" / "ti3c2o" / "README.md",
@@ -78,7 +78,7 @@ def test_public_entry_points_exist() -> None:
         ROOT / "benchmarks" / "tmc" / "README.md",
         ROOT / "benchmarks" / "ti3c2o" / "README.md",
         ROOT / "docs" / "claim_governance.md",
-        ROOT / "docs" / "hf_validation_status.md",
+        ROOT / "docs" / "HF_VALIDATION_STATUS.md",
         HASH_MANIFEST,
     ]
     missing = [str(path.relative_to(ROOT)) for path in required if not path.exists()]

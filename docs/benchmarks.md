@@ -15,7 +15,7 @@ random tracks. The original buggy plain-GP behavior and the corrected rerun
 are both retained.
 
 HF ranking validation did not complete and is not a benchmark result. See
-[HF validation status](hf_validation_status.md).
+[HF validation status](HF_VALIDATION_STATUS.md).
 
 ## Evidence integrity
 

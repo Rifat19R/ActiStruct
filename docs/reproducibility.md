@@ -15,7 +15,8 @@ python -m pytest -q
 ```
 
 The pre-change baseline was `433 passed`; after repository-integrity tests were
-added, the verified result was `467 passed` with no warnings.
+added, the verified result was `467 passed` under the repository's configured
+warning policy.
 
 ## Cached benchmark reproduction
 
@@ -76,7 +77,7 @@ committed data.
 The LF Ti3C2-O campaign required long live-QE runs. The attempted HF clean-slab
 calculation did not complete in three attempts on the recorded WSL2
 environment. No HF result exists. Read
-`docs/hf_validation_status.md` before considering another HF run.
+`docs/HF_VALIDATION_STATUS.md` before considering another HF run.
 
 ## Integrity manifest
 

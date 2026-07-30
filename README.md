@@ -56,7 +56,7 @@ record; the original failed behavior was not erased.
 High-fidelity ranking validation was **attempted and deferred**. The HF
 clean-slab reference did not complete in three attempts, no HF scientific
 result exists, and no partial HF output supports a claim. See
-[HF validation status](docs/hf_validation_status.md).
+[HF validation status](docs/HF_VALIDATION_STATUS.md).
 
 ## Install
 
@@ -185,7 +185,7 @@ Read [scientific scope](docs/scientific_scope.md),
 - [Reproducibility](docs/reproducibility.md)
 - [Frozen Ti3C2-O protocol](docs/BENCHMARK_PROTOCOL.md)
 - [Ti3C2-O results](docs/TI3C2O_LF_CAMPAIGN_RESULTS.md)
-- [HF validation status](docs/hf_validation_status.md)
+- [HF validation status](docs/HF_VALIDATION_STATUS.md)
 - [Contributing](CONTRIBUTING.md)
 
 ## Citation
