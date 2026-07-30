@@ -32,9 +32,10 @@ Active-learning workflow for DFT-guided materials discovery.
 > **A closed active-learning loop has completed on live LF DFT data**: 3
 > tracks (GNN-embedding GP, plain GP on periodic features, random baseline),
 > 5 iterations each, 14 physical DFT calls. Full results and the honest
-> verdict: `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`. HF ionic relaxation is
-> deferred pending hardware upgrade (needs ~5.4 GB RAM; WSL2 default is
-> 3.7 GB).
+> verdict: `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`. HF validation was attempted
+> and deliberately deferred after a controlled partial run (the HF clean-slab
+> reference did not complete in 3 attempts); no HF result exists and none is
+> used in any claim -- see `docs/HF_VALIDATION_STATUS.md`.
 
 This is a development release. See [Roadmap](#roadmap) for what is planned next.
 
@@ -310,9 +311,10 @@ Ti3C2-O pseudopotentials (SSSP 1.3.0 PBE efficiency, verified on disk):
 
 See `pseudo/README.md` and `docs/qe_setup.md` for full setup notes.
 
-**WSL2 RAM:** LF slab (ecutwfc=40, 28 atoms) peaks at ~3.3 GB. HF ionic
-relaxation (ecutwfc=60) needs ~5.4 GB -- add `memory=6GB` to
-`C:\Users\<user>\.wslconfig` or run on a cluster.
+**WSL2 RAM:** LF slab (ecutwfc=40, 28 atoms) peaks at ~3.3 GB. HF settings
+(ecutwfc=60) estimate ~4.1 GB per MPI rank; an HF clean-slab attempt did not
+complete in 3 tries on this machine and was deferred rather than retried
+further -- see `docs/HF_VALIDATION_STATUS.md` before attempting HF again.
 
 ---
 
@@ -323,17 +325,18 @@ relaxation (ecutwfc=60) needs ~5.4 GB -- add `memory=6GB` to
 # (u,v) evaluation after that)
 FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
 
-# Step 2: run the frozen six-site (u,v) seed campaign
-# (not yet completed -- see Roadmap)
+# Step 2: run the frozen six-site (u,v) seed campaign, then the 3-track
+# active-learning loop (complete -- see docs/TI3C2O_LF_CAMPAIGN_RESULTS.md)
+FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_grid_campaign
+FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_al_loop
 
-# Step 3: HF evaluation at selected sites (requires .wslconfig memory=6GB
-# or cluster -- deferred)
-FIDELITY=high python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
+# Step 3: HF ranking validation on representative sites (attempted, deferred
+# -- see docs/HF_VALIDATION_STATUS.md)
+FIDELITY=high python -m examples.manual_qe.validate_lf_hf_ranking
 ```
 
-Steps 2 and 3 have not been completed yet. Five preliminary development-site
-calculations were completed earlier, but they were superseded after symmetry
-aliasing and lateral adsorbate migration were identified. See Roadmap.
+Step 2 is complete: `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`. Step 3 (HF) was
+attempted and deferred after a controlled partial run: `docs/HF_VALIDATION_STATUS.md`.
 
 ## Running the v0.x 50-workflow benchmark
 
@@ -353,7 +356,7 @@ bash run.sh one generated_models/bulk_lifepo4_qe_active_inverse.py
 | LF relaxed clean slab | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -26041.297821 eV | JOB DONE (fmax=0.028 eV/A) |
 | Frozen LF (u,v) seed campaign | 6 distinct (u,v) sites | 40 Ry | (3,3,1) | see `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` | 6/6 complete |
 | Live 3-track AL campaign | GNN / plain-GP / random, 5 iter each | 40 Ry | (3,3,1) | best find 0.0020 eV (plain-GP) | complete, 14 physical DFT calls |
-| HF ionic relax | Ti3C2-O 2x2 | 60 Ry | (6,6,1) | -- | deferred (WSL2 OOM) |
+| HF ranking validation | Ti3C2-O 2x2 | 60 Ry | (6,6,1) | -- | attempted, deferred -- `docs/HF_VALIDATION_STATUS.md` |
 
 **Full results, per-track metrics, and the honest verdict:** `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
 **Frozen protocol and dated amendments:** `docs/BENCHMARK_PROTOCOL.md`.
@@ -440,7 +443,8 @@ ActiStruct does not claim:
 - That the GNN-embedding surrogate outperforms a plain GP or random search in
   general -- the completed campaign is a single system, single budget test;
   in this test, it did not outperform either.
-- HF ionic relaxation is feasible on WSL2 without .wslconfig change (it OOMs).
+- That HF validation has been completed -- it was attempted and deliberately
+  deferred; see `docs/HF_VALIDATION_STATUS.md`. No HF result exists.
 - Guaranteed reduction of failed DFT jobs.
 - General, transferable DFT savings from active learning -- one completed
   live campaign on one system is evidence, not proof of generality.
@@ -450,8 +454,10 @@ ActiStruct does not claim:
 
 ## Limitations
 
-- **HF ionic relax deferred**: ecutwfc=60 on 28-atom slab needs ~5.4 GB; WSL2
-  default is 3.7 GB. Needs `.wslconfig memory=6GB` or a cluster.
+- **HF validation deferred**: attempted (HF clean-slab reference, 3 attempts,
+  none completed) and deliberately stopped as a project-closure decision, not
+  retried further. See `docs/HF_VALIDATION_STATUS.md` for what was tried, the
+  preserved evidence, and prerequisites before resuming.
 - **run_dft_with_recovery()** wraps static SCF only. Ionic relaxation restart
   requires manual `restart_mode='restart'`.
 - **Post-relax k-point consistency check** required before declaring any relaxed
@@ -472,7 +478,7 @@ ActiStruct does not claim:
 1. ~~Frozen LF seed campaign: run oracle at 6 distinct initial (u,v) sites.~~ **Done** -- 6/6 complete, `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
 2. ~~GNN pretraining: train SchNetEncoder on LF DeltaG_H structures + energies.~~ **Done.**
 3. ~~Active learning loop: HybridGPSurrogate proposes next (u,v) via LCB; evaluate oracle; retrain.~~ **Done** -- 3-track live campaign complete (GNN / plain-GP / random), 14 physical DFT calls.
-4. HF evaluation: 3-4 sites at FIDELITY=high (cluster or .wslconfig memory=6GB).
+4. HF evaluation: 3 representative sites at FIDELITY=high. **Attempted, deferred** -- see `docs/HF_VALIDATION_STATUS.md` for the prerequisites before resuming (WSL2 reliability issue affecting even the clean-slab reference).
 5. Uncertainty Evolution tab: store GP std per iteration in ledger; wire
    into dashboard.
 

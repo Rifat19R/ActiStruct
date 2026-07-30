@@ -91,7 +91,7 @@ This still does **not** support a general "GNN is worse" or "engineered surrogat
 
 ## Known limitations (carried from `docs/BENCHMARK_PROTOCOL.md`)
 
-- LF only; HF validation deferred.
+- LF only; HF validation attempted and deferred, see `docs/HF_VALIDATION_STATUS.md`.
 - GNN pretrain/fit both use the same LF-only dataset, not a true LF/HF transfer split.
 - GNN-embedded structures use nominal (u,v) placement on the relaxed clean slab, not each site's archived final relaxed geometry (not retained -- see `docs/BENCHMARK_PROTOCOL.md` provenance notes).
 - `+0.04 eV` is an approximate HER ZPE/entropy correction, not a full vibrational free-energy calculation. `0.0004 eV` and `0.0239 eV` are "near-thermoneutral within the resolution of this LF screening protocol," not citation-grade precision claims.
