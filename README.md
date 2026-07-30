@@ -25,14 +25,16 @@ Active-learning workflow for DFT-guided materials discovery.
 ## v2.0 status (honest)
 
 > All code paths are implemented and unit-tested (433 tests, 0 warnings).
-> One clean-slab QE static SCF was historically reported for the Ti3C2-O
-> 2x2 slab (E = -25973.017 eV, JOB DONE, 1h43m on WSL2 mpirun -np 2), but
-> raw QE output is not retained in the repo and must be regenerated before
-> citation-grade use.
+> The Ti3C2-O 2x2 slab is independently regenerated and DFT-relaxed to
+> convergence (E = -26041.297821 eV, JOB DONE, fmax=0.028 eV/A), retained in
+> the repo at `data/structures/ti3c2_o/`.
 >
-> **A closed active-learning loop has not yet been run on live DFT data.**
-> The LF (u,v) campaign is next. HF ionic relaxation is deferred pending
-> hardware upgrade (needs ~5.4 GB RAM; WSL2 default is 3.7 GB).
+> **A closed active-learning loop has completed on live LF DFT data**: 3
+> tracks (GNN-embedding GP, plain GP on periodic features, random baseline),
+> 5 iterations each, 14 physical DFT calls. Full results and the honest
+> verdict: `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`. HF ionic relaxation is
+> deferred pending hardware upgrade (needs ~5.4 GB RAM; WSL2 default is
+> 3.7 GB).
 
 This is a development release. See [Roadmap](#roadmap) for what is planned next.
 
@@ -161,8 +163,8 @@ project convention: real data or no screenshot).
   efficiency. All filenames verified against disk.
 - Acquisition: differential_evolution minimising thermoneutral LCB over (u,v)
   space, targeting `|DeltaG_H|` near zero
-- **LF static (clean slab) historically reported:** E = -25973.017 eV, JOB
-  DONE, 1h43m; raw QE output must be regenerated before citation-grade use
+- **LF relaxed clean slab verified:** E = -26041.297821 eV, JOB DONE,
+  fmax=0.028 eV/A; structure retained in `data/structures/ti3c2_o/`
 
 ### v0.x Reliability Layer (retained, unchanged)
 
@@ -344,17 +346,23 @@ bash run.sh one generated_models/bulk_lifepo4_qe_active_inverse.py
 
 ## Benchmark status
 
-### Phase 2 -- Ti3C2-O HER (ongoing)
+### Phase 2-4 -- Ti3C2-O HER (complete)
 
 | Run | System | ecutwfc | kpts | Energy | Status |
 |---|---|---|---|---|---|
-| LF static, clean slab | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -25973.017 eV | JOB DONE |
-| Frozen LF (u,v) seed campaign | 6 distinct (u,v) sites | 40 Ry | (3,3,1) | -- | not completed |
+| LF relaxed clean slab | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -26041.297821 eV | JOB DONE (fmax=0.028 eV/A) |
+| Frozen LF (u,v) seed campaign | 6 distinct (u,v) sites | 40 Ry | (3,3,1) | see `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` | 6/6 complete |
+| Live 3-track AL campaign | GNN / plain-GP / random, 5 iter each | 40 Ry | (3,3,1) | best find 0.0020 eV (plain-GP) | complete, 14 physical DFT calls |
 | HF ionic relax | Ti3C2-O 2x2 | 60 Ry | (6,6,1) | -- | deferred (WSL2 OOM) |
 
-To reproduce: `FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py`
-Expected output: energy cached in
-`outputs/cache/ti3c2_o_her_low_protocol_v1_amend1.pkl`
+**Full results, per-track metrics, and the honest verdict:** `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
+**Frozen protocol and dated amendments:** `docs/BENCHMARK_PROTOCOL.md`.
+**Raw evidence:** `outputs/campaigns/ti3c2_o_lf_campaign.jsonl` and `outputs/campaigns/ti3c2_o_lf_campaign_plain_gp_rerun_amend5.jsonl`.
+
+Summary: once a real kernel bug (periodicity blindness in the plain-GP surrogate) was found and fixed, a simple 2D GP on periodic features found the best near-thermoneutral site (`|DeltaG_H|=0.0020` eV) of any of the three tracks, ahead of the random baseline (0.0239 eV) and the GNN-embedding surrogate (0.0672 eV), with fewer DFT calls and less wall time than random. This does not support a general claim that any one method beats the others outside this single system/budget/seed set -- see the results doc for the full, unhedged verdict.
+
+To reproduce: `FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_al_loop`
+Cache: `outputs/cache/ti3c2_o_her_low_protocol_v1_amend1.pkl`
 
 ### v0.x -- reliability classifier (v0.3.2, 20 repeated group splits)
 
@@ -400,27 +408,42 @@ Claim governance:
 - `docs/FEATURE_FREEZE.md` records the current scientific-evidence freeze.
 - `docs/CLAIMS_AND_EVIDENCE.md` maps major claims to evidence, commands, and
   limitations.
-- `docs/BENCHMARK_PROTOCOL.md` freezes the next LF Ti3C2-O benchmark protocol
-  before live campaign results are generated.
+- `docs/BENCHMARK_PROTOCOL.md` freezes the LF Ti3C2-O benchmark protocol used
+  for the completed live campaign, with dated amendments for every change
+  made after any result was inspected.
+- `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` is the full results writeup: per-track
+  metrics, both real failures encountered (and how they were handled), and
+  the honest verdict.
 
 - The GNN encoder produces geometry-sensitive embeddings: same composition +
   different bond lengths -> different embedding (verified by test).
-- The LF static SCF on the 28-atom Ti3C2-O slab was historically reported as
-  JOB DONE with E = -25973.017 eV. Raw QE output is not retained in the repo,
-  so this claim must be regenerated before citation-grade use.
+- The LF relaxed clean 28-atom Ti3C2-O slab is independently regenerated,
+  DFT-relaxed to convergence (JOB DONE, fmax=0.028 eV/A), and retained in the
+  repo (`data/structures/ti3c2_o/`) -- this is real, reproducible evidence,
+  not a historical claim awaiting regeneration.
+- A live 3-track LF active-learning campaign (GNN-embedding GP, plain GP on
+  periodic features, random baseline; 5 iterations each; 14 physical DFT
+  calls total) has completed. Full metrics and raw JSONL evidence in
+  `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
+- In this specific campaign (one system, one seed set, one acquisition
+  budget), the plain-GP track found the best near-thermoneutral site
+  (`|DeltaG_H|=0.0020` eV) of the three tracks, using fewer DFT calls and
+  less wall time than the random baseline. This does **not** generalize to
+  "GP beats GNN" or "engineered surrogates beat random search" outside this
+  test -- see the results doc's verdict section before citing this anywhere.
 - The (u,v) design variable produces meaningfully distinct embeddings across
   adsorption sites (atop vs hollow embedding distance ~1.0, >> 0.01 threshold).
 - The 23-system structural check gives 0.71% mean deviation vs reference values.
 - v0.x offline benchmark results are retained and unchanged.
 
 ActiStruct does not claim:
-- A live Ti3C2-O active-learning campaign has completed (frozen LF seed
-  campaign not completed).
-- The GNN surrogate outperforms a simple GP on real HER data (no head-to-head
-  benchmark has been run).
+- That the GNN-embedding surrogate outperforms a plain GP or random search in
+  general -- the completed campaign is a single system, single budget test;
+  in this test, it did not outperform either.
 - HF ionic relaxation is feasible on WSL2 without .wslconfig change (it OOMs).
 - Guaranteed reduction of failed DFT jobs.
-- Live DFT savings (no live active-learning run has been performed).
+- General, transferable DFT savings from active learning -- one completed
+  live campaign on one system is evidence, not proof of generality.
 - It replaces QE/PBE validation.
 
 ---
@@ -446,18 +469,16 @@ ActiStruct does not claim:
 
 ### v2.x near-term
 
-1. Frozen LF seed campaign: run oracle at 6 distinct initial (u,v) sites.
-2. GNN pretraining: train SchNetEncoder on LF DeltaG_H structures + energies.
-3. Active learning loop: HybridGPSurrogate proposes next (u,v) via LCB;
-   evaluate oracle; retrain. Iterate until convergence.
+1. ~~Frozen LF seed campaign: run oracle at 6 distinct initial (u,v) sites.~~ **Done** -- 6/6 complete, `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
+2. ~~GNN pretraining: train SchNetEncoder on LF DeltaG_H structures + energies.~~ **Done.**
+3. ~~Active learning loop: HybridGPSurrogate proposes next (u,v) via LCB; evaluate oracle; retrain.~~ **Done** -- 3-track live campaign complete (GNN / plain-GP / random), 14 physical DFT calls.
 4. HF evaluation: 3-4 sites at FIDELITY=high (cluster or .wslconfig memory=6GB).
 5. Uncertainty Evolution tab: store GP std per iteration in ledger; wire
    into dashboard.
 
 ### Longer term
 
-- Head-to-head: HybridGPSurrogate vs sklearn GP on real HER data (requires
-  the active-learning loop to have produced data first).
+- ~~Head-to-head: HybridGPSurrogate vs sklearn GP on real HER data.~~ **Done**, plus a random baseline -- see `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` for the full comparison and its scope limits.
 - Validate v0.x failure-aware acquisition in a live GP/QE run.
 - Extend to other MXene terminations: Ti3C2-F, Ti3C2-OH, V2C-O.
 

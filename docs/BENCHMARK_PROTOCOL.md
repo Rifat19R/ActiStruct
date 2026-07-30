@@ -323,3 +323,87 @@ moved through the same `run_energy()` metadata path used for slab calculations.
 QE fallback energy parsing now requires a complete `JOB DONE` output and
 rejects `convergence NOT achieved`; intermediate total-energy lines from
 incomplete outputs are not accepted as evidence.
+
+### Amendment 4 -- Pre-run Duplicate-Detection and GNN-Seed Fixes
+
+Date: 2026-07-22.
+
+Made while reconciling this protocol with a separate, parallel session's work
+on the same campaign (`ActiStruct-main` checkout). Two fixes, both applied and
+verified before any of this run's live results were inspected:
+
+1. **`torch.manual_seed(config.random_state)`** added to
+   `HybridGPSurrogate.__init__` (`actistruct/gnn/surrogate.py`). Without it,
+   the SchNet encoder's weight initialization was not reproducible across
+   process restarts -- every unplanned restart silently discarded the GNN
+   track's accumulated progress (a new random encoder produces different
+   embeddings, a different GP fit, and a different LCB proposal, so a restart
+   could not resume via cache replay). Verified: two independently constructed
+   `HybridGPSurrogate` instances with the same config now produce bit-identical
+   predictions.
+2. **Periodic (toroidal) minimum-image distance in `is_new()`**, plus
+   `duplicate_tol` raised from `1e-6` to `0.01` fractional (~0.03 A on this
+   cell, `a=3.06` A). The prior version wrapped coordinates with `% 1.0` but
+   then compared with plain `np.isclose`, so a proposal like `(0.9985, 0.9995)`
+   -- 0.0015 from `(0.0, 0.0)` after wrapping across the cell boundary, the
+   same physical atop-O site -- was not recognized as a duplicate. `1e-6` was
+   also far too tight to catch this class of case regardless. Fix verified:
+   near-boundary duplicates are now correctly rejected; a genuinely distinct
+   nearby site is still correctly accepted as new.
+
+Both fixes are in the code paths this protocol already specifies
+(`HybridGPSurrogate`, `is_new()`); no acquisition setting, baseline, metric,
+or stopping rule changed. `pytest -q`: 433 passed after both fixes, no
+regressions.
+
+### Amendment 5 -- Post-run Periodic-Kernel Fix for `PlainGPTrack` (Not Retroactive)
+
+Date: 2026-07-28.
+
+Made **after** live results existed (`docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`),
+recorded here per this file's own rule that post-result protocol changes
+require a dated amendment with reason. Does not retroactively change any
+already-reported result.
+
+**Root cause of the observed plain-GP failure** (every one of its 5 live
+iterations proposed a near-duplicate of the atop-O seed and made zero new
+discoveries): `GPModel`'s kernel was a plain `RBF` on raw, unwrapped `(u, v)`.
+It has no notion that the surface is periodic, so a point near `u=0.999` is
+computed as ~0.999 from a training point at `u=0.0` in Euclidean terms, even
+though physically it is ~0.001 away, wrapping across the cell boundary. That
+made the boundary region look artificially unexplored (hence high predicted
+uncertainty), pulling the thermoneutral-LCB acquisition there repeatedly --
+and because duplicate rejection correctly never adds that point to training
+data, the phantom uncertainty never resolved.
+
+**Fix:** `GPModel` now fits on periodic features
+`(sin(2*pi*u), cos(2*pi*u), sin(2*pi*v), cos(2*pi*v))` instead of raw `(u, v)`,
+so Euclidean distance in the embedded space is a monotonic function of true
+minimum-image angular distance. Verified on the existing seed dataset (no new
+DFT cost): the fitted kernel no longer collapses toward its length-scale lower
+bound (was `RBF(length_scale=0.01)` against the `1e-3` bound; now
+`RBF(length_scale=[2, 0.863, 2, 1.1])`), and the next proposal on the same
+6-point seed set that previously produced 5 consecutive near-`(1,1)`
+duplicates is `(0.048, 0.789)` -- a genuinely new, non-duplicate point.
+`pytest -q`: 433 passed, no regressions.
+
+**Operational note (unrelated to the kernel bug, found while verifying it):**
+`campaign_fingerprint()` includes the live git commit hash
+(`_git_commit_short()`), so committing *any* change -- including a docs-only
+commit -- between a campaign run and a follow-up cache lookup shifts every
+cache key and makes the entire cache look like a miss. This cost ~6 hours of
+an unwanted, unnecessary recomputation of the already-known atop-Ti seed
+value before being caught (process was blocked in `do_wait` on a real `pw.x`
+child, not hung -- confirmed via `/proc/<pid>/status` and open file
+descriptors). Set `ACTISTRUCT_COMMIT` to a fixed, pinned value for any
+cache-touching command run after the code that produced the cached data was
+committed, e.g.:
+```bash
+export ACTISTRUCT_COMMIT=59ed496b6efd  # commit HEAD was at during the completed 3-track run
+```
+
+**Scope of what this fix invalidates:** GNN and random tracks are unaffected
+(neither uses `GPModel`). Only `PlainGPTrack`'s 5 live iterations from
+`docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` were affected by this bug and are
+candidates for a re-run under the fixed kernel; that re-run has not been
+performed as of this amendment and requires up to 5 new physical DFT calls.
