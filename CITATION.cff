@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "ActiStruct: Active Learning for DFT-Guided Materials Discovery"
+title: "ActiStruct: Reliability-Aware Active Learning for DFT Structure Exploration"
 message: "If you use ActiStruct, please cite this software."
 type: software
 authors:
@@ -9,15 +9,14 @@ authors:
 version: "2.0.0"
 date-released: "2026-07-15"
 repository-code: "https://github.com/Rifat19R/ActiStruct"
-abstract: "ActiStruct is an active-learning workflow for DFT-guided materials
-  discovery. It combines a SchNet-style GNN encoder with a frozen-embedding GP
-  surrogate (HybridGPSurrogate), an autonomous Quantum ESPRESSO fault-recovery
-  engine, a multi-fidelity Ti3C2-O MXene HER oracle, and a Streamlit monitoring
-  dashboard. The v1.0 release includes the TMC Reliability Benchmark: a
-  DFT-validated dataset for Cr(CO)6, Fe(CO)5, Ni(CO)4, and ferrocene (16
-  QE-relaxed structures, Coulomb-matrix features, GP baseline, AL demo, and
-  NEB endpoints). The v0.x reliability-aware layer (QE parser, failure-risk
-  classifier, failure-aware LCB acquisition) is retained."
+abstract: "ActiStruct is a reliability-aware active-learning framework for
+  selecting and managing Quantum ESPRESSO calculations in targeted atomistic
+  structure exploration. It includes Gaussian-process and GNN-embedding
+  surrogates, failure-aware acquisition, QE parsing and recovery utilities,
+  append-only campaign records, a transition-metal-complex reliability
+  benchmark, and a completed low-fidelity Ti3C2-O hydrogen-adsorption
+  campaign. High-fidelity ranking validation was attempted and deferred; no HF
+  scientific result is claimed."
 keywords:
   - inverse-design
   - active-learning
