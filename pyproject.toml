@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "actistruct"
 version = "2.0.0"
-description = "Active-learning workflow for DFT-guided materials discovery: GNN+GP surrogate, autonomous QE fault recovery, multi-fidelity oracle, and Streamlit dashboard."
+description = "Reliability-aware active learning for DFT structure exploration with Quantum ESPRESSO."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -28,7 +28,7 @@ keywords = [
   "structure-optimization",
 ]
 dependencies = [
-  "numpy",
+  "numpy<2.5",
   "scipy",
   "matplotlib",
   "scikit-learn",
@@ -38,13 +38,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest"]
-dashboard = ["streamlit", "plotly", "stmol", "py3Dmol"]
+test = ["pytest>=8"]
+dashboard = ["streamlit", "plotly", "stmol", "py3Dmol", "pandas"]
+dev = ["pytest>=8", "black>=24", "ruff>=0.9"]
 
 [project.urls]
 Homepage = "https://github.com/Rifat19R/ActiStruct"
 Repository = "https://github.com/Rifat19R/ActiStruct"
 Issues = "https://github.com/Rifat19R/ActiStruct/issues"
+Documentation = "https://github.com/Rifat19R/ActiStruct/blob/main/docs/index.md"
 
 [tool.setuptools]
 py-modules = ["qe_active_inverse_common"]
