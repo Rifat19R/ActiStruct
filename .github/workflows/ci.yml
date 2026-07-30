@@ -21,15 +21,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Install CPU-only torch first so pip does not pull the full CUDA
-          # build (~2-3 GB) when it processes requirements.txt.
-          pip install torch --index-url https://download.pytorch.org/whl/cpu
-          python -m pip install -r requirements.txt
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -e ".[test]"
+      - name: Import smoke test
+        run: |
+          python -c "import actistruct; print(actistruct.__version__)"
+          python -c "import qe_active_inverse_common"
       - name: Syntax checks
         run: |
-          python -m py_compile qe_active_inverse_common.py
-          python -m py_compile generated_models/*.py
-          python -m py_compile tests/*.py
+          python -m compileall -q actistruct generated_models examples scripts
       - name: Run tests
-        run: pytest -q
+        run: python -m pytest -q

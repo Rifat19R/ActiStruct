@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible ActiStruct software or workflow defect.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include credentials, private cluster paths, or proprietary pseudopotentials.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Provide the smallest command or code sample that reproduces the problem.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ActiStruct commit or version
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS and Python version
+      placeholder: Ubuntu 24.04, Python 3.12.9
+    validations:
+      required: true
+  - type: dropdown
+    id: qe
+    attributes:
+      label: Did this command launch Quantum ESPRESSO?
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Relevant log excerpt or evidence path
+      description: Keep excerpts minimal and remove machine-specific secrets.
