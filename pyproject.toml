@@ -38,9 +38,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest>=8"]
+test = ["pytest>=8", "pandas>=2", "PyYAML>=6"]
 dashboard = ["streamlit", "plotly", "stmol", "py3Dmol", "pandas"]
-dev = ["pytest>=8", "black>=24", "ruff>=0.9"]
+dev = [
+  "pytest>=8",
+  "pandas>=2",
+  "PyYAML>=6",
+  "black>=24",
+  "ruff>=0.9",
+]
 
 [project.urls]
 Homepage = "https://github.com/Rifat19R/ActiStruct"
