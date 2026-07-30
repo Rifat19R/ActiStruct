@@ -1,4 +1,7 @@
-# Model and Test Documentation
+# Historical Model and Test Documentation
+
+> Historical v0.x record. For current software design and test commands, see
+> `docs/architecture.md` and `docs/reproducibility.md`.
 
 ## Project Summary
 

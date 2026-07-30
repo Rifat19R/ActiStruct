@@ -3,7 +3,8 @@
 **Date started:** 2026-06-29
 **Repo:** `D:/Research/Dr.Kulik_MIT`
 **Branch:** `feature/tmc-reliability-benchmark`
-**Trigger:** Phase 1 closed with all 4 primary systems converged via real `pw.x` (see `docs/PHASE1_SUMMARY.md`).
+**Trigger:** Phase 1 closed with all 4 primary systems converged via real
+`pw.x` (see `docs/development/history/tmc_phase1.md`).
 
 ## Step 1: production QE output parser (`scripts/07_parse_qe_outputs.py`)
 

@@ -16,16 +16,20 @@ Expected runtime: ~5-10 min (QE ~1-3 min, GNN pretrain ~2-4 min on CPU).
 
 Run (WSL2):
     source .venv/bin/activate
-    python test_all_integrations.py
+    python examples/integration/full_stack_check.py
 """
 from __future__ import annotations
 
 import time
 import tempfile
+import sys
 from pathlib import Path
 
 import numpy as np
 from ase.build import bulk
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT))
 
 # ── paths ─────────────────────────────────────────────────────
 QE_BIN = Path("/home/alchemist/q-e/bin/pw.x")
@@ -355,6 +359,6 @@ print(f"\n  Workdir (QE scratch + ledger): {WORKDIR}")
 print(f"""
 Next steps:
   streamlit run actistruct/dashboard/app.py   # interactive dashboard
-  python demo_v2.py                           # minimal phase demo
-  python -m pytest tests/ -v                  # 121 tests
+  python examples/quickstart/no_qe_ti3c2o.py  # no-QE phase demo
+  python -m pytest -q                         # no-QE test suite
 """)

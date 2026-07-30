@@ -11,7 +11,7 @@ Exercises:
   - Ledger append + read
 
 Run:
-    python demo_ti3c2_o.py
+    python examples/quickstart/no_qe_ti3c2o.py
 """
 from __future__ import annotations
 
@@ -20,15 +20,15 @@ import tempfile
 import warnings
 from pathlib import Path
 
-# GP ConvergenceWarning is expected in this demo: only 4 HF points on a
-# randomly-initialised (not LF-pretrained) encoder. In a real campaign the
-# encoder is pretrained first, which spreads the embedding space and avoids
-# this. Suppress here so the demo output stays readable.
-warnings.filterwarnings("ignore", message=".*optimal value.*lower bound.*")
-
 import numpy as np
 from ase import Atoms
 from ase.io import read as ase_read
+from sklearn.exceptions import ConvergenceWarning
+
+# GP convergence warnings are expected in this synthetic demo because the GP
+# has only four calibration points. Suppress them here so the example output
+# stays focused; production fits and tests retain their normal diagnostics.
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 SEP = "=" * 62
 SEC = "-" * 50
@@ -40,7 +40,8 @@ print(SEP)
 # -- locate slab ---------------------------------------------------------------
 
 _STRUCTURES_DIR = Path(os.environ.get(
-    "TI3C2_O_STRUCTURES_DIR", str(Path(__file__).resolve().parent / "data" / "structures" / "ti3c2_o")
+    "TI3C2_O_STRUCTURES_DIR",
+    str(Path(__file__).resolve().parents[2] / "data" / "structures" / "ti3c2_o"),
 ))
 _SLAB_PATH = _STRUCTURES_DIR / "ti3c2_o_slab.traj"
 if not _SLAB_PATH.exists():

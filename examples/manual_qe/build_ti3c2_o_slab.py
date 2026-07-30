@@ -2,7 +2,7 @@
 ti3c2_o_her_qe_active_inverse.py.
 
 The original ti3c2_o_slab.traj / ti3c2_o_slab_relaxed.traj (referenced by both
-the oracle script and demo_ti3c2_o.py) were produced on a different
+the oracle script and `examples/quickstart/no_qe_ti3c2o.py`) were produced on a different
 machine/environment and are not present here. This script regenerates them:
 
   1. Build a 2x2 (28-atom) Ti3C2O2 slab from a rock-salt(111)-derived

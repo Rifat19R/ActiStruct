@@ -8,7 +8,7 @@ three representative Ti3C2-O sites survives at HF settings
 (`ecutwfc=60, ecutrho=480, kpts=(6,6,1)` vs LF's `ecutwfc=40, ecutrho=320,
 kpts=(3,3,1)`). It did not complete even the first required calculation (the
 clean-slab reference energy) and was deliberately stopped. **No HF scientific
-result exists.** See `docs/HF_VALIDATION_STATUS.md` for the full closure
+result exists.** See `docs/hf_validation_status.md` for the full closure
 decision and rationale.
 
 ## What is preserved here

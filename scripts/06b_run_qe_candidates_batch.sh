@@ -2,7 +2,7 @@
 # Sequential WSL batch runner for the 12 audited+selected perturbation
 # candidates (qe/run_manifest_candidates_v0.csv). Always sequential, never
 # parallel: cr_co6 candidates alone need ~14GB/process against this
-# machine's 16GB WSL ceiling (see docs/PHASE1_SUMMARY.md) - running two at
+# machine's 16GB WSL ceiling (see docs/development/history/tmc_phase1.md) - running two at
 # once would risk the same OOM this project already hit once.
 #
 # Idempotent: skips any candidate whose existing output already shows
