@@ -1,13 +1,3 @@
-numpy<2.5
-scipy
-matplotlib
-scikit-learn
-ase
-pillow
-# v2.0 additions
-torch
-streamlit
-plotly
-py3Dmol
-stmol
-ipython_genutils
+# Convenience full local environment.
+# pyproject.toml is authoritative for versions and dependency groups.
+-e .[test,dashboard]

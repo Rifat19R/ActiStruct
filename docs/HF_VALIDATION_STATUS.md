@@ -1,72 +1,72 @@
 # HF Validation Status
 
-Status: **deferred**, as of 2026-07-31. This is a project-closure decision,
-not a bug report -- it documents why HF validation (docs/FEATURE_FREEZE.md
-Priority 5) is being closed out as future work rather than pursued further
-right now.
+Status: **attempted and deferred**, as of 2026-07-31. This is a
+project-closure decision, not a completed scientific result.
 
 ## Summary
 
 HF validation was deferred after a controlled partial run because its
-computational cost was disproportionate to the current project-closure
-objective. No incomplete HF result is used in the scientific conclusions.
+computational cost was disproportionate to the closure objective and the
+required clean-slab reference did not complete. No incomplete HF value is used
+in the scientific conclusions.
 
 ## What was attempted
 
 `examples/manual_qe/validate_lf_hf_ranking.py` was run under `FIDELITY=high`
-(`ecutwfc=60, ecutrho=480, kpts=(6,6,1)`, vs LF's `ecutwfc=40, ecutrho=320,
-kpts=(3,3,1)`) to check whether HF preserves the LF campaign's ranking on 3
-representative sites. It requires the HF clean-slab reference energy first;
-that alone was retried 3 times (the driver's configured retry cap) and did
-not complete on any attempt -- 1 died before the first SCF iteration (~3 s),
-1 reached SCF iteration 30 of 300 without converging (~28 min) then stopped,
-and the 3rd was deliberately interrupted (`SIGINT`, clean exit, no
-`SIGTERM`/`SIGKILL` needed) as part of this closure decision. Full
-attempt-by-attempt evidence, including raw QE input/output and a root-cause
-investigation that did **not** find a definitive single cause, is preserved
-at `data/evidence/ti3c2_o_hf_ranking_validation_interrupted/` (see that
-directory's `README.md` and `run_metadata.json`).
+(`ecutwfc=60`, `ecutrho=480`, `kpts=(6,6,1)`) to check whether HF preserves
+the LF campaign ranking on three representative sites. The driver first
+requires an HF clean-slab reference.
 
-## Why this is being deferred, not retried again right now
+That reference did not complete in three attempts:
 
-- HF settings cost substantially more per calculation than LF (larger cutoffs,
-  denser k-point grid), and the clean-slab reference alone did not complete
-  in 3 attempts.
-- A real, not-yet-fully-diagnosed reliability issue exists in this WSL2
-  environment under long uptime (kernel `page allocation failure` events were
-  observed on this same machine on 2026-07-25, 2026-07-26, and 2026-07-29,
-  though none was captured correlated to this specific attempt window).
-  Continuing to retry at HF cost without first resolving that infrastructure
-  issue is not a good use of compute for a project-closure task.
-- The completed LF campaign (`docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`) already
-  provides a real, fully-evidenced result. HF validation would strengthen
-  confidence in the LF ranking but is not required to honestly report what
-  the LF campaign found.
+1. one attempt stopped before the first SCF iteration;
+2. one reached SCF iteration 30 of 300 without convergence and then stopped;
+3. one was deliberately interrupted with `SIGINT` during the closure
+   decision.
 
-## What this means for claims
+Attempt-by-attempt curated metadata and a root-cause investigation that did
+not identify a definitive single cause are committed at
+`data/evidence/ti3c2_o_hf_ranking_validation_interrupted/`. Raw QE scratch
+(`espresso.pwi`, `espresso.pwo`, and `espresso.err`) remains local-only under
+the repository's established gitignore convention and is not claimed as
+committed evidence.
 
-- **No completed HF scientific result exists.** No `DeltaG_H` value at HF
-  settings, for the clean slab or any of the 3 target sites, was ever
-  produced.
-- **Partial HF data (the incomplete clean-slab attempts above) must not be
-  used in any scientific claim or comparison.** They are preserved only as
-  process evidence of what was attempted and why it was stopped.
-- **HF validation remains future work.** `docs/FEATURE_FREEZE.md` Priority 5
-  and its corresponding Exit Criterion stay unchecked; `docs/CLAIMS_AND_EVIDENCE.md`
-  continues to list "LF ranking transfers reliably to HF" as "Not available."
-- **The completed LF campaign is the validated result currently supported by
-  evidence.** See `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` for the full,
-  evidenced LF result and its own honestly-scoped limitations.
+## Why the work was deferred
 
-## Resuming this work later
+- HF settings use larger cutoffs and a denser k-point grid than LF settings.
+- The clean-slab reference alone exhausted the driver's three-attempt cap.
+- The recorded WSL2 environment had a plausible but unconfirmed
+  memory-reliability problem under long uptime.
+- Further retries without resolving the infrastructure issue would spend
+  substantial compute without a sound validation plan.
 
-Prerequisites before re-attempting HF validation:
+The completed LF campaign already supports a carefully scoped LF result. HF
+validation would strengthen confidence in ranking transfer, but it is not
+required to report what the LF campaign observed.
 
-1. Resolve or work around the WSL2 memory-fragmentation reliability issue
-   (options: increase `.wslconfig` memory/reduce fragmentation via a fresh
-   WSL restart before the run, or move HF calculations to a machine/cluster
-   not subject to this constraint).
-2. Re-run `FIDELITY=high python -m examples.manual_qe.validate_lf_hf_ranking`
-   from a clean state (the 3 preserved attempts above do not need to be
-   reproduced first; they document the interruption, not a required
-   baseline).
+## Claim boundary
+
+- No completed HF clean-slab or adsorption-site value exists.
+- Partial/incomplete HF output must not be used in a scientific comparison.
+- LF-to-HF rank correlation and ranking stability are unknown.
+- `docs/claim_governance.md` therefore lists HF ranking transfer as
+  unavailable.
+- `docs/FEATURE_FREEZE.md` keeps the corresponding exit criterion open.
+
+## Prerequisites before resuming
+
+1. Resolve or avoid the recorded WSL2 reliability constraint, or move the
+   work to suitable cluster hardware.
+2. Review memory, MPI, scratch, QE, and pseudopotential configuration.
+3. Run the clean-slab HF reference from a clean state.
+4. Only after the reference completes, evaluate the pre-specified
+   representative sites and report rank stability.
+
+The future command would be:
+
+```bash
+FIDELITY=high python -m examples.manual_qe.validate_lf_hf_ranking
+```
+
+It is intentionally not part of installation, CI, or fast reproducibility
+checks.

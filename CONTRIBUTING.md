@@ -11,17 +11,16 @@ cd ActiStruct
 # WSL2 / Linux (QE runs require Linux; tests work on any OS)
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e ".[test]"
+python -m pip install -e ".[dev]"
 
 # Verify
-pytest -q   # 281 passed, 0 warnings
+python -m pytest -q
 ```
 
 ## Running tests
 
 ```bash
-pytest -q
+python -m pytest -q
 ```
 
 No QE/DFT is launched by any test. All tests are offline and should take under
@@ -31,7 +30,6 @@ No QE/DFT is launched by any test. All tests are offline and should take under
 
 - Format with `black` (line length 88, default settings).
 - Lint with `ruff` (default rules).
-- Only mention tools actually configured in `pyproject.toml`.
 - ASCII-only in comments, docstrings, and print statements. No Unicode box-
   drawing, em-dashes, or section signs.
 
@@ -49,6 +47,8 @@ No QE/DFT is launched by any test. All tests are offline and should take under
   design.
 - Do not delete or relabel failed records to improve metrics. Failures are
   training signal, not noise to be cleaned away.
+- Keep claims linked to evidence and limitations in
+  `docs/claim_governance.md`.
 
 ## Reporting bugs
 

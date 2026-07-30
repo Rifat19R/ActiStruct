@@ -1,4 +1,4 @@
-# Claims And Evidence
+# Claim Governance
 
 This file is the claim-to-evidence index for reviewer-facing statements. A
 claim is only safe when it has an evidence file, a reproduction command, and a

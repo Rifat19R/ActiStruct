@@ -53,7 +53,7 @@ The freeze can be relaxed only after the repository contains:
 - [x] baseline comparisons under the same data budget (`docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`)
 - [ ] LF/HF ranking validation on representative sites -- **not done, deferred, see `docs/HF_VALIDATION_STATUS.md`**
 - [x] raw data hashes or stable output references (`campaign_fingerprint()`: slab sha256, pseudopotential sha256, commit)
-- [ ] a public technical report linking every major claim to evidence -- `docs/CLAIMS_AND_EVIDENCE.md` covers this internally; no separate public-facing report has been drafted
+- [ ] a public technical report linking every major claim to evidence -- `docs/claim_governance.md` covers this internally; no separate public-facing report has been drafted
 
 Not all criteria are met. **Do not treat the freeze as lifted or the
 Ti3C2-O work as ready for outreach (Priority 7) until Priority 5 and the

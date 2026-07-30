@@ -100,12 +100,8 @@ run_many() {
 usage() {
   cat <<'USAGE'
 Usage:
-  bash run.sh [all|solids|two-d|molecules|battery|adsorption]
-  bash run.sh one generated_models/<script>.py
-  bash generated_models/run.sh [all|solids|two-d|molecules|battery|adsorption]
-  bash generated_models/run.sh one <script>.py
-
-Direct generated-suite runner:
+  bash scripts/run_generated_models.sh [all|solids|two-d|molecules|battery|adsorption]
+  bash scripts/run_generated_models.sh one generated_models/<script>.py
   bash generated_models/run_all_generated_models.sh all
 
 Environment:

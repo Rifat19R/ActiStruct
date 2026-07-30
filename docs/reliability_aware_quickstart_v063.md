@@ -31,7 +31,8 @@ pip install -e ".[test]"
 pytest -q
 ```
 
-Expected: `74 passed` (see `docs/model_and_tests.md` for what each test file
+Historical expectation: `74 passed` (see
+`docs/development/history/model_and_tests_v0.md` for what each test file
 covers, including `tests/test_reliability_aware_quickstart.py`). No QE/DFT
 is launched by any test in the suite.
 

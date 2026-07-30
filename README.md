@@ -1,532 +1,200 @@
 # ActiStruct
 
-Active-learning workflow for DFT-guided materials discovery.
+<p align="center">
+  <img src="assets/logo/actistruct-wordmark.svg" alt="ActiStruct" width="520">
+</p>
 
-![Tests](https://img.shields.io/badge/tests-433%20passed%2C%200%20warnings-brightgreen)
-![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
-![CI](https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/badge/license-MIT-green)
+<p align="center">
+  <strong>Reliability-aware active learning for DFT structure exploration.</strong>
+</p>
 
----
+<p align="center">
+  <a href="https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml"><img src="https://github.com/Rifat19R/ActiStruct/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2f855a.svg" alt="MIT License"></a>
+</p>
 
-## What it does in 30 seconds
+ActiStruct is a reliability-aware active-learning framework for selecting and
+managing DFT calculations in atomistic structure exploration. It connects
+Gaussian-process and GNN-embedding surrogates to Quantum ESPRESSO workflows,
+records successful and failed calculations, and keeps scientific claims tied
+to committed evidence.
 
-- Given a DFT geometry-search problem (adsorption site, bulk lattice, molecule),
-  ActiStruct proposes the next candidate to compute using a Gaussian-Process
-  surrogate over a geometry-aware GNN embedding.
-- It records every DFT run -- successful and failed -- into a JSONL ledger,
-  and automatically escalates failed runs through a four-group recovery strategy
-  before giving up.
-- It does not replace Quantum ESPRESSO. It decides which QE runs to launch and
-  learns from the ones that fail.
+<p align="center">
+  <img src="assets/figures/workflow.svg" alt="ActiStruct workflow: candidate selection, Quantum ESPRESSO, reliability records, and surrogate updates" width="860">
+</p>
 
----
+## Why ActiStruct
 
-## v2.0 status (honest)
+DFT geometry searches are expensive, and failures are scientifically relevant.
+ActiStruct provides:
 
-> All code paths are implemented and unit-tested (433 tests, 0 warnings).
-> The Ti3C2-O 2x2 slab is independently regenerated and DFT-relaxed to
-> convergence (E = -26041.297821 eV, JOB DONE, fmax=0.028 eV/A), retained in
-> the repo at `data/structures/ti3c2_o/`.
->
-> **A closed active-learning loop has completed on live LF DFT data**: 3
-> tracks (GNN-embedding GP, plain GP on periodic features, random baseline),
-> 5 iterations each, 14 physical DFT calls. Full results and the honest
-> verdict: `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`. HF validation was attempted
-> and deliberately deferred after a controlled partial run (the HF clean-slab
-> reference did not complete in 3 attempts); no HF result exists and none is
-> used in any claim -- see `docs/HF_VALIDATION_STATUS.md`.
+- Gaussian-process lower-confidence-bound acquisition with optional
+  failure-risk penalties;
+- a SchNet-style encoder with a frozen-embedding GP surrogate;
+- Quantum ESPRESSO output parsing, failure classification, retry strategies,
+  caching, and append-only JSONL ledgers;
+- reviewer-facing benchmark protocols, reports, and provenance records;
+- offline tests that never launch Quantum ESPRESSO.
 
-This is a development release. See [Roadmap](#roadmap) for what is planned next.
+The framework supports targeted exploration of known structural variables. It
+is not a replacement for global structure search, convergence studies, or
+expert review of DFT settings.
 
----
+## Validated evidence
 
-## What v2.0 adds
-
-| Component | v0.x (retained) | v2.0 (new) |
+| Evidence package | What was completed | Supported conclusion |
 |---|---|---|
-| Active-learning core | GP/LCB + failure-risk penalty | Differential Evolution in 2D (u,v) space |
-| Surrogate | sklearn GP on raw descriptors | HybridGPSurrogate: GNN pretrain -> frozen embeddings -> GP |
-| GNN encoder | None | SchNetEncoder: neighbor list + Gaussian RBF + message passing |
-| DFT fault handling | Manual | DFTFailureAnalyzer + TroubleshootingStrategy (4 groups) + run_dft_with_recovery() |
-| Campaign oracle | 50 generated bulk/surface scripts | Ti3C2-O HER: DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV |
-| Ledger | None | Append-only JSONL, NTFS-safe atomic writes |
-| Monitoring | None | 4-tab Streamlit dashboard |
-| Tests | 81 tests | 433 tests, 0 warnings (3.11 + 3.12 CI) |
+| [TMC reliability benchmark](benchmarks/tmc/README.md) | 16 converged QE records for ferrocene, Ni(CO)4, Cr(CO)6, and Fe(CO)5, with parser checks, features, a GP baseline, and a retrospective AL demonstration | The pipeline operates on real QE records and preserves reliability metadata; the small dataset does not establish predictive generality |
+| [Ti3C2-O LF campaign](benchmarks/ti3c2o/README.md) | GNN-embedding GP, periodic plain GP, and random tracks; five iterations per track; 14 physical DFT calls including the corrected GP rerun | In this single campaign, the corrected periodic GP found the best new result, `|DeltaG_H| = 0.0020 eV` |
+| [Software validation](docs/reproducibility.md#fast-local-checks) | 467 offline tests after reorganization | Core behavior, evidence paths, parsers, and benchmark invariants are regression-tested without running QE |
 
----
+The live Ti3C2-O campaign exposed two real implementation problems: GNN random
+number reproducibility and periodic-coordinate/duplicate behavior in the plain
+GP track. Both are documented in the frozen protocol and preserved result
+record; the original failed behavior was not erased.
 
-## Surrogate architecture
+High-fidelity ranking validation was **attempted and deferred**. The HF
+clean-slab reference did not complete in three attempts, no HF scientific
+result exists, and no partial HF output supports a claim. See
+[HF validation status](docs/HF_VALIDATION_STATUS.md).
 
-```
-Low-fidelity DFT  (ecutwfc=40, kpts=3x3x1)
-        |
-  SchNetEncoder.pretrain()
-  cutoff=5.0 A (Ti3C2-O), embedding_dim=64, 3 message-passing blocks
-  Loss: MSE energy/atom via Linear->SiLU->Linear head
-        |
-   FREEZE encoder weights  (requires_grad_(False))
-        |
-High-fidelity DFT  (ecutwfc=60, kpts=6x6x1)
-        |
-  StandardScaler on frozen HF embeddings
-        |
-  GaussianProcessRegressor
-  kernel: ConstantKernel(1.0) * RBF(ls=1.0, bounds=(1e-2, 1e5))
-  alpha=1e-4, n_restarts_optimizer=5, normalize_y=True
-        |
-  predict(atoms) -> (mean eV/atom, uncertainty eV/atom)
-        |
-  differential_evolution minimises LCB -> next (u,v) candidate
-        |
-  DFT oracle + run_dft_with_recovery() -> ledger append
-```
+## Install
 
-This is **frozen-embedding transfer learning**, not Kennedy-O'Hagan co-kriging.
-The encoder is pretrained on LF data, frozen, and its outputs are features for
-the HF GP. This is named honestly throughout the code.
-
-Key design decisions:
-
-- **GNN cutoff (Ti3C2-O):** 5.0 A. Ti-C ~2.1 A, Ti-O ~2.0 A; 5.0 A captures
-  both bond shells with margin to distinguish hollow vs atop H adsorption sites.
-- **StandardScaler before GP fit:** Raw SchNet embeddings have ~20x per-dim
-  variance. After scaling, pairwise distances are ~1-12, optimal GP length
-  scale ~3-5, and ConvergenceWarnings are eliminated on real data.
-- **alpha=1e-4, no WhiteKernel:** WhiteKernel noise estimation is unreliable
-  with 5-20 HF points and collapses to its lower bound on clean data. Fixed
-  alpha=1e-4 is numerical regularization for stable GP fitting; it is not a
-  measured physical DFT noise level.
-- **NTFS-safe locking:** WSL2 /mnt/d/ (NTFS) does not support fcntl/flock.
-  Ledger and cache use O_CREAT|O_EXCL for safe concurrent writes.
-- **Cumulative escalation:** Smearing method and degauss always change together
-  (physically coupled). electron_maxstep=300 (group 4) retains all prior group
-  changes. nspin is never touched automatically.
-
----
-
-## Implemented components
-
-### Phase 0 -- Ledger (`actistruct/core/`)
-
-- `atomic_cache.py` -- NTFS-safe atomic file cache (O_CREAT|O_EXCL locking,
-  not fcntl/flock)
-- `ledger.py` -- append-only JSONL run ledger; one record per DFT attempt;
-  atomically locked during writes
-
-### Phase 1 -- Debug and Recovery (`actistruct/debug/`)
-
-- `classifier.py` -- `DFTFailureAnalyzer`: regex classifier for pw.x output;
-  categories SUCCESS, SCF_CONVERGENCE, ELECTRONIC_INSTABILITY, GEOMETRY_CRASH,
-  UNKNOWN. Patterns verified against real QE 7.x .pwo output. Broyden/linmin
-  intentionally excluded from GEOMETRY_CRASH (appear in normal BFGS logs).
-- `strategies.py` -- `TroubleshootingStrategy`: 4 cumulative escalation groups:
-  (1) mixing_beta=0.3, (2) Gaussian smearing + degauss=0.02, (3) M-P smearing
-  + degauss=0.03, (4) electron_maxstep=300. Smearing+degauss always together.
-- `recovery.py` -- `run_dft_with_recovery()`: wraps static SCF with automatic
-  fault detection, escalation, and ledger logging. Not adapted for ionic
-  relaxation (use restart_mode='restart' manually).
-
-### Phase 2 -- GNN Surrogate (`actistruct/gnn/`)
-
-- `config.py` -- `GNNConfig`, `MultiFidelityConfig`. Per-system cutoff
-  guidance documented.
-- `encoder.py` -- `SchNetEncoder`: pairwise distances via ase.neighborlist,
-  Gaussian RBF expansion, message-passing block (filter_ij = MLP(rbf(d_ij)),
-  h_i += sum_j(filter_ij * h_j)), mean-pool. Same composition + different bond
-  lengths -> different embedding (verified by test).
-- `surrogate.py` -- `HybridGPSurrogate`: pretrain, freeze, StandardScaler,
-  GP fit, predict, predict_batch. predict(atoms) returns (mean eV/atom,
-  uncertainty eV/atom); drop-in for the existing GPModel interface.
-
-### Phase 3 -- Dashboard (`actistruct/dashboard/`)
-
-- `app.py` -- Streamlit dashboard (4 tabs: scorecard + convergence rate,
-  energy landscape, 3D structure viewer via py3Dmol/stmol, run log). Multi-
-  ledger support; handles empty ledger gracefully.
-- `data_loader.py` -- load_ledger(), load_multi_ledger(), get_summary_stats().
-
-Launch: `streamlit run actistruct/dashboard/app.py`
-
-Screenshot pending first campaign run (empty ledger screenshot omitted per
-project convention: real data or no screenshot).
-
-### Phase 2 Oracle -- Ti3C2-O HER (`examples/manual_qe/`)
-
-`ti3c2_o_her_qe_active_inverse.py`:
-
-- `DeltaG_H = E(slab+H) - E(slab) - 0.5*E(H2) + 0.04 eV` (Norskov ZPE-TS)
-- Design variable: (u,v) in-plane fractional coordinates of adsorbed H
-- FIDELITY=low: ecutwfc=40, ecutrho=320, kpts=(3,3,1)
-- FIDELITY=high: ecutwfc=60, ecutrho=480, kpts=(6,6,1)
-- All energies cached per fidelity; E_slab and E_H2 computed once per run
-- Pseudopotentials: Ti(USPP) + C(PAW) + O(PAW) + H(USPP), SSSP 1.3.0 PBE
-  efficiency. All filenames verified against disk.
-- Acquisition: differential_evolution minimising thermoneutral LCB over (u,v)
-  space, targeting `|DeltaG_H|` near zero
-- **LF relaxed clean slab verified:** E = -26041.297821 eV, JOB DONE,
-  fmax=0.028 eV/A; structure retained in `data/structures/ti3c2_o/`
-
-### v0.x Reliability Layer (retained, unchanged)
-
-- `actistruct/parsers/qe.py` -- QE output parser; failures recorded as data
-- `actistruct/datasets/qe_records.py` -- dataset builder for parsed QE records
-- `actistruct/acquisition/reliability.py` -- soft failure-risk LCB penalty;
-  old LCB behavior preserved when gamma=0 or no risk estimate available
-- `analysis/` -- reliability classifier (v0.3.2), offline benchmarks (v0.5.x)
-- `generated_models/` -- 50 original v0.x QE workflow scripts (the Phase 2
-  campaign scripts bulk_lifepo4 and bulk_fe_bcc are additional)
-
----
-
-## Test suite
-
-433 tests, 0 warnings (Python 3.11 + 3.12, CI). No QE/DFT is launched by any test.
-
-**ActiStruct core tests:**
-
-| Test file | What it covers |
-|---|---|
-| `test_hybrid_surrogate.py` | GNN geometry sensitivity, permutation invariance, fidelity config, overfit sanity, (u,v) UV design variable sensitivity |
-| `test_debugging.py` | DFTFailureAnalyzer (5 categories), TroubleshootingStrategy (4 groups), run_dft_with_recovery() |
-| `test_dashboard.py` | Ledger loading, summary stats, multi-ledger, empty-ledger safety |
-| `test_ledger.py` | Append, concurrent writes, lock timeout, schema validation |
-| `test_generated_workflows.py` | All generated_models scripts import and define required attributes |
-| `test_failure_aware_acquisition.py`, `test_qe_reliability_*` | v0.x reliability and acquisition layer |
-
-**TMC Reliability Benchmark tests (Tasks 1-9):**
-
-| Test file | Tests | What it covers |
-|---|---|---|
-| `test_pseudo_verification.py` | 8 | SSSP checksums for Cr, Fe, Ni pseudopotentials |
-| `test_qe_parser.py` | 18 | QE output parsing, force/energy extraction |
-| `test_feature_builder.py` | 22 | Coulomb matrix + geometry reproducibility, DFT vs reference |
-| `test_reference_data_integrity.py` | 11 | YAML reference schema and verification status |
-| `test_convergence_and_consistency.py` | 12 | BFGS convergence, atom counts, energy ordering, dE sanity |
-| `test_fe_cutoff_convergence.py` | 14 | Fe cutoff convergence data, ferrocene label disambiguation |
-| `test_neb_endpoints.py` | 9 | XYZ files, stoichiometry, dE encoding, energy bounds |
-| `test_ml_al_framing.py` | 31 | Report disclaimer presence, prohibited over-claim phrases |
-| `test_baseline_model.py`, `test_al_demo.py`, others | 122 | Dataset loading, GP baseline, AL demo, candidates, structures |
-
-```bash
-pytest -q       # 433 passed, 0 warnings
-```
-
----
-
-## Repository structure
-
-```
-ActiStruct/
-|-- demo_ti3c2_o.py                   # no-QE end-to-end demo (all 4 phases)
-|-- qe_active_inverse_common.py       # shared GP/LCB active-learning engine
-|-- actistruct/
-|   |-- core/                         # ledger, atomic cache
-|   |-- debug/                        # classifier, escalation, recovery
-|   |-- gnn/                          # GNN config, encoder, surrogate
-|   |-- dashboard/                    # Streamlit app, data loader
-|   |-- acquisition/                  # failure-aware LCB (v0.x)
-|   |-- parsers/                      # QE output parser (v0.x)
-|   `-- datasets/                     # QE records dataset builder (v0.x)
-|-- examples/manual_qe/
-|   |-- ti3c2_o_her_qe_active_inverse.py   # Ti3C2-O HER oracle (Phase 2)
-|   `-- h_cu111_qe_active_inverse.py       # Cu(111) H adsorption reference
-|-- generated_models/                 # 50 original v0.x QE workflow scripts
-|
-|-- [TMC Reliability Benchmark - Tasks 1-9]
-|-- scripts/                          # 17 numbered pipeline scripts (01-17)
-|-- configs/                          # QE settings, pseudo manifest, project config
-|-- data/
-|   |-- processed/                    # full_dataset_v0.2.csv, cutoff convergence, candidates
-|   |-- features/                     # Coulomb matrix + geometry features v0.1
-|   |-- models/                       # GP baseline and AL demo model records
-|   `-- references/                   # YAML reference values and sources
-|-- qe/
-|   |-- inputs/relax/                 # validated QE input files for all systems
-|   `-- outputs/                      # cutoff convergence outputs, PBE-D3 rerun
-|-- structures/
-|   |-- initial_xyz/                  # starting geometries for 4 primary systems
-|   |-- generated_candidates/         # 52 perturbation candidates
-|   `-- neb_endpoints/                # ferrocene D5h/D5d endpoints for nebwalk
-|-- references/                       # literature reference YAML and CSV
-|-- reports/                          # benchmark reports, daily logs, figures
-|
-|-- tests/                            # 433 tests, no QE/DFT launched
-|-- archive/caaln2_dropped/           # archived CaAlN2 scripts (scope change)
-|-- analysis/                         # classifier training, offline benchmarks
-|-- docs/                             # setup guides and specification docs
-|-- outputs/
-|   |-- cache/                        # DFT energy caches (gitignored)
-|   `-- reports/                      # 50 completed benchmark reports (kept)
-|-- requirements.txt
-|-- pyproject.toml
-`-- CHANGELOG.md
-```
-
----
-
-## Getting started
+Python 3.10 or newer is required. Tests are supported without Quantum
+ESPRESSO.
 
 ```bash
 git clone https://github.com/Rifat19R/ActiStruct.git
 cd ActiStruct
-
-# WSL2 / Linux (QE runs require Linux)
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e ".[test]"
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[test]"
 ```
 
-**Run tests (no QE launched):**
+Optional dashboard dependencies:
+
 ```bash
-pytest -q       # 433 passed, 0 warnings
+python -m pip install -e ".[dashboard]"
 ```
 
-**Run the no-QE demo (exercises full v2 stack on real Ti3C2-O geometry):**
+See [installation](docs/installation.md) for the conda environment, CPU-only
+PyTorch, and live Quantum ESPRESSO requirements.
+
+## Five-minute no-QE example
+
 ```bash
-python demo_ti3c2_o.py
+python examples/quickstart/no_qe_ti3c2o.py
 ```
 
-**Launch the monitoring dashboard:**
+The example loads the committed Ti3C2-O structure, creates adsorption-site
+variants, exercises the GNN-embedding GP path, and writes only temporary
+ledger data. It uses no Quantum ESPRESSO executable and does not reproduce the
+live campaign.
+
+Then run the offline suite:
+
 ```bash
-streamlit run actistruct/dashboard/app.py
+python -m pytest -q
 ```
 
----
+For a smaller reliability-acquisition walkthrough, see
+[the quickstart](docs/quickstart.md).
 
-## Quantum ESPRESSO setup
+## Inspect evidence without rerunning DFT
+
+The fastest reviewer workflow uses committed data:
+
+```bash
+# Verify selected evidence files and campaign totals
+python -m pytest -q tests/test_repository_integrity.py
+
+# Rebuild the small-data TMC GP and retrospective AL reports
+python scripts/12_baseline_model.py
+python scripts/14_active_learning_demo.py
+```
+
+The checksum manifest is
+[`reproducibility/evidence_sha256.txt`](reproducibility/evidence_sha256.txt).
+It pins selected reviewer-facing files while Git preserves complete history.
+The [reproducibility guide](docs/reproducibility.md) distinguishes software
+checks, cached analysis, and live QE reproduction.
+
+## Live QE is an explicit opt-in
+
+Live workflows require Linux/WSL or cluster hardware, reviewed QE settings,
+external pseudopotentials, and potentially hours per candidate. They are never
+launched by installation or tests.
 
 ```bash
 export ESPRESSO_PSEUDO=/path/to/SSSP_1.3.0_PBE_efficiency
 export ESPRESSO_COMMAND="mpirun -np 2 pw.x"
-which pw.x
 ```
 
-Ti3C2-O pseudopotentials (SSSP 1.3.0 PBE efficiency, verified on disk):
-- Ti: `ti_pbe_v1.4.uspp.F.UPF` (USPP)
-- C:  `C.pbe-n-kjpaw_psl.1.0.0.UPF` (PAW)
-- O:  `O.pbe-n-kjpaw_psl.0.1.UPF` (PAW)
-- H:  `H.pbe-rrkjus_psl.1.0.0.UPF` (USPP)
+Before a run, review `pseudo/README.md`, the benchmark protocol, expected
+outputs, and hardware limits. Do not rerun expensive DFT merely to confirm
+that the Python package installed correctly.
 
-See `pseudo/README.md` and `docs/qe_setup.md` for full setup notes.
+## Repository map
 
-**WSL2 RAM:** LF slab (ecutwfc=40, 28 atoms) peaks at ~3.3 GB. HF settings
-(ecutwfc=60) estimate ~4.1 GB per MPI rank; an HF clean-slab attempt did not
-complete in 3 tries on this machine and was deferred rather than retried
-further -- see `docs/HF_VALIDATION_STATUS.md` before attempting HF again.
+| Path | Purpose |
+|---|---|
+| `actistruct/` | Installed library: acquisition, core ledger/cache, datasets, debugging, GNN, parser, dashboard |
+| `qe_active_inverse_common.py` | Installed legacy GP/LCB engine used by generated QE workflows |
+| `benchmarks/` | Reviewer entry points for TMC and Ti3C2-O protocols, evidence, commands, and limitations |
+| `examples/` | No-QE quickstarts, manual integration checks, and live-QE examples |
+| `scripts/` | TMC pipeline, analysis, maintenance, and generated-workflow launchers |
+| `data/`, `qe/`, `runs/`, `structures/` | Reference/processed data, retained inputs and outputs, and structures |
+| `outputs/campaigns/` | Append-only Ti3C2-O campaign evidence |
+| `reports/` | Generated and dated scientific reports |
+| `reproducibility/` | Evidence hashes and tiered reproduction entry point |
+| `docs/` | Current documentation, claim governance, and development history |
+| `tests/` | Offline test suite; no test launches QE |
 
----
+The current package is intentionally not half-migrated to `src/`: generated
+workflows install and import the top-level legacy engine. The decision and
+future migration boundary are recorded in the
+[repository audit](docs/repository_audit/maloq_vs_actistruct.md).
 
-## Running the Ti3C2-O HER campaign
+## Scientific scope and limitations
 
-```bash
-# Step 1: LF oracle call (first call caches E_slab + E_H2; ~1.7h per
-# (u,v) evaluation after that)
-FIDELITY=low python examples/manual_qe/ti3c2_o_her_qe_active_inverse.py
+ActiStruct currently supports conservative claims about:
 
-# Step 2: run the frozen six-site (u,v) seed campaign, then the 3-track
-# active-learning loop (complete -- see docs/TI3C2O_LF_CAMPAIGN_RESULTS.md)
-FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_grid_campaign
-FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_al_loop
+- reliability-aware ranking behavior and its tested LCB fallback;
+- the completed TMC pipeline and retrospective small-data demonstrations;
+- the completed, single-system Ti3C2-O low-fidelity campaign;
+- software behavior protected by the offline test suite.
 
-# Step 3: HF ranking validation on representative sites (attempted, deferred
-# -- see docs/HF_VALIDATION_STATUS.md)
-FIDELITY=high python -m examples.manual_qe.validate_lf_hf_ranking
-```
+It does **not** establish that GP generally beats GNN, make active learning a
+universal DFT-cost reducer, confirm LF ranking at HF, or experimentally
+validate any result. The Ti3C2-O comparison uses one system, one seed set, and
+one campaign budget. The TMC dataset is small, and some literature-reference
+checks remain below citation-grade geometry validation.
 
-Step 2 is complete: `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`. Step 3 (HF) was
-attempted and deferred after a controlled partial run: `docs/HF_VALIDATION_STATUS.md`.
+Read [scientific scope](docs/scientific_scope.md),
+[limitations](docs/limitations.md), and
+[claim governance](docs/claim_governance.md) before reusing a result.
 
-## Running the v0.x 50-workflow benchmark
+## Documentation
 
-```bash
-bash run.sh all
-bash run.sh one generated_models/bulk_lifepo4_qe_active_inverse.py
-```
-
----
-
-## Benchmark status
-
-### Phase 2-4 -- Ti3C2-O HER (complete)
-
-| Run | System | ecutwfc | kpts | Energy | Status |
-|---|---|---|---|---|---|
-| LF relaxed clean slab | Ti3C2-O 2x2, 28 atoms | 40 Ry | (3,3,1) | -26041.297821 eV | JOB DONE (fmax=0.028 eV/A) |
-| Frozen LF (u,v) seed campaign | 6 distinct (u,v) sites | 40 Ry | (3,3,1) | see `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` | 6/6 complete |
-| Live 3-track AL campaign | GNN / plain-GP / random, 5 iter each | 40 Ry | (3,3,1) | best find 0.0020 eV (plain-GP) | complete, 14 physical DFT calls |
-| HF ranking validation | Ti3C2-O 2x2 | 60 Ry | (6,6,1) | -- | attempted, deferred -- `docs/HF_VALIDATION_STATUS.md` |
-
-**Full results, per-track metrics, and the honest verdict:** `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
-**Frozen protocol and dated amendments:** `docs/BENCHMARK_PROTOCOL.md`.
-**Raw evidence:** `outputs/campaigns/ti3c2_o_lf_campaign.jsonl` and `outputs/campaigns/ti3c2_o_lf_campaign_plain_gp_rerun_amend5.jsonl`.
-
-Summary: once a real kernel bug (periodicity blindness in the plain-GP surrogate) was found and fixed, a simple 2D GP on periodic features found the best near-thermoneutral site (`|DeltaG_H|=0.0020` eV) of any of the three tracks, ahead of the random baseline (0.0239 eV) and the GNN-embedding surrogate (0.0672 eV), with fewer DFT calls and less wall time than random. This does not support a general claim that any one method beats the others outside this single system/budget/seed set -- see the results doc for the full, unhedged verdict.
-
-To reproduce: `FIDELITY=low python -m examples.manual_qe.run_ti3c2_o_al_loop`
-Cache: `outputs/cache/ti3c2_o_her_low_protocol_v1_amend1.pkl`
-
-### v0.x -- reliability classifier (v0.3.2, 20 repeated group splits)
-
-```
-threshold 0.05  ->  failure recall 0.776 +/- 0.344
-threshold 0.10  ->  failure recall 0.725 +/- 0.377
-threshold 0.30  ->  failure recall 0.300 +/- 0.359
-```
-
-Large split-to-split variance. Soft triage signal; not a hard filter.
-
-### v0.x -- structural parameter recovery (23-system check subset)
-
-Mean absolute percentage deviation: **0.71%**. Median: 0.65%.
-Source: `outputs/reports/ACTISTRUCT_RESULTS_DRAFT.md`.
-This is a structural sanity check, not a claim that all 50 workflows are
-literature-validated.
-
-### v0.x -- direct grid validation (GP/LCB engine)
-
-| System | Grid | Status | Delta vs AL | Reproduce |
-|---|---:|---|---:|---|
-| Cu FCC | 20/20 | pass | 0.000198 eV/atom | `analysis/direct_grid_validation.py` |
-| MoS2 monolayer | 49/49 | pass | 0.000916 eV/atom | same |
-| Rocksalt MgO | 20/20 | pass | 0.000157 eV/atom | same |
-| Diamond Si | 20/20 | pass | 0.000233 eV/atom | same |
-
-Validates the GP/LCB engine. Does not validate the v2.0 GNN surrogate.
-
-### v0.x -- offline failure-aware benchmark (v0.5.1, 50 trials)
-
-Failure-aware LCB reduced mean predicted failure risk across all four pool
-modes and reduced known-failed selections most clearly in normal and
-failure-enriched pools. Weaker in held-out-material and high-uncertainty pools.
-Source: `reports/simulated_failure_aware_al_benchmark_v051.md`.
-
----
-
-## Safe claims
-
-Claim governance:
-
-- `docs/FEATURE_FREEZE.md` records the current scientific-evidence freeze.
-- `docs/CLAIMS_AND_EVIDENCE.md` maps major claims to evidence, commands, and
-  limitations.
-- `docs/BENCHMARK_PROTOCOL.md` freezes the LF Ti3C2-O benchmark protocol used
-  for the completed live campaign, with dated amendments for every change
-  made after any result was inspected.
-- `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` is the full results writeup: per-track
-  metrics, both real failures encountered (and how they were handled), and
-  the honest verdict.
-
-- The GNN encoder produces geometry-sensitive embeddings: same composition +
-  different bond lengths -> different embedding (verified by test).
-- The LF relaxed clean 28-atom Ti3C2-O slab is independently regenerated,
-  DFT-relaxed to convergence (JOB DONE, fmax=0.028 eV/A), and retained in the
-  repo (`data/structures/ti3c2_o/`) -- this is real, reproducible evidence,
-  not a historical claim awaiting regeneration.
-- A live 3-track LF active-learning campaign (GNN-embedding GP, plain GP on
-  periodic features, random baseline; 5 iterations each; 14 physical DFT
-  calls total) has completed. Full metrics and raw JSONL evidence in
-  `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
-- In this specific campaign (one system, one seed set, one acquisition
-  budget), the plain-GP track found the best near-thermoneutral site
-  (`|DeltaG_H|=0.0020` eV) of the three tracks, using fewer DFT calls and
-  less wall time than the random baseline. This does **not** generalize to
-  "GP beats GNN" or "engineered surrogates beat random search" outside this
-  test -- see the results doc's verdict section before citing this anywhere.
-- The (u,v) design variable produces meaningfully distinct embeddings across
-  adsorption sites (atop vs hollow embedding distance ~1.0, >> 0.01 threshold).
-- The 23-system structural check gives 0.71% mean deviation vs reference values.
-- v0.x offline benchmark results are retained and unchanged.
-
-ActiStruct does not claim:
-- That the GNN-embedding surrogate outperforms a plain GP or random search in
-  general -- the completed campaign is a single system, single budget test;
-  in this test, it did not outperform either.
-- That HF validation has been completed -- it was attempted and deliberately
-  deferred; see `docs/HF_VALIDATION_STATUS.md`. No HF result exists.
-- Guaranteed reduction of failed DFT jobs.
-- General, transferable DFT savings from active learning -- one completed
-  live campaign on one system is evidence, not proof of generality.
-- It replaces QE/PBE validation.
-
----
-
-## Limitations
-
-- **HF validation deferred**: attempted (HF clean-slab reference, 3 attempts,
-  none completed) and deliberately stopped as a project-closure decision, not
-  retried further. See `docs/HF_VALIDATION_STATUS.md` for what was tried, the
-  preserved evidence, and prerequisites before resuming.
-- **run_dft_with_recovery()** wraps static SCF only. Ionic relaxation restart
-  requires manual `restart_mode='restart'`.
-- **Post-relax k-point consistency check** required before declaring any relaxed
-  geometry canonical. Not needed for this sprint (no new relaxations).
-- **Uncertainty Evolution dashboard tab** not yet wired: requires per-iteration
-  GP std stored in the ledger.
-- v0.x reliability classifier has large split-to-split variance on held-out
-  materials. Do not use as a hard accept/reject filter.
-- No live QE active-learning run with failure-aware acquisition has been
-  performed. All v0.x evidence is offline.
-
----
-
-## Roadmap
-
-### v2.x near-term
-
-1. ~~Frozen LF seed campaign: run oracle at 6 distinct initial (u,v) sites.~~ **Done** -- 6/6 complete, `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md`.
-2. ~~GNN pretraining: train SchNetEncoder on LF DeltaG_H structures + energies.~~ **Done.**
-3. ~~Active learning loop: HybridGPSurrogate proposes next (u,v) via LCB; evaluate oracle; retrain.~~ **Done** -- 3-track live campaign complete (GNN / plain-GP / random), 14 physical DFT calls.
-4. HF evaluation: 3 representative sites at FIDELITY=high. **Attempted, deferred** -- see `docs/HF_VALIDATION_STATUS.md` for the prerequisites before resuming (WSL2 reliability issue affecting even the clean-slab reference).
-5. Uncertainty Evolution tab: store GP std per iteration in ledger; wire
-   into dashboard.
-
-### Longer term
-
-- ~~Head-to-head: HybridGPSurrogate vs sklearn GP on real HER data.~~ **Done**, plus a random baseline -- see `docs/TI3C2O_LF_CAMPAIGN_RESULTS.md` for the full comparison and its scope limits.
-- Validate v0.x failure-aware acquisition in a live GP/QE run.
-- Extend to other MXene terminations: Ti3C2-F, Ti3C2-OH, V2C-O.
-
----
+- [Documentation index](docs/index.md)
+- [Installation](docs/installation.md)
+- [Quickstart](docs/quickstart.md)
+- [Architecture](docs/architecture.md)
+- [Benchmark index](docs/benchmarks.md)
+- [Reproducibility](docs/reproducibility.md)
+- [Frozen Ti3C2-O protocol](docs/BENCHMARK_PROTOCOL.md)
+- [Ti3C2-O results](docs/TI3C2O_LF_CAMPAIGN_RESULTS.md)
+- [HF validation status](docs/HF_VALIDATION_STATUS.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Citation
 
-If ActiStruct supports your work, please cite the repository metadata in
-`CITATION.cff`.
-
-## Acknowledgments
-
-ActiStruct was developed with selective AI-assisted support for code review,
-debugging guidance, documentation refinement, and release-workflow cleanup.
-Scientific direction, algorithmic design, implementation decisions, validation
-strategy, benchmark interpretation, and release responsibility remain with the
-project maintainer.
+If ActiStruct supports your work, cite the software using
+[`CITATION.cff`](CITATION.cff). Cite the underlying DFT, ASE, and method
+references appropriate to the workflow as well; the historical manuscript
+bibliography is retained under `docs/manuscript/`.
 
 ## License
 
-MIT License. See `LICENSE`.
-
----
-
-## TMC Reliability Benchmark (v1.0)
-
-The TMC Benchmark v1.0 is a separate benchmark artifact inside the ActiStruct
-repository, distinct from the ActiStruct v2.0 software status above. It contains
-converged QE records for transition-metal carbonyls and metallocenes, used to
-assess ActiStruct's active-learning pipeline on real QE-relaxed structures.
-
-**Systems**: Cr(CO)6, Fe(CO)5, Ni(CO)4, ferrocene (D5h/D5d conformers) -- 16
-converged QE records passing internal checks, with Coulomb-matrix features, GP
-baseline, and AL demo.
-
-**Key results**:
-- Ferrocene D5h -> D5d conformer energy difference: dE = 41.68 meV (same scale
-  as the known experimental rotational barrier, ~41 meV); ferrocene reference
-  geometry is primary-PDF verified. A true barrier claim would require a
-  constrained rotational scan or NEB.
-- Fe cutoff convergence: 90 Ry adopted; 60 Ry fails the Fe(CO)5 energy criterion
-  (+18.55 meV/atom vs 90 Ry), while Fe-C bond lengths are already stable
-- NEB endpoints prepared for nebwalk demo (`structures/neb_endpoints/`)
-
-**Tests**: 424 passing across all ActiStruct and TMC benchmark test files (Python 3.11 + 3.12, CI green).
+ActiStruct is released under the [MIT License](LICENSE).

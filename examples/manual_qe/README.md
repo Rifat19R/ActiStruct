@@ -1,8 +1,9 @@
 # Manual QE Examples
 
-This folder keeps older standalone Quantum ESPRESSO demonstration scripts out of
-the repository root. The production benchmark workflows are in `generated_models/`
-and are run through the top-level `run.sh` script.
+This folder keeps standalone Quantum ESPRESSO demonstration scripts separate
+from no-QE examples. The legacy generated workflows are in
+`generated_models/` and are launched through
+`scripts/run_generated_models.sh`.
 
 Before running any manual QE script, configure Quantum ESPRESSO in your shell:
 

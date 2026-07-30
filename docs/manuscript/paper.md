@@ -18,6 +18,9 @@ date: 16 June 2026
 bibliography: paper.bib
 ---
 
+> Historical manuscript source retained for provenance. Current validated
+> claims and limitations are governed by `docs/claim_governance.md`.
+
 # Summary
 
 ActiStruct is an open source Python tool that uses Quantum ESPRESSO [@giannozzi2017] for density functional theory (DFT) calculations together with Gaussian process active learning to find the best value of a structural parameter, such as a lattice constant, bond length, layer spacing, or adsorption height, using far fewer DFT calculations than a normal grid scan. It is built on top of the Atomic Simulation Environment [@larsen2017]. The program fits a Gaussian process to the energies it has already computed, then picks the next geometry to test by minimizing a lower confidence bound acquisition function with SciPy's differential evolution optimizer [@virtanen2020]. ActiStruct comes with a shared active learning engine and a growing set of example systems covering metals, semiconductors, oxides, two dimensional materials, molecules, battery related crystals, and surface adsorption models. It is meant for researchers who need to tune one or two structural variables without writing their own optimization code.

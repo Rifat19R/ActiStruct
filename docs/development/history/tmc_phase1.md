@@ -95,6 +95,8 @@ All symmetry-preserving (equal bond lengths within each ligand set) - a good san
 
 **Phase 1 done criteria (CLAUDE_ACTISTRUCT_TMC_PLAN.md Sec 12) met:** scaffold, pseudo manifest, 4 initial structures, QE inputs for all 4, reference schema, all 4 systems actually converged via real QE, dry-run/help on all scripts, tests passing, limitations documented.
 
-## Phase 2: see docs/PHASE2_SUMMARY.md
+## Phase 2
+
+See `docs/development/history/tmc_phase2.md`.
 
 Phase 2 starts with `scripts/07_parse_qe_outputs.py` (production QE output parser) now that real, converged data exists for all 4 systems.

@@ -1,4 +1,8 @@
-# Repository Guide
+# Historical Repository Guide
+
+> Superseded contributor notes retained for history. Current contributor and
+> reproduction instructions live in `CONTRIBUTING.md` and
+> `docs/reproducibility.md`.
 
 ## Track in Git
 

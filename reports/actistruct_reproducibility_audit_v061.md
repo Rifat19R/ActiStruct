@@ -82,7 +82,7 @@ on-ramp rather than one example file.
   `ESPRESSO_PSEUDO` environment-variable convention.
 - `pseudo/README.md`: contained a hardcoded personal machine path; fixed
   here (Section 9).
-- `docs/model_and_tests.md`: accurate for the original GP/LCB engine, but
+- `docs/development/history/model_and_tests_v0.md`: accurate for the original GP/LCB engine, but
   its "Tests" section names only `tests/test_builders_and_config.py` and
   does not mention the other 10 test files now in `tests/` (reliability
   parser, classifier, failure-aware acquisition, v0.5.0/v0.5.1 benchmarks,
@@ -96,7 +96,7 @@ on-ramp rather than one example file.
   following this literally could submit a change that breaks the
   reliability-track tests while believing they had run "the tests." Flagged
   as medium/high priority for a future, explicitly-scoped task.
-- `docs/repository_guide.md`: contains a "First Commit" / "Before arXiv"
+- `docs/development/history/repository_guide_v0.md`: contains a "First Commit" / "Before arXiv"
   section that is historical bootstrap guidance from before the repo had
   any git history; harmless but stale framing for a repo that already has
   full history on GitHub. Low priority.
@@ -181,7 +181,7 @@ detail and the diff).
    future, narrowly-scoped task (not done here to avoid editing dependency
    files beyond the audit's "only if missing and verified from imports"
    allowance without a dedicated review — flagging for confirmation first).
-2. `docs/model_and_tests.md` "Tests" section only documents
+2. `docs/development/history/model_and_tests_v0.md` "Tests" section only documents
    `tests/test_builders_and_config.py`, omitting the other 10 test files
    that now exist for the reliability/acquisition track.
 3. `CONTRIBUTING.md` only instructs contributors to run
@@ -197,7 +197,7 @@ detail and the diff).
 1. `requirements.txt` is unpinned (no version constraints), while
    `environment.yml` is pinned — minor asymmetry between the two
    reproduction paths.
-2. `docs/repository_guide.md` contains stale "First Commit"/"Before arXiv"
+2. `docs/development/history/repository_guide_v0.md` contains stale "First Commit"/"Before arXiv"
    bootstrap framing left over from before the repo had git history.
 3. CI's `py_compile` step does not explicitly list `actistruct/**` or
    `analysis/**`, though `pytest -q` already exercises them indirectly.
@@ -226,7 +226,7 @@ Recommended for a future, separately-scoped task (not done here, to keep
 this audit's diff minimal and within its explicit allowed-file list):
 
 1. Declare `pillow` explicitly as a dependency (resolves Medium issue 1).
-2. Add a short note to `docs/model_and_tests.md` pointing to `pytest -q` and
+2. Add a short note to `docs/development/history/model_and_tests_v0.md` pointing to `pytest -q` and
    the full `tests/` directory for the reliability track (resolves Medium
    issue 2).
 3. Update `CONTRIBUTING.md`'s pre-submission check to `pytest -q` (resolves

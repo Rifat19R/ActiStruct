@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
+  <title id="title">ActiStruct wordmark</title>
+  <desc id="desc">A restrained hexagonal lattice mark beside the ActiStruct name.</desc>
+  <rect width="900" height="220" rx="28" fill="#0b1726"/>
+  <g transform="translate(48 36)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M72 0 136 37v74l-64 37-64-37V37Z" stroke="#45d0b1" stroke-width="8"/>
+    <circle cx="72" cy="0" r="11" fill="#f6b44b" stroke="none"/>
+    <circle cx="136" cy="37" r="11" fill="#45d0b1" stroke="none"/>
+    <circle cx="136" cy="111" r="11" fill="#45d0b1" stroke="none"/>
+    <circle cx="72" cy="148" r="11" fill="#f6b44b" stroke="none"/>
+    <circle cx="8" cy="111" r="11" fill="#45d0b1" stroke="none"/>
+    <circle cx="8" cy="37" r="11" fill="#45d0b1" stroke="none"/>
+    <path d="M8 37 72 74l64-37M72 74v74M8 111l64-37 64 37" stroke="#7ea6bd" stroke-width="5"/>
+  </g>
+  <text x="238" y="112" fill="#f7fafc" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="-2">ActiStruct</text>
+  <text x="242" y="158" fill="#9fb6c5" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" letter-spacing="2">ACTIVE LEARNING · DFT · RELIABILITY</text>
+</svg>

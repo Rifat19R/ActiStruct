@@ -30,6 +30,6 @@ Total: 12 candidates, 4 systems.
 
 ## Execution notes
 
-- Run sequentially, never in parallel - cr_co6 candidates alone need ~14GB/process against this machine's 16GB WSL ceiling (see docs/PHASE1_SUMMARY.md for the OOM history that makes this a hard constraint, not a suggestion).
+- Run sequentially, never in parallel - cr_co6 candidates alone need ~14GB/process against this machine's 16GB WSL ceiling (see `docs/development/history/tmc_phase1.md` for the OOM history that makes this a hard constraint, not a suggestion).
 - Exit code 0 does NOT mean converged - QE prints `JOB DONE` even on a failed BFGS run (this exact failure mode hit cr_co6 in the first campaign). Always grep each output for `bfgs converged` vs `bfgs failed` before trusting a result.
 - Use `scripts/06b_run_qe_candidates_batch.sh` (idempotent - safe to re-run after a partial failure, skips anything already converged).

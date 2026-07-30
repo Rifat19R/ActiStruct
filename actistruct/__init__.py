@@ -1,4 +1,5 @@
 """ActiStruct research-code utilities."""
 
-__all__ = ["parsers"]
+__version__ = "2.0.0"
 
+__all__ = ["parsers"]

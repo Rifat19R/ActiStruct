@@ -2,6 +2,18 @@
 
 All notable changes to ActiStruct are documented here.
 
+## Unreleased
+
+### Changed
+
+- Reorganized public entry points, examples, manuscript sources, and
+  historical documentation without moving scientific evidence.
+- Replaced the root README with a concise evidence-based project overview.
+- Added benchmark entry points, tiered reproduction guidance, a visual
+  identity, and a machine-checked evidence checksum manifest.
+- Made `pyproject.toml` authoritative for dependency groups and added clean
+  installation/import checks to CI.
+
 ## v1.0 - 2026-07-15
 
 ### Added
@@ -54,7 +66,7 @@ All notable changes to ActiStruct are documented here.
   `DeltaG_H = E_slab+H - E_slab - 0.5*E_H2 + 0.04 eV`; `FIDELITY` env var
   switches LF (ecutwfc=40) vs HF (ecutwfc=60); full caching per fidelity level.
   SSSP 1.3.0 PBE efficiency pseudos. LF static verified: -25973.017 eV, JOB DONE.
-- **Ti3C2-O demo** (`demo_ti3c2_o.py`): no-QE end-to-end demo exercising all
+- **Ti3C2-O demo** (`examples/quickstart/no_qe_ti3c2o.py`): no-QE end-to-end demo exercising all
   4 phases on the real 28-atom slab geometry.
 - **UV design variable sensitivity tests** (`tests/test_hybrid_surrogate.py`):
   3 new tests confirming (u,v) fractional-coordinate design variable produces

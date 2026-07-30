@@ -1,0 +1,35 @@
+name: Feature request
+description: Propose a scoped improvement with a scientific validation plan.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Scientific or software problem
+      description: What concrete problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed scope
+      description: Describe the smallest useful change.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation and evidence plan
+      description: Explain how the behavior and any scientific claim would be tested.
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Scope checks
+      options:
+        - label: This proposal does not require rewriting or deleting existing evidence.
+          required: true
+        - label: I have read the current scientific limitations and feature-freeze record.
+          required: true
