@@ -1,0 +1,80 @@
+{
+  "audit_date": "2026-07-31",
+  "claim_status": "hf_validation_incomplete_deliberately_stopped",
+  "system": "Ti3C2-O clean slab (HF reference calculation, first step of validate_lf_hf_ranking.py)",
+  "fidelity": "high",
+  "settings": {
+    "ecutwfc": 60.0,
+    "ecutrho": 480.0,
+    "kpts": [6, 6, 1],
+    "conv_thr": 1e-08,
+    "electron_maxstep": 300,
+    "n_procs": 2
+  },
+  "campaign_protocol_id": "ti3c2o-hf-v1-amend1",
+  "commit": "2b513b570380",
+  "input_sha256_all_attempts": "ecdd5696768eb2996d25ae8c9a4c59b021c934311a452c0d305e2e3477e59015",
+  "attempts": [
+    {
+      "attempt": 1,
+      "input_written": "2026-07-31T02:36:10+06:00",
+      "output_last_written": "2026-07-31T02:36:13+06:00",
+      "wall_time_s": 3,
+      "scf_iterations_reached": 0,
+      "note": "died during initial charge-density setup, before iteration #1",
+      "converged": false,
+      "qe_output_sha256": "762e5fb2b2ce98abb8bc85e7a33197f6f7cd5302fe81a63481289734c31da16f",
+      "stderr_bytes": 0,
+      "outcome": "incomplete"
+    },
+    {
+      "attempt": 2,
+      "input_written": "2026-07-31T02:36:22+06:00",
+      "output_last_written": "2026-07-31T03:04:35+06:00",
+      "wall_time_s": 1693,
+      "scf_iterations_reached": 30,
+      "last_total_energy_ry": -1914.03173471,
+      "last_estimated_scf_accuracy_ry": 1.61e-06,
+      "converged": false,
+      "qe_output_sha256": "860af806c216de7aab6a19e898c5a4a54e4c443f94a50906f78b0bd55aac71cf",
+      "stderr_bytes": 0,
+      "outcome": "incomplete"
+    },
+    {
+      "attempt": 3,
+      "input_written": "2026-07-31T03:04:46+06:00",
+      "output_last_written": "2026-07-31T03:05:13+06:00",
+      "wall_time_s": 27,
+      "scf_iterations_reached": 1,
+      "converged": false,
+      "qe_output_sha256": "f620ee492d5748c6ca37fba57e4885b2ef419f47e5de4d1f763ca5fcefd1f081",
+      "stderr_bytes": 0,
+      "outcome": "deliberately_stopped_sigint",
+      "stop_reason": "operator-issued SIGINT per HF closure/deferral decision, escalation to SIGTERM/SIGKILL not required"
+    }
+  ],
+  "driver_outcome": {
+    "retries_configured": 3,
+    "retries_exhausted": true,
+    "final_exception": "RuntimeError: Clean slab QE failed: QE output incomplete: .../clean_slab_pid120527_attempt3/espresso.pwo",
+    "driver_stdout_sha256": "be465478d8369928f01f962a0bb78d54b4a5568cfac58f0cf808553fc8628815"
+  },
+  "root_cause_investigation": {
+    "dmesg_page_allocation_failure_for_this_window": "not found",
+    "dmesg_page_allocation_failure_precedent_this_boot": [
+      "2026-07-25 pytest/python page allocation failure order:4 GFP_NOFS",
+      "2026-07-26 pw.x page allocation failure order:4 GFP_NOFS",
+      "2026-07-29 kworker page allocation failure order:7 GFP_KERNEL"
+    ],
+    "system_memory_at_audit_time": "15Gi total, 15Gi free (free -h, post-stop)",
+    "conclusion": "not definitively established; memory fragmentation under long WSL2 uptime is a plausible contributing factor given HF's larger per-iteration footprint (~4.14 GB estimated per MPI rank) but is not confirmed as the cause of attempts 1-2 specifically"
+  },
+  "no_completed_hf_result": true,
+  "structure_files": {
+    "relaxed_traj": {
+      "path": "data/structures/ti3c2_o/ti3c2_o_slab_relaxed.traj",
+      "sha256": "55a23221a3e07ca161e73b7830b3532403125323f6c350c7a62cd25100518ac1"
+    }
+  },
+  "raw_qe_files_location": "local only (data/evidence/ti3c2_o_hf_ranking_validation_interrupted/, gitignored per *.pwi/*.pwo/*.err/*.log rules); this JSON is the git-tracked summary"
+}

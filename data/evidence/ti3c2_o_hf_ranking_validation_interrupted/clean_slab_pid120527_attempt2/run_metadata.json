@@ -1,0 +1,74 @@
+{
+  "active_pseudopotential_sha256": {
+    "C": "9900d1efd50b9848e31849f39094b33348486b400ee51e0f3922f716137cf3d7",
+    "O": "7c4b6ed541f83d0afdf5c1d3a8c611340f073f3e2b11e95b7963bb2ee26929aa",
+    "Ti": "747afa52fa17dc061e9eff72bcea534e81ffa5a4a5d33af3eb8fc9f1b3aee580"
+  },
+  "active_pseudopotentials": {
+    "C": "C.pbe-n-kjpaw_psl.1.0.0.UPF",
+    "O": "O.pbe-n-kjpaw_psl.0.1.UPF",
+    "Ti": "ti_pbe_v1.4.uspp.F.UPF"
+  },
+  "bfgs_steps": 0,
+  "campaign_fingerprint": "campaign=ti3c2o-hf-v1-amend1|commit=2b513b570380|constraint=fixedline-z|conv_thr=1e-8|degauss=0.02|ecut=60.0-480.0|electron_maxstep=300|h_initial_height=1.800000|kpts_h2=(1, 1, 1)|kpts_slab=(6, 6, 1)|mixing_beta=0.2|mixing_mode=local-TF|pseudo_sha256=C:C.pbe-n-kjpaw_psl.1.0.0.UPF:9900d1efd50b9848e31849f39094b33348486b400ee51e0f3922f716137cf3d7,H:H.pbe-rrkjus_psl.1.0.0.UPF:27f8a7e87851d59a2698237d6ab4578d62950640f4f175781b015a0ce731f962,O:O.pbe-n-kjpaw_psl.0.1.UPF:7c4b6ed541f83d0afdf5c1d3a8c611340f073f3e2b11e95b7963bb2ee26929aa,Ti:ti_pbe_v1.4.uspp.F.UPF:747afa52fa17dc061e9eff72bcea534e81ffa5a4a5d33af3eb8fc9f1b3aee580|relax_fmax=0.050000|relax_steps=50|slab_sha256=55a23221a3e07ca161e73b7830b3532403125323f6c350c7a62cd25100518ac1|smearing=mv",
+  "campaign_protocol_id": "ti3c2o-hf-v1-amend1",
+  "commit": "2b513b570380",
+  "converged": false,
+  "ecutrho": 480.0,
+  "ecutwfc": 60.0,
+  "final_max_force_ev_per_a": null,
+  "input_settings": {
+    "control": {
+      "calculation": "scf",
+      "outdir": "/tmp/qe_scratch/ti3c2_o_her/high/ti3c2o_clean",
+      "prefix": "ti3c2o_clean",
+      "pseudo_dir": "/mnt/d/Rifat_kh/SSSP_1.3.0_PBE_efficiency",
+      "tprnfor": true,
+      "tstress": false,
+      "verbosity": "high"
+    },
+    "electrons": {
+      "conv_thr": 1e-08,
+      "electron_maxstep": 300,
+      "mixing_beta": 0.2,
+      "mixing_mode": "local-TF"
+    },
+    "system": {
+      "degauss": 0.02,
+      "ecutrho": 480.0,
+      "ecutwfc": 60.0,
+      "nspin": 1,
+      "occupations": "smearing",
+      "smearing": "mv"
+    }
+  },
+  "kpts": [
+    6,
+    6,
+    1
+  ],
+  "prefix": "ti3c2o_clean",
+  "pseudopotential_sha256": {
+    "C": "9900d1efd50b9848e31849f39094b33348486b400ee51e0f3922f716137cf3d7",
+    "H": "27f8a7e87851d59a2698237d6ab4578d62950640f4f175781b015a0ce731f962",
+    "O": "7c4b6ed541f83d0afdf5c1d3a8c611340f073f3e2b11e95b7963bb2ee26929aa",
+    "Ti": "747afa52fa17dc061e9eff72bcea534e81ffa5a4a5d33af3eb8fc9f1b3aee580"
+  },
+  "pseudopotentials": {
+    "C": "C.pbe-n-kjpaw_psl.1.0.0.UPF",
+    "H": "H.pbe-rrkjus_psl.1.0.0.UPF",
+    "O": "O.pbe-n-kjpaw_psl.0.1.UPF",
+    "Ti": "ti_pbe_v1.4.uspp.F.UPF"
+  },
+  "qe_output": "/tmp/qe_scratch/ti3c2_o_her/high/clean_slab_pid120527_attempt2/espresso.pwo",
+  "qe_output_sha256": "860af806c216de7aab6a19e898c5a4a54e4c443f94a50906f78b0bd55aac71cf",
+  "relax": false,
+  "slab_file": "/mnt/d/Rifat_kh/ActiStruct-main/data/structures/ti3c2_o/ti3c2_o_slab_relaxed.traj",
+  "slab_sha256": "55a23221a3e07ca161e73b7830b3532403125323f6c350c7a62cd25100518ac1",
+  "symbols": [
+    "C",
+    "O",
+    "Ti"
+  ],
+  "trajectory": null
+}
